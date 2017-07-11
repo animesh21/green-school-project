@@ -1,0 +1,97 @@
+<ion-view>
+    <ion-content scroll="false">
+        <div class="row" style="padding-top: 0px;padding-bottom: 0px">
+            <progress id="progressbar" max="100" value="23" class="progress"></progress>
+        </div>
+        <ion-scroll direction="y" class="theroot">
+            <div class="card">
+                <div class="item item-text-wrap">
+                    1. question text here ?
+                </div>
+
+                <div class="list ">
+                    <ion-list>
+                        <label class="item item-input" style="height: 100px">
+                            <textarea placeholder="Answer here!"></textarea>
+                        </label>
+                    </ion-list>
+                </div>
+            </div>
+            <div class="card">
+                <div class="item item-text-wrap">
+                    2. question text here ?
+                </div>
+
+                <div class="row ">
+                    <div class="col">
+                        <input type="radio" ng-model="choice22" ng-value="'e'" name="b">&nbsp;&nbsp;<span
+                            style="position:absolute"> Choose A</span>
+                    </div>
+                    <div class="col">
+                        <input type="radio" ng-model="choice32" ng-value="'f'" name="b">&nbsp;&nbsp;<span
+                            style="position:absolute">Choose B</span>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col">
+                        <input type="radio" ng-model="choice22" ng-value="'e'" name="b">&nbsp;&nbsp;<span
+                            style="position:absolute">Choose C</span>
+                    </div>
+                    <div class="col">
+                        <input type="radio" ng-model="choice22" ng-value="'e'" name="b">&nbsp;&nbsp;<span
+                            style="position:absolute">Choose D</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="item item-text-wrap">
+                    4. question text here ?
+                </div>
+
+
+                <label class="item item-input item-select ">
+                    <div class="input-label txt-align">
+                        &nbsp;
+                    </div>
+                    <select>
+                        <option selected>Default</option>
+                        <option>Green</option>
+                        <option>Red</option>
+                        <option>Green</option>
+                        <option>Red</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap">
+                    5. question text here ?
+                </div>
+
+                <div class="list ">
+
+                    <ion-list>
+                        <ion-radio ng-model="choice4" ng-value="'p'" name="e">Choose A</ion-radio>
+                        <ion-radio ng-model="choice3" ng-value="'q'" name="e">Choose B</ion-radio>
+                        <ion-radio ng-model="choice2" ng-value="'r'" name="e">Choose B</ion-radio>
+                        <ion-radio ng-model="choice1" ng-value="'s'" name="e">Choose B</ion-radio>
+                    </ion-list>
+                </div>
+            </div>
+
+
+            <div class="list card">
+                <!--||question.id==numberOfQuestions-1-->
+                <div class="button-bar">
+
+                    <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1"
+                       ion-chevron-right nav-clear ng-click="quiz2()">NEXT</a>
+                    <!-- ng-click="quiz2()" -->
+                    <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
+                </div>
+            </div>
+        </ion-scroll>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,413 @@
+/* Empty. Add your own CSS if you like */
+
+@font-face {
+    font-family: Roboto-Light !important;
+    src: url(font/RobotoSlab-Regular.ttf);
+}
+p, ion-item, span, a, input {
+  font-family: Roboto-Light !important;
+}
+ /* font-weight: lighter !important;
+  letter-spacing: 2px;*/
+
+
+.video-container {
+position: relative;
+padding-bottom: 56.25%;
+padding-top: 30px; height: 0; overflow: hidden;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+}
+.background-white{
+  background: #FFF !important;
+}
+.background-black{
+  background: #000 !important;
+}
+.background-color{
+  background: #e86549  !important;
+}
+.background-gray{
+  background: #7f7f7f !important;
+}
+.no-border{
+  border: none !important;
+}
+.text-white{
+  color: #FFF !important;
+}
+.text-black{
+  color: #000 !important;
+}
+.text-color{
+  color: #30ad64 !important;
+}
+.text-gray{
+  color: #7f7f7f !important
+}
+.fs-8{
+  font-size: 8px !important;
+}
+.fs-10{
+  font-size: 10px !important;
+}
+.fs-12{
+  font-size: 12px !important;
+}
+.fs-13{
+  font-size: 13px !important;
+}
+.fs-14{
+  font-size: 14px !important;
+}
+.fs-16{
+  font-size: 16px !important;
+}
+.fs-18{
+  font-size: 18px !important;
+}
+.fs-30{
+  font-size: 30px !important;
+}
+.fs-40{
+  font-size: 40px !important;
+}
+.margin{
+  margin: 10px !important;
+}
+
+.fs-20{
+  font-size: 20px !important;
+}
+.fs-24{
+  font-size: 24px !important;
+}
+.float-right{
+  float: right !important;
+}
+.padding-left{
+      padding-left: 40px !important;
+}
+.padding-bottom{
+  padding-bottom: 10px !important;
+}
+.padding-top{
+  padding-top: 25px !important;
+}
+.font-bold{
+  font-weight: bold !important;
+}
+.no-margin{
+  margin: 0px !important
+}
+.no-padding{
+  padding: 0px !important
+}
+
+.my-menu {
+background-color: #3f4041;
+}
+.my-menu .scroll {
+  background-color: transparent;
+}
+
+.my-menu .list {
+  background-color: transparent;
+}
+
+.my-menu .item, .my-menu .item-content, .my-menu .item-complex{
+  background-color: transparent;
+  color: #FFFFFF;
+  border-color: rgba(0,0,0,0);
+}
+.home-margin{
+	margin-right: 12%;
+	margin-top: 2%;
+	margin-left: 12%;
+}
+.right-border{
+	border-right: 1px solid #DBDAD9  ;
+	text-align: center;
+  /*padding-top: 30px;*/
+}
+.txt-align{
+	text-align: center;
+}
+.home-margin1{
+	margin-right: 8%;
+	margin-top: 4%;
+	margin-left: 8%;
+}
+.content{
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+hr{
+   border: 1px solid #F3F1F1 ;
+}
+
+
+/*///////////////////////////////////media////////////*/
+@media only screen and (min-width:250px) and (max-width:300px){
+  .home-height{
+   margin-right: 6%;
+  margin-top: 8%;
+  margin-left: 6%;
+  }
+}
+@media only screen and (min-width:300px) and (max-width:360px){
+  .home-height{
+   margin-right: 6%;
+  margin-top: 8%;
+  margin-left: 6%;
+  }
+}
+@media only screen and (min-width:360px) and (max-width:380px){
+  .home-height{
+    margin-right: 6%;
+  margin-top: 8%;
+  margin-left: 6%;
+  }
+}
+@media only screen and (min-width:380px) and (max-width:600px){
+  .home-height{
+   margin-right: 6%;
+  margin-top: 8%;
+  margin-left: 6%;
+  }
+}
+@media only screen and (min-width:600px) and (max-width:800px){
+  .home-height{
+   margin-right: 6%;
+  margin-top: 8%;
+  margin-left: 6%;
+  }
+}
+@media only screen and (min-width:800px) and (max-width:1100px){
+  .home-height{
+    margin-right: 6%;
+  margin-top: 8%;
+  margin-left: 6%;
+  }
+}
+
+.imag{
+-webkit-box-flex: 47%;
+    -webkit-flex: 0 0 47%;
+    -moz-box-flex: 47%;
+    -moz-flex: 0 0 47%;
+    -ms-flex: 0 0 47%;
+    flex: 0 0 47%;
+    max-width: 47%;
+    max-height: 47%;
+  }
+
+  .my-nav {
+  list-style-type: disc;
+}
+  /*input.ng-dirty.ng-invalid{background-color: #F0755B;}*/
+  .logo{
+    width:50px;
+    height:50px;
+    background:url('img/logogsp.png') center no-repeat;
+    display:block;
+    float:left;
+    cursor:pointer;
+}
+.theroot{
+  height:100%;
+}
+.popup-container.active .popup {
+    background-color: #fff;}
+    .popup-head {
+    padding: 5px 1px;
+    border-bottom: 0px solid #eee;
+    text-align: center;
+}
+.popup-body {
+    padding: 5px;
+    overflow: auto;
+    text-align: center;
+}
+.popup-container.active .popup {
+    background-color: #fff;
+    border: 1px solid #ebebe0;
+}
+/*////////////////////// test ///////////////////////////////////*/
+@media only screen and (min-width:250px) and (max-width:300px){
+  .home-height2{
+   margin-right: 12%;
+  margin-top: 2%;
+  margin-left: 12%;
+  }
+}
+@media only screen and (min-width:300px) and (max-width:360px){
+  .home-height2{
+   margin-right: 12%;
+  margin-top: 2%;
+  margin-left: 12%;
+  }
+}
+@media only screen and (min-width:360px) and (max-width:380px){
+  .home-height2{
+    margin-right: 12%;
+  margin-top: 2%;
+  margin-left: 12%;
+  }
+}
+@media only screen and (min-width:380px) and (max-width:600px){
+  .home-height2{
+   margin-right: 12%;
+  margin-top: 2%;
+  margin-left: 12%;
+  }
+}
+@media only screen and (min-width:600px) and (max-width:800px){
+  .home-height2{
+   margin-right: 12%;
+  margin-top: 2%;
+  margin-left: 12%;
+  }
+}
+@media only screen and (min-width:800px) and (max-width:1100px){
+  .home-height2{
+    margin-right: 12%;
+  margin-top: 2%;
+  margin-left: 12%;
+  }
+}
+
+/*.item-select {
+  width: 75%;  Or whatever you'd like the width to be
+}
+
+.item-select select {
+  left: 0;
+}
+*/
+/*
+        progress.progress{
+
+   color:#fff;
+   background-color:#019F45;
+
+}
+progress {
+    display: block;
+    margin: 5px auto;
+    width: 100%;
+    background-color: red;
+    color: red;
+}*/
+
+/*////////radio button css/////*/
+input[type='radio'] {
+    -webkit-appearance:none;
+    width:18px;
+    height:18px;
+    border:1px solid darkgray;
+    border-radius:50%;
+    outline:none;
+    box-shadow:0 0 5px 0px gray inset;
+
+}
+input[type='radio']:hover {
+    box-shadow:0 0 5px 0px orange inset;
+}
+input[type='radio']:before {
+    content:'';
+    display:block;
+    width:60%;
+    height:60%;
+    margin: 20% auto;
+    border-radius:50%;
+}
+input[type='radio']:checked:before {
+    background:green;
+}
+
+.bar .title {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 0;
+    overflow: hidden;
+    margin: 0 10px;
+    min-width: 30px;
+    height: 43px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 44px;
+    color: #fff;
+}
+
+
+.textbox {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #111;
+    outline:0;
+    height:1px;
+    width: 100%;
+
+ }
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+    display: block;
+    padding-top: 2px;
+    padding-left: 0;
+    height: 24px;
+    color: #111;
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  content: 'Select some files';
+  display: inline-block;
+  background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+ion-scroll[direction=y] {
+  height: 100vh;
+}
+
+/*green school font*/
+
+/*<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+*/

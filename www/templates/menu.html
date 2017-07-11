@@ -1,0 +1,92 @@
+<!-- <style>
+@font-face {
+    font-family: Roboto-Light !important;
+    src: url(font/Roboto-Light.ttf);
+}
+p, ion-item, span, a, input{
+  font-family: Roboto-Light !important;
+ /* font-weight: lighter !important;
+  letter-spacing: 2px;*/
+}
+
+</style>
+ -->
+
+<ion-side-menus enable-menu-with-back-views="true">
+  <ion-side-menu-content>
+    <ion-nav-bar class="background-color" align-title="center">
+     <!--  <ion-nav-back-button>
+      </ion-nav-back-button> -->
+
+      <ion-nav-buttons side="left">
+        <button class="text-white button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <button class="text-white button button-icon button-clear "  menu-toggle="right">
+               <img src="img/logogsp (3).png" height="100%" width="100%">
+        </button>
+
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+   <!--  <ion-header-bar  >
+      <h1 class="title fs-16">ABC PUBLIC SCHOOL </h1>
+    </ion-header-bar> -->
+    <!-- <h1 class="">Left</h1> -->
+     <!-- <div class="ion-header-bar"> ABC PUBLIC SCHOOL </div> -->
+    <ion-content class="my-menu">
+    <!-- <div style="padding-top:10px"></div> -->
+      <ion-list >
+         
+        <ion-item class="title  item-borderless" >
+        <p class="fs-12 text-white padding-top" style="text-align: center;">WELCOME</p><br/>
+
+          <p class="fs-16 text-white" menu-close ng-click="home()"  style="text-align: center;" >ABC PUBLIC SCHOOL</p>
+        </ion-item>
+        <div class="padding-left">
+        <ion-item class="item-borderless fs-12" ng-click="" menu-close href="#/app/home2">
+          SCHOOL PROFILE
+        </ion-item>
+        <ion-item class="item-borderless fs-12" menu-close href="#/app/general1">
+          GENERAL QUESTIONS
+        </ion-item>
+        <ion-item class="item-borderless fs-12" ng-click="air()" menu-close>
+          AIR
+        </ion-item>
+        <ion-item class="item-borderless fs-12" ng-click="energy()" menu-close>
+          ENERGY
+        </ion-item>
+
+        <ion-item  class="item-borderless fs-12" ng-click="food()" menu-close >
+          FOOD
+        </ion-item>
+        <ion-item class="item-borderless fs-12" ng-click="land()" menu-close >
+          LAND
+        </ion-item>
+        <ion-item class="item-borderless fs-12" ng-click="water()" menu-close>
+          WATER
+        </ion-item>
+        <ion-item class="item-borderless fs-12" ng-click="waste()" menu-close>
+          WASTE
+        </ion-item>
+        <ion-item class="item-borderless fs-12" menu-close ng-click="quiz()">
+          FEEDBACK
+        </ion-item>
+        <ion-item class="item-borderless fs-12" menu-close href="#/app/FAQ" >
+          FAQ
+        </ion-item>
+        <ion-item class="item-borderless fs-12" menu-close href="#/app/help">
+          HELP
+        </ion-item>
+        <ion-item class="item-borderless fs-12" menu-close ng-click="login()">
+          SIGN OUT
+        </ion-item>
+        </div>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

@@ -1,0 +1,8 @@
+{
+  "name": "GreenSchool",
+  "app_id": "ffce377d",
+  "type": "ionic1",
+  "watchPatterns": [
+    "scss/**/*"
+  ]
+}

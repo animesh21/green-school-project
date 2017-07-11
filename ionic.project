@@ -1,0 +1,10 @@
+{
+  "name": "proxy-example",
+  "app_id": "",
+  "proxies": [
+    {
+      "path": "/",
+      "proxyUrl": "http://localhost:8012/green-school/submit-aswer.php"
+    }
+  ]
+}

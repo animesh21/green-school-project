@@ -1,0 +1,735 @@
+<ion-view title="Air">
+
+    <ion-content scroll="false">
+        <div class="button-bar">
+            <script type="text/javascript">
+                function loadFrame() {
+                    var x = document.getElementById("iframeair");
+                    //x.style.visibility = 'hidden';
+                    x.innerHTML = '<iframe src="https://www.youtube.com/embed/klen-TOrXFA" frameborder="0" allowfullscreen></iframe>'
+                }
+
+            </script>
+            <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1" ion-chevron-right
+               nav-clear onclick="loadFrame()">View Tutorial</a>
+            <!-- ng-click="quiz2()" -->
+            <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
+        </div>
+        <div id="iframeair" class="video-container">
+        </div>
+
+        <div class="row" style="padding-top: 0px;padding-bottom: 0px">
+            <progress id="progressbar" max="100" value="1" class="progress"></progress>
+        </div>
+        <!--||questionair.id==numberOfQuestions-1-->
+
+        <ion-scroll direction="y" class="theroot">
+            <form name="Data" novalidate ng-submit="Data(value)">
+
+                <div class="row">
+                    The Air section involves finding out your school's contribution in polluting the air. The
+                    information will help in devising strategies for clean air in the coming years.<br>
+
+                    The unit of measurement to be used in the Air section is square meter (m2).
+                </div>
+                <div class="list" style="margin-left: 5px;margin-right: 5px">
+                    <strong>Task 1: Choose your Air Audit Team</strong><br>
+                    You would require at least five to 10 of your schoolmates in the Air audit team. The teacher
+                    co-ordinator may be a science or social science teacher, with an interest in air pollution issues.
+                    Do include the school transport in-charge and the drivers of the school vehicles in your audit team.
+                </div>
+
+                <div class="card">
+                    <div class="item item-text-wrap item-borderless">
+                        Teachers (maximum of three teachers can be part of the team):
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10"></div>
+                        <div class="col">Name</div>
+                        <div class="col"> Email id</div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">1</div>
+                        <div class="col">
+                            <input ng-model="air.Q1A1S1" ng-model="air.Q1A1S1" name="oneName" class="textbox"
+                                   style="border:1px solid #111;text-align: center;" type="text" id="oneName">
+
+                        </div>
+                        <div class="col">
+                            <input ng-model="air.Q1A1S2" class="textbox"
+                                   style="border:1px solid #111;text-align: center;" type="text" id='oneEmail'>
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">2</div>
+                        <div class="col"><input ng-model="air.Q1A2S1" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                id='twoName'></div>
+                        <div class="col"><input ng-model="air.Q1A2S2" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                id='twoEmail'></div>
+                    </div>
+
+
+                    <div class="row ">
+                        <div class="col col-10">3</div>
+                        <div class="col"><input ng-model="air.Q1A3S1" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                id='threeName'></div>
+                        <div class="col"><input ng-model="air.Q1A3S2" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                id='threeEmail'></div>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="item item-text-wrap item-borderless">
+                        Administrative staff (maximum of five staff can be part of the team):
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10"></div>
+                        <div class="col">Name</div>
+                        <div class="col"> Email id</div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">1</div>
+                        <div class="col"><input ng-model="air.Q2A1S1" id='questionairtwoOneName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q2A1S2" id='questionairtwoOneEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">2</div>
+                        <div class="col"><input ng-model="air.Q2A2S1" id='questionairtwoTwoName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q2A2S2" id='questionairtwoTwoEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+
+                    <div class="row ">
+                        <div class="col col-10">3</div>
+                        <div class="col"><input ng-model="air.Q2A3S1" id='questionairtwoThreeName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q2A3S2" id='questionairtwoThreeEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">4</div>
+                        <div class="col"><input ng-model="air.Q2A4S1" id='questionairtwoFourName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q2A4S2" id='questionairtwoFourEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">5</div>
+                        <div class="col"><input ng-model="air.Q2A5S1" id='questionairtwoFiveName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q2A5S2" id='questionairtwoFiveEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="item item-text-wrap item-borderless">
+                        Students (maximum of ten students can be part of the team):
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10"></div>
+                        <div class="col">Name</div>
+                        <div class="col"> Email id</div>
+                        <div class="col"> Grade/Class</div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">1</div>
+                        <div class="col"><input ng-model="air.Q3A1S1" id='questionairthreeOneName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A1S2" id='questionairthreeOneEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A1S3" id='questionairthreeOneGrade' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">2</div>
+                        <div class="col"><input ng-model="air.Q3A2S1" id='questionairthreeTwoName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A2S2" id='questionairthreeTwoEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A2S3" id='questionairthreeTwoGrade' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+
+                    <div class="row ">
+                        <div class="col col-10">3</div>
+                        <div class="col"><input ng-model="air.Q3A3S1" id='questionairthreeThreeName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A3S2" id='questionairthreeThreeEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A3S3" id='questionairthreeThreeGrade' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">4</div>
+                        <div class="col"><input ng-model="air.Q3A4S1" id='questionairthreeFourName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A4S2" id='questionairthreeFourEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A4S3" id='questionairthreeFourGrade' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">5</div>
+                        <div class="col"><input ng-model="air.Q3A5S1" id='questionairthreeFiveName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A5S2" id='questionairthreeFiveEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A5S3" id='questionairthreeFiveGrade' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">6</div>
+                        <div class="col"><input ng-model="air.Q3A6S1" id='questionairthreeSixName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A6S2" id='questionairthreeSixEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A6S3" id='questionairthreeSixGrade' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">7</div>
+                        <div class="col"><input ng-model="air.Q3A7S1" id='questionairthreeSevenName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A7S2" id='questionairthreeSevenEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A7S3" id='questionairthreeSevenGrade' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">8</div>
+                        <div class="col"><input ng-model="air.Q3A8S1" id='questionairthreeEightName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A8S2" id='questionairthreeEightEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A8S3" id='questionairthreeEightGrade' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">9</div>
+                        <div class="col"><input ng-model="air.Q3A9S1" id='questionairthreeNineName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A9S2" id='questionairthreeNineEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A9S3" id='questionairthreeNineGrade' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col col-10">10</div>
+                        <div class="col"><input ng-model="air.Q3A10S1" id='questionairthreeTenName' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A10S2" id='questionairthreeTenEmail' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q3A10S3" id='questionairthreeTenGrade' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                    </div>
+                </div>
+
+                <div class="list" style="margin-left: 5px;margin-right: 5px">
+                    <strong>Task 2: Are the rooms in your school well-ventilated?</strong><br>
+                    1. For this exercise, classrooms that are occupied by students regularly should be considered. Do
+                    not add laboratories or the auditorium.<br>
+                    2.Openings: are there any windows and ventilators which can be opened on regular basis and can be
+                    opened anytime?<br>
+                    3.This exercise should be done by schools with centrally air conditioning system also.<br>
+                    4.The exercise should be carried out for ten classrooms only. Sample size should have representation
+                    from all sections of classes: two classrooms each from pre-primary, primary, middle, secondary and
+                    higher secondary. If your school is up to Standard X only, then, at your discretion, you can add a
+                    class to any tier.<br>
+                    5.This activity is for all schools (non-air-conditioned buildings as well as air-conditioned
+                    buildings).
+                </div>
+
+                <div class="card">
+                    <div class="item item-text-wrap item-borderless">
+                        1. How many classrooms does your school have?
+                    </div>
+
+                    <div class="list " style="margin-left: 5px;margin-right: 5px">
+
+                        <input ng-model="air.Q4A1" id='questionairFour' class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="text" step="0.01" value="1.0">
+
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="item item-text-wrap item-borderless">
+                        2. To calculate the Window-floor ratio of classrooms in your school, please fill the table
+                        below:
+                    </div>
+
+                    <div class="row ">
+                        <div class="col"> Details of the classroom (e.g. Class II section b)</div>
+                        <div class="col"> X = Area of floor (LxB) (square meters)</div>
+                        <div class="col"> Y = Sum of area of openings
+                            ∑ (LxH)
+                        </div>
+                        <div class="col"> Percentage of the floor area being ventilated (Y/X x 100)</div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col"><input ng-model="air.Q5A1S1" id='questionairFiveOneDetails' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A1S2" id='questionairFiveOneArea' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A1S3" id='questionairFiveOneSum' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A1S4" id='questionairFiveOnePercentage' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col"><input ng-model="air.Q5A2S1" id='questionairFiveTwoDetails' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A2S2" id='questionairFiveTwoArea' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A2S3" id='questionairFiveTwoSum' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A2S4" id='questionairFiveTwoPercentage' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0" readonly="true"></div>
+                    </div>
+
+
+                    <div class="row ">
+                        <div class="col"><input ng-model="air.Q5A3S1" id='questionairFiveThreeDetails' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A3S2" id='questionairFiveThreeArea' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A3S3" id='questionairFiveThreeSum' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A3S4" id='questionairFiveThreePercentage'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col"><input ng-model="air.Q5A4S1" id='questionairFiveFourDetails' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A4S2" id='questionairFiveFourArea' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A4S3" id='questionairFiveFourSum' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A4S4" id='questionairFiveFourPercentage' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col"><input ng-model="air.Q5A5S1" id='questionairFiveFiveDetails' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A5S2" id='questionairFiveFiveArea' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A5S3" id='questionairFiveFiveSum' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A5S4" id='questionairFiveFivePercentage' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col"><input ng-model="air.Q5A6S1" id='questionairFiveSixDetails' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A6S2" id='questionairFiveSixArea' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A6S3" id='questionairFiveSixSum' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A6S4" id='questionairFiveSixPercentage' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col"><input ng-model="air.Q5A7S1" id='questionairFiveSevenDetails' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A7S2" id='questionairFiveSevenArea' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A7S3" id='questionairFiveSevenSum' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A7S4" id='questionairFiveSevenPercentage'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col"><input ng-model="air.Q5A8S1" id='questionairFiveEightDetails' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A8S2" id='questionairFiveEightArea' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A8S3" id='questionairFiveEightSum' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A8S4" id='questionairFiveEightPercentage'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col"><input ng-model="air.Q5A9S1" id='questionairFiveNineDetails' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A9S2" id='questionairFiveNineArea' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A9S3" id='questionairFiveNineSum' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A9S4" id='questionairFiveNinePercentage' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col"><input ng-model="air.Q5A10S1" id='questionairFiveTenDetails' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A10S2" id='questionairFiveTenArea' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A10S3" id='questionairFiveTenSum' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q5A10S4" id='questionairFiveTenPercentage' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col">Total</div>
+                        <div class="col"><input ng-model="air.Q5A11S1" id='questionairFiveTotalArea' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0.0" readonly="true"></div>
+                        <div class="col"><input ng-model="air.Q5A11S2" id='questionairFiveTotalSum' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0.0" readonly="true"></div>
+                        <div class="col"></div>
+                    </div>
+                </div>
+
+                <div class="list" style="margin-left: 5px;margin-right: 5px">
+                    <strong>Task 3: How eco-friendly are the vehicles in your school?</strong><br>
+                    In this section, you will maintain a record of vehicles used by your school. Two critical parameters
+                    indicate if your vehicles are eco-friendly. One—type of fuel—is given in the table below.
+
+                </div>
+
+
+                <div class="card">
+                    <div class="item item-text-wrap item-borderless">
+                        3. What is the ownership of the vehicles used by your school? Please choose what is applicable?
+                    </div>
+                    <ion-item class="fs-14 item-text-wrap">
+                        <input ng-model="air.Q6A1" type="radio" ng-value="'1'" name="choice"><span
+                            style="position:absolute">&nbsp;School does not use or own vehicles</span>
+                    </ion-item>
+                    <ion-item class="fs-14 item-text-wrap">
+                        <input ng-model="air.Q6A1" type="radio" ng-value="'2'" name="choice"><span
+                            style="position:absolute">&nbsp;Operator-owned vehicles</span>
+                    </ion-item>
+                    <ion-item class="fs-14 item-text-wrap">
+                        <input ng-model="air.Q6A1" type="radio" ng-value="'3'" name="choice"><span
+                            style="position:absolute">&nbsp;School-owned vehicles</span>
+                    </ion-item>
+                    <ion-item class="fs-14 item-text-wrap">
+                        <input ng-model="air.Q6A1" type="radio" ng-value="'4'" name="choice"><span
+                            style="position:absolute; ">&nbsp;A combination of school-owned and operator-owned vehicles</span>
+                    </ion-item>
+                </div>
+
+
+                <div class="list" style="margin-left: 5px;margin-right: 5px">
+                    <strong>Task 4: How do you travel to school every day?</strong><br>
+                    To know how the students, teachers and other staff in your school travel daily, the
+                    teacher/co-ordinator in the team should ask individual class monitors to record the commuting
+                    practices of his/her classmates and the teachers, and forward the data to the audit team. After
+                    completing the survey, provide the compiled information below.
+
+                </div>
+
+                <div class="card">
+                    <div class="item item-text-wrap item-borderless">
+                        4. Please specify how many members of the school community use each type of transport:
+                    </div>
+
+                    <div class="row ">
+                        <div class="col">Mode of transport</div>
+                        <div class="col">Students</div>
+                        <div class="col">Teaching Staff</div>
+                        <div class="col"> Non-Teaching Staff</div>
+                        <div class="col">Total</div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col">School bus</div>
+                        <div class="col"><input ng-model="air.Q7A1S1" id='questionairSevenOneMode' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A1S2" id='questionairSevenOneStudent' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A1S3" id='questionairSevenOneTeacher' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A1S4" id='questionairSevenOneNonTeaching'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col">Public bus</div>
+                        <div class="col"><input ng-model="air.Q7A2S1" id='questionairSevenTwoMode' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A2S2" id='questionairSevenTwoStudent' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A2S3" id='questionairSevenTwoTeacher' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A2S4" id='questionairSevenTwoNonTeaching'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+
+
+                    <div class="row ">
+                        <div class="col">School transport (other than bus)</div>
+                        <div class="col"><input ng-model="air.Q7A3S1" id='questionairSevenThreeMode' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A3S2" id='questionairSevenThreeStudent' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A3S3" id='questionairSevenThreeTeacher' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A3S4" id='questionairSevenThreeNonTeaching'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col">Public transport (other than bus)</div>
+                        <div class="col"><input ng-model="air.Q7A4S1" id='questionairSevenFourMode' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A4S2" id='questionairSevenFourStudent' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A4S3" id='questionairSevenFourTeacher' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A4S4" id='questionairSevenFourNonTeaching'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col">Taxi four-wheeler</div>
+                        <div class="col"><input ng-model="air.Q7A5S1" id='questionairSevenFiveMode' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A5S2" id='questionairSevenFiveStudent' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A5S3" id='questionairSevenFiveTeacher' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A5S4" id='questionairSevenFiveNonTeaching'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col">Taxi three-wheeler</div>
+                        <div class="col"><input ng-model="air.Q7A6S1" id='questionairSevenSixMode' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A6S2" id='questionairSevenSixStudent' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A6S3" id='questionairSevenSixTeacher' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A6S4" id='questionairSevenSixNonTeaching'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col">Personal four-wheeler</div>
+                        <div class="col"><input ng-model="air.Q7A7S1" id='questionairSevenSevenMode' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A7S2" id='questionairSevenSevenStudent' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A7S3" id='questionairSevenSevenTeacher' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A7S4" id='questionairSevenSevenNonTeaching'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col">Personal two-wheeler</div>
+                        <div class="col"><input ng-model="air.Q7A8S1" id='questionairSevenEightMode' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A8S2" id='questionairSevenEightStudent' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A8S3" id='questionairSevenEightTeacher' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A8S4" id='questionairSevenEightNonTeaching'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+                    <div class="row ">
+                        <div class="col">Bicycle</div>
+                        <div class="col"><input ng-model="air.Q7A9S1" id='questionairSevenNineMode' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A9S2" id='questionairSevenNineStudent' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A9S3" id='questionairSevenNineTeacher' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A9S4" id='questionairSevenNineNonTeaching'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+                    <div class="row ">
+                        <div class="col">On foot</div>
+                        <div class="col"><input ng-model="air.Q7A10S1" id='questionairSevenTenMode' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A10S2" id='questionairSevenTenStudent' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A10S3" id='questionairSevenTenTeacher' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A10S4" id='questionairSevenTenNonTeaching'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+                    <div class="row ">
+                        <div class="col">Others (non-motorized)</div>
+                        <div class="col"><input ng-model="air.Q7A11S1" id='questionairSevenElevenMode' class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A11S2" id='questionairSevenElevenStudent'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A11S3" id='questionairSevenElevenTeacher'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text"></div>
+                        <div class="col"><input ng-model="air.Q7A11S4" id='questionairSevenElevenNonTeaching'
+                                                class="textbox" style="border:1px solid #111;text-align: center;"
+                                                type="text" placeholder="0" readonly="true"></div>
+                    </div>
+                    <div class="row ">
+                        <div class="col">Total</div>
+                        <div class="col"><input ng-model="air.Q7A12S1" id="Total1" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0.0" readonly="true"></div>
+                        <div class="col"><input ng-model="air.Q7A12S2" id="Total2" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0.0" readonly="true"></div>
+                        <div class="col"><input ng-model="air.Q7A12S3" id="Total3" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0.0" readonly="true"></div>
+                        <div class="col"><input ng-model="air.Q7A12S4" id="Total4" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                placeholder="0.0" readonly="true"></div>
+                    </div>
+                </div>
+
+
+                <div class="list" style="margin-left: 5px;margin-right: 5px">
+                    <strong>Task 5: How good is the air you breathe in your school?</strong><br>
+                    The starting point of air quality monitoring is to first study if an area has an air pollution
+                    problem. Monitoring helps in assessing the level of pollution in relation to the ambient air quality
+                    standards. Standards are a regulatory measure to set the target for pollution reduction and achieve
+                    clean air.
+
+                </div>
+
+                <div class="card">
+                    <div class="item item-text-wrap item-borderless">
+                        5. How many students suffer from respiratory ailments ?
+                    </div>
+
+                    <div class="list ">
+
+                        <ion-list>
+
+                            <label class="item item-input">
+                                <input ng-model="air.Q8A1" id='questionairEight' type="text" step="0.01" value="1.0"
+                                       placeholder="Answer here!"></textarea>
+                            </label>
+                        </ion-list>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="item item-text-wrap item-borderless">
+                        6. Does the school laboratory have air quality monitoring equipment?
+                    </div>
+
+
+                    <div class="row ">
+
+                        <div class="col fs-12">
+                            <input ng-model="air.Q9A1" type="radio" ng-value="'1'" name="b">&nbsp;<span
+                                style="position:absolute">Yes</span>
+                        </div>
+                        <div class="col fs-12">
+                            <input ng-model="air.Q9A1" type="radio" ng-value="'2'" name="b">&nbsp;<span
+                                style="position:absolute">No</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <input ng-model="air.Q10A1" type="hidden" id="token"/>
+
+
+                <!-- <div class="card">
+                    <div class="item item-text-wrap">
+                        4. questionair text here ?
+                    </div>
+
+
+                    <label class="item item-input item-select ">
+        <div class="input-label txt-align">
+            &nbsp;
+        </div>
+        <select>
+            <option selected>Default</option>
+            <option >Green</option>
+            <option>Red</option>
+            <option >Green</option>
+            <option>Red</option>
+        </select>
+    </label>
+                </div> -->
+
+
+                <div class="list card">
+                    <!--||questionair.id==numberOfQuestions-1-->
+                    <div class="button-bar">
+
+                        <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1"
+                           ion-chevron-right nav-clear ng-click="quiz2(air)">NEXT</a>
+                        <!-- ng-click="quiz2()" -->
+                        <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
+                    </div>
+                </div>
+                <div class="list card">
+                    <!--||question.id==numberOfQuestions-1-->
+                    {{ response }}
+                </div>
+            </form>
+        </ion-scroll>
+    </ion-content>
+</ion-view>
