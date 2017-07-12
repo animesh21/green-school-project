@@ -4,6 +4,8 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
+
+
 angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
   'starter.quiz2', 'starter.quiz3', 'multipleChoice.services',
   'starter.help', 'starter.menu', 'starter.login', 'ngCordova',
@@ -11,14 +13,14 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
   'starter.energy', 'starter.food', 'starter.land', 'starter.water',
   'starter.waste', 'starter.feedback', 'starter.api'])
 
-  .run(function ($ionicPlatform, $cordovaSQLite, $window) {
+  .run(function ($ionicPlatform, $cordovaSQLite, $window, AppServiceAPI) {
     $ionicPlatform.ready(function () {
+
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
       if (window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         cordova.plugins.Keyboard.disableScroll(true);
-
       }
       if (window.StatusBar) {
         // org.apache.cordova.statusbar required

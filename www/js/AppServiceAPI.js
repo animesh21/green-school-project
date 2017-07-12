@@ -1,7 +1,16 @@
 angular.module('starter.api', []).factory('AppServiceAPI', function ($http, $cordovaSQLite) {
+  var db;
   return {
+
     select: function (type) {
-      var data;
+      if (window.cordova) {
+        db = $cordovaSQLite.openDB({name: "quiz.db"}); //device
+        console.log("Android");
+      }
+      else {
+        db = window.openDatabase("quiz.db", '1', 'my', 1024 * 1024 * 100); // browser
+        console.log("browser");
+      }
       var query = "SELECT questionid,answer FROM gsp_answers WHERE type = ?";
       return $cordovaSQLite.execute(db, query, [type])
     },
@@ -18,12 +27,14 @@ angular.module('starter.api', []).factory('AppServiceAPI', function ($http, $cor
         console.log("INSERT ID -> " + res.insertId);
       });
     },
+
     update: function (userid, questionid, answer, score, type) {
       var query = "REPLACE INTO gsp_answers (userid, questionid, answer, score, type) VALUES (?,?,?,?,?)";
       $cordovaSQLite.execute(db, query, [userid, questionid, answer, score, type]).then(function (res) {
         console.log("INSERT ID -> " + res.insertId);
       });
     },
+
     sync: function () {
       var data = {};
       var query = "SELECT * FROM gsp_answers";
@@ -60,7 +71,8 @@ angular.module('starter.api', []).factory('AppServiceAPI', function ($http, $cor
 
         //$http.post("http://studio-tesseract.co/GSP/api/Gsp/users/",)
       });
-    }
+    },
 
+    db: db
   };
 });
