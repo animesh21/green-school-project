@@ -411,3 +411,30 @@ ion-scroll[direction=y] {
 /*<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 */
+.badges {
+    background-color: #9b9796;
+    font-size: 12px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: top;
+    line-height: 27px;
+    font-family: 'Lato Bold', sans-serif;
+    font-weight: normal;
+	padding:0px 7px;
+	color: #fff;
+}
+.item .badges {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    position: absolute;
+    top: 16px;
+    right:4px!important;
+}

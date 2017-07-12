@@ -1,340 +1,309 @@
 <ion-view title="General">
-
-    <ion-content scroll="false">
-        <div class="button-bar">
-            <script type="text/javascript">
+  <ion-content scroll="false">
+    <div class="button-bar">
+      <script type="text/javascript">
                 function loadFrame() {
                     var x = document.getElementById("iframeair");
                     //x.style.visibility = 'hidden';
                     x.innerHTML = '<iframe src="https://www.youtube.com/embed/klen-TOrXFA" frameborder="0" allowfullscreen></iframe>'
                 }
             </script>
-            <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1" ion-chevron-right
+      <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1" ion-chevron-right
                nav-clear onclick="loadFrame()">View Tutorial</a>
-            <!-- ng-click="quiz2()" -->
-            <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
+      <!-- ng-click="quiz2()" -->
+      <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
+    </div>
+    <div id="iframeair" class="video-container"> </div>
+    <div class="row" style="padding-top: 0px;padding-bottom: 0px">
+      <progress id="progressbar" max="100" value="1" class="progress"></progress>
+    </div>
+    <ion-scroll direction="y" class="theroot">
+      <div class="card">
+        <div class="item item-text-wrap item-borderless"> 1. How many levels does your school have?
+          <div class="badges" ng-click="popover.show($event)">?</div>
         </div>
-        <div id="iframeair" class="video-container">
+        <label class="item item-input item-select">
+        <div class="input-label fs-12"> Lowest level of grade: </div>
+        <select ng-model="general.Q1G1" class="fs-12" id="questiongeneralone">
+          <option selected>Please Choose</option>
+          <option checked="{{ general.Q1G1 == 1 }}" ng-value="'1'">1</option>
+          <option checked="{{ general.Q1G1 == 2 }}" ng-value="'2'">2</option>
+          <option checked="{{ general.Q1G1 == 3 }}" ng-value="'3'">3</option>
+          <option checked="{{ general.Q1G1 == 4 }}" ng-value="'4'">4</option>
+          <option checked="{{ general.Q1G1 == 5 }}" ng-value="'5'">5</option>
+          <option checked="{{ general.Q1G1 == 6 }}" ng-value="6">6</option>
+          <option checked="{{ general.Q1G1 == 7 }}" ng-value="'7'">7</option>
+          <option checked="{{ general.Q1G1 == 8 }}" ng-value="'8'">8</option>
+          <option checked="{{ general.Q1G1 == 9 }}" ng-value="'9'">9</option>
+          <option checked="{{ general.Q1G1 == 10 }}" ng-value="'10'">10</option>
+          <option checked="{{ general.Q1G1 == 11 }}" ng-value="'11'">11</option>
+          <option checked="{{ general.Q1G1 == 12 }}" ng-value="'12'">12</option>
+        </select>
+        </label>
+        <label class="item item-input item-select">
+        <div class="input-label fs-12"> Highest level of grade: </div>
+        <select ng-model="general.Q1G1" class="fs-12" id="questiongeneraltwo">
+          <option selected>Please Choose</option>
+          <option checked="{{ general.Q1G1 == 1 }}" ng-value="'1'">1</option>
+          <option checked="{{ general.Q1G1 == 2 }}" ng-value="'2'">2</option>
+          <option checked="{{ general.Q1G1 == 3 }}" ng-value="'3'">3</option>
+          <option checked="{{ general.Q1G1 == 4 }}" ng-value="'4'">4</option>
+          <option checked="{{ general.Q1G1 == 5 }}" ng-value="'5'">5</option>
+          <option checked="{{ general.Q1G1 == 6 }}" ng-value="6">6</option>
+          <option checked="{{ general.Q1G1 == 7 }}" ng-value="'7'">7</option>
+          <option checked="{{ general.Q1G1 == 8 }}" ng-value="'8'">8</option>
+          <option checked="{{ general.Q1G1 == 9 }}" ng-value="'9'">9</option>
+          <option checked="{{ general.Q1G1 == 10 }}" ng-value="'10'">10</option>
+          <option checked="{{ general.Q1G1 == 11 }}" ng-value="'11'">11</option>
+          <option checked="{{ general.Q1G1 == 12 }}" ng-value="'12'">12</option>
+        </select>
+        </label>
+      </div>
+      <div class="card">
+        <div class="item item-text-wrap item-borderless"> 2. Is your school single gender or mixed gender? </div>
+        <div class="row ">
+          <div class="col fs-12">
+            <input ng-model="general.Q2G1" id="questiongeneralthree" type="radio" ng-value="'1'" name="b">
+            &nbsp;<span
+                            style="position:absolute"> Only boys</span> </div>
+          <div class="col fs-12">
+            <input ng-model="general.Q2G1" id="questiongeneralthree" type="radio" ng-value="'2'" name="b">
+            &nbsp;<span
+                            style="position:absolute">Only girls</span> </div>
+          <div class="col col-50 fs-12">
+            <input ng-model="general.Q2G1" id="questiongeneralthree" type="radio" ng-value="'3'" name="b">
+            &nbsp;<span
+                            style="position:absolute">Mixed/Co-education</span> </div>
         </div>
-
-        <div class="row" style="padding-top: 0px;padding-bottom: 0px">
-            <progress id="progressbar" max="100" value="1" class="progress"></progress>
+      </div>
+      <div class="card">
+        <div class="item item-text-wrap item-borderless"> 3. Which board of education does the school follow ? </div>
+        <ion-item class="fs-14 item-text-wrap">
+          <input ng-model="general.Q3G1" type="radio" ng-value="'1'" name="e">
+          <span style="position:absolute">&nbsp;State board of education (please specify your state)</span> </ion-item>
+        <ion-item class="fs-14 item-text-wrap">
+          <input ng-model="general.Q3G1" type="radio" ng-value="'2'" name="e">
+          <span style="position:absolute">&nbsp;Central Board of Secondary Education</span> </ion-item>
+        <ion-item class="fs-14 item-text-wrap">
+          <input ng-model="general.Q3G1" type="radio" ng-value="'3'" name="e">
+          <span style="position:absolute">&nbsp;Indian Certificate of Secondary Education</span> </ion-item>
+        <ion-item class="fs-14 item-text-wrap">
+          <input ng-model="general.Q3G1" type="radio" ng-value="'4'" name="e">
+          <span
+                        style="position:absolute; ">&nbsp;International Baccalaureate (IB)/ International  General Certificate of Secondary Education (IGCSE) combination</span> </ion-item>
+        <ion-item class="fs-14 item-text-wrap">
+          <input ng-model="general.Q3G1" type="radio" ng-value="'5'"
+                           name="e">
+          <span style="position:absolute">&nbsp;other
+          <input ng-model="general.Q3G1O" id="questiongeneralfour" type="text" placeholder="Other">
+          </span> </ion-item>
+      </div>
+      <div class="card">
+        <div class="item item-text-wrap item-borderless"> 3(a). Select State for board of education: </div>
+        <label class="item item-input item-select">
+        <div class="input-label fs-12"> State: </div>
+        <select class="fs-12" id="questiongeneralfive">
+          <option selected>Please Choose</option>
+          <option>Uttar Pradesh</option>
+        </select>
+        </label>
+      </div>
+      <div class="card">
+        <div class="item item-text-wrap item-borderless"> 4(a). What is the total permanent population of the school ? </div>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col">Male</div>
+          <div class="col">Female</div>
+          <div class="col">Total</div>
         </div>
-
-        <ion-scroll direction="y" class="theroot">
-            <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    1. How many levels does your school have?
-                </div>
-
-                <label class="item item-input item-select">
-                    <div class="input-label fs-12">
-                        Lowest level of grade:
-                    </div>
-                    <select ng-model="general.Q1G1" class="fs-12" id="questiongeneralone">
-                        <option selected>Please Choose</option>
-                        <option checked="{{ general.Q1G1 == 1 }}" ng-value="'1'">1</option>
-                        <option checked="{{ general.Q1G1 == 2 }}" ng-value="'2'">2</option>
-                        <option checked="{{ general.Q1G1 == 3 }}" ng-value="'3'">3</option>
-                        <option checked="{{ general.Q1G1 == 4 }}" ng-value="'4'">4</option>
-                        <option checked="{{ general.Q1G1 == 5 }}" ng-value="'5'">5</option>
-                        <option checked="{{ general.Q1G1 == 6 }}" ng-value="6">6</option>
-                        <option checked="{{ general.Q1G1 == 7 }}" ng-value="'7'">7</option>
-                        <option checked="{{ general.Q1G1 == 8 }}" ng-value="'8'">8</option>
-                        <option checked="{{ general.Q1G1 == 9 }}" ng-value="'9'">9</option>
-                        <option checked="{{ general.Q1G1 == 10 }}" ng-value="'10'">10</option>
-                        <option checked="{{ general.Q1G1 == 11 }}" ng-value="'11'">11</option>
-                        <option checked="{{ general.Q1G1 == 12 }}" ng-value="'12'">12</option>
-                    </select>
-                </label>
-                <label class="item item-input item-select">
-                    <div class="input-label fs-12">
-                        Highest level of grade:
-                    </div>
-                    <select ng-model="general.Q1G1" class="fs-12" id="questiongeneraltwo">
-                        <option selected>Please Choose</option>
-                        <option checked="{{ general.Q1G1 == 1 }}" ng-value="'1'">1</option>
-                        <option checked="{{ general.Q1G1 == 2 }}" ng-value="'2'">2</option>
-                        <option checked="{{ general.Q1G1 == 3 }}" ng-value="'3'">3</option>
-                        <option checked="{{ general.Q1G1 == 4 }}" ng-value="'4'">4</option>
-                        <option checked="{{ general.Q1G1 == 5 }}" ng-value="'5'">5</option>
-                        <option checked="{{ general.Q1G1 == 6 }}" ng-value="6">6</option>
-                        <option checked="{{ general.Q1G1 == 7 }}" ng-value="'7'">7</option>
-                        <option checked="{{ general.Q1G1 == 8 }}" ng-value="'8'">8</option>
-                        <option checked="{{ general.Q1G1 == 9 }}" ng-value="'9'">9</option>
-                        <option checked="{{ general.Q1G1 == 10 }}" ng-value="'10'">10</option>
-                        <option checked="{{ general.Q1G1 == 11 }}" ng-value="'11'">11</option>
-                        <option checked="{{ general.Q1G1 == 12 }}" ng-value="'12'">12</option>
-                    </select>
-                </label>
-            </div>
-
-            <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    2. Is your school single gender or mixed gender?
-                </div>
-
-                <div class="row ">
-                    <div class="col fs-12">
-                        <input ng-model="general.Q2G1" id="questiongeneralthree" type="radio" ng-value="'1'" name="b">&nbsp;<span
-                            style="position:absolute"> Only boys</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input ng-model="general.Q2G1" id="questiongeneralthree" type="radio" ng-value="'2'" name="b">&nbsp;<span
-                            style="position:absolute">Only girls</span>
-                    </div>
-                    <div class="col col-50 fs-12">
-                        <input ng-model="general.Q2G1" id="questiongeneralthree" type="radio" ng-value="'3'" name="b">&nbsp;<span
-                            style="position:absolute">Mixed/Co-education</span>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    3. Which board of education does the school follow ?
-                </div>
-
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q3G1" type="radio" ng-value="'1'" name="e"><span style="position:absolute">&nbsp;State board of education (please specify your state)</span>
-                </ion-item>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q3G1" type="radio" ng-value="'2'" name="e"><span style="position:absolute">&nbsp;Central Board of Secondary Education</span>
-                </ion-item>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q3G1" type="radio" ng-value="'3'" name="e"><span style="position:absolute">&nbsp;Indian Certificate of Secondary Education</span>
-                </ion-item>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q3G1" type="radio" ng-value="'4'" name="e"><span
-                        style="position:absolute; ">&nbsp;International Baccalaureate (IB)/ International  General Certificate of Secondary Education (IGCSE) combination</span>
-                </ion-item>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q3G1" type="radio" ng-value="'5'"
-                           name="e"><span style="position:absolute">&nbsp;other
-                <input ng-model="general.Q3G1O" id="questiongeneralfour" type="text" placeholder="Other">
-            </span>
-                </ion-item>
-
-            </div>
-
-            <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    3(a). Select State for board of education:
-                </div>
-
-                <label class="item item-input item-select">
-                    <div class="input-label fs-12">
-                        State:
-                    </div>
-                    <select class="fs-12" id="questiongeneralfive">
-                        <option selected>Please Choose</option>
-                        <option>Uttar Pradesh</option>
-
-
-                    </select>
-                </label>
-            </div>
-
-            <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    4(a). What is the total permanent population of the school ?
-                </div>
-                <div class="row">
-                    <div class="col"></div>
-                    <div class="col">Male</div>
-                    <div class="col">Female</div>
-                    <div class="col">Total</div>
-
-                </div>
-                <div class="row">
-                    <div class="col">Students</div>
-                    <div class="col"><input ng-model="general.Q4G1S1" id="questiongeneralsixOneMale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="general.Q4G1S2" id="questiongeneralsixOneFemale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="general.Q4G1S3" id="questiongeneralsixOnetotal" class="textbox"
+        <div class="row">
+          <div class="col">Students</div>
+          <div class="col">
+            <input ng-model="general.Q4G1S1" id="questiongeneralsixOneMale" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text">
+          </div>
+          <div class="col">
+            <input ng-model="general.Q4G1S2" id="questiongeneralsixOneFemale" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text">
+          </div>
+          <div class="col">
+            <input ng-model="general.Q4G1S3" id="questiongeneralsixOnetotal" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"
-                                            readonly="true"></div>
-
-                </div>
-                <div class="row">
-                    <div class="col">Teachers</div>
-                    <div class="col"><input ng-model="general.Q4G2S1" id="questiongeneralsixTwoMale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="general.Q4G2S2" id="questiongeneralsixTwoFemale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="general.Q4G2S3" id="questiongeneralsixTwototal" class="textbox"
+                                            readonly="true">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">Teachers</div>
+          <div class="col">
+            <input ng-model="general.Q4G2S1" id="questiongeneralsixTwoMale" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text">
+          </div>
+          <div class="col">
+            <input ng-model="general.Q4G2S2" id="questiongeneralsixTwoFemale" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text">
+          </div>
+          <div class="col">
+            <input ng-model="general.Q4G2S3" id="questiongeneralsixTwototal" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"
-                                            readonly="true"></div>
-
-                </div>
-                <div class="row">
-                    <div class="col">Non-teaching Staff</div>
-                    <div class="col"><input ng-model="general.Q4G3S1" id="questiongeneralsixThreeMale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="general.Q4G3S2" id="questiongeneralsixThreeFemale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="general.Q4G3S3" id="questiongeneralsixThreetotal" class="textbox"
+                                            readonly="true">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">Non-teaching Staff</div>
+          <div class="col">
+            <input ng-model="general.Q4G3S1" id="questiongeneralsixThreeMale" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text">
+          </div>
+          <div class="col">
+            <input ng-model="general.Q4G3S2" id="questiongeneralsixThreeFemale" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text">
+          </div>
+          <div class="col">
+            <input ng-model="general.Q4G3S3" id="questiongeneralsixThreetotal" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"
-                                            readonly="true"></div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col">Sub-Total</div>
-                    <div class="col"><input ng-model="general.Q4G4S1" id="questiongeneralsixFourMale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="general.Q4G4S2" id="questiongeneralsixFourFemale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="general.Q4G4S3" id="questiongeneralsixFourtotal" class="textbox"
+                                            readonly="true">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">Sub-Total</div>
+          <div class="col">
+            <input ng-model="general.Q4G4S1" id="questiongeneralsixFourMale" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text">
+          </div>
+          <div class="col">
+            <input ng-model="general.Q4G4S2" id="questiongeneralsixFourFemale" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text">
+          </div>
+          <div class="col">
+            <input ng-model="general.Q4G4S3" id="questiongeneralsixFourtotal" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"
-                                            readonly="true"></div>
-
-                </div>
-
-            </div>
-
-            <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    4(b). How many visitors visit your school ?
-                </div>
-
-                <div class="list ">
-
-                    <ion-list>
-
-                        <label class="item item-input">
-                            <input ng-model="general.Q5G1" type="text" placeholder="Answer here!"
-                                   id="questiongeneralseven"></textarea>
-                        </label>
-                    </ion-list>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    5. What is the total number of working days of your school in a year?
-                </div>
-
-                <div class="list ">
-
-                    <ion-list>
-
-                        <label class="item item-input">
-                            <input ng-model="general.Q6G1" id="questiongeneraleight" type="text"
-                                   placeholder="Answer here!"></textarea>
-                        </label>
-                    </ion-list>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    6. Please select the month(s) in which the GSP audit was carried out?
-                </div>
-                <ion-scroll direction="x" class="wide-as-needed" style="padding-bottom:0px">
-                    <div class="row">
-                        <div class="col col-20" style="text-align: center;">Jan</div>
-                        <div class="col col-20" style="text-align: center;">Feb</div>
-                        <div class="col col-20" style="text-align: center;">Mar</div>
-                        <div class="col col-20" style="text-align: center;">Apr</div>
-                        <div class="col col-20" style="text-align: center;">May</div>
-                        <div class="col col-20" style="text-align: center;">Jun</div>
-                        <div class="col col-20" style="text-align: center;">Jul</div>
-                        <div class="col col-20" style="text-align: center;">Aug</div>
-                        <div class="col col-20" style="text-align: center;">Sep</div>
-                        <div class="col col-20" style="text-align: center;">Oct</div>
-                        <div class="col col-20" style="text-align: center;">Nov</div>
-                        <div class="col col-20" style="text-align: center;">Dec</div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-20" style="text-align: center;">
-
-                            <input ng-model="general.Q7G1" id="questiongeneralnineOne" type="checkbox" name="month"
+                                            readonly="true">
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-text-wrap item-borderless"> 4(b). How many visitors visit your school ? </div>
+        <div class="list ">
+          <ion-list>
+            <label class="item item-input">
+            <input ng-model="general.Q5G1" type="text" placeholder="Answer here!"
+                                   id="questiongeneralseven">
+            </textarea>
+            </label>
+          </ion-list>
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-text-wrap item-borderless"> 5. What is the total number of working days of your school in a year? </div>
+        <div class="list ">
+          <ion-list>
+            <label class="item item-input">
+            <input ng-model="general.Q6G1" id="questiongeneraleight" type="text"
+                                   placeholder="Answer here!">
+            </textarea>
+            </label>
+          </ion-list>
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-text-wrap item-borderless"> 6. Please select the month(s) in which the GSP audit was carried out? </div>
+        <ion-scroll direction="x" class="wide-as-needed" style="padding-bottom:0px">
+          <div class="row">
+            <div class="col col-20" style="text-align: center;">Jan</div>
+            <div class="col col-20" style="text-align: center;">Feb</div>
+            <div class="col col-20" style="text-align: center;">Mar</div>
+            <div class="col col-20" style="text-align: center;">Apr</div>
+            <div class="col col-20" style="text-align: center;">May</div>
+            <div class="col col-20" style="text-align: center;">Jun</div>
+            <div class="col col-20" style="text-align: center;">Jul</div>
+            <div class="col col-20" style="text-align: center;">Aug</div>
+            <div class="col col-20" style="text-align: center;">Sep</div>
+            <div class="col col-20" style="text-align: center;">Oct</div>
+            <div class="col col-20" style="text-align: center;">Nov</div>
+            <div class="col col-20" style="text-align: center;">Dec</div>
+          </div>
+          <div class="row">
+            <div class="col col-20" style="text-align: center;">
+              <input ng-model="general.Q7G1" id="questiongeneralnineOne" type="checkbox" name="month"
                                    value="Jan">
-
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G2" id="questiongeneralninetwo" type="checkbox" name="month"
+            </div>
+            <div class="col col-20" style="text-align: center;">
+              <input ng-model="general.Q7G2" id="questiongeneralninetwo" type="checkbox" name="month"
                                    value="Feb">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G3" id="questiongeneralnineThree" type="checkbox" name="month"
+            </div>
+            <div class="col col-20" style="text-align: center;">
+              <input ng-model="general.Q7G3" id="questiongeneralnineThree" type="checkbox" name="month"
                                    value="Mar">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G4" id="questiongeneralnineFour" type="checkbox" name="month"
+            </div>
+            <div class="col col-20" style="text-align: center;">
+              <input ng-model="general.Q7G4" id="questiongeneralnineFour" type="checkbox" name="month"
                                    value="Apr">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G5" id="questiongeneralnineFive" type="checkbox" name="month"
+            </div>
+            <div class="col col-20" style="text-align: center;">
+              <input ng-model="general.Q7G5" id="questiongeneralnineFive" type="checkbox" name="month"
                                    value="may">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G6" id="questiongeneralnineSix" type="checkbox" name="month"
+            </div>
+            <div class="col col-20" style="text-align: center;">
+              <input ng-model="general.Q7G6" id="questiongeneralnineSix" type="checkbox" name="month"
                                    value="Jun">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G7" id="questiongeneralnineSeven" type="checkbox" name="month"
+            </div>
+            <div class="col col-20" style="text-align: center;">
+              <input ng-model="general.Q7G7" id="questiongeneralnineSeven" type="checkbox" name="month"
                                    value="Jul">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G8" id="questiongeneralnineEight" type="checkbox" name="month"
+            </div>
+            <div class="col col-20" style="text-align: center;">
+              <input ng-model="general.Q7G8" id="questiongeneralnineEight" type="checkbox" name="month"
                                    value="Aug">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G9" id="questiongeneralnineNine" type="checkbox" name="month"
+            </div>
+            <div class="col col-20" style="text-align: center;">
+              <input ng-model="general.Q7G9" id="questiongeneralnineNine" type="checkbox" name="month"
                                    value="Sep">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G10" id="questiongeneralnineTen" type="checkbox" name="month"
+            </div>
+            <div class="col col-20" style="text-align: center;">
+              <input ng-model="general.Q7G10" id="questiongeneralnineTen" type="checkbox" name="month"
                                    value="Oct">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G11" id="questiongeneralnineEleven" type="checkbox" name="month"
+            </div>
+            <div class="col col-20" style="text-align: center;">
+              <input ng-model="general.Q7G11" id="questiongeneralnineEleven" type="checkbox" name="month"
                                    value="Nov">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G12" id="questiongeneralnineTwelve" type="checkbox" name="month"
+            </div>
+            <div class="col col-20" style="text-align: center;">
+              <input ng-model="general.Q7G12" id="questiongeneralnineTwelve" type="checkbox" name="month"
                                    value="Dec">
-                        </div>
-                    </div>
-                </ion-scroll>
             </div>
-
-            <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    7. Where is the school located??
-                </div>
-
-
-                <div class="row ">
-
-                    <div class="col fs-12">
-                        <input ng-model="general.Q8G1" id="questiongeneralten" type="radio" ng-value="'1'" name="c">&nbsp;<span
-                            style="position:absolute"> Urban Area</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input ng-model="general.Q8G1" id="questiongeneralten" type="radio" ng-value="'2'" name="c">&nbsp;<span
-                            style="position:absolute">Rural Area</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="list card">
-                <!--||questiongeneral.id==numberOfQuestions-1-->
-                <div class="button-bar">
-
-                    <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1"
-                       ion-chevron-right nav-clear ng-click="quiz2()">NEXT</a>
-                    <!-- ng-click="quiz2()" -->
-                    <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
-                </div>
-            </div>
+          </div>
         </ion-scroll>
-    </ion-content>
+      </div>
+      <div class="card">
+        <div class="item item-text-wrap item-borderless"> 7. Where is the school located?? </div>
+        <div class="row ">
+          <div class="col fs-12">
+            <input ng-model="general.Q8G1" id="questiongeneralten" type="radio" ng-value="'1'" name="c">
+            &nbsp;<span
+                            style="position:absolute"> Urban Area</span> </div>
+          <div class="col fs-12">
+            <input ng-model="general.Q8G1" id="questiongeneralten" type="radio" ng-value="'2'" name="c">
+            &nbsp;<span
+                            style="position:absolute">Rural Area</span> </div>
+        </div>
+      </div>
+      <div class="list card">
+        <!--||questiongeneral.id==numberOfQuestions-1-->
+        <div class="button-bar"> <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1"
+                       ion-chevron-right nav-clear ng-click="quiz2()">NEXT</a>
+          <!-- ng-click="quiz2()" -->
+          <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
+        </div>
+      </div>
+    </ion-scroll>
+  </ion-content>
 </ion-view>
+<script id="templates/popover.html" type="text/ng-template">
+      <ion-popover-view>
+        <ion-content>
+          <div class="list">
+           <p>The field of environment education is dogged by a very fundamental contradiction. While everyone, everywhere, asserts the importance of 'learning to live sustainably', environment remains a peripheral issue in the formal schooling system</p>
+          </div>
+        </ion-content>
+      </ion-popover-view>
+    </script>
