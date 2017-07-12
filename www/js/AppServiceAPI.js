@@ -1,13 +1,13 @@
 angular.module('starter.api', []).factory('AppServiceAPI', function ($http, $cordovaSQLite) {
   var db;
   if (window.cordova) {
-        db = $cordovaSQLite.openDB({name: "quiz.db"}); //device
-        console.log("Android");
-      }
-      else {
-        db = window.openDatabase("quiz.db", '1', 'my', 1024 * 1024 * 100); // browser
-        console.log("browser");
-      }
+    db = $cordovaSQLite.openDB({name: "quiz.db"}); //device
+    console.log("Android");
+  }
+  else {
+    db = window.openDatabase("quiz.db", '1', 'my', 1024 * 1024 * 100); // browser
+    console.log("browser");
+  }
   return {
 
     select: function (type) {

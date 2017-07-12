@@ -4,6 +4,33 @@ angular.module('starter.general', [])
     $(document).ready(function () {
       $('.progressBarIndicator').css("background", "red");
     });
+    // defining object to store responses of the user to survey questions
+    $scope.general = {};
+
+    $scope.checkQ1 = function () {
+      // alert('You changed the select value.');
+      val1 = $scope.general.Q1G1;
+      val2 = $scope.general.Q1G2;
+      console.log("Val1: " + val1 + " Val2: " + val2);
+      if (val1 && val2){
+        console.log('both values defined');
+        console.log('val1 > val2: ' + (+val1 > +val2));
+        if(+val1 > +val2){
+          alert('Higher level can not be less than lower level');
+          $scope.general.Q1G2 = val1;
+        }
+      }
+    };
+
+    $scope.checkQ6 = function () {
+      val = $scope.general.Q6G1;
+      console.log('value of days: ' + val);
+      if(val > 365){
+        alert("No. of working days can't be greater than 365");
+        $scope.general.Q6G1 = 365;
+        // angular.element('#questiongeneraleight').val(365);
+      }
+    };
 
     $scope.questiongeneralfour = {
       choice: '1'
@@ -47,11 +74,12 @@ angular.module('starter.general', [])
     $scope.data = {};
     $scope.quiz2 = function (general) {
 
-      angular.forEach(air, function (item, index) {
+      angular.forEach(general, function (item, index) {
         AppServiceAPI.update($rootScope.user, index, item, 10, 1);
       });
       AppServiceAPI.sync();
-      $state.go('app.air');
+      $state.go('app.air1');
     };
+
     // $window.location.reload(true);
   });
