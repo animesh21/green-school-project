@@ -1,9 +1,6 @@
 angular.module('starter.api', []).factory('AppServiceAPI', function ($http, $cordovaSQLite) {
   var db;
-  return {
-
-    select: function (type) {
-      if (window.cordova) {
+  if (window.cordova) {
         db = $cordovaSQLite.openDB({name: "quiz.db"}); //device
         console.log("Android");
       }
@@ -11,6 +8,10 @@ angular.module('starter.api', []).factory('AppServiceAPI', function ($http, $cor
         db = window.openDatabase("quiz.db", '1', 'my', 1024 * 1024 * 100); // browser
         console.log("browser");
       }
+  return {
+
+    select: function (type) {
+
       var query = "SELECT questionid,answer FROM gsp_answers WHERE type = ?";
       return $cordovaSQLite.execute(db, query, [type])
     },
