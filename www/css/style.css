@@ -225,6 +225,7 @@ hr{
 }
 .theroot{
   height:100%;
+  z-index: auto;
 }
 .popup-container.active .popup {
     background-color: #fff;}
@@ -402,9 +403,27 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 }
 
-ion-scroll[direction=y] {
-  height: 100vh;
+.validation-error {
+  color: red;
 }
+
+.popup-buttons button{
+  background-color: #e86549;
+  color: white;
+}
+
+.popup-head {
+  background-color: #e86549;
+}
+
+.popup-title {
+  color: white;
+}
+
+.card:last-child{
+  margin-bottom:100px !important;
+}
+
 
 /*green school font*/
 

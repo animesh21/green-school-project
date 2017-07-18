@@ -125,6 +125,10 @@ angular.module('starter.home', [])
       }
     };
 
+    $scope.profile = function () {
+      $state.go('app.profile')
+    };
+
     $scope.general = function () {
       // $window.location.reload(true);
       $state.go('app.general1');

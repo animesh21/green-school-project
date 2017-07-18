@@ -9,11 +9,11 @@
 angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
   'starter.quiz2', 'starter.quiz3', 'multipleChoice.services',
   'starter.help', 'starter.menu', 'starter.login', 'ngCordova',
-  'starter.home', 'starter.home2', 'starter.air', 'starter.general',
-  'starter.energy', 'starter.food', 'starter.land', 'starter.water',
+  'starter.home', 'starter.home2', 'starter.profile', 'starter.general',
+  'starter.air', 'starter.energy', 'starter.food', 'starter.land', 'starter.water',
   'starter.waste', 'starter.feedback', 'starter.api'])
 
-  .run(function ($ionicPlatform, $cordovaSQLite, $window, AppServiceAPI) {
+  .run(function ($ionicPlatform, $cordovaSQLite, $window) {
     $ionicPlatform.ready(function () {
 
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -26,21 +26,24 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
+
+      var db = null;
       if (window.cordova) {
-        db = $cordovaSQLite.openDB({name: "quiz.db"}); //device
-        console.log("Android");
+        console.log('reached android');
+        db = $cordovaSQLite.openDB({name: "quiz.db", location: 'default'}); //device
       }
       else {
+        console.log('reached browser');
         db = window.openDatabase("quiz.db", '1', 'my', 1024 * 1024 * 100); // browser
-        console.log("browser");
       }
       //db = $window.openDB("quiz.db");
       $cordovaSQLite.execute(db, "drop table gsp_answers");
       $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS gsp_answers (userid integer NOT NULL,questionid varchar(100) PRIMARY KEY,answer varchar(100),score integer,type integer)");
       $cordovaSQLite.execute(db, "DELETE FROM gsp_answers");
+    }, function (error) {
+      console.error('Error in platform ready: ' + error);
     });
   })
-
 
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
@@ -61,6 +64,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
           }
         }
       })
+
       .state('app.help', {
         url: '/help',
         views: {
@@ -70,6 +74,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
           }
         }
       })
+
       .state('app.quiz', {
         url: '/quiz',
         views: {
@@ -89,6 +94,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
           }
         }
       })
+
       .state('app.quiz3', {
         url: '/quiz3',
         views: {
@@ -108,6 +114,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
           }
         }
       })
+
       .state('app.home2', {
         url: '/home2',
         views: {
@@ -134,6 +141,17 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
           }
         }
       })
+
+      .state('app.profile', {
+        url: '/profile',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/profile.html',
+            controller: 'profileCtrl'
+          }
+        }
+      })
+
       .state('app.air1', {
         url: '/air1',
         views: {
@@ -143,6 +161,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
           }
         }
       })
+
       .state('app.general1', {
         url: '/general1',
         views: {
@@ -162,6 +181,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
           }
         }
       })
+
       .state('app.food', {
         url: '/food',
         views: {
@@ -191,6 +211,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
           }
         }
       })
+
       .state('app.waste', {
         url: '/waste',
         views: {
@@ -200,6 +221,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
           }
         }
       })
+
       .state('app.feedback', {
         url: '/feedback',
         views: {
@@ -208,8 +230,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
             controller: 'feedbackCtrl'
           }
         }
-      })
-    ;
+      });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('login');
   });

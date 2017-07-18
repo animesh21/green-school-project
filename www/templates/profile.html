@@ -1,0 +1,257 @@
+<ion-view title="School Profile" ng-controller="profileCtrl">
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            return !(charCode > 31 && (charCode < 48 || charCode > 57));
+        }
+    </script>
+    <ion-content scroll="false">
+
+        <div class="button-bar">
+            <a class="button background-color text-white" ion-chevron-right
+               nav-clear ng-click="openModal()">
+                <!--Watch Video Tutorial <img align="right" src="img/green-school-video-icon.png"
+                                          style="width : auto ; height : auto" ng-click="openModal()">-->
+            </a>
+        </div>
+
+        <div class="row" style="padding-top: 0px;padding-bottom: 0px">
+            <progress id="progressbar" max="100" value="12.5" class="progress"></progress>
+        </div>
+
+        <ion-scroll direction="y" class="theroot">
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    1. Name of the School / Institution:
+                </div>
+                <label class="item item-input">
+                    <input ng-value="profile.Q1P1" type="text" placeholder="Name of the School/Institution"
+                           class="textbox" readonly>
+                </label>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    2. Address line 1:
+                </div>
+                <label class="item item-input">
+                    <input ng-value="profile.Q2P1" type="text" placeholder="Address line 1"
+                           class="textbox" readonly>
+                </label>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    3. Address line 2:
+                </div>
+                <label class="item item-input">
+                    <input ng-value="profile.Q3P1" type="text" placeholder="Address line 2"
+                           class="textbox" readonly>
+                </label>
+            </div>
+
+            <div class="card">
+                <label class="item item-input item-select">
+                    <div class="input-label fs-12">
+                        4. Country:
+                    </div>
+                    <select class="fs-12" disabled>
+                        <option selected ng-value="profile.Q4P1">{{ profile.Q4P1 }} India</option>
+                        <option checked="{{ general.Q4P1 == 1 }}" ng-value="'1'">Uttar Pradesh</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="card">
+                <label class="item item-input item-select">
+                    <div class="input-label fs-12">
+                        5. State:
+                    </div>
+                    <select class="fs-12" ng-value="profile.Q5P1" disabled>
+                        <option selected ng-value="profile.Q5P1">{{ profile.Q5P1 }}Uttar Pradesh</option>
+                        <option checked="{{ general.Q5P1 == 1 }}" ng-value="'1'"></option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="card">
+                <label class="item item-input item-select">
+                    <div class="input-label fs-12">
+                        6. District:
+                    </div>
+                    <select class="fs-12" disabled>
+                        <option selected ng-value="profile.Q6P1">{{ profile.Q6P1 }}Lucknow</option>
+                        <option checked="{{ general.Q6P1 == 1 }}" ng-value="'1'"></option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    7. City:
+                </div>
+                <label class="item item-input">
+                    <input ng-value="profile.Q7P1" type="text" placeholder="City"
+                           class="textbox" readonly>
+                </label>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    8. PIN Code:
+                </div>
+                <label class="item item-input">
+                    <input ng-value="profile.Q8P1" type="number" placeholder="PIN"
+                           class="textbox" readonly>
+                </label>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    9. Telephone Number (Landline Number):
+                </div>
+                <div class="row">
+                    <div class="col-33 col">
+                        <label class="item item-input">
+                            <input ng-value="profile.Q9P1" type="number" placeholder="STD Code"
+                                   class="textbox" readonly>
+                        </label>
+                    </div>
+                    <div class="col-67 col">
+                        <label class="item item-input">
+                            <input ng-value="profile.Q9P2" type="number" placeholder="Number"
+                                   class="textbox" readonly>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    10. Mobile Number:
+                </div>
+                <label class="item item-input">
+                    <input ng-value="profile.Q10P1" type="number" placeholder="Mobile"
+                           class="textbox" readonly>
+                </label>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    11. Principal's Name:
+                </div>
+                <label class="item item-input">
+                    <input ng-value="profile.Q11P1" type="text" placeholder="Principal Name"
+                           class="textbox" readonly>
+                </label>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    12. GSP Coordinator's Name:
+                </div>
+                <label class="item item-input">
+                    <input ng-value="profile.Q12P1" type="text" placeholder="GSP Coordinator Name"
+                           class="textbox" readonly>
+                </label>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    13. GSP Coordinator's Email:
+                </div>
+                <label class="item item-input">
+                    <input ng-value="profile.Q13P1" type="email" placeholder="GSP Coordinator Email"
+                           class="textbox" readonly>
+                </label>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    14. GSP Coordinator's Mobile Number:
+                </div>
+                <label class="item item-input">
+                    <input ng-value="profile.Q14P1" type="number" placeholder="Mobile"
+                           class="textbox" readonly>
+                </label>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    15. Please select the appropriate category for your school:
+                </div>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="profile.Q1S1" type="radio" ng-value="'1'" name="e"><span
+                        style="position:absolute"> &nbsp; Day Scholar </span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="profile.Q1S1" type="radio" ng-value="'2'" name="e"><span
+                        style="position:absolute"> &nbsp; Day Boarding </span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="profile.Q1S1" type="radio" ng-value="'3'" name="e"><span
+                        style="position:absolute"> &nbsp; Residential </span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="profile.Q1S1" type="radio" ng-value="'4'" name="e"><span
+                        style="position:absolute"> &nbsp; Day Scholar + Day Boarding </span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="profile.Q1S1" type="radio" ng-value="'5'" name="e"><span
+                        style="position:absolute"> &nbsp; Day Boarding + Residential </span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="profile.Q1S1" type="radio" ng-value="'6'" name="e"><span
+                        style="position:absolute"> &nbsp; Day Scholar + Residential </span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="profile.Q1S1" type="radio" ng-value="'7'" name="e"><span
+                        style="position:absolute"> &nbsp; Day Scholar + Day Boarding + Residential </span>
+                </ion-item>
+            </div>
+
+            <div class="card" ng-show="profile['Q1S1'] >= 3">
+                <div class="item item-text-wrap item-borderless">
+                    16. How many shifts does your school have?:
+                </div>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="profile.Q2S1" type="radio" ng-value="'1'" name="f"><span
+                        style="position:absolute"> &nbsp; Morning </span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="profile.Q2S1" type="radio" ng-value="'2'" name="f"><span
+                        style="position:absolute"> &nbsp; Evening </span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="profile.Q2S1" type="radio" ng-value="'3'" name="f"><span
+                        style="position:absolute"> &nbsp; Both </span>
+                </ion-item>
+            </div>
+
+            <div class="list card">
+                <!--||questiongeneral.id==numberOfQuestions-1-->
+                <div class="button-bar">
+                    <!-- <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1" -->
+                    <a class="button background-color text-white"
+                       ion-chevron-right nav-clear ng-click="quiz2(profile)"
+                       ng-disabled="!validNext()">
+                        NEXT
+                    </a>
+                    &nbsp;
+                    <a class="button background-color text-white"
+                       ion-chevron-right nav-clear ng-click="saveData(profile)">
+                        SAVE
+                    </a>
+                    <!-- ng-click="quiz2()" -->
+                    <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
+                </div>
+            </div>
+
+        </ion-scroll>
+    </ion-content>
+</ion-view>

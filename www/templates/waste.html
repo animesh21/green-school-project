@@ -1,176 +1,207 @@
 <ion-view title="Waste">
- 
+
     <ion-content scroll="false">
-        <div class="row" style="padding-top: 0px;padding-bottom: 0px">
 
-            <progress id="progressbar" max="100" value="84" class="progress"> </progress>
-        </div>
         <div class="button-bar">
-                <script type="text/javascript">
-                    function loadFrame()
-                    {
-                        var x = document.getElementById("iframeair");
-                        //x.style.visibility = 'hidden'; 
-                        x.innerHTML = '<iframe src="https://www.youtube.com/embed/klen-TOrXFA" frameborder="0" allowfullscreen></iframe>'
-                    }
-                </script>
-                    <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1" ion-chevron-right nav-clear onclick="loadFrame()">View Tutorial</a>
-                    <!-- ng-click="quiz2()" -->
-                    <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
-                </div>
+            <a class="button background-color text-white" ion-chevron-right
+               nav-clear ng-click="openModal()">
+                Watch Video Tutorial <img align="right" src="img/green-school-video-icon.png"
+                                          style="width : auto ; height : auto" ng-click="openModal()">
+            </a>
+        </div>
+
+        <div class="row" style="padding-top: 0px;padding-bottom: 0px">
+            <progress id="progressbar" max="100" value="87.5" class="progress"></progress>
+        </div>
+
         <ion-scroll direction="y" class="theroot">
-        <div class="padding-bottom content" style="text-align: justify;">To understand water, it is important to know the source of water in your school premise. As you know, most cities in India have to deal with depleting water supply, marked by falling ground water levels, vanishing water bodies, severe pollution and urban floods. With their own supplies drying up, cities are forced to source water from further and further away. This is expensive. The questions below will help students to understand where their water is coming from – at a cost.
+            <div class="padding-bottom content" style="text-align: justify;">To understand water, it is important to
+                know the source of water in your school premise. As you know, most cities in India have to deal with
+                depleting water supply, marked by falling ground water levels, vanishing water bodies, severe pollution
+                and urban floods. With their own supplies drying up, cities are forced to source water from further and
+                further away. This is expensive. The questions below will help students to understand where their water
+                is coming from – at a cost.
 
-The unit of measurement to be used in the Water section is Litre (L).
-       </div>
+                The unit of measurement to be used in the Water section is Litre (L).
+            </div>
             <input type="hidden" id="token"/>
-           <div class="padding-bottom content fs-16">
-              Task 2: How much water does your school use?
+            <div class="padding-bottom content fs-16">
+                Task 2: How much water does your school use?
             </div>
-             <!-- <div class="padding-bottom content fs-14">
-              To find out the land/ site area of your school, you need to measure:
-            </div> -->
+            <!-- <div class="padding-bottom content fs-14">
+             To find out the land/ site area of your school, you need to measure:
+           </div> -->
             <div class="content" style="text-align: justify;">
-            To find total consumption, monitor water consumption over a period of three working days, spread over one month and take the average. <br>
-           For example: you can monitor the water consumption on August 5, August 15 and August 25. Add all three total consumptions and then divide it with number of days of observation (that is three days). You will get an average per day water consumption.
-           <p class="fs-16"> To collect data: </p>
-            <p class="fs-16"> The bill method:</p>
-             If the school’s water meter is monitored regularly—water bills by the government/municipality state the actual amount used—students can simply compile bills to assess total consumption.
-            <p class="fs-16"> Monitoring overhead tanks:</p>
-            If the bills are irregular and incorrect, then monitor the overhead tanks. Note the difference in levels of water in your overhead tank between the beginning and the end of the day. Ensure that the tanks are full when the day begins. Check the water level when school is over by noting the difference in levels of water in your overhead tank between beginning and end of a day. Estimate consumption.
-           <p class="fs-16"> Using the motor method:</p>
-           If your school uses groundwater, take a bucket and know its measurement. Then switch on the underground-water pump. Let the water run out of the hosepipe into the bucket. Check how long it takes to fill up the bucket. You can now calculate the flow of water in litres per minute. Find out (from the gardener or other administrative staff) the number of hours the pump motor runs per day. Multiply the number of hours the motor runs by 60 to get the number of minutes the motor runs. Multiply the number of minutes the motor is run by how much water comes out from the hose pipe in a minute. The administrative staff and the plumber would be helpful in gauging the above. Conduct an audit for two or three days and then take an average to find the total consumption.
-            
-            
+                To find total consumption, monitor water consumption over a period of three working days, spread over
+                one month and take the average. <br>
+                For example: you can monitor the water consumption on August 5, August 15 and August 25. Add all three
+                total consumptions and then divide it with number of days of observation (that is three days). You will
+                get an average per day water consumption.
+                <p class="fs-16"> To collect data: </p>
+                <p class="fs-16"> The bill method:</p>
+                If the school’s water meter is monitored regularly—water bills by the government/municipality state the
+                actual amount used—students can simply compile bills to assess total consumption.
+                <p class="fs-16"> Monitoring overhead tanks:</p>
+                If the bills are irregular and incorrect, then monitor the overhead tanks. Note the difference in levels
+                of water in your overhead tank between the beginning and the end of the day. Ensure that the tanks are
+                full when the day begins. Check the water level when school is over by noting the difference in levels
+                of water in your overhead tank between beginning and end of a day. Estimate consumption.
+                <p class="fs-16"> Using the motor method:</p>
+                If your school uses groundwater, take a bucket and know its measurement. Then switch on the
+                underground-water pump. Let the water run out of the hosepipe into the bucket. Check how long it takes
+                to fill up the bucket. You can now calculate the flow of water in litres per minute. Find out (from the
+                gardener or other administrative staff) the number of hours the pump motor runs per day. Multiply the
+                number of hours the motor runs by 60 to get the number of minutes the motor runs. Multiply the number of
+                minutes the motor is run by how much water comes out from the hose pipe in a minute. The administrative
+                staff and the plumber would be helpful in gauging the above. Conduct an audit for two or three days and
+                then take an average to find the total consumption.
+
+
             </div>
 
-           <div class="padding-bottom content fs-16">
-             Task 3: What Are The Sources, Supply and Storage of Water in your School?
+            <div class="padding-bottom content fs-16">
+                Task 3: What Are The Sources, Supply and Storage of Water in your School?
             </div>
             <div class="content" style="text-align: justify;">
-             To understand water, it is important to know the source of water in your school premises. As you know, most cities in India have to deal with depleting water supply, marked by falling ground water levels, vanishing water bodies, severe pollution and urban floods. With their own supplies drying up, cities are forced to source water from further and further away. This is expensive.<br>
-             The questions below will help students to understand where their water is coming from – at a cost.
+                To understand water, it is important to know the source of water in your school premises. As you know,
+                most cities in India have to deal with depleting water supply, marked by falling ground water levels,
+                vanishing water bodies, severe pollution and urban floods. With their own supplies drying up, cities are
+                forced to source water from further and further away. This is expensive.<br>
+                The questions below will help students to understand where their water is coming from – at a cost.
 
             </div>
 
-           <!--  <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    1.Does your school have access to an electricity bill?
-                </div>
+            <!--  <div class="card">
+                 <div class="item item-text-wrap item-borderless">
+                     1.Does your school have access to an electricity bill?
+                 </div>
 
 
-                <div class="row ">
+                 <div class="row ">
 
-                    <div class="col fs-12">
-                        <input type="radio" ng-model="choice22" ng-value="'e'" name="b">&nbsp;<span style="position:absolute"> Yes</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input type="radio" ng-model="choice32" ng-value="'f'" name="b">&nbsp;<span style="position:absolute">On</span>
-                    </div>
-                    
-                </div>
+                     <div class="col fs-12">
+                         <input type="radio" ng-model="choice22" ng-value="'e'" name="b">&nbsp;<span style="position:absolute"> Yes</span>
+                     </div>
+                     <div class="col fs-12">
+                         <input type="radio" ng-model="choice32" ng-value="'f'" name="b">&nbsp;<span style="position:absolute">On</span>
+                     </div>
 
-            </div>
- -->         <!-- <div class="padding-bottom content fs-16">
+                 </div>
+
+             </div>
+  -->         <!-- <div class="padding-bottom content fs-16">
               Task 2: Measure the four critical areas of your school campus
             </div> -->
-                 <div class="card">
+            <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                   2 Where does the water your school uses, come from? (please tick the correct options):
+                    2 Where does the water your school uses, come from? (please tick the correct options):
                 </div>
 
 
-
-                 <div class="row " style="padding-left: 20px">
+                <div class="row " style="padding-left: 20px">
 
                     <div class="col fs-12">
-                        <input id="questionone" type="checkbox" ng-model="choice2" ng-value="'e'" name="b">&nbsp;<span style="position:absolute"> Ground water</span>
+                        <input id="questionone" type="checkbox" ng-model="choice2" ng-value="'e'" name="b">&nbsp;<span
+                            style="position:absolute"> Ground water</span>
                     </div>
                     <div class="col fs-12">
-                        <input id="questionone" type="checkbox" ng-model="choice12" ng-value="'f'" name="b">&nbsp;<span style="position:absolute">Surface water</span>
+                        <input id="questionone" type="checkbox" ng-model="choice12" ng-value="'f'" name="b">&nbsp;<span
+                            style="position:absolute">Surface water</span>
                     </div>
-                    
+
                 </div>
-                 <div class="row " style="padding-left: 20px">
+                <div class="row " style="padding-left: 20px">
 
                     <div class="col fs-12">
-                        <input id="questionone" type="checkbox" ng-model="choice22" ng-value="'g'" name="b">&nbsp;<span style="position:absolute"> Rain water</span>
+                        <input id="questionone" type="checkbox" ng-model="choice22" ng-value="'g'" name="b">&nbsp;<span
+                            style="position:absolute"> Rain water</span>
                     </div>
                     <div class="col fs-12">
-                        <input id="questionone" type="checkbox" ng-model="choice32" ng-value="'h'" name="b">&nbsp;<span style="position:absolute">Recycled waste water</span>
+                        <input id="questionone" type="checkbox" ng-model="choice32" ng-value="'h'" name="b">&nbsp;<span
+                            style="position:absolute">Recycled waste water</span>
                     </div>
-                    
+
                 </div>
 
-           </div>
-           
-                    <div class="card">
+            </div>
+
+            <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                   3. Who supplies the water in your school? (please tick the correct options):
+                    3. Who supplies the water in your school? (please tick the correct options):
                 </div>
 
 
-
-                 <div class="row " style="padding-left: 0px">
+                <div class="row " style="padding-left: 0px">
 
                     <div class="col fs-12">
-                        <input id="questiontwo" type="checkbox" ng-model="z" ng-value="'e'" name="u">&nbsp;<span style="position:absolute">Municipality</span>
+                        <input id="questiontwo" type="checkbox" ng-model="z" ng-value="'e'" name="u">&nbsp;<span
+                            style="position:absolute">Municipality</span>
                     </div>
                     <div class="col fs-12">
-                        <input id="questiontwo" type="checkbox" ng-model="a" ng-value="'f'" name="u">&nbsp;<span style="position:absolute">Panchayat</span>
+                        <input id="questiontwo" type="checkbox" ng-model="a" ng-value="'f'" name="u">&nbsp;<span
+                            style="position:absolute">Panchayat</span>
                     </div>
-                    
+
                 </div>
-                 <div class="row " style="padding-left: 0px">
+                <div class="row " style="padding-left: 0px">
 
                     <div class="col fs-12">
-                        <input id="questiontwo" type="checkbox" ng-model="q" ng-value="'g'" name="u">&nbsp;<span style="position:absolute"> Public Health Engineering Department (PHED)</span>
-                    </div></div>
-                      <div class="row " style="padding-left: 0px">
+                        <input id="questiontwo" type="checkbox" ng-model="q" ng-value="'g'" name="u">&nbsp;<span
+                            style="position:absolute"> Public Health Engineering Department (PHED)</span>
+                    </div>
+                </div>
+                <div class="row " style="padding-left: 0px">
                     <div class="col fs-12">
-                        <input id="questiontwo" type="checkbox" ng-model="w" ng-value="'h'" name="u">&nbsp;<span style="position:absolute">Private supplier</span>
+                        <input id="questiontwo" type="checkbox" ng-model="w" ng-value="'h'" name="u">&nbsp;<span
+                            style="position:absolute">Private supplier</span>
                     </div>
-                    </div>
-                
+                </div>
+
                 <div class="row " style="padding-left: 0px">
 
                     <div class="col fs-12" style="padding-bottom: 20px">
-                        <input id="questiontwo" type="checkbox" ng-model="s" ng-value="'i'" name="u">&nbsp;<span style="position:absolute;padding-bottom: 10px"> School’s own supply (bore well, rainwater harvesting facility, etc)</span>
+                        <input id="questiontwo" type="checkbox" ng-model="s" ng-value="'i'" name="u">&nbsp;<span
+                            style="position:absolute;padding-bottom: 10px"> School’s own supply (bore well, rainwater harvesting facility, etc)</span>
                     </div>
                     <!-- <div class="col col-20">
-                        
+
                     </div> -->
-                    
+
                 </div>
 
-           </div>
-                
-                  <div class="card">
+            </div>
+
+            <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                   4. Does your school get daily water supply?
-                </div>
-                  
-
-                 <div class="row " style="padding-left: 20px">
-
-                    <div class="col fs-12">
-                        <input id="questionthree" type="radio" ng-model="choice2" ng-value="'e'" name="b">&nbsp;<span style="position:absolute">Yes</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input id="questionthree" type="radio" ng-model="choice12" ng-value="'f'" name="b">&nbsp;<span style="position:absolute">No</span>
-                    </div>
-                    
+                    4. Does your school get daily water supply?
                 </div>
 
-           </div>
 
-            
- <div class="padding-bottom content fs-16">
-            Task 5: Does your school harvest rainwater?
+                <div class="row " style="padding-left: 20px">
+
+                    <div class="col fs-12">
+                        <input id="questionthree" type="radio" ng-model="choice2" ng-value="'e'" name="b">&nbsp;<span
+                            style="position:absolute">Yes</span>
+                    </div>
+                    <div class="col fs-12">
+                        <input id="questionthree" type="radio" ng-model="choice12" ng-value="'f'" name="b">&nbsp;<span
+                            style="position:absolute">No</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="padding-bottom content fs-16">
+                Task 5: Does your school harvest rainwater?
             </div>
             <div class="content" style="text-align: justify;">
-            Rainfall (precipitation) is the primary source of freshwater on land. In this section, you will find out how much rainwater your school can catch, and how much your school can harvest. Rainwater harvesting is a traditional, time-tested method of collecting rainwater and using it to recharge groundwater or storing it for other uses.<br>
-            To know the types of catchment
+                Rainfall (precipitation) is the primary source of freshwater on land. In this section, you will find out
+                how much rainwater your school can catch, and how much your school can harvest. Rainwater harvesting is
+                a traditional, time-tested method of collecting rainwater and using it to recharge groundwater or
+                storing it for other uses.<br>
+                To know the types of catchment
 
             </div>
             <!-- <div class="card">
@@ -189,34 +220,33 @@ The unit of measurement to be used in the Water section is Litre (L).
                 </div>
             </div>
             -->
-           <div class="card">
+            <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     6. Do you have Rainwater harvesting (RWH) system in your school?
                 </div>
 
 
-               <div class="row ">
+                <div class="row ">
 
                     <div class="col fs-12">
-                        <input id="questionfour" type="radio" ng-model="choice22" ng-value="'e'" name="b">&nbsp;<span style="position:absolute"> Yes</span>
+                        <input id="questionfour" type="radio" ng-model="choice22" ng-value="'e'" name="b">&nbsp;<span
+                            style="position:absolute"> Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input id="questionfour" type="radio" ng-model="choice32" ng-value="'f'" name="b">&nbsp;<span style="position:absolute">On</span>
+                        <input id="questionfour" type="radio" ng-model="choice32" ng-value="'f'" name="b">&nbsp;<span
+                            style="position:absolute">On</span>
                     </div>
-                    
+
                 </div>
 
             </div>
-
- 
-
 
 
             <!-- <div class="card">
                 <div class="item item-text-wrap">
                     4. question text here ?
                 </div>
-                
+
 
                 <label class="item item-input item-select ">
     <div class="input-label txt-align">
@@ -233,13 +263,12 @@ The unit of measurement to be used in the Water section is Litre (L).
             </div> -->
 
 
-
-
             <div class="list card">
                 <!--||question.id==numberOfQuestions-1-->
                 <div class="button-bar">
 
-                    <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1" ion-chevron-right nav-clear ng-click="home()">NEXT</a>
+                    <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1"
+                       ion-chevron-right nav-clear ng-click="home()">NEXT</a>
                     <!-- ng-click="quiz2()" -->
                     <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
                 </div>

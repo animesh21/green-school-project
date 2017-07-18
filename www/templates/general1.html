@@ -1,23 +1,24 @@
-<ion-view title="General">
+<ion-view title="General" ng-controller="gen1Ctrl">
+
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            return !(charCode > 31 && (charCode < 48 || charCode > 57));
+        }
+    </script>
+
     <ion-content scroll="false">
+
         <div class="button-bar">
-            <script type="text/javascript">
-                function loadFrame() {
-                    var x = document.getElementById("iframeair");
-                    //x.style.visibility = 'hidden';
-                    x.innerHTML = '<iframe src="https://www.youtube.com/embed/klen-TOrXFA" frameborder="0" allowfullscreen></iframe>'
-                }
-            </script>
-            <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1" ion-chevron-right
-               nav-clear onclick="loadFrame()">View Tutorial</a>
-            <!-- ng-click="quiz2()" -->
-            <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
-        </div>
-        <div id="iframeair" class="video-container">
+            <a class="button background-color text-white" ion-chevron-right
+               nav-clear ng-click="openModal()">
+                <!--Watch Video Tutorial <img align="right" src="img/green-school-video-icon.png"
+                                          style="width : auto ; height : auto" ng-click="openModal()">-->
+            </a>
         </div>
 
         <div class="row" style="padding-top: 0px;padding-bottom: 0px">
-            <progress id="progressbar" max="100" value="1" class="progress"></progress>
+            <progress id="progressbar" max="100" value="12.5" class="progress"></progress>
         </div>
 
         <ion-scroll direction="y" class="theroot">
@@ -26,7 +27,6 @@
                 <div class="item item-text-wrap item-borderless">
                     1. How many levels does your school have?
                 </div>
-
                 <label class="item item-input item-select">
                     <div class="input-label fs-12">
                         Lowest level of grade:
@@ -73,22 +73,18 @@
                 <div class="item item-text-wrap item-borderless">
                     2. Is your school single gender or mixed gender?
                 </div>
-
-                <div class="row ">
-                    <div class="col fs-12">
-                        <input ng-model="general.Q2G1" id="questiongeneralthree" type="radio" ng-value="'1'" name="b">&nbsp;<span
-                            style="position:absolute"> Only boys</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input ng-model="general.Q2G1" id="questiongeneralthree" type="radio" ng-value="'2'" name="b">&nbsp;<span
-                            style="position:absolute">Only girls</span>
-                    </div>
-                    <div class="col col-50 fs-12">
-                        <input ng-model="general.Q2G1" id="questiongeneralthree" type="radio" ng-value="'3'" name="b">&nbsp;<span
-                            style="position:absolute">Mixed/Co-education</span>
-                    </div>
-                </div>
-
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="general.Q2G1" type="radio" ng-value="'1'" name="b"><span
+                        style="position:absolute">&nbsp;Only boys</span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="general.Q2G1" type="radio" ng-value="'2'" name="b"><span
+                        style="position:absolute">&nbsp;Only girls</span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="general.Q2G1" type="radio" ng-value="'3'" name="b"><span
+                        style="position:absolute">&nbsp;Mixed/Co-education</span>
+                </ion-item>
             </div>
 
             <div class="card">
@@ -97,23 +93,23 @@
                 </div>
 
                 <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q3G1" type="radio" ng-value="'1'" name="e"><span
+                    <input ng-model="general.Q3G1" type="radio" ng-value="'1'" name="a"><span
                         style="position:absolute">&nbsp;State board of education (please specify your state below)</span>
                 </ion-item>
                 <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q3G1" type="radio" ng-value="'2'" name="e"><span
+                    <input ng-model="general.Q3G1" type="radio" ng-value="'2'" name="a"><span
                         style="position:absolute">&nbsp;Central Board of Secondary Education</span>
                 </ion-item>
                 <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q3G1" type="radio" ng-value="'3'" name="e"><span
+                    <input ng-model="general.Q3G1" type="radio" ng-value="'3'" name="a"><span
                         style="position:absolute">&nbsp;Indian Certificate of Secondary Education</span>
                 </ion-item>
                 <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q3G1" type="radio" ng-value="'4'" name="e"><span
+                    <input ng-model="general.Q3G1" type="radio" ng-value="'4'" name="a"><span
                         style="position:absolute; ">&nbsp;International Baccalaureate (IB)/ International  General Certificate of Secondary Education (IGCSE) combination</span>
                 </ion-item>
                 <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q3G1" type="radio" ng-value="'5'" name="e"><span
+                    <input ng-model="general.Q3G1" type="radio" ng-value="'5'" name="a"><span
                         style="position:absolute">&nbsp;Other </span>
                 </ion-item>
                 <ion-item ng-show="general.Q3G1==5" class="fs-14 item-text-wrap">
@@ -147,61 +143,66 @@
                     <div class="col">Male</div>
                     <div class="col">Female</div>
                     <div class="col">Total</div>
-
                 </div>
 
                 <div class="row">
                     <div class="col">Students</div>
                     <div class="col"><input ng-model="general.Q4G1S1" id="questiongeneralsixOneMale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" ng-disabled="general.Q2G1 == 2"></div>
-                    <div class="col"><input ng-model="general.Q4G1S2" id="questiongeneralsixOneFemale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" ng-disabled="general.Q2G1 == 1"></div>
-                    <div class="col"><input ng-model="general.Q4G1S3" id="questiongeneralsixOnetotal" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"
-                                            value="{{ general.Q4G1S1 + general.Q4G1S2 }}" readonly></div>
-
+                                            ng-disabled="general.Q2G1 == 2"
+                                            ng-change="updateNumStudents(1);" min="0" step="1"
+                                            onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="general.Q4G1S2" id="questiongeneralsixOneFemale" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number"
+                                            ng-disabled="general.Q2G1 == 1"
+                                            ng-change="updateNumStudents(1);" min="0" step="1"
+                                            onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="general.Q4G1S3" id="questiongeneralsixOnetotal" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" readonly>
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col">Teachers</div>
                     <div class="col"><input ng-model="general.Q4G2S1" id="questiongeneralsixTwoMale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="general.Q4G2S2" id="questiongeneralsixTwoFemale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="general.Q4G2S3" id="questiongeneralsixTwototal" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"
-                                            value="{{ general.Q4G2S1 + general.Q4G2S2 }}" readonly></div>
-
+                                            ng-change="updateNumStudents(2);" min="0" step="1"
+                                            onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="general.Q4G2S2" id="questiongeneralsixTwoFemale" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number"
+                                            ng-change="updateNumStudents(2);" min="0" step="1"
+                                            onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="general.Q4G2S3" id="questiongeneralsixTwototal" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" readonly>
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col">Non-teaching Staff</div>
                     <div class="col"><input ng-model="general.Q4G3S1" id="questiongeneralsixThreeMale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="general.Q4G3S2" id="questiongeneralsixThreeFemale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="general.Q4G3S3" id="questiongeneralsixThreetotal" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"
-                                            value="{{ general.Q4G3S1 + general.Q4G3S2 }}" readonly></div>
-
+                                            ng-change="updateNumStudents(3);" min="0" step="1"
+                                            onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="general.Q4G3S2" id="questiongeneralsixThreeFemale" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number"
+                                            ng-change="updateNumStudents(3);" min="0" step="1"
+                                            onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="general.Q4G3S3" id="questiongeneralsixThreetotal" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" readonly>
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col">Sub-Total</div>
-                    <div class="col"><input ng-model="general.Q4G4S1" id="questiongeneralsixFourMale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number"
-                                            value="{{ general.Q4G1S1 + general.Q4G2S1 + general.Q4G3S1 }}"
-                                            readonly></div>
-                    <div class="col"><input ng-model="general.Q4G4S2" id="questiongeneralsixFourFemale" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number"
-                                            value="{{ general.Q4G1S2 + general.Q4G2S2 + general.Q4G3S2 }}"
-                                            readonly></div>
-                    <div class="col"><input ng-model="general.Q4G4S3" id="questiongeneralsixFourtotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number"
-                                            value="{{ general.Q4G1S1 + general.Q4G1S2 +
-                                                      general.Q4G2S1 + general.Q4G2S2 +
-                                                      general.Q4G3S1 + general.Q4G3S2 }}"
-                                            readonly></div>
+                    <div class="col"><input ng-value="general.Q4G4S1" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" readonly>
+                    </div>
+                    <div class="col"><input ng-value="general.Q4G4S2" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" readonly>
+                    </div>
+                    <div class="col"><input ng-value="general.Q4G4S3" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" readonly>
+                    </div>
                 </div>
             </div>
 
@@ -216,7 +217,22 @@
 
                         <label class="item item-input">
                             <input ng-model="general.Q5G1" type="number" placeholder="Your Answer Here"
-                                   id="questiongeneralseven">
+                                   id="questiongeneralseven" onkeypress="return isNumberKey(event);">
+                        </label>
+                    </ion-list>
+                </div>
+            </div>
+
+            <div class="card" ng-show="true">
+                <div class="item item-text-wrap item-borderless">
+                    4(c). How many family members stay in the school campus?
+                </div>
+
+                <div class="list ">
+                    <ion-list>
+                        <label class="item item-input">
+                            <input ng-model="general.Q5G2" type="number" placeholder="Your Answer Here"
+                                   id="questiongeneralseven" onkeypress="return isNumberKey(event);">
                         </label>
                     </ion-list>
                 </div>
@@ -233,7 +249,8 @@
 
                         <label class="item item-input">
                             <input ng-model="general.Q6G1" id="questiongeneraleight" type="number"
-                                   placeholder="Your Answer Here" ng-change="checkQ6()">
+                                   placeholder="Your Answer Here" ng-change="checkQ6()"
+                                   onkeypress="return isNumberKey(event);">
                         </label>
                     </ion-list>
                 </div>
@@ -314,7 +331,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    7. Where is the school located??
+                    7. Where is the school located?
                 </div>
                 <div class="row ">
                     <div class="col fs-12">
@@ -328,13 +345,45 @@
                 </div>
             </div>
 
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    8. Whether your school is:
+                </div>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="general.Q9G1" type="radio" ng-value="'1'" name="d"><span
+                        style="position:absolute">&nbsp; Government School </span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="general.Q9G1" type="radio" ng-value="'2'" name="d"><span
+                        style="position:absolute">&nbsp; Government–aided School </span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="general.Q9G1" type="radio" ng-value="'3'" name="d"><span
+                        style="position:absolute">&nbsp; Private School </span>
+                </ion-item>
+            </div>
+
             <div class="list card">
                 <!--||questiongeneral.id==numberOfQuestions-1-->
                 <div class="button-bar">
 
-                   <!-- <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1" -->
                     <a class="button background-color text-white" ng-hide="false"
-                       ion-chevron-right nav-clear ng-click="quiz2(general)">NEXT</a>
+                       ion-chevron-right nav-clear ng-click="goToPrev()">
+                        PREV
+                    </a>
+                    &nbsp;
+                    <!-- <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1" -->
+                    <a class="button background-color text-white" ng-hide="false"
+                       ion-chevron-right nav-clear ng-click="quiz2(general)"
+                       ng-disabled="!validNext()">
+                        NEXT
+                    </a>
+                    &nbsp;
+                    <a class="button background-color text-white" ng-hide="false"
+                       ion-chevron-right nav-clear ng-click="saveData(general)">
+                        SAVE
+                    </a>
+
                     <!-- ng-click="quiz2()" -->
                     <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
                 </div>
