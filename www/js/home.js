@@ -129,6 +129,14 @@ angular.module('starter.home', [])
       $state.go('app.profile')
     };
 
+    $scope.onGeneral = function (cat) {
+      if (cat === '11') {
+        var alertPopup = $ionicPopup.alert({
+          template: 'If your school has classes from Grade 6 to 11, your response will be lowest level of grade: Grade 6 and Highest level of grade: Grade 11. If your school has only one Grade (Grade 7) then your response for both will be Grade 7'
+        });
+      }
+    }
+
     $scope.general = function () {
       // $window.location.reload(true);
       $state.go('app.general1');
@@ -170,7 +178,6 @@ angular.module('starter.home', [])
     };
 
   })
-
 
   .controller('tab', function ($scope, $stateParams) {
 
