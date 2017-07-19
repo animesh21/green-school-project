@@ -37,6 +37,7 @@
 
             <div class="list" style="margin-left: 5px;margin-right: 5px">
                 <strong>Task 1: Choose your Energy Audit Team</strong><br>
+
                 The school administrative staff must be members of your team as you would require electricity bills,
                 fuel consumption bills, etc. Other support staff such as generator attendant and electricians are also
                 important contacts. It would be a good idea to rope in a Physics or Science teacher as well and, most
@@ -297,7 +298,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    1.Does your school have access to an electricity bill?
+                    1.Does your school has access to an electricity bill?
                 </div>
 
                 <div class="row " style="padding-left: 20px">
@@ -323,11 +324,13 @@
 
                 <div class="row " style="padding-left: 20px">
                     <div class="col fs-12">
-                        <input ng-model="energy.Q5E1" id="questionenergyfive" type="radio" ng-value="'Y'" name="d">&nbsp;<span
+                        <input ng-change="updateQ5()" ng-model="energy.Q5E1" id="questionenergyfive" type="radio"
+                               ng-value="'Y'" name="d">&nbsp;<span
                             style="position:absolute">Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="energy.Q5E1" id="questionenergyfive" type="radio" ng-value="'N'" name="d">&nbsp;<span
+                        <input ng-change="updateQ5()" ng-model="energy.Q5E1" id="questionenergyfive" type="radio"
+                               ng-value="'N'" name="d">&nbsp;<span
                             style="position:absolute">No</span>
                     </div>
 
@@ -353,141 +356,175 @@
 
                 <div class="row ">
                     <div class="col">Electricity from the board (kwh)</div>
-                    <div class="col"><input ng-model="energy.Q6E1S1" id="questionenergysixOneSource" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E1S1" ng-change="updateQ6(1)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="energy.Q6E1S2" id="questionenergysixOneQuantity" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E1S2" ng-value="energy.Q6E1S2" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number" readonly>
                     </div>
-                    <div class="col"><input ng-model="energy.Q6E1S3" id="questionenergysixOneEnergy" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E1S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Electricity from generator (diesel) (litres)</div>
-                    <div class="col"><input ng-model="energy.Q6E2S1" id="questionenergysixTwoSource" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E2S1" ng-change="updateQ6(2)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="energy.Q6E2S2" id="questionenergysixTwoQuantity" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E2S2" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number" readonly>
                     </div>
-                    <div class="col"><input ng-model="energy.Q6E2S3" id="questionenergysixTwoEnergy" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E2S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Petrol (litres)</div>
-                    <div class="col"><input ng-model="energy.Q6E3S1" id="questionenergysixThreeSource" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E3S1" ng-change="updateQ6(3)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="energy.Q6E3S2" id="questionenergysixThreeQuantity" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E3S2" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number" readonly>
                     </div>
-                    <div class="col"><input ng-model="energy.Q6E3S3" id="questionenergysixThreeEnergy" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E3S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Diesel (litres)</div>
-                    <div class="col"><input ng-model="energy.Q6E4S1" id="questionenergysixFourSource" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E4S1" ng-change="updateQ6(4)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="energy.Q6E4S2" id="questionenergysixFourQuantity" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E4S2" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number" readonly>
                     </div>
-                    <div class="col"><input ng-model="energy.Q6E4S3" id="questionenergysixFourEnergy" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E4S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
 
                 <div class="row ">
                     <div class="col">CNG (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E5S1" id="questionenergysixFiveSource" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E5S1" ng-change="updateQ6(5)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="energy.Q6E5S2" id="questionenergysixFiveQuantity" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E5S2" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number" readonly>
                     </div>
-                    <div class="col"><input ng-model="energy.Q6E5S3" id="questionenergysixFiveEnergy" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E5S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Kerosene (litres)</div>
-                    <div class="col"><input ng-model="energy.Q6E6S1" id="questionenergysixSixSource" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E6S1" ng-change="updateQ6(6)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="energy.Q6E6S2" id="questionenergysixSixQuantity" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E6S2" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number" readonly>
                     </div>
-                    <div class="col"><input ng-model="energy.Q6E6S3" id="questionenergysixSixEnergy" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E6S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Coal (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E7S1" id="questionenergysixSevenSource" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E7S1" ng-change="updateQ6(7)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="energy.Q6E7S2" id="questionenergysixSevenQuantity" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E7S2" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number" readonly>
                     </div>
-                    <div class="col"><input ng-model="energy.Q6E7S3" id="questionenergysixSevenEnergy" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E7S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Wood (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E8S1" id="questionenergysixEightSource" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E16S1" ng-change="updateQ6(16)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="energy.Q6E8S2" id="questionenergysixEightQuantity" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E16S2" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number" readonly>
                     </div>
-                    <div class="col"><input ng-model="energy.Q6E8S3" id="questionenergysixEightEnergy" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E16S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Animal waste (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E9S1" id="questionenergysixNineSource" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E8S1" ng-change="updateQ6(8)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="energy.Q6E9S2" id="questionenergysixNineQuantity" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E8S2" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number" readonly>
                     </div>
-                    <div class="col"><input ng-model="energy.Q6E9S3" id="questionenergysixNineEnergy" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E8S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Solar (kwh)</div>
-                    <div class="col"><input ng-model="energy.Q6E10S1" id="questionenergysixTenSource" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E9S1" ng-change="updateQ6(9)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="energy.Q6E10S2" id="questionenergysixTenQuantity" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E9S2" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number" readonly>
                     </div>
-                    <div class="col"><input ng-model="energy.Q6E10S3" id="questionenergysixTenEnergy" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E9S3" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                </div>
+
+                <div class="row ">
+                    <div class="col">Wind (kWh)</div>
+                    <div class="col"><input ng-model="energy.Q6E10S1" ng-change="updateQ6(10)" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number"></div>
+                    <div class="col"><input ng-model="energy.Q6E10S2"
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" readonly></div>
+                    <div class="col"><input ng-model="energy.Q6E10S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
 
                 <div class="row ">
                     <div class="col">LPG (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E11S1" id="questionenergysixElevenSource" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E11S1" ng-change="updateQ6(11)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="energy.Q6E11S2" id="questionenergysixElevenQuantity"
+                    <div class="col"><input ng-model="energy.Q6E11S2"
                                             class="textbox" style="border:1px solid #111;text-align: center;"
                                             type="number" readonly></div>
-                    <div class="col"><input ng-model="energy.Q6E11S3" id="questionenergysixElevenEnergy" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E11S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Piped Natural Gas (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E12S1" id="questionenergysixTwelveSource" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E12S1" ng-change="updateQ6(12)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"></div>
-                    <div class="col"><input ng-model="energy.Q6E12S2" id="questionenergysixTwelveQuantity"
+                    <div class="col"><input ng-value="energy.Q6E12S2"
                                             class="textbox" style="border:1px solid #111;text-align: center;"
                                             type="number" readonly></div>
-                    <div class="col"><input ng-model="energy.Q6E12S3" id="questionenergysixTwelveEnergy" class="textbox"
+                    <div class="col"><input ng-model="energy.Q6E12S3" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                </div>
+
+                <div class="row ">
+                    <div class="col">Biogas (kg)</div>
+                    <div class="col"><input ng-model="energy.Q6E13S1" ng-change="updateQ6(13)" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number"></div>
+                    <div class="col"><input ng-value="energy.Q6E13S2"
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" readonly></div>
+                    <div class="col"><input ng-model="energy.Q6E13S3" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                </div>
+
+                <div class="row ">
+                    <div class="col">Others(Specify</div>
+                    <div class="col"><input ng-model="energy.Q6E14S1" ng-change="updateQ6(14)" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number"></div>
+                    <div class="col"><input ng-value="energy.Q6E14S2"
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" readonly></div>
+                    <div class="col"><input ng-model="energy.Q6E14S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Total</div>
-                    <div class="col"><input ng-value="energy.Q6E13S1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" readonly></div>
-                    <div class="col"><input ng-model="energy.Q6E13S2" class="textbox"
+                    <div class="col"><input ng-value="energy.Q6E15S1" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" readonly>
+                    </div>
+                    <div class="col"><input ng-value="energy.Q6E15S2" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number"
                                             readonly></div>
                     <div class="col"></div>
@@ -597,8 +634,8 @@
                 </div>
                 <hr/>
                 <div class="row">
-                    <strong>Please upload fuel bills</strong><br>
-                    <input ng-model="Q7EFL3" type="file" id="questionenergyeight">
+                    <strong>Please upload picture of 5 star appliances used by school</strong><br>
+                    <input ng-model="Q7EFL3" type="file" multiple>
                 </div>
             </div>
 
@@ -614,7 +651,7 @@
                     <ion-list>
                         <label class="item item-input">
                             <input ng-model="energy.Q10E1" type="number" placeholder="Answer here!"
-                                   id="questionenergynine" ng-change="validLimit('Q10E1', 365)">
+                                   ng-change="validLimit('Q10E1', 365)">
                         </label>
                     </ion-list>
                 </div>
@@ -624,14 +661,13 @@
                 <div class="item item-text-wrap item-borderless">
                     6. Are there any alternate sources of energy employed/installed in your school?
                 </div>
-
                 <div class="row " style="padding-left: 20px">
                     <div class="col fs-12">
-                        <input ng-model="energy.Q9E1" id="questionenergyten" type="radio" ng-value="'Y'" name="e">&nbsp;<span
+                        <input ng-model="energy.Q9E1" type="radio" ng-value="'Y'" name="e">&nbsp;<span
                             style="position:absolute"> Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="energy.Q9E1" id="questionenergyten" type="radio" ng-value="'N'" name="e">&nbsp;<span
+                        <input ng-model="energy.Q9E1" type="radio" ng-value="'N'" name="e">&nbsp;<span
                             style="position:absolute">No</span>
                     </div>
                 </div>
@@ -642,7 +678,35 @@
                     </strong><br>
                     <input type="file" id="questionenergyeleven"/>
                 </div>
+            </div>
 
+            <div class="card" ng-show="energy.Q9E1 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    6(a) If yes, do you use:
+                </div>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="energy.Q9E1S1" type="checkbox" ng-value="'1'"
+                           ng-checked="energy.Q6E9S1 > 0" name="f"><span
+                        style="position:absolute">&nbsp;Solar</span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="energy.Q9E1S2" type="checkbox" ng-value="'2'"
+                           ng-checked="energy.Q6E10S1 > 0" name="f"><span
+                        style="position:absolute">&nbsp;Wind</span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="energy.Q9E1S3" type="checkbox" ng-value="'3'" name="f"><span
+                        style="position:absolute">&nbsp;Hydro</span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="energy.Q9E1S4" type="checkbox" ng-value="'4'" name="f"><span
+                        style="position:absolute">&nbsp;Combination of Solar & Wind</span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="energy.Q9E1S5" type="checkbox" ng-value="'4'"
+                           ng-checked="energy.Q6E13S1 > 0" name="f"><span
+                        style="position:absolute">&nbsp;Biogas</span>
+                </ion-item>
             </div>
 
             <div class="list card">

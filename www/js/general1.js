@@ -37,14 +37,14 @@ angular.module('starter.general', [])
 
     $scope.checkQ1 = function () {
       // alert('You changed the select value.');
-      val1 = $scope.general.Q1G1;
-      val2 = $scope.general.Q1G2;
+      var val1 = $scope.general.Q1G1;
+      var val2 = $scope.general.Q1G2;
       if (val1 && val2) {
         if (+val1 > +val2) {
           $scope.showPopup('Alert!', 'Higher level can not be less than lower level');
           $scope.general.Q1G2 = val1;
         }
-        if (val1 < 5 && val2 <=5) {
+        if (val1 < 5 && val2 <= 5) {
           $scope.promptQ1();
         }
       }
@@ -63,7 +63,7 @@ angular.module('starter.general', [])
         buttons: [
           {
             text: '<b>Save</b>',
-            onTap: function(e) {
+            onTap: function (e) {
               if (!$scope.general.Q10G1) {
                 //don't allow the user to close unless he enters wifi password
                 e.preventDefault();
@@ -77,11 +77,10 @@ angular.module('starter.general', [])
     };
 
     $scope.checkQ6 = function () {
-      val = $scope.general.Q6G1;
-      console.log('value of days: ' + val);
+      var val = $scope.general.Q6G1;
       if (val > 365) {
-        alert("No. of working days can't be greater than 365");
         $scope.general.Q6G1 = 365;
+        $scope.showPopup("Alert", "No. of working days can't be greater than 365");
         // angular.element('#questiongeneraleight').val(365);
       }
     };
@@ -92,6 +91,7 @@ angular.module('starter.general', [])
       $scope.validVal('Q4G4S3') && $scope.validVal('Q5G1') &&
       $scope.validVal('Q6G1') && $scope.validVal('Q8G1') &&
       $scope.validVal('Q9G1'));
+
     };
 
     $scope.updateNumStudents = function (rowNum) {
@@ -125,7 +125,7 @@ angular.module('starter.general', [])
     // function for getting answer values from other sections
     $scope.getAnswer = function (questionID) {
       return AppServiceAPI.selectQuestion(questionID).then(function (res) {
-        if(res.rows.length > 0) {
+        if (res.rows.length > 0) {
           var row = res.rows[0];
           var answer = row['answer'];
           console.log('returning answer: ' + answer);

@@ -433,6 +433,7 @@
                         <input ng-model="air.Q6A4" type="radio" ng-value="'1'" name="b">&nbsp;<span
                             style="position:absolute">Yes</span>
                     </div>
+
                     <div class="col fs-12">
                         <input ng-model="air.Q6A4" type="radio" ng-value="'2'" name="b">&nbsp;<span
                             style="position:absolute">No</span>
@@ -621,10 +622,11 @@
                                             readonly>
                     </div>
                 </div>
+
                 <div ng-show="air.Q6A2S1B4" style="padding-left: 20px">
                     <b>Please upload supporting documents:</b>
                     <label class="col" for="puc">PUC certificates of not more than 5 buses</label>
-                    <input class="col" name="puc" type="file" ng-model="air.Q6AFL1" multiple>
+                    <input class="col" id="puc" name="puc" type="file" ng-model="air.Q6AFL1" multiple>
                 </div>
             </div>
 
@@ -949,174 +951,204 @@
             </div>
 
             <div class="card">
+
                 <div class="item item-text-wrap item-borderless">
                     4. Please specify how many members of the school community use each type of transport:
                 </div>
 
-                <div class="row ">
-                    <div class="col">Mode of transport</div>
+                <div class="row">
+                    <div class="col col-25">Mode of transport</div>
                     <div class="col">Students</div>
-                    <div class="col">Teaching Staff</div>
-                    <div class="col"> Non-Teaching Staff</div>
+                    <div class="col">Teachers</div>
+                    <div class="col"> Other Staff</div>
                     <div class="col">Total</div>
                 </div>
 
-                <div class="row ">
-                    <div class="col">School bus</div>
-                    <div class="col"><input ng-model="air.Q7A1S1" id='questionairSevenOneMode' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A1S2" id='questionairSevenOneStudent' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A1S3" id='questionairSevenOneTeacher' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A1S4" id='questionairSevenOneNonTeaching'
-                                            class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text" placeholder="0" readonly="true"></div>
+                <div class="row">
+                  <b>(A) Sustainable Motorised Vehicles</b>
                 </div>
 
-                <div class="row ">
-                    <div class="col">Public bus</div>
-                    <div class="col"><input ng-model="air.Q7A2S1" id='questionairSevenTwoMode' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A2S2" id='questionairSevenTwoStudent' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A2S3" id='questionairSevenTwoTeacher' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A2S4" id='questionairSevenTwoNonTeaching'
-                                            class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text" placeholder="0" readonly="true"></div>
+                <div class="row">
+                    <div class="col col-25">School bus</div>
+                    <div class="col"><input ng-model="air.Q7A1S1" ng-change="updateQ7(1)" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"
+                                            onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A1S2" ng-change="updateQ7(1)" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"
+                                            onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A1S3" ng-change="updateQ7(1)" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"
+                                            onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="air.Q7A1S4" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" placeholder="0" readonly></div>
                 </div>
 
-
-                <div class="row ">
-                    <div class="col">School transport (other than bus)</div>
-                    <div class="col"><input ng-model="air.Q7A3S1" id='questionairSevenThreeMode' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A3S2" id='questionairSevenThreeStudent' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A3S3" id='questionairSevenThreeTeacher' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A3S4" id='questionairSevenThreeNonTeaching'
+                <div class="row">
+                    <div class="col col-25">Public bus</div>
+                    <div class="col"><input ng-model="air.Q7A2S1" ng-change="updateQ7(2)" id='questionairSevenTwoMode'
                                             class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text" placeholder="0" readonly="true"></div>
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A2S2" ng-change="updateQ7(2)" id='questionairSevenTwoStudent'
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A2S3" ng-change="updateQ7(2)" id='questionairSevenTwoTeacher'
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="air.Q7A2S4" id='questionairSevenTwoNonTeaching'
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" placeholder="0" readonly></div>
                 </div>
 
-                <div class="row ">
-                    <div class="col">Public transport (other than bus)</div>
-                    <div class="col"><input ng-model="air.Q7A4S1" id='questionairSevenFourMode' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A4S2" id='questionairSevenFourStudent' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A4S3" id='questionairSevenFourTeacher' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A4S4" id='questionairSevenFourNonTeaching'
+                <div class="row">
+                    <div class="col col-25">School transport (other than bus)</div>
+                    <div class="col"><input ng-model="air.Q7A3S1" ng-change="updateQ7(3)" id='questionairSevenThreeMode'
                                             class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text" placeholder="0" readonly="true"></div>
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A3S2" ng-change="updateQ7(3)" id='questionairSevenThreeStudent'
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A3S3" ng-change="updateQ7(3)" id='questionairSevenThreeTeacher'
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="air.Q7A3S4" id='questionairSevenThreeNonTeaching'
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);" placeholder="0" readonly></div>
                 </div>
 
-                <div class="row ">
-                    <div class="col">Taxi four-wheeler</div>
-                    <div class="col"><input ng-model="air.Q7A5S1" id='questionairSevenFiveMode' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A5S2" id='questionairSevenFiveStudent' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A5S3" id='questionairSevenFiveTeacher' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A5S4" id='questionairSevenFiveNonTeaching'
-                                            class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text" placeholder="0" readonly="true"></div>
+                <div class="row">
+                    <div class="col col-25">Public transport (other than bus)</div>
+                    <div class="col"><input ng-model="air.Q7A4S1" ng-change="updateQ7(4)" class="textbox"
+                                            style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A4S2" ng-change="updateQ7(4)" class="textbox"
+                                            style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A4S3" ng-change="updateQ7(4)" class="textbox"
+                                            style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="air.Q7A4S4" class="textbox"
+                                            style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);" placeholder="0" readonly></div>
                 </div>
 
-                <div class="row ">
-                    <div class="col">Taxi three-wheeler</div>
-                    <div class="col"><input ng-model="air.Q7A6S1" id='questionairSevenSixMode' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A6S2" id='questionairSevenSixStudent' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A6S3" id='questionairSevenSixTeacher' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A6S4" id='questionairSevenSixNonTeaching'
+                <div class="row">
+                    <div class="col col-25">Taxi four-wheeler</div>
+                    <div class="col"><input ng-model="air.Q7A5S1" ng-change="updateQ7(5)" id='questionairSevenFiveMode' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A5S2" ng-change="updateQ7(5)" id='questionairSevenFiveStudent' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A5S3" ng-change="updateQ7(5)" id='questionairSevenFiveTeacher' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="air.Q7A5S4" id='questionairSevenFiveNonTeaching'
                                             class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text" placeholder="0" readonly="true"></div>
+                                            type="number" min="0" onkeypress="return isNumberKey(event);" placeholder="0" readonly></div>
                 </div>
 
-                <div class="row ">
-                    <div class="col">Personal four-wheeler</div>
-                    <div class="col"><input ng-model="air.Q7A7S1" id='questionairSevenSevenMode' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A7S2" id='questionairSevenSevenStudent' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A7S3" id='questionairSevenSevenTeacher' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A7S4" id='questionairSevenSevenNonTeaching'
+                <div class="row">
+                    <div class="col col-25">Taxi three-wheeler</div>
+                    <div class="col"><input ng-model="air.Q7A6S1" ng-change="updateQ7(6)" id='questionairSevenSixMode' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A6S2" ng-change="updateQ7(6)" id='questionairSevenSixStudent' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A6S3" ng-change="updateQ7(6)" id='questionairSevenSixTeacher' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="air.Q7A6S4" id='questionairSevenSixNonTeaching'
                                             class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text" placeholder="0" readonly="true"></div>
+                                            type="number" min="0" onkeypress="return isNumberKey(event);" placeholder="0" readonly></div>
                 </div>
 
-                <div class="row ">
-                    <div class="col">Personal two-wheeler</div>
-                    <div class="col"><input ng-model="air.Q7A8S1" id='questionairSevenEightMode' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A8S2" id='questionairSevenEightStudent' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A8S3" id='questionairSevenEightTeacher' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A8S4" id='questionairSevenEightNonTeaching'
-                                            class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text" placeholder="0" readonly="true"></div>
+                <div class="row">
+                  <b>(B) Private Vehicles</b>
                 </div>
-                <div class="row ">
-                    <div class="col">Bicycle</div>
-                    <div class="col"><input ng-model="air.Q7A9S1" id='questionairSevenNineMode' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A9S2" id='questionairSevenNineStudent' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A9S3" id='questionairSevenNineTeacher' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A9S4" id='questionairSevenNineNonTeaching'
+
+                <div class="row">
+                    <div class="col col-25">Personal four-wheeler</div>
+                    <div class="col"><input ng-model="air.Q7A7S1" ng-change="updateQ7(7)" id='questionairSevenSevenMode' class="textbox"
+                                            style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A7S2" ng-change="updateQ7(7)" id='questionairSevenSevenStudent' class="textbox"
+                                            style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A7S3" ng-change="updateQ7(7)" id='questionairSevenSevenTeacher' class="textbox"
+                                            style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="air.Q7A7S4" id='questionairSevenSevenNonTeaching'
                                             class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text" placeholder="0" readonly="true"></div>
+                                            type="number" min="0" onkeypress="return isNumberKey(event);" placeholder="0" readonly></div>
                 </div>
-                <div class="row ">
-                    <div class="col">On foot</div>
-                    <div class="col"><input ng-model="air.Q7A10S1" id='questionairSevenTenMode' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A10S2" id='questionairSevenTenStudent' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A10S3" id='questionairSevenTenTeacher' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A10S4" id='questionairSevenTenNonTeaching'
+
+                <div class="row">
+                    <div class="col col-25">Personal two-wheeler</div>
+                    <div class="col"><input ng-model="air.Q7A8S1" ng-change="updateQ7(8)" id='questionairSevenEightMode' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A8S2" ng-change="updateQ7(8)" id='questionairSevenEightStudent' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A8S3" ng-change="updateQ7(8)" id='questionairSevenEightTeacher' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="air.Q7A8S4" id='questionairSevenEightNonTeaching'
                                             class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text" placeholder="0" readonly="true"></div>
+                                            type="number" min="0" onkeypress="return isNumberKey(event);" placeholder="0" readonly></div>
                 </div>
-                <div class="row ">
-                    <div class="col">Others (non-motorized)</div>
-                    <div class="col"><input ng-model="air.Q7A11S1" id='questionairSevenElevenMode' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A11S2" id='questionairSevenElevenStudent'
-                                            class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A11S3" id='questionairSevenElevenTeacher'
-                                            class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text"></div>
-                    <div class="col"><input ng-model="air.Q7A11S4" id='questionairSevenElevenNonTeaching'
-                                            class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="text" placeholder="0" readonly="true"></div>
+
+                <div class="row">
+                  <b>(B) Non Polluting Mode</b>
                 </div>
-                <div class="row ">
-                    <div class="col">Total</div>
-                    <div class="col"><input ng-model="air.Q7A12S1" id="Total1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"
-                                            placeholder="0.0" readonly="true"></div>
-                    <div class="col"><input ng-model="air.Q7A12S2" id="Total2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"
-                                            placeholder="0.0" readonly="true"></div>
-                    <div class="col"><input ng-model="air.Q7A12S3" id="Total3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"
-                                            placeholder="0.0" readonly="true"></div>
-                    <div class="col"><input ng-model="air.Q7A12S4" id="Total4" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"
-                                            placeholder="0.0" readonly="true"></div>
+
+                <div class="row">
+                    <div class="col col-25">Bicycle</div>
+                    <div class="col"><input ng-model="air.Q7A9S1" ng-change="updateQ7(9)" id='questionairSevenNineMode' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A9S2" ng-change="updateQ7(9)" id='questionairSevenNineStudent' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A9S3" ng-change="updateQ7(9)" id='questionairSevenNineTeacher' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="air.Q7A9S4" id='questionairSevenNineNonTeaching'
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);" placeholder="0" readonly></div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-25">On foot</div>
+                    <div class="col"><input ng-model="air.Q7A10S1" ng-change="updateQ7(10)" id='questionairSevenTenMode' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A10S2" ng-change="updateQ7(10)" id='questionairSevenTenStudent' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A10S3" ng-change="updateQ7(10)" id='questionairSevenTenTeacher' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="air.Q7A10S4" id='questionairSevenTenNonTeaching'
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);" placeholder="0" readonly></div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-25">Others (non-motorized)</div>
+                    <div class="col"><input ng-model="air.Q7A11S1" ng-change="updateQ7(11)" id='questionairSevenElevenMode' class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A11S2" ng-change="updateQ7(11)" id='questionairSevenElevenStudent'
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-model="air.Q7A11S3" ng-change="updateQ7(11)" id='questionairSevenElevenTeacher'
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);"></div>
+                    <div class="col"><input ng-value="air.Q7A11S4" id='questionairSevenElevenNonTeaching'
+                                            class="textbox" style="border:1px solid #111;text-align: center;"
+                                            type="number" min="0" onkeypress="return isNumberKey(event);" placeholder="0" readonly></div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-25">Total</div>
+                    <div class="col"><input ng-value="air.Q7A12S1" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number"
+                                            placeholder="0.0" readonly></div>
+                    <div class="col"><input ng-value="air.Q7A12S2" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number"
+                                            placeholder="0.0" readonly></div>
+                    <div class="col"><input ng-value="air.Q7A12S3" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number"
+                                            placeholder="0.0" readonly></div>
+                    <div class="col"><input ng-value="air.Q7A12S4" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number"
+                                            placeholder="0.0" readonly></div>
                 </div>
             </div>
 
@@ -1148,10 +1180,9 @@
                 <div class="list ">
 
                     <ion-list>
-
                         <label class="item item-input">
-                            <input ng-model="air.Q8A1" id='questionairEight' type="text" step="0.01" value="1.0"
-                                   placeholder="Answer here!"></textarea>
+                            <input ng-model="air.Q8A1" type="number" min="0"
+                                   onkeypress="return isNumberKey(event);" placeholder="0">
                         </label>
                     </ion-list>
                 </div>
@@ -1164,13 +1195,35 @@
 
 
                 <div class="row ">
-
                     <div class="col fs-12">
-                        <input ng-model="air.Q9A1" type="radio" ng-value="'1'" name="c">&nbsp;<span
+                        <input ng-model="air.Q9A1" type="radio" ng-value="'1'" name="d">&nbsp;<span
                             style="position:absolute">Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="air.Q9A1" type="radio" ng-value="'2'" name="c">&nbsp;<span
+                        <input ng-model="air.Q9A1" type="radio" ng-value="'2'" name="d">&nbsp;<span
+                            style="position:absolute">No</span>
+                    </div>
+                </div>
+                <div ng-show="air.Q9A1 == 1">
+                    <p><b>Upload supporting documents</b></p>
+                    <p>Please upload all supporting documents related to this section here:</p>
+                    <input ng-model="Q9AFL1" type="file" multiple>
+                </div>
+
+            </div>
+
+            <div class="card" ng-show="air.Q9A1 == 2">
+                <div class="item item-text-wrap item-borderless">
+                    6(a) If No, is there an air quality monitoring station
+                    (private or government) close to your school?
+                </div>
+                <div class="row ">
+                    <div class="col fs-12">
+                        <input ng-model="air.Q10A1" type="radio" ng-value="'1'" name="e">&nbsp;<span
+                            style="position:absolute">Yes</span>
+                    </div>
+                    <div class="col fs-12">
+                        <input ng-model="air.Q10A1" type="radio" ng-value="'2'" name="e">&nbsp;<span
                             style="position:absolute">No</span>
                     </div>
 
@@ -1182,17 +1235,17 @@
                 <!--||questionair.id==numberOfQuestions-1-->
                 <div class="button-bar">
 
-                    <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1"
+                    <a class="button background-color text-white"
                        ion-chevron-right nav-clear ng-click="goToPrev()">
                         PREV
                     </a>
                     &nbsp;
-                    <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1"
-                       ion-chevron-right nav-clear ng-click="quiz2(air)">
+                    <a class="button background-color text-white"
+                       ng-disabled="!validNext()" ion-chevron-right nav-clear ng-click="quiz2(air)">
                         NEXT
                     </a>
                     &nbsp;
-                    <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1"
+                    <a class="button background-color text-white"
                        ion-chevron-right nav-clear ng-click="saveData(air)">
                         SAVE
                     </a>

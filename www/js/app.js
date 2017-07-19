@@ -13,7 +13,13 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
   'starter.air', 'starter.energy', 'starter.food', 'starter.land', 'starter.water',
   'starter.waste', 'starter.feedback', 'starter.api'])
 
-  .run(function ($ionicPlatform, $cordovaSQLite, $window) {
+  .run(function ($ionicPlatform, $cordovaSQLite, $window, $rootScope) {
+
+    // for converting data from api to number
+    $rootScope.typeOf = function (value) {
+      return typeof value;
+    };
+
     $ionicPlatform.ready(function () {
 
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -43,6 +49,20 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
     }, function (error) {
       console.error('Error in platform ready: ' + error);
     });
+  })
+
+  .directive('stringToNumber', function () {
+    return {
+      require: 'ngModel',
+      link: function (scope, element, attrs, ngModel) {
+        ngModel.$parsers.push(function (value) {
+          return '' + value;
+        });
+        ngModel.$formatters.push(function (value) {
+          return parseFloat(value);
+        });
+      }
+    };
   })
 
   .config(function ($stateProvider, $urlRouterProvider) {

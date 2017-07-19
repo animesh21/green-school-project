@@ -33,14 +33,28 @@ angular.module('starter.air', [])
     });
 
     // Execute action on hide modal
-    $scope.$on('modal.hidden', function() {
+    $scope.$on('modal.hidden', function () {
       $scope.pauseVideo();
     });
 
     $scope.pauseVideo = function () {
       var iframe = document.getElementById("airFrame").contentWindow;
-      iframe.postMessage('{"event":"command","func":"' + 'pauseVideo' +   '","args":""}', '*');
+      iframe.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
       console.log('video paused');
+    };
+
+    // function for getting answer values from other sections
+    $scope.getAnswer = function (questionID) {
+      return AppServiceAPI.selectQuestion(questionID).then(function (res) {
+        if (res.rows.length > 0) {
+          var row = res.rows[0];
+          var answer = row['answer'];
+          return answer;
+        }
+      }, function (err) {
+        return err;
+        console.error('Error in db: ' + JSON.stringify(err));
+      });
     };
 
     // validation functions
@@ -235,6 +249,18 @@ angular.module('starter.air', [])
       $scope.air['Q5A110S4'] = $scope.air['Q5A110S3'] / $scope.air['Q5A110S2'] * 100;
     };
 
+    $scope.validateQ5 = function () {
+      var qID, val;
+      for (var i = 1; i <= $scope.air.Q4A1; i++) {
+        qID = $scope.getQuestionID(5, i, 4);
+        val = $scope.getAbsVal(qID);
+        if (!val) {
+          return false;
+        }
+      }
+      return true;
+    };
+
     $scope.updateQ5Rows = function () {
       var numRooms = parseInt($scope.air['Q4A1']);
       var range = [];
@@ -250,15 +276,6 @@ angular.module('starter.air', [])
         range.push(i);
       }
       $scope.roomRange = range;
-    };
-
-    $scope.validateQ5 = function () {
-      for (var i = 1; i <= $scope.air['Q4A1']; i++) {
-        if (!$scope.validVal($scope.getQuestionID(5, i, 4))) {
-          return false;
-        }
-      }
-      return true;
     };
 
     $scope.updateQ6 = function (n) {
@@ -284,17 +301,141 @@ angular.module('starter.air', [])
     $scope.updateQ6C = function (type) {
 
       var numQues = [1, 2, 3, 4];
-      var QuesPrefix = 'Q6A2S3';
+      var quesPrefix = 'Q6A2S3';
       var typeTotal = 0;
       for (var i = 0; i < numQues.length; i++) {
-        typeTotal += $scope.getAbsVal(QuesPrefix + type + i);
+        typeTotal += $scope.getAbsVal(quesPrefix + type + numQues[i]);
       }
-      $scope.air[QuesPrefix + type + '5'] = typeTotal;
+
+      $scope.air[quesPrefix + type + '5'] = typeTotal;
+
+      var qMap = {
+        'B': 1,
+        'C': 2,
+        'V': 3,
+        'O': 4
+      };
+      var types = ['D', 'P', 'L', 'C', 'E', 'H', 'B'];
+      var qID, qMaxID, maxVal, rowVal;
+      angular.forEach(qMap, function (value, key) {
+        qMaxID = 'Q6A2S1' + key + '1';
+        maxVal = $scope.getAbsVal(qMaxID);
+        rowVal = 0;
+        for (i = 0; i < types.length; i++) {
+          qID = 'Q6A2S3' + types[i] + value;
+          rowVal += $scope.getAbsVal(qID);
+          if (rowVal > maxVal) {
+            $scope.air[qID] = 0;
+            $scope.showPopup('Alert', "Sum of vehicles can't be greater" +
+              " than total no. of vehicles of this type.");
+            break;
+          }
+
+        }
+
+      });
+    };
+
+    $scope.validateQ6 = function () {
+      var val = $scope.getAbsVal('Q6A1');
+      if(val) {
+        if (val >= 1 && val <= 2) {
+          return true;
+        }
+        else {
+          return $scope.validateQ6A() && $scope.validateQ6B() &&
+                 $scope.validateQ6C() && $scope.validateQ6D();
+        }
+      }
+    };
+
+    $scope.validateQ6A = function () {
+      if ($scope.getAbsVal('Q6A4')) {
+        return true;
+      }
+      return false;
+    };
+
+    $scope.validateQ6B = function () {
+      if ($scope.getAbsVal('Q6A2S1T1')) {
+        return true;
+      }
+      return false;
+    };
+
+    $scope.validateQ6C = function () {
+      return true;  // TODO: validation to be implemented
+    };
+
+    $scope.validateQ6D = function () {
+      if ($scope.getAbsVal('Q6A3')){
+        return true;
+      }
+      return false;
+    };
+
+    $scope.updateQ7 = function (n) {
+      var quesPrefix = 'Q7A' + n + 'S';
+      var rowTotal = 0;
+      for (var i = 1; i <= 3; i++) {
+        rowTotal += $scope.getAbsVal(quesPrefix + i);
+      }
+      $scope.air[quesPrefix + 4] = rowTotal;
+
+      var qID;
+      var val;
+      var colTotals = [0, 0, 0, 0];
+      for (var j = 0; j <= 3; j++) {
+        for (i = 1; i <=11; i++) {
+          qID = 'Q7A' + i + 'S' + (j + 1);
+          val = $scope.getAbsVal(qID);
+          colTotals[j] += val;
+        }
+        qID = 'Q7A12S' + (j + 1);
+        $scope.air[qID] = colTotals[j];
+      }
+    };
+
+    // TODO validation with cross linking
+    $scope.validateQ7 = function () {
+      // return $ionicPlatform.ready(function () {
+      //   var qIDs1 = ['Q7A12S1', 'Q7A12S2', 'Q7A12S3'];
+      //   var qIDs2 = ['Q4G1S3', 'Q4G2S3', 'Q4G3S3'];  // question ids of general section for cross validation
+      //   var val1 = [];
+      //   var val2 = [];
+      //   for ( var i = 0; i < qIDs1.length; i++) {
+      //     val1.push($scope.getAbsVal(qIDs1[i]));
+      //     $scope.getAnswer(qIDs2[i]).then(function (res) {
+      //       val2.push($scope.getAbsVal(res));
+      //     });
+      //   }
+      //   console.log('arr1: ' + JSON.stringify(val1));
+      //   console.log('arr2: ' + JSON.stringify(val2));
+      //   return true;
+      // }, function (err) {
+      //   return err;
+      // });
+      return true;
+    };
+
+    $scope.validateQ9 = function () {
+      var val = $scope.getAbsVal('Q9A1');
+      if (val) {
+        if(val == 1) {
+          return true;
+        }
+        else if (val == 2){
+          return $scope.validVal('Q10A1');
+        }
+      }
+      return false;
     };
 
     $scope.validNext = function () {
-      // return $scope.validateTeacher() && $scope.validateStudent() &&
-      return $scope.validVal('Q4A1') && $scope.validateQ5();
+      return $scope.validateTeacher() && $scope.validateStudent() &&
+             $scope.validVal('Q4A1') && $scope.validateQ5() &&
+             $scope.validateQ6() && $scope.validateQ7() &&
+             $scope.validVal('Q8A1') && $scope.validateQ9();
     };
     // end validation functions
 
@@ -306,11 +447,10 @@ angular.module('starter.air', [])
     };
 
     $scope.goToPrev = function () {
-      $state.go('app.energy');
+      $state.go('app.general1');
     };
 
     $scope.toggleReadMore = function (n) {
-      console.log('toggling read more');
       $scope.readMore[n] = 1 - ($scope.readMore[n] || 0);
     };
 
@@ -325,30 +465,6 @@ angular.module('starter.air', [])
         ]
       })
     };
-
-    //$scope.air = $rootScope.data;
-    // $scope.select = function(type) {
-
-    //     var query = "SELECT questionid,answer FROM gsp_answers WHERE type = ?";
-    //     $cordovaSQLite.execute(db, query, [type]).then(function(res) {
-    //     		if(res.rows.length > 0) {
-    //                    angular.forEach(res.rows, function(item,index) {
-    //                        questionid = res.rows.item(index).questionid
-    //                    	$scope.air[questionid] = res.rows.item(index).answer
-    //                        console.log($scope.air);
-    //                      });
-    //                  }
-    //                 else{
-    //                      console.log("No results found");
-    //                  }
-    //            },
-    //            function (err) {
-    //                console.error(err);
-    //            });
-    //  		};
-
-    //$scope.air = $rootScope.select(2);
-    //console.log($scope.air);
 
     $ionicPlatform.ready(function () {
 

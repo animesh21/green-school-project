@@ -1,11 +1,13 @@
 angular.module('starter.energy', [])
 
-  .controller('energyCtrl', function ($scope, $rootScope, $state, $window, $stateParams, AppServiceAPI, $ionicPlatform, $sce, $ionicModal) {
+  .controller('energyCtrl', function ($scope, $rootScope, $state, $window, $stateParams, AppServiceAPI, $ionicPlatform, $sce, $ionicModal, $ionicPopup) {
     $(document).ready(function () {
       $('.progressBarIndicator').css("background", "red");
     });
 
     $scope.energy = {};
+
+    $scope.readMore = {};
 
     $scope.tutorialURL = $sce.trustAsResourceUrl('https://www.youtube.com/embed/i6DM3E5euRE?enablejsapi=1');
 
@@ -40,6 +42,20 @@ angular.module('starter.energy', [])
       var iframe = document.getElementById ("energyFrame").contentWindow;
       iframe.postMessage('{"event":"command","func":"' + 'pauseVideo' +   '","args":""}', '*');
       console.log('video paused');
+    };
+
+    // function for getting answer values from other sections
+    $scope.getAnswer = function (questionID) {
+      return AppServiceAPI.selectQuestion(questionID).then(function (res) {
+        if (res.rows.length > 0) {
+          var row = res.rows[0];
+          var answer = row['answer'];
+          return answer;
+        }
+      }, function (err) {
+        return err;
+        console.error('Error in db: ' + JSON.stringify(err));
+      });
     };
 
     // Validation functions start
@@ -192,22 +208,113 @@ angular.module('starter.energy', [])
       return sum >= 5;
     };
 
+    $scope.updateQ5 = function () {
+      var val1, val2;
+      $scope.getAnswer('Q6A1').then(function (res) {
+        console.log(JSON.stringify(res));
+        if (res) {
+          val1 = parseInt(res);
+          val2 = $scope.energy.Q5E1;
+          if (val1 <= 2 && val2 == 'Y' || val1 > 2 && val2 == 'N') {
+            $scope.showPopup('Alert', 'Your choice mismatch with answer given in air section Q3');
+          }
+
+          console.log('Value from air just after: ' + val1);
+        }
+      }, function (err) {
+        console.log('Error in getting value from db: ' + JSON.stringify(err));
+      });
+    };
+
+    $scope.updateQ6 = function (n) {
+
+      var conversionTable = {
+        1: 3.6, // Electricity from grid
+        2: 45.6, // Generator(Diesel)
+        3: 43.93, // Petrol
+        4: 44.8, // Diesel
+        5: 37.24, // CNG
+        6: 43.09, // Kerosene
+        7: 20.92, // coal
+        8: 18, // Animal waste(kg)
+        9: 3.6, // Solar
+        10: 3.6, // Wind
+        11: 45.19, // LPG
+        12: 37.24, // Piped Natural Gas
+        13: 37.24, // Biogas
+        14: 0, // Others
+        16: 17.6 // Wood
+      };
+
+      // for updating question no. 6
+      if (n == 9 || n == 10 || n == 13) {
+        var qID9 = 'Q6E9S1';
+        var qID10 = 'Q6E10S1';
+        var qID13 = 'Q6E13S1';
+        var val9, val10, val13;
+        val9 = $scope.getAbsVal(qID9);
+        val10 = $scope.getAbsVal(qID10);
+        val13 = $scope.getAbsVal(qID13);
+        if (val9 || val10 || val13) {
+          $scope.energy.Q9E1 = 'Y';
+        }
+        else {
+          $scope.energy.Q9E1 = 'N';
+        }
+      }
+
+      var conversionFactor = conversionTable[n];
+      var qID1 = 'Q6E' + n + 'S1';
+      var qID2 = 'Q6E' + n + 'S2';
+
+      $scope.energy[qID2] = $scope.getAbsVal(qID1) * conversionFactor;
+
+      var totalEnergy = 0;
+      var qID;
+      angular.forEach(conversionTable, function (value, key) {
+        qID = 'Q6E' + key + 'S2';
+        totalEnergy += $scope.getAbsVal(qID);
+      });
+      $scope.energy.Q6E15S2 = totalEnergy;
+    };
+
+    $scope.validateQ9 = function () {
+      var val = $scope.getAbsVal('Q9E1');
+      if (val) {
+        if (val == 'Y'){
+          var val1 = $scope.getAbsVal('Q9E1S1');
+          var val2 = $scope.getAbsVal('Q9E1S2');
+          var val3 = $scope.getAbsVal('Q9E1S3');
+          var val4 = $scope.getAbsVal('Q9E1S4');
+          if (val1 || val2 || val3 || val4) {
+            return true;
+          }
+          else {
+            return false;
+          }
+        }
+        else  if (val == 'N') {
+          return true;
+        }
+      }
+      return false;
+    };
+
     $scope.validQ7S3 = function (questionID) {
       var val = $scope.energy[questionID];
       if (val) {
         val = +val;
         if (val > 5) {
-          alert("BEE rating can't be greater than 5");
+          $scope.showPopup('Alert', "BEE rating can't be greater than 5");
           $scope.energy[questionID] = 5;
         }
       }
     };
 
     $scope.validLimit = function (questionID, numLimit) {
-      val = +$scope.energy[questionID];
-      console.log('value of days: ' + val);
+      var val = +$scope.energy[questionID];
       if (val > numLimit) {
-        alert("This number can't be greater than " + numLimit);
+        $scope.showPopup("Alert", "This number can't be greater than " + numLimit);
         $scope.energy[questionID] = numLimit;
         // angular.element('#questiongeneraleight').val(365);
       }
@@ -220,10 +327,14 @@ angular.module('starter.energy', [])
       return false;
     };
 
+    $scope.getAbsVal = function (questionID) {
+      return $scope.energy[questionID] || 0;
+    };
+
     $scope.validNext = function () {
       var validQ4 = $scope.validRadio('Q4E1');
       var validQ5 = $scope.validRadio('Q5E1');
-      var validQ9 = $scope.validRadio('Q9E1');
+      var validQ9 = $scope.validateQ9();
       var validQ10 = $scope.validRadio('Q10E1');
       return ($scope.validateTeacher() && $scope.validateStudent() &&
               validQ4 && validQ5 && validQ9 && validQ10);
@@ -239,6 +350,22 @@ angular.module('starter.energy', [])
 
     $scope.goToPrev = function () {
       $state.go('app.air1');
+    };
+
+    $scope.toggleReadMore = function (n) {
+      $scope.readMore[n] = 1 - ($scope.readMore[n] || 0);
+    };
+
+    $scope.showPopup = function (title, message) {
+      var popup = $ionicPopup.show({
+        title: title,
+        template: message,
+        buttons: [
+          {
+            'text': 'OK'
+          }
+        ]
+      })
     };
 
     $ionicPlatform.ready(function () {

@@ -147,47 +147,47 @@
 
         <div class="row">
           <div class="col">Students</div>
-          <div class="col"><input ng-model="general.Q4G1S1" id="questiongeneralsixOneMale" class="textbox"
+          <div class="col"><input ng-model="general.Q4G1S1" class="textbox"
                                   style="border:1px solid #111;text-align: center;" type="number"
                                   ng-disabled="general.Q2G1 == 2"
                                   ng-change="updateNumStudents(1);" min="0" step="1"
                                   onkeypress="return isNumberKey(event);"></div>
-          <div class="col"><input ng-model="general.Q4G1S2" id="questiongeneralsixOneFemale" class="textbox"
+          <div class="col"><input ng-model="general.Q4G1S2" class="textbox"
                                   style="border:1px solid #111;text-align: center;" type="number"
                                   ng-disabled="general.Q2G1 == 1"
                                   ng-change="updateNumStudents(1);" min="0" step="1"
                                   onkeypress="return isNumberKey(event);"></div>
-          <div class="col"><input ng-value="general.Q4G1S3" id="questiongeneralsixOnetotal" class="textbox"
+          <div class="col"><input ng-value="general.Q4G1S3" class="textbox"
                                   style="border:1px solid #111;text-align: center;" type="number" readonly>
           </div>
         </div>
 
         <div class="row">
           <div class="col">Teachers</div>
-          <div class="col"><input ng-model="general.Q4G2S1" id="questiongeneralsixTwoMale" class="textbox"
+          <div class="col"><input ng-model="general.Q4G2S1" class="textbox"
                                   style="border:1px solid #111;text-align: center;" type="number"
                                   ng-change="updateNumStudents(2);" min="0" step="1"
                                   onkeypress="return isNumberKey(event);"></div>
-          <div class="col"><input ng-model="general.Q4G2S2" id="questiongeneralsixTwoFemale" class="textbox"
+          <div class="col"><input ng-model="general.Q4G2S2" class="textbox"
                                   style="border:1px solid #111;text-align: center;" type="number"
                                   ng-change="updateNumStudents(2);" min="0" step="1"
                                   onkeypress="return isNumberKey(event);"></div>
-          <div class="col"><input ng-value="general.Q4G2S3" id="questiongeneralsixTwototal" class="textbox"
+          <div class="col"><input ng-value="general.Q4G2S3" class="textbox"
                                   style="border:1px solid #111;text-align: center;" type="number" readonly>
           </div>
         </div>
 
         <div class="row">
           <div class="col">Non-teaching Staff</div>
-          <div class="col"><input ng-model="general.Q4G3S1" id="questiongeneralsixThreeMale" class="textbox"
+          <div class="col"><input ng-model="general.Q4G3S1" class="textbox"
                                   style="border:1px solid #111;text-align: center;" type="number"
                                   ng-change="updateNumStudents(3);" min="0" step="1"
                                   onkeypress="return isNumberKey(event);"></div>
-          <div class="col"><input ng-model="general.Q4G3S2" id="questiongeneralsixThreeFemale" class="textbox"
+          <div class="col"><input ng-model="general.Q4G3S2" class="textbox"
                                   style="border:1px solid #111;text-align: center;" type="number"
                                   ng-change="updateNumStudents(3);" min="0" step="1"
                                   onkeypress="return isNumberKey(event);"></div>
-          <div class="col"><input ng-value="general.Q4G3S3" id="questiongeneralsixThreetotal" class="textbox"
+          <div class="col"><input ng-value="general.Q4G3S3" class="textbox"
                                   style="border:1px solid #111;text-align: center;" type="number" readonly>
           </div>
         </div>
@@ -216,8 +216,8 @@
           <ion-list>
 
             <label class="item item-input">
-              <input ng-model="general.Q5G1" type="number" placeholder="Your Answer Here"
-                     id="questiongeneralseven" onkeypress="return isNumberKey(event);">
+              <input ng-model="general.Q5G1" type="number" string-to-number
+                     placeholder="Your Answer Here" onkeypress="return isNumberKey(event);">
             </label>
           </ion-list>
         </div>
@@ -231,8 +231,8 @@
         <div class="list ">
           <ion-list>
             <label class="item item-input">
-              <input ng-model="general.Q5G2" type="number" placeholder="Your Answer Here"
-                     id="questiongeneralseven" onkeypress="return isNumberKey(event);">
+              <input ng-model="general.Q5G2" type="number" string-to-number
+                     placeholder="Your Answer Here" onkeypress="return isNumberKey(event);">
             </label>
           </ion-list>
         </div>
@@ -248,7 +248,7 @@
           <ion-list>
 
             <label class="item item-input">
-              <input ng-model="general.Q6G1" id="questiongeneraleight" type="number"
+              <input ng-model="general.Q6G1" type="number" string-to-number
                      placeholder="Your Answer Here" ng-change="checkQ6()"
                      onkeypress="return isNumberKey(event);">
             </label>
