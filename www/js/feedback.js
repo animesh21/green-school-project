@@ -5,8 +5,12 @@ angular.module('starter.feedback', [])
          $('.progressBarIndicator').css("background", "red");
     });
 
+	 $scope.feedback = {};
+
+	 $scope.progress = 100;
+
 	 $scope.quiz2=function(){
 	 	$state.go('app.quiz2');
 	 	// $window.location.reload(true);
-	 }
+	 };
 });

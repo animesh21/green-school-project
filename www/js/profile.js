@@ -10,8 +10,20 @@ angular.module('starter.profile', [])
       $('.progressBarIndicator').css("background", "red");
     });
 
+    $scope.data = {
+      states: [
+        {id: '1', name: 'Andamean & Nicobar Islands'},
+        {id: '2', name: 'Uttar Pradesh'}
+      ],
+      selectedOption: {id: '2', name: 'Uttar Pradesh'}
+    };
+
     // defining object to store responses of the user to survey questions
-    $scope.profile = {};
+    $scope.profile = {
+      Q5P1: {id: '2', name: 'Uttar Pradesh'}
+    };
+
+    $scope.progress = 5;
 
     $scope.validVal = function (questionID) {
       if ($scope.profile[questionID]) {
@@ -23,11 +35,12 @@ angular.module('starter.profile', [])
     $scope.validQ15 = function () {
       var val1 = $scope.getAbsVal('Q1S1');
       if (val1) {
-        if (+val1 >= 1 && +val1 <= 2) {
+        if (val1 == 3) {
+          $scope.profile.Q2S1 = null;
           return true;
         }
         else if ($scope.getAbsVal('Q2S1')) {
-          return true
+          return true;
         }
       }
       return false;
@@ -43,7 +56,7 @@ angular.module('starter.profile', [])
 
     $scope.saveData = function () {
       AppServiceAPI.sync();
-      angular.forEach(profile, function (item, index) {
+      angular.forEach($scope.profile, function (item, index) {
         AppServiceAPI.update($rootScope.user, index, item, 10, 0);
       });
     };
@@ -51,6 +64,7 @@ angular.module('starter.profile', [])
     $ionicPlatform.ready(function () {
       AppServiceAPI.select(0).then(function (res) {
         if (res.rows.length > 0) {
+          var questionid;
           angular.forEach(res.rows, function (item, index) {
             questionid = res.rows.item(index).questionid;
             //console.log(questionid,res.rows.item(index).answer,item,index);

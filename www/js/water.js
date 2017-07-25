@@ -7,6 +7,78 @@ angular.module('starter.water', [])
       $('.progressBarIndicator').css("background", "red");
     });
 
+    $scope.water = {};
+
+    // function for getting answer values from other sections
+    $scope.getAnswer = function (questionID) {
+      return AppServiceAPI.selectQuestion(questionID).then(function (res) {
+        if (res.rows.length > 0) {
+          var row = res.rows[0];
+          var answer = row.answer;
+          return answer;
+        }
+      }, function (err) {
+        return err;
+        console.error('Error in db: ' + JSON.stringify(err));
+      });
+    };
+
+    // Validation functions start
+    $scope.validateTeacher = function (section) {
+      var qFirstName, qLastName, qEmail, isValid;
+      for(var i = 1; i <= 3; i++) {
+        qFirstName = 'Q1' + section + i + 'S1';
+        qLastName = 'Q1' + section + i + 'S3';
+        qEmail = 'Q1' + section + i + 'S2';
+        isValid = $scope.validVal(qFirstName) && $scope.validVal(qEmail) &&
+          $scope.validVal(qLastName);
+        if (isValid) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    $scope.validateStudent = function (section) {
+      var qFirstName, qLastName, qGrade, isValid;
+      for (var i = 1; i <= 10; i++) {
+        qFirstName = 'Q3' + section + i + 'S1';
+        qLastName = 'Q3' + section + i + 'S2';
+        qGrade = 'Q3' + section + i + 'S3';
+        isValid = $scope.validVal(qFirstName) && $scope.validVal(qLastName) &&
+          $scope.validVal(qGrade);
+        if (isValid) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    $scope.validVal = function (questionID) {
+      if ($scope.water[questionID]) {
+        return true;
+      }
+      return false;
+    };
+
+    $scope.getAbsVal = function (questionID) {
+      return parseFloat($scope.water[questionID]) || 0;
+    };
+
+
+    $scope.validNext = function () {
+      return $scope.validateTeacher('W') && $scope.validateStudent('W');
+    };
+
+
+    $scope.progress = 50;
+
+    $scope.readMore = {};
+
+    $scope.toggleReadMore = function (n) {
+      $scope.readMore[n] = 1 - ($scope.readMore[n] || 0);
+    };
+
     $scope.tutorialURL = $sce.trustAsResourceUrl('https://www.youtube.com/embed/Wh2INoQoaMw?enablejsapi=1');
 
     $scope.iFrameID = 'waterFrame';
@@ -21,7 +93,7 @@ angular.module('starter.water', [])
 
     $scope.openModal = function () {
       console.log("openModal");
-      $scope.modal.show()
+      $scope.modal.show();
     };
 
     $scope.closeModal = function () {

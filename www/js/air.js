@@ -1,8 +1,11 @@
 angular.module('starter.air', [])
 
   .controller('air1Ctrl', function ($scope, $rootScope, $state, $window, $stateParams, AppServiceAPI, $ionicModal, $ionicPlatform, $ionicPopup, $sce) {
+    'use strict';
 
     $scope.air = {};
+
+    $scope.progress = 10;
 
     $scope.roomRange = [];
 
@@ -48,8 +51,7 @@ angular.module('starter.air', [])
       return AppServiceAPI.selectQuestion(questionID).then(function (res) {
         if (res.rows.length > 0) {
           var row = res.rows[0];
-          var answer = row['answer'];
-          return answer;
+          return row.answer;
         }
       }, function (err) {
         return err;
@@ -66,156 +68,37 @@ angular.module('starter.air', [])
     };
 
     $scope.getAbsVal = function (questionID) {
-      return $scope.air[questionID] || 0;
+      return parseInt($scope.air[questionID]) || 0;
     };
 
-    $scope.validateTeacher = function () {
-      var teacherName1 = $scope.air.Q1A1S1;
-      var teacherName2 = $scope.air.Q1A2S1;
-      var teacherName3 = $scope.air.Q1A3S1;
-
-      var teacherEmail1 = $scope.air.Q1A1S2;
-      var teacherEmail2 = $scope.air.Q1A2S2;
-      var teacherEmail3 = $scope.air.Q1A3S2;
-
-      var teacherDetail1 = teacherName1 && teacherEmail1;
-      var teacherDetail2 = teacherName2 && teacherEmail2;
-      var teacherDetail3 = teacherName3 && teacherEmail3;
-
-      return teacherDetail1 || teacherDetail2 || teacherDetail3
+    $scope.validateTeacher = function (section) {
+      var qFirstName, qLastName, qEmail, isValid;
+      for(var i = 1; i <= 3; i++) {
+        qFirstName = 'Q1' + section + i + 'S1';
+        qLastName = 'Q1' + section + i + 'S3';
+        qEmail = 'Q1' + section + i + 'S2';
+        isValid = $scope.validVal(qFirstName) && $scope.validVal(qEmail) &&
+          $scope.validVal(qLastName);
+        if (isValid) {
+          return true;
+        }
+      }
+      return false;
     };
 
-    $scope.validStaff = function () {
-      var staffName1 = $scope.air.Q2A1S1;
-      var staffName2 = $scope.air.Q2A2S1;
-      var staffName3 = $scope.air.Q2A3S1;
-      var staffName4 = $scope.air.Q2A4S1;
-      var staffName5 = $scope.air.Q2A5S1;
-
-      var staffEmail1 = $scope.air.Q2A1S2;
-      var staffEmail2 = $scope.air.Q2A2S2;
-      var staffEmail3 = $scope.air.Q2A3S2;
-      var staffEmail4 = $scope.air.Q2A4S2;
-      var staffEmail5 = $scope.air.Q2A5S2;
-
-      var staffDetail1 = staffName1 && staffEmail1;
-      var staffDetail2 = staffName2 && staffEmail2;
-      var staffDetail3 = staffName3 && staffEmail3;
-      var staffDetail4 = staffName4 && staffEmail4;
-      var staffDetail5 = staffName5 && staffEmail5;
-
-      return staffDetail1 || staffDetail2 || staffDetail3 || staffDetail4 || staffDetail5
-    };
-
-    $scope.validateStudent = function () {
-      var studentName1 = $scope.air.Q3A1S1;
-      var studentName2 = $scope.air.Q3A2S1;
-      var studentName3 = $scope.air.Q3A3S1;
-      var studentName4 = $scope.air.Q3A4S1;
-      var studentName5 = $scope.air.Q3A5S1;
-      var studentName6 = $scope.air.Q3A6S1;
-      var studentName7 = $scope.air.Q3A7S1;
-      var studentName8 = $scope.air.Q3A8S1;
-      var studentName9 = $scope.air.Q3A9S1;
-      var studentName10 = $scope.air.Q3A10S1;
-
-      var studentEmail1 = $scope.air.Q3A1S2;
-      var studentEmail2 = $scope.air.Q3A2S2;
-      var studentEmail3 = $scope.air.Q3A3S2;
-      var studentEmail4 = $scope.air.Q3A4S2;
-      var studentEmail5 = $scope.air.Q3A5S2;
-      var studentEmail6 = $scope.air.Q3A5S2;
-      var studentEmail7 = $scope.air.Q3A5S2;
-      var studentEmail8 = $scope.air.Q3A5S2;
-      var studentEmail9 = $scope.air.Q3A5S2;
-      var studentEmail10 = $scope.air.Q3A5S2;
-
-      var studentGrade1 = $scope.air.Q3A1S3;
-      var studentGrade2 = $scope.air.Q3A2S3;
-      var studentGrade3 = $scope.air.Q3A3S3;
-      var studentGrade4 = $scope.air.Q3A4S3;
-      var studentGrade5 = $scope.air.Q3A5S3;
-      var studentGrade6 = $scope.air.Q3A5S3;
-      var studentGrade7 = $scope.air.Q3A5S3;
-      var studentGrade8 = $scope.air.Q3A5S3;
-      var studentGrade9 = $scope.air.Q3A5S3;
-      var studentGrade10 = $scope.air.Q3A5S3;
-
-      var studentDetail1 = studentEmail1 && studentGrade1 && studentName1;
-      var studentDetail2 = studentEmail2 && studentGrade2 && studentName2;
-      var studentDetail3 = studentEmail3 && studentGrade3 && studentName3;
-      var studentDetail4 = studentEmail4 && studentGrade4 && studentName4;
-      var studentDetail5 = studentEmail5 && studentGrade5 && studentName5;
-      var studentDetail6 = studentEmail6 && studentGrade6 && studentName6;
-      var studentDetail7 = studentEmail7 && studentGrade7 && studentName7;
-      var studentDetail8 = studentEmail8 && studentGrade8 && studentName8;
-      var studentDetail9 = studentEmail9 && studentGrade9 && studentName9;
-      var studentDetail10 = studentEmail10 && studentGrade10 && studentName10;
-
-      var n1, n2, n3, n4, n5, n6, n7, n8, n9, n10;
-      if (studentDetail1) {
-        n1 = 1;
+    $scope.validateStudent = function (section) {
+      var qFirstName, qLastName, qGrade, isValid;
+      for (var i = 1; i <= 10; i++) {
+        qFirstName = 'Q3' + section + i + 'S1';
+        qLastName = 'Q3' + section + i + 'S2';
+        qGrade = 'Q3' + section + i + 'S3';
+        isValid = $scope.validVal(qFirstName) && $scope.validVal(qLastName) &&
+          $scope.validVal(qGrade);
+        if (isValid) {
+          return true;
+        }
       }
-      else {
-        n1 = 0;
-      }
-      if (studentDetail2) {
-        n2 = 1;
-      }
-      else {
-        n2 = 0;
-      }
-      if (studentDetail3) {
-        n3 = 1;
-      }
-      else {
-        n3 = 0;
-      }
-      if (studentDetail4) {
-        n4 = 1;
-      }
-      else {
-        n4 = 0;
-      }
-      if (studentDetail5) {
-        n5 = 1;
-      }
-      else {
-        n5 = 0;
-      }
-      if (studentDetail6) {
-        n6 = 1;
-      }
-      else {
-        n6 = 0;
-      }
-      if (studentDetail7) {
-        n7 = 1;
-      }
-      else {
-        n7 = 0;
-      }
-      if (studentDetail8) {
-        n8 = 1;
-      }
-      else {
-        n8 = 0;
-      }
-      if (studentDetail9) {
-        n9 = 1;
-      }
-      else {
-        n9 = 0;
-      }
-      if (studentDetail10) {
-        n10 = 1;
-      }
-      else {
-        n10 = 0;
-      }
-      var sum = n1 + n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9 + n10;
-
-      return sum >= 5;
+      return false;
     };
 
     $scope.getQuestionID = function (n1, n2, n3) {
@@ -229,7 +112,7 @@ angular.module('starter.air', [])
       var qID4 = $scope.getQuestionID(n1, n2, 4);
       var totRowArea = $scope.air[qID2];
       var openRowArea = $scope.air[qID3];
-      console.log('Inside Q5check: area:' + totRowArea + ', ' + openRowArea)
+      console.log('Inside Q5check: area:' + totRowArea + ', ' + openRowArea);
       if (+openRowArea > +totRowArea) {
         $scope.showPopup('Alert', "Open area can't be greater than total area!");
         $scope.air[qID3] = totRowArea;
@@ -240,13 +123,13 @@ angular.module('starter.air', [])
         3: 0
       };
       for (var i = 2; i <= 3; i++) {
-        for (var j = 1; j <= $scope.air['Q4A1']; j++) {
+        for (var j = 1; j <= $scope.air.Q4A1; j++) {
           totColArea[i] = (totColArea[i] || 0) + $scope.getAbsVal($scope.getQuestionID(5, j, i))
         }
       }
-      $scope.air['Q5A110S2'] = totColArea[2];
-      $scope.air['Q5A110S3'] = totColArea[3];
-      $scope.air['Q5A110S4'] = $scope.air['Q5A110S3'] / $scope.air['Q5A110S2'] * 100;
+      $scope.air.Q5A110S2 = totColArea[2];
+      $scope.air.Q5A110S3 = totColArea[3];
+      $scope.air.Q5A110S4 = $scope.air.Q5A110S3 / $scope.air.Q5A110S2 * 100;
     };
 
     $scope.validateQ5 = function () {
@@ -262,7 +145,7 @@ angular.module('starter.air', [])
     };
 
     $scope.updateQ5Rows = function () {
-      var numRooms = parseInt($scope.air['Q4A1']);
+      var numRooms = parseInt($scope.air.Q4A1);
       var range = [];
       var minVal = 1;
       var maxVal;
@@ -299,6 +182,7 @@ angular.module('starter.air', [])
     };
 
     $scope.updateQ6C = function (type) {
+      console.log('inside update 6C');
 
       var numQues = [1, 2, 3, 4];
       var quesPrefix = 'Q6A2S3';
@@ -328,6 +212,7 @@ angular.module('starter.air', [])
             $scope.air[qID] = 0;
             $scope.showPopup('Alert', "Sum of vehicles can't be greater" +
               " than total no. of vehicles of this type.");
+            $scope.updateQ6C(type);
             break;
           }
 
@@ -338,13 +223,13 @@ angular.module('starter.air', [])
 
     $scope.validateQ6 = function () {
       var val = $scope.getAbsVal('Q6A1');
-      if(val) {
+      if (val) {
         if (val >= 1 && val <= 2) {
           return true;
         }
         else {
           return $scope.validateQ6A() && $scope.validateQ6B() &&
-                 $scope.validateQ6C() && $scope.validateQ6D();
+            $scope.validateQ6C() && $scope.validateQ6D();
         }
       }
     };
@@ -368,27 +253,39 @@ angular.module('starter.air', [])
     };
 
     $scope.validateQ6D = function () {
-      if ($scope.getAbsVal('Q6A3')){
-        return true;
+      if ($scope.validVal('Q6A3')) {
+        return $scope.validVal('Q6A3S1');
       }
       return false;
     };
 
     $scope.updateQ7 = function (n) {
-      var quesPrefix = 'Q7A' + n + 'S';
-      var rowTotal = 0;
-      for (var i = 1; i <= 3; i++) {
-        rowTotal += $scope.getAbsVal(quesPrefix + i);
-      }
-      $scope.air[quesPrefix + 4] = rowTotal;
+      // updating the concerned row total
+      $scope.updateQ7Row(n);
 
+      // updating the columns
       var qID;
       var val;
       var colTotals = [0, 0, 0, 0];
+      var maxColTotals = [
+        $scope.air.Q4G1S3,
+        $scope.air.Q4G2S3,
+        $scope.air.Q4G3S3,
+        $scope.air.Q4G4S3
+      ];
       for (var j = 0; j <= 3; j++) {
-        for (i = 1; i <=11; i++) {
+        for (var i = 1; i <= 11; i++) {
           qID = 'Q7A' + i + 'S' + (j + 1);
           val = $scope.getAbsVal(qID);
+          if ((colTotals[j] + val) > maxColTotals[j]) {
+            val = 0;
+            $scope.air[qID] = val;
+            $scope.updateQ7Row(n);
+            $scope.showPopup('Alert', "Sum of this column" +
+              " can't be greater than the value entered in" +
+              " general section i.e. " + maxColTotals[j]);
+            break;
+          }
           colTotals[j] += val;
         }
         qID = 'Q7A12S' + (j + 1);
@@ -396,35 +293,57 @@ angular.module('starter.air', [])
       }
     };
 
-    // TODO validation with cross linking
+    $scope.updateQ7Row = function (n) {
+      var quesPrefix = 'Q7A' + n + 'S';
+      var rowTotal = 0;
+      for (var i  = 1; i <= 3; i++) {
+        rowTotal += $scope.getAbsVal(quesPrefix + i);
+      }
+      $scope.air[quesPrefix + 4] = rowTotal;
+    };
+
     $scope.validateQ7 = function () {
-      // return $ionicPlatform.ready(function () {
-      //   var qIDs1 = ['Q7A12S1', 'Q7A12S2', 'Q7A12S3'];
-      //   var qIDs2 = ['Q4G1S3', 'Q4G2S3', 'Q4G3S3'];  // question ids of general section for cross validation
-      //   var val1 = [];
-      //   var val2 = [];
-      //   for ( var i = 0; i < qIDs1.length; i++) {
-      //     val1.push($scope.getAbsVal(qIDs1[i]));
-      //     $scope.getAnswer(qIDs2[i]).then(function (res) {
-      //       val2.push($scope.getAbsVal(res));
-      //     });
-      //   }
-      //   console.log('arr1: ' + JSON.stringify(val1));
-      //   console.log('arr2: ' + JSON.stringify(val2));
-      //   return true;
-      // }, function (err) {
-      //   return err;
-      // });
-      return true;
+      var numTotal, numTotalAir;
+      $ionicPlatform.ready(function () {
+        $scope.getAnswer('Q4G4S3').then(function (res) {
+          console.log('Num total: ' + res);
+          numTotal = parseInt(res);
+          numTotalAir = $scope.getAbsVal('Q7A12S4');
+          if (numTotal != numTotalAir) {
+            $scope.showPopup('Alert', "Total population of school entered above in Q.4 doesn't match with " +
+              "total population entered in General section Q.4(a) i.e. " + numTotal);
+          }
+          else {
+            $scope.quiz2($scope.air);
+          }
+        });
+      });
+    };
+
+    $scope.checkQ8 = function () {
+      var qID = 'Q8A1';
+      var val1 = $scope.getAbsVal(qID);
+      var val2;
+      $ionicPlatform.ready(function () {
+        $scope.getAnswer('Q4G1S3').then(function (res) {
+          val2 = parseInt(res);
+          if (val1 > val2) {
+            $scope.air.Q8A1 = val2;
+
+            $scope.showPopup('Alert', "This value can't be greater than total" +
+              " no. of students entered in the General section i.e. " +  val2);
+          }
+        });
+      });
     };
 
     $scope.validateQ9 = function () {
       var val = $scope.getAbsVal('Q9A1');
       if (val) {
-        if(val == 1) {
+        if (val == 1) {
           return true;
         }
-        else if (val == 2){
+        else if (val == 2) {
           return $scope.validVal('Q10A1');
         }
       }
@@ -432,16 +351,47 @@ angular.module('starter.air', [])
     };
 
     $scope.validNext = function () {
-      return $scope.validateTeacher() && $scope.validateStudent() &&
-             $scope.validVal('Q4A1') && $scope.validateQ5() &&
-             $scope.validateQ6() && $scope.validateQ7() &&
-             $scope.validVal('Q8A1') && $scope.validateQ9();
+      return $scope.validateTeacher('A') && $scope.validateStudent('A') &&
+        $scope.validVal('Q4A1') && $scope.validateQ5() &&
+        $scope.validateQ6() &&
+        $scope.validVal('Q8A1') && $scope.validateQ9();
+      // return true;
+    };
+
+    $scope.updatePage = function () {
+      $scope.updateQ5Rows();
+      $scope.setQ4G();
+    };
+
+    $scope.setQ4G = function () {
+      $ionicPlatform.ready(function () {
+        $scope.getAnswer('Q4G4S3').then(function (res) {
+          console.log('Value fo Q4G4S3(total population): ' + res);
+          $scope.air.Q4G4S3 = parseInt(res);
+        });
+        // student's population
+        $scope.getAnswer('Q4G1S3').then(function (res2) {
+          $scope.air.Q4G1S3 = parseInt(res2);
+          console.log('Students population: ' + res2);
+        });
+        // teacher's population
+        $scope.getAnswer('Q4G2S3').then(function (res3) {
+          $scope.air.Q4G2S3 = parseInt(res3);
+          console.log('Teachers population: ' + res3);
+        });
+        // other staff population
+        $scope.getAnswer('Q4G3S3').then(function (res4) {
+          $scope.air.Q4G3S3 = parseInt(res4);
+          console.log('Other staff: ' + res4);
+        });
+
+      });
     };
     // end validation functions
 
     $scope.saveData = function (data) {
       angular.forEach(data, function (item, index) {
-        AppServiceAPI.update($rootScope.user, index, item, 10, 1);
+        AppServiceAPI.update($rootScope.user, index, item, 10, 2);
       });
       AppServiceAPI.sync();
     };
@@ -472,7 +422,7 @@ angular.module('starter.air', [])
 
         if (res.rows.length > 0) {
           angular.forEach(res.rows, function (item, index) {
-            questionid = res.rows.item(index).questionid;
+            var questionid = res.rows.item(index).questionid;
             //console.log(questionid,res.rows.item(index).answer,item,index);
             $scope.air[questionid] = res.rows.item(index).answer;
           });
@@ -487,8 +437,9 @@ angular.module('starter.air', [])
       $scope.data = {};
 
       $scope.quiz2 = function (air) {
+
         angular.forEach(air, function (item, index) {
-          AppServiceAPI.update($rootScope.user, index, item, 10, 2)
+          AppServiceAPI.update($rootScope.user, index, item, 10, 2);
         });
         // AppServiceAPI.select(2).then(function(res) {
 
@@ -510,18 +461,5 @@ angular.module('starter.air', [])
         AppServiceAPI.sync();
         $state.go('app.energy');
       };
-
-      $scope.showPopup = function (title, message) {
-        var popup = $ionicPopup.show({
-          title: title,
-          template: message,
-          buttons: [
-            {
-              'text': 'OK'
-            }
-          ]
-        })
-      };
-
     });
   });

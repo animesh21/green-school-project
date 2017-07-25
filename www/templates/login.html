@@ -11,8 +11,9 @@
             <div style="padding-right:10px;padding-left: 10px; ">
                 <hr/>
             </div>
-<!--            <form name="loginuser" novalidate> -->
+            <!--            <form name="loginuser" novalidate> -->
             <form name="loginuser" ng-submit="submitForm(user)">
+
                 <div class="list list-inset">
                     <label class="item item-input">
                         <input id="user" type="email" name="usenEmail" ng-model="user.email"
@@ -21,6 +22,7 @@
                     </label>
                     <!--div ng-show="loginuser.usenEmail.$invalid && !loginuser.usenEmail.$pristine" class="error-message" style="color:#F0755B">Invalid Username or Email</div-->
                 </div>
+
                 <div class="list list-inset">
                     <label class="item item-input">
                         <input id="pass" type="password" ng-model="user.password" maxlength="10" minlength="5"
@@ -52,10 +54,10 @@
 
 
                 </div>
+
             </form>
 
         </div>
-        <div style="padding-top: 3%"></div>
         <div class="list  background-color txt-align text-white fs-12" style="padding-top: 8%;padding-bottom: 6%">
             Copyright @ 2017 Centre for Science and Environment
         </div>

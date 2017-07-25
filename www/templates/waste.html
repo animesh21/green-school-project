@@ -11,8 +11,9 @@
         </div>
 
         <div class="row" style="padding-top: 0px;padding-bottom: 0px">
-            <progress id="progressbar" max="100" value="87.5" class="progress"></progress>
+            <progress id="progressbar" max="100" value="{{ progress }}" class="progress"></progress>
         </div>
+        <p style="text-align: center">Progress: {{ progress }}% </p>
 
         <ion-scroll direction="y" class="theroot">
             <div class="padding-bottom content" style="text-align: justify;">To understand water, it is important to
@@ -24,7 +25,7 @@
 
                 The unit of measurement to be used in the Water section is Litre (L).
             </div>
-            <input type="hidden" id="token"/>
+
             <div class="padding-bottom content fs-16">
                 Task 2: How much water does your school use?
             </div>

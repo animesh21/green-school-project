@@ -48,9 +48,8 @@ angular.module('starter.home', [])
           template: 'The field of environment education is dogged by a very fundamental contradiction. While everyone, everywhere, asserts the importance of ‘learning to live sustainably’, environment remains a peripheral issue in the formal schooling system'
 
         });
-
-
       }
+
       else if (cat == '2') {
         var alertPopup = $ionicPopup.alert({
           // title: '<p>GENERAL<p>',
@@ -126,7 +125,7 @@ angular.module('starter.home', [])
     };
 
     $scope.profile = function () {
-      $state.go('app.profile')
+      $state.go('app.profile');
     };
 
     $scope.onGeneral = function (cat) {
@@ -135,7 +134,7 @@ angular.module('starter.home', [])
           template: 'If your school has classes from Grade 6 to 11, your response will be lowest level of grade: Grade 6 and Highest level of grade: Grade 11. If your school has only one Grade (Grade 7) then your response for both will be Grade 7'
         });
       }
-    }
+    };
 
     $scope.general = function () {
       // $window.location.reload(true);

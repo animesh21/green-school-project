@@ -1,4 +1,4 @@
-<ion-view title="School Profile" ng-controller="profileCtrl">
+<ion-view title="School Profile" ng-controller="profileCtrl" ng-init="console.log('Inside profile init');">
     <script type="text/javascript">
         function isNumberKey(evt) {
             var charCode = (evt.which) ? evt.which : event.keyCode;
@@ -16,8 +16,9 @@
         </div>
 
         <div class="row" style="padding-top: 0px;padding-bottom: 0px">
-            <progress id="progressbar" max="100" value="12.5" class="progress"></progress>
+            <progress id="progressbar" max="100" value="{{ progress }}" class="progress"></progress>
         </div>
+        <p style="text-align: center">Progress: {{ progress }}% </p>
 
         <ion-scroll direction="y" class="theroot">
 
@@ -68,9 +69,10 @@
                     <div class="input-label fs-12">
                         5. State:
                     </div>
-                    <select class="fs-12" ng-value="profile.Q5P1" disabled>
-                        <option selected ng-value="profile.Q5P1">{{ profile.Q5P1 }}Uttar Pradesh</option>
-                        <option checked="{{ general.Q5P1 == 1 }}" ng-value="'1'"></option>
+                    <select class="fs-12" ng-options="option.name for option in data.states track by option.id"
+                            ng-model="profile.Q5P1" disabled>
+                        <!--<option selected ng-value="profile.Q5P1">{{ profile.Q5P1 }}Uttar Pradesh</option>
+                        <option checked="{{ general.Q5P1 == 1 }}" ng-value="'1'"></option> -->
                     </select>
                 </label>
             </div>
@@ -212,7 +214,7 @@
                 </ion-item>
             </div>
 
-            <div class="card" ng-show="profile['Q1S1'] >= 3">
+            <div class="card" ng-show="profile.Q1S1 != 3">
                 <div class="item item-text-wrap item-borderless">
                     16. How many shifts does your school have?:
                 </div>

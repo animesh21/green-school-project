@@ -11,7 +11,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
   'starter.help', 'starter.menu', 'starter.login', 'ngCordova',
   'starter.home', 'starter.home2', 'starter.profile', 'starter.general',
   'starter.air', 'starter.energy', 'starter.food', 'starter.land', 'starter.water',
-  'starter.waste', 'starter.feedback', 'starter.api'])
+  'starter.waste', 'starter.feedback', 'starter.api', 'starter.validation'])
 
   .run(function ($ionicPlatform, $cordovaSQLite, $window, $rootScope) {
 
@@ -35,14 +35,11 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
 
       var db = null;
       if (window.cordova) {
-        console.log('reached android');
         db = $cordovaSQLite.openDB({name: "quiz.db", location: 'default'}); //device
       }
       else {
-        console.log('reached browser');
         db = window.openDatabase("quiz.db", '1', 'my', 1024 * 1024 * 100); // browser
       }
-      //db = $window.openDB("quiz.db");
       $cordovaSQLite.execute(db, "drop table gsp_answers");
       $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS gsp_answers (userid integer NOT NULL,questionid varchar(100) PRIMARY KEY,answer varchar(100),score integer,type integer)");
       $cordovaSQLite.execute(db, "DELETE FROM gsp_answers");

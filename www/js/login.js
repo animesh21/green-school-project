@@ -1,9 +1,16 @@
 angular.module('starter.login', [])
-  .controller('loginCtrl', function ($scope, $rootScope, $state, $stateParams, $cordovaInAppBrowser, $http, $ionicLoading, AppServiceAPI, $ionicPopup) {
+  .controller('loginCtrl', function ($scope, $rootScope, $state, $stateParams, $cordovaInAppBrowser, $http, $ionicLoading, AppServiceAPI, $ionicPopup, $q) {
 
     $scope.show = function () {
       $ionicLoading.show({
         template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+      });
+    };
+
+    $scope.showLoading = function (message) {
+      $ionicLoading.show({
+        template: '<p>Loading...</p><ion-spinner></ion-spinner><p>' +
+                  message + '</p>'
       });
     };
 
@@ -40,7 +47,7 @@ angular.module('starter.login', [])
             'text': 'OK'
           }
         ]
-      })
+      });
     };
 
     /////////////////////login form submission////////
@@ -108,7 +115,11 @@ angular.module('starter.login', [])
     //       });
 
     // }
+
     $scope.submitForm = function (user) {
+      // list of all promises
+      var promises = [];
+
       $scope.show();
 
       var email = user.email.replace("@", "-");
@@ -126,16 +137,40 @@ angular.module('starter.login', [])
             $state.go('login');
           }
           else {
-            $rootScope.data = response['data']['data'];
-            angular.forEach($rootScope.data, function (item, index) {
-              $rootScope.user = item['user'];
-              AppServiceAPI.insert(item['user'], index, item['Answer'], item['score'], item['type']);
-              //console.log(index, item);
-              // console.log('User after login in rootScope: ' + JSON.stringify($rootScope.user));
-              // console.log('Data after login in rootScope: ' + JSON.stringify($rootScope.data));
+            $rootScope.data = response.data.data;
+            angular.forEach($rootScope.data, function (answerObj, quesID) {
+              // create a $q deffered promise
+              var deferred = $q.defer();
+
+              console.log(JSON.stringify(quesID));
+              console.log(JSON.stringify(answerObj));
+              if (answerObj.type == '0') {
+                console.log('Answer: ' + JSON.stringify(answerObj.Answer));
+              }
+              $rootScope.user = answerObj.user;
+              AppServiceAPI.insert(answerObj.user, quesID, answerObj.Answer, answerObj.score, answerObj.type).then(function (res) {
+
+                // promise successfully resolved
+                deferred.resolve(res);
+              }, function (err) {
+                $scope.hide();
+                console.error('Error inserting data: ' + JSON.stringify(err));
+
+              });
+
+              // add to the list of promises
+              promises.push(deferred.promise);
             });
+
             $scope.hide();
             $state.go('app.home');
+
+            $scope.showLoading('Please wait while syncing the database');
+
+            $q.all(promises).then(function (results) {
+              $scope.hide();
+              $scope.showPopup('Done', 'Your survey data is now synced to the portal');
+            });
             //AppServiceAPI.
             //$rootScope.select();
           }
@@ -143,5 +178,5 @@ angular.module('starter.login', [])
           $scope.hide();
           console.error('Error in the response: ' + JSON.stringify(error));
         });
-    }
+    };
   });

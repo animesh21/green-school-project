@@ -1,4 +1,15 @@
-<ion-view title="Food">
+<ion-view title="Food" ng-controller="foodCtrl">
+
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            return !(charCode > 31 && (charCode < 48 || charCode > 57));
+        }
+        function isDecimalNumber(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            return !(charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57));
+        }
+    </script>
 
     <ion-content scroll="false">
 
@@ -11,36 +22,61 @@
         </div>
 
         <div class="row" style="padding-top: 0px;padding-bottom: 0px">
-            <progress id="progressbar" max="100" value="50" class="progress"></progress>
+            <progress id="progressbar" max="100" value="{{ progress }}" class="progress"></progress>
         </div>
+        <p style="text-align: center">Progress: {{ progress }}% </p>
 
         <ion-scroll direction="y" class="theroot">
             <form name="data">
 
                 <div class="list" style="margin-left: 5px;margin-right: 5px">
                     <strong>Task 1: Choose your Food Audit Team</strong><br>
-                    You would require at least 5 to 10 of your schoolmates in the Food audit team. The teacher
-                    co-ordinator
-                    may be a science or home science teacher or midday meal in-charge with an interest in food and
-                    nutrition. Do include the canteen in-charge in your audit team.
-
+                    <p>
+                        You would
+                        <span ng-show="!readMore[1]">...</span>
+                        <span ng-show="readMore[1]">
+                            require at least 5 to 10 of your schoolmates in the Food audit team.
+                            The teacher co-ordinator may be a science or home science teacher or
+                            midday meal in-charge with an interest in food and nutrition. Do
+                            include the canteen in-charge in your audit team.
+                        </span>
+                        <a ng-click="toggleReadMore(1)">
+                            <span ng-show="!readMore[1]">Read More</span>
+                            <span ng-show="readMore[1]">Read Less</span>
+                        </a>
+                    </p>
                 </div>
 
                 <div class="card">
                     <div class="item item-text-wrap item-borderless">
                         Teachers (maximum of three teachers can be part of the team):
                     </div>
+                    <span class="validation-error" ng-hide="validateTeacher('F')">
+                        Please enter details of at least 1 teacher
+                    </span>
+
+                    <div class="row ">
+                        <div class="col col-10"></div>
+                        <div class="col">First Name</div>
+                        <div class="col">Last Name</div>
+                        <div class="col"> Email ID</div>
+                    </div>
+
 
                     <div class="row ">
                         <div class="col col-10">1</div>
                         <div class="col">
                             <input ng-model="food.Q1F1S1" name="oneName" class="textbox"
-                                   style="border:1px solid #111;text-align: center;" type="text" id="foodoneName">
+                                   style="border:1px solid #111;text-align: center;" type="text">
+                        </div>
+                        <div class="col">
+                            <input ng-model="food.Q1F1S3" name="oneNameLast" class="textbox"
+                                   style="border:1px solid #111;text-align: center;" type="text">
                         </div>
                         <div class="col">
                             <input ng-model="food.Q1F1S2" class="textbox"
                                    style="border:1px solid #111;text-align: center;"
-                                   type="text" id='foodoneEmail'>
+                                   type="email" id='foodoneEmail'>
                         </div>
                     </div>
 
@@ -49,9 +85,11 @@
                         <div class="col"><input ng-model="food.Q1F2S1" class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"
                                                 id='foodtwoName'></div>
+                        <div class="col"><input ng-model="food.Q1F2S3" class="textbox"
+                                                style="border:1px solid #111;text-align: center;"
+                                                type="text"></div>
                         <div class="col"><input ng-model="food.Q1F2S2" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"
-                                                id='foodtwoEmail'></div>
+                                                style="border:1px solid #111;text-align: center;" type="email"></div>
                     </div>
 
                     <div class="row ">
@@ -59,8 +97,11 @@
                         <div class="col"><input ng-model="food.Q1F3S1" class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"
                                                 id='foodthreeName'></div>
+                        <div class="col"><input ng-model="food.Q1F3S3" class="textbox"
+                                                style="border:1px solid #111;text-align: center;"
+                                                type="text"></div>
                         <div class="col"><input ng-model="food.Q1F3S2" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"
+                                                style="border:1px solid #111;text-align: center;" type="email"
                                                 id='foodthreeEmail'></div>
                     </div>
                 </div>
@@ -72,24 +113,30 @@
 
                     <div class="row ">
                         <div class="col col-10"></div>
-                        <div class="col">Name</div>
-                        <div class="col"> Email id</div>
+                        <div class="col">First Name</div>
+                        <div class="col">Last Name</div>
+                        <div class="col"> Email ID</div>
                     </div>
 
                     <div class="row ">
                         <div class="col col-10">1</div>
                         <div class="col"><input ng-model="food.Q2F1S1" id='questionfoodtwoOneName' class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
-                        <div class="col"><input ng-model="food.Q2F1S2" id='questionfoodtwoOneEmail' class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="food.Q2F1S3" class="textbox"
+                                                style="border:1px solid #111;text-align: center;"
+                                                type="text"></div>
+                        <div class="col"><input ng-model="food.Q2F1S2" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="email"></div>
                     </div>
 
                     <div class="row ">
                         <div class="col col-10">2</div>
                         <div class="col"><input ng-model="food.Q2F2S1" id='questionfoodtwoTwoName' class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
-                        <div class="col"><input ng-model="food.Q2F2S2" id='questionfoodtwoTwoEmail' class="textbox"
+                        <div class="col"><input ng-model="food.Q2F2S3" class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="food.Q2F2S2" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="email"></div>
                     </div>
 
 
@@ -97,24 +144,30 @@
                         <div class="col col-10">3</div>
                         <div class="col"><input ng-model="food.Q2F3S1" id='questionfoodtwoThreeName' class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
-                        <div class="col"><input ng-model="food.Q2F3S2" id='questionfoodtwoThreeEmail' class="textbox"
+                        <div class="col"><input ng-model="food.Q2F3S3" class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="food.Q2F3S2" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="email"></div>
                     </div>
 
                     <div class="row ">
                         <div class="col col-10">4</div>
                         <div class="col"><input ng-model="food.Q2F4S1" id='questionfoodtwoFourName' class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
-                        <div class="col"><input ng-model="food.Q2F4S2" id='questionfoodtwoFourEmail' class="textbox"
+                        <div class="col"><input ng-model="food.Q2F4S3" class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="food.Q2F4S2" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="email"></div>
                     </div>
 
                     <div class="row ">
                         <div class="col col-10">5</div>
                         <div class="col"><input ng-model="food.Q2F5S1" id='questionfoodtwoFiveName' class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
-                        <div class="col"><input ng-model="food.Q2F5S2" id='questionfoodtwoFiveEmail' class="textbox"
+                        <div class="col"><input ng-model="food.Q2F5S3" class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="food.Q2F5S2" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="email"></div>
                     </div>
                 </div>
 
@@ -122,12 +175,14 @@
                     <div class="item item-text-wrap item-borderless">
                         Students (maximum of ten students can be part of the team):
                     </div>
-
+                    <span class="validation-error" ng-hide="validateStudent('F')">
+                        Please enter details of at least 1 student.
+                    </span>
                     <div class="row ">
                         <div class="col col-10"></div>
-                        <div class="col">Name</div>
-                        <div class="col"> Email id</div>
-                        <div class="col"> Grade/Class</div>
+                        <div class="col">First Name</div>
+                        <div class="col">Last Name</div>
+                        <div class="col"> Grade</div>
                     </div>
 
                     <div class="row ">
@@ -149,7 +204,6 @@
                         <div class="col"><input ng-model="food.Q3F2S3" id='questionfoodthreeTwoGrade' class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
                     </div>
-
 
                     <div class="row ">
                         <div class="col col-10">3</div>
@@ -223,28 +277,24 @@
 
                     <div class="row ">
                         <div class="col col-10">10</div>
-                        <div class="col"><input ng-model="food.Q3F10S1" id='questionfoodthreeTenName' class="textbox"
+                        <div class="col"><input ng-model="food.Q3F10S1" class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
-                        <div class="col"><input ng-model="food.Q3F10S2" id='questionfoodthreeTenEmail' class="textbox"
+                        <div class="col"><input ng-model="food.Q3F10S2" class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
-                        <div class="col"><input ng-model="food.Q3F10S3" id='questionfoodthreeTenGrade' class="textbox"
+                        <div class="col"><input ng-model="food.Q3F10S3" class="textbox"
                                                 style="border:1px solid #111;text-align: center;" type="text"></div>
                     </div>
                 </div>
 
                 <div class="padding-bottom content fs-16">
-
                     Task 2: Find out about the food service in your school?
                 </div>
 
                 <div class="card">
                     <div class="item item-text-wrap item-borderless">
-                        1.Does your school have a provision/space to sell packaged food items within the campus?
+                        1. Does your school have a provision/space to sell packaged food items within the campus?
                     </div>
-
-
-                    <div class="row ">
-
+                    <div class="row " style="padding-left: 20px">
                         <div class="col fs-12">
                             <input ng-model="food.Q4F1" id="questionfoodfour" type="radio" ng-value="'Y'"
                                    name="a">&nbsp;<span style="position:absolute"> Yes</span>
@@ -253,9 +303,7 @@
                             <input ng-model="food.Q4F1" id="questionfoodfour" type="radio" ng-value="'N'"
                                    name="a">&nbsp;<span style="position:absolute">No</span>
                         </div>
-
                     </div>
-
                 </div>
 
                 <div class="card">
@@ -274,12 +322,118 @@
                         </div>
 
                     </div>
-
+                    <div class="list" style="margin-left: 5px;margin-right: 5px" ng-show="food.Q5F1 == 'Y'">
+                        <strong>Please upload picture of Mid-day meal being served</strong><br>
+                        <input ng-model="food.QF2S1" type="file" id="questionfoodsix">
+                    </div>
                 </div>
 
-                <div class="list" style="margin-left: 5px;margin-right: 5px">
-                    <strong>Please upload picture of Mid-day meal being served</strong><br>
-                    <input ng-model="food.QF2S1" type="file" id="questionfoodsix">
+                <div class="card" ng-show="food.Q5F1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        2(a) If yes, then midday meal is served under:
+                    </div>
+
+                    <ion-item class="fs-14 item-text-wrap">
+                        <input ng-model="food.Q5F1S1" type="radio" ng-value="'1'" name="c"><span
+                            style="position:absolute">&nbsp; Government Scheme </span>
+                    </ion-item>
+                    <ion-item class="fs-14 item-text-wrap">
+                        <input ng-model="food.Q5F1S1" type="radio" ng-value="'2'" name="c"><span
+                            style="position:absolute">&nbsp; School’s personal initiative </span>
+                    </ion-item>
+                    <ion-item class="fs-14 item-text-wrap">
+                        <input ng-model="food.Q5F1S1" type="radio" ng-value="'3'" name="c"><span
+                            style="position:absolute">&nbsp; Others </span>
+                    </ion-item>
+                </div>
+
+                <div class="card" ng-show="food.Q5F1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        2(b) What kind of food items are served in midday meal?
+                    </div>
+                    <div class="row" ng-repeat="(num, meal) in midDayMeals">
+                        <div class="col col-33">
+                            <span>{{ num }}. {{ meal }}</span>
+                        </div>
+                        <div class="col">
+                            <input ng-model="food[getQ5ID(num)]" type="radio" ng-value="'Y'" name="{{ num }}">
+                            <span>Yes</span>
+                        </div>
+                        <div class="col">
+                            <input ng-model="food[getQ5ID(num)]" type="radio" ng-value="'N'" name="{{ num }}">
+                            <span>No</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" ng-show="food.Q5F1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        2(b)(1) How many students out of total student population
+                        avail the midday meal services provided?
+                    </div>
+                    <div class="item-input">
+                        <input type="number" ng-change="updateQ5F3()" onkeypress="return isNumberKey(event);" class="textbox" min="0" step="1"
+                               ng-model="food.Q5F3" placeholder="Your Answer Here" string-to-number>
+                    </div>
+                </div>
+
+                <div class="card" ng-show="food.Q5F1 == 'N'">
+                    <div class="item item-text-wrap item-borderless">
+                        2(a) Do students bring their own lunch from home?
+                    </div>
+                    <div class="row " style="padding-left: 20px">
+                        <div class="col fs-12">
+                            <input ng-model="food.Q5F1S1" type="radio" ng-value="'Y'"
+                                   name="d">&nbsp;<span style="position:absolute"> Yes</span>
+                        </div>
+                        <div class="col fs-12">
+                            <input ng-model="food.Q5F1S1" type="radio" ng-value="'N'"
+                                   name="d">&nbsp;<span style="position:absolute">No</span>
+                        </div>
+                    </div>
+                    <div class="list" style="margin-left: 5px;margin-right: 5px" ng-show="food.Q5F1S1 == 'Y'">
+                        <strong>Please upload photographs of lunch boxes</strong><br>
+                        <input ng-model="food.QF2S1" type="file" id="questionfoodsix">
+                    </div>
+                </div>
+
+                <div class="card" ng-show="food.Q5F1 == 'N' && food.Q5F1S1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        2(a)(1)  How many students out of total student population
+                        bring home-made lunch?
+                    </div>
+                    <div class="item-input">
+                        <input type="number" ng-change="checkQ5F1S2()" onkeypress="return isNumberKey(event);" class="textbox" min="0" step="1"
+                               ng-model="food.Q5F1S2" placeholder="Your Answer Here" string-to-number>
+                    </div>
+                </div>
+
+                <div class="card" ng-show="food.Q5F1 == 'N' && food.Q5F1S1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        2(a)(2) Of the students who bring lunch from home, how many
+                        bring packaged food?
+                    </div>
+                    <div class="item-input">
+                        <input type="number" ng-change="checkQ5F1S3()" onkeypress="return isNumberKey(event);" class="textbox" min="0" step="1"
+                               ng-model="food.Q5F1S3" placeholder="Your Answer Here" string-to-number>
+                    </div>
+                </div>
+
+                <div class="card" ng-show="food.Q5F1 == 'N' && food.Q5F1S1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        2(a)(3) Do teachers have the responsibility to ensure that students
+                        are carrying lunch from home?
+                    </div>
+                    <div class="row " style="padding-left: 20px">
+                        <div class="col fs-12">
+                            <input ng-model="food.Q5F1S4" type="radio" ng-value="'Y'"
+                                   name="e">&nbsp;<span style="position:absolute"> Yes</span>
+                        </div>
+                        <div class="col fs-12">
+                            <input ng-model="food.Q5F1S4" type="radio" ng-value="'N'"
+                                   name="e">&nbsp;<span style="position:absolute">No</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="list" style="margin-left: 5px;margin-right: 5px">
@@ -300,100 +454,132 @@
                     </div>
 
                     <div class="row ">
-                        <div class="col">Savoury snacks and similar packaged food like chips, Kurkure, Cheetos, potato
-                            crisps, corn snacks, nuts and seeds, etc
+                        <div class="col">
+                            <p>
+                                Savoury snacks and similar packaged food
+                                <span ng-show="!readMore[2]">...</span>
+                                <span ng-show="readMore[2]">
+                                    like chips, Kurkure, Cheetos,
+                                    potato crisps, corn snacks, nuts and seeds, etc.
+                                </span>
+                                <a ng-click="toggleReadMore(2)">
+                                    <span ng-show="!readMore[2]">Read More</span>
+                                    <span ng-show="readMore[2]">Read Less</span>
+                                </a>
+                            </p>
                         </div>
-                        <div class="col"><input ng-model="food.Q6F1S1" id="questionfoodsevenOnePlease" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
-                        <div class="col"><input ng-model="food.Q6F1S2" id="questionfoodsevenOneTotal" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
-                        <div class="col"><input ng-model="food.Q6F1S3" id="questionfoodsevenOneMonth" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="food.Q6F1S1" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
+                        <div class="col"><input ng-model="food.Q6F1S2" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
+                        <div class="col"><input ng-model="food.Q6F1S3" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                     </div>
 
                     <div class="row ">
-                        <div class="col">Instant Noodles like Knorr, Cup-a-noodles, Top Ramen, Wai-wai, Yippee, Foodles,
-                            Maggi, etc
+                        <div class="col">
+                            <p>
+                                Instant Noodles
+                                <span ng-show="!readMore[3]">...</span>
+                                <span ng-show="readMore[3]">
+                                    like Maggi, Knorr, Cup-a-noodles, Top Ramen, Wai-wai,
+                                    Yippee, Foodles, etc.
+                                </span>
+                                <a ng-click="toggleReadMore(3)">
+                                    <span ng-show="!readMore[3]">Read More</span>
+                                    <span ng-show="readMore[3]">Read Less</span>
+                                </a>
+                            </p>
                         </div>
-                        <div class="col"><input ng-model="food.Q6F1S1" id="questionfoodsevenTwoPlease" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                        <div class="col"><input ng-model="food.Q6F2S1" id="questionfoodsevenTwoPlease" class="textbox"
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F2S2" id="questionfoodsevenTwoTotal" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F2S3" id="questionfoodsevenTwoMonth" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                     </div>
-
 
                     <div class="row ">
                         <div class="col">Potato fries and burgers</div>
                         <div class="col"><input ng-model="food.Q6F3S1" id="questionfoodsevenThreePlease" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F3S2" id="questionfoodsevenThreeTotal" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F3S3" id="questionfoodsevenThreeMonth" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                     </div>
 
                     <div class="row ">
-                        <div class="col">Confectionery items (chocolate, candies, gums)</div>
+                        <div class="col">
+                            <p>
+                                Confectionery items
+                                <span ng-show="!readMore[4]">...</span>
+                                <span ng-show="readMore[4]">
+                                    like chocolate, candies, gums.
+                                </span>
+                                <a ng-click="toggleReadMore(4)">
+                                    <span ng-show="!readMore[4]">Read More</span>
+                                    <span ng-show="readMore[4]">Read Less</span>
+                                </a>
+                            </p>
+                        </div>
                         <div class="col"><input ng-model="food.Q6F4S1" id="questionfoodsevenFourPlease" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F4S2" id="questionfoodsevenFourTotal" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F4S3" id="questionfoodsevenFourMonth" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                     </div>
 
                     <div class="row ">
                         <div class="col">Ice cream</div>
                         <div class="col"><input ng-model="food.Q6F5S1" id="questionfoodsevenFivePlease" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F5S2" id="questionfoodsevenFiveTotal" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F5S3" id="questionfoodsevenFiveMonth" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                     </div>
 
                     <div class="row ">
                         <div class="col">Carbonated beverages</div>
                         <div class="col"><input ng-model="food.Q6F6S1" id="questionfoodsevenSixPlease" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F6S2" id="questionfoodsevenSixTotal" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F6S3" id="questionfoodsevenSixMonth" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                     </div>
 
                     <div class="row ">
                         <div class="col">Sugar sweetened non-carbonated beverages</div>
                         <div class="col"><input ng-model="food.Q6F7S1" id="questionfoodsevenSevenPlease" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F7S2" id="questionfoodsevenSevenTotal" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F7S3" id="questionfoodsevenSevenMonth" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                     </div>
 
                     <div class="row ">
                         <div class="col">Packaged/bottled nimboo paani/lassi/flavoured milk</div>
                         <div class="col"><input ng-model="food.Q6F8S1" id="questionfoodsevenEightPlease" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F8S2" id="questionfoodsevenEightTotal" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F8S3" id="questionfoodsevenEightMonth" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                     </div>
 
                     <div class="row ">
                         <div class="col">Packaged/bottled energy drinks</div>
                         <div class="col"><input ng-model="food.Q6F9S1" id="questionfoodsevenNinePlease" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F9S2" id="questionfoodsevenNineTotal" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                         <div class="col"><input ng-model="food.Q6F9S3" id="questionfoodsevenNineMonth" class="textbox"
-                                                style="border:1px solid #111;text-align: center;" type="text"></div>
+                                                style="border:1px solid #111;text-align: center;" type="number" min="0" step="1" onkeypress="return isNumberKey(event);" string-to-number></div>
                     </div>
-
 
                 </div>
 
@@ -410,15 +596,82 @@
 
                         <div class="col fs-12">
                             <input ng-model="food.Q7F1" id="questionfoodnine" type="radio" ng-value="'Y'"
-                                   name="c">&nbsp;<span style="position:absolute"> Yes</span>
+                                   name="f">&nbsp;<span style="position:absolute"> Yes</span>
                         </div>
                         <div class="col fs-12">
                             <input ng-model="food.Q7F1" id="questionfoodnine" type="radio" ng-value="'N'"
-                                   name="c">&nbsp;<span style="position:absolute">No</span>
+                                   name="f">&nbsp;<span style="position:absolute">No</span>
                         </div>
 
                     </div>
 
+                </div>
+
+                <div class="card" ng-show="food.Q7F1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        4(a) Please provide the details:
+                    </div>
+                    <div class="row ">
+                        <div class="col col-33">
+                            <b>Traditional Indian Snacks</b>
+                        </div>
+                        <div class="col">
+                            <b>Number of servings sold when on the menu</b>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col col-33">Samosa</div>
+                        <div class="col">
+                            <input ng-model="food.Q7F1S1" class="textbox"
+                                   style="border:1px solid #111;text-align: center;"
+                                   type="number" onkeypress="return isNumberKey(event);" string-to-number min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col col-33">Idli/vada and sambhar</div>
+                        <div class="col">
+                            <input ng-model="food.Q7F1S2" class="textbox"
+                                   style="border:1px solid #111;text-align: center;"
+                                   type="number" onkeypress="return isNumberKey(event);" string-to-number min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col col-33">Pav bhaji</div>
+                        <div class="col">
+                            <input ng-model="food.Q7F1S3" class="textbox"
+                                   style="border:1px solid #111;text-align: center;"
+                                   type="number" onkeypress="return isNumberKey(event);" string-to-number min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col col-33">Momos</div>
+                        <div class="col">
+                            <input ng-model="food.Q7F1S4" class="textbox"
+                                   style="border:1px solid #111;text-align: center;"
+                                   type="number" onkeypress="return isNumberKey(event);" string-to-number min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col col-33">Others</div>
+                        <div class="col">
+                            <input ng-model="food.Q7F1S5" class="textbox"
+                                   style="border:1px solid #111;text-align: center;"
+                                   type="number" onkeypress="return isNumberKey(event);" string-to-number min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span>Please upload picture of traditional food items sold in canteen</span>
+                        <input type="file">
+                    </div>
+                </div>
+
+                <div class="card" ng-show="food.Q7F1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        4(b) Give descriptions for rare local snacks served in your school:
+                    </div>
+                    <div class="item-input row">
+                        <input type="text" ng-model="food.Q7F3S1">
+                    </div>
                 </div>
 
                 <div class="card">
@@ -426,23 +679,75 @@
                         5. Does your school serve traditional Indian beverages?
                     </div>
                     <div class="row " style="padding-left: 20px">
-
                         <div class="col fs-12">
                             <input ng-model="food.Q8F1" id="questionfoodten" type="radio" ng-value="'Y'"
-                                   name="d">&nbsp;<span style="position:absolute"> Yes</span>
+                                   name="g">&nbsp;<span style="position:absolute"> Yes</span>
                         </div>
                         <div class="col fs-12">
                             <input ng-model="food.Q8F1" id="questionfoodten" type="radio" ng-value="'N'"
-                                   name="d">&nbsp;<span style="position:absolute">No</span>
+                                   name="g">&nbsp;<span style="position:absolute">No</span>
                         </div>
 
                     </div>
 
                 </div>
 
-                <div class="padding-bottom content fs-16">
+                <div class="card" ng-show="food.Q8F1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        5(a) Please provide details:
+                    </div>
+                    <div class="row ">
+                        <div class="col col-33">
+                            <b>Traditional Indian Beverages</b>
+                        </div>
+                        <div class="col">
+                            <b>Number of servings sold when on the menu</b>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col col-33">Nimbu Pani</div>
+                        <div class="col">
+                            <input ng-model="food.Q8F1S1" class="textbox"
+                                   style="border:1px solid #111;text-align: center;"
+                                   type="number" onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col col-33">Sweet Lassi</div>
+                        <div class="col">
+                            <input ng-model="food.Q8F1S2" class="textbox"
+                                   style="border:1px solid #111;text-align: center;"
+                                   type="number" onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col col-33">Salted butter milk</div>
+                        <div class="col">
+                            <input ng-model="food.Q8F1S3" class="textbox"
+                                   style="border:1px solid #111;text-align: center;"
+                                   type="number" onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col col-33">Aam Panna</div>
+                        <div class="col">
+                            <input ng-model="food.Q8F1S4" class="textbox"
+                                   style="border:1px solid #111;text-align: center;"
+                                   type="number" onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col col-33">Others</div>
+                        <div class="col">
+                            <input ng-model="food.Q8F1S5" class="textbox"
+                                   style="border:1px solid #111;text-align: center;"
+                                   type="number" onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number onkeypress="return isNumberKey(event);" string-to-number min="0" step="1">
+                        </div>
+                    </div>
+                </div>
 
-                    Task 4: What kind of food does your school promote?
+                <div class="list" style="margin-left: 5px;margin-right: 5px">
+                    <strong> Task 4: What kind of food does your school promote?</strong>
                 </div>
 
                 <div class="card">
@@ -455,15 +760,24 @@
 
                         <div class="col fs-12">
                             <input ng-model="food.Q9F1" id="questionfoodeleven" type="radio" ng-value="'Y'"
-                                   name="e">&nbsp;<span style="position:absolute"> Yes</span>
+                                   name="h">&nbsp;<span style="position:absolute"> Yes</span>
                         </div>
                         <div class="col fs-12">
                             <input ng-model="food.Q9F1" id="questionfoodeleven" type="radio" ng-value="'N'"
-                                   name="e">&nbsp;<span style="position:absolute">No</span>
+                                   name="h">&nbsp;<span style="position:absolute">No</span>
                         </div>
 
                     </div>
 
+                </div>
+
+                <div class="card" ng-show="food.Q9F1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        6(a) Please provide details:
+                    </div>
+                    <div class="item-input">
+                        <input type="text" class="textbox" ng-model="food.Q9F2" placeholder="Your Answer Here">
+                    </div>
                 </div>
 
                 <div class="card">
@@ -471,18 +785,25 @@
                         7. Does the school distribute chocolates/similar products as refreshments during schools events?
                     </div>
                     <div class="row " style="padding-left: 20px">
-
                         <div class="col fs-12">
-                            <input ng-model="food.Q10F1" id="questionfoodtwelve" type="radio" ng-value="'Y'" name="f">&nbsp;<span
+                            <input ng-model="food.Q10F1" id="questionfoodtwelve" type="radio" ng-value="'Y'" name="i">&nbsp;<span
                                 style="position:absolute"> Yes</span>
                         </div>
                         <div class="col fs-12">
-                            <input ng-model="food.Q10F1" id="questionfoodtwelve" type="radio" ng-value="'N'" name="f">&nbsp;<span
+                            <input ng-model="food.Q10F1" id="questionfoodtwelve" type="radio" ng-value="'N'" name="i">&nbsp;<span
                                 style="position:absolute">No</span>
                         </div>
-
                     </div>
 
+                </div>
+
+                <div class="card" ng-show="food.Q10F1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        7(a) Please provide the names:
+                    </div>
+                    <div class="item-input">
+                        <input type="text" class="textbox" ng-model="food.Q10F2" placeholder="Your Answer Here">
+                    </div>
                 </div>
 
                 <div class="card">
@@ -491,38 +812,139 @@
                         companies/brands?
                     </div>
                     <div class="row " style="padding-left: 20px">
-
                         <div class="col fs-12">
-                            <input ng-model="food.Q11F1" id="questionfoodthirteen" type="radio" ng-value="'Y'" name="g">&nbsp;<span
+                            <input ng-model="food.Q11F1" type="radio" ng-value="'Y'" name="j">&nbsp;<span
                                 style="position:absolute"> Yes</span>
                         </div>
                         <div class="col fs-12">
-                            <input ng-model="food.Q11F1" id="questionfoodthirteen" type="radio" ng-value="'N'" name="g">&nbsp;<span
-                                style="position:absolute">No</span>
+                            <input ng-model="food.Q11F1" type="radio" ng-value="'N'" name="j">&nbsp;<span
+                                style="position:absolute"> No</span>
                         </div>
+                    </div>
+                </div>
 
+                <div class="card" ng-show="food.Q11F1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        8(a) Please provide the names of sponsers:
+                    </div>
+                    <div class="item-input">
+                        <input type="text" class="textbox" ng-model="food.Q11F2" placeholder="Your Answer Here">
+                    </div>
+                </div>
+
+                <div class="card" ng-show="food.Q11F1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        8(b) Are their banners, brochures, hoardings, stalls etc. put up during the events?
+                    </div>
+                    <div class="row " style="padding-left: 20px">
+                        <div class="col fs-12">
+                            <input ng-model="food.Q11F3" type="radio" ng-value="'Y'" name="k">&nbsp;<span
+                                style="position:absolute"> Yes</span>
+                        </div>
+                        <div class="col fs-12">
+                            <input ng-model="food.Q11F3" type="radio" ng-value="'N'" name="k">&nbsp;<span
+                                style="position:absolute"> No</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="list" style="margin-left: 5px;margin-right: 5px">
+                    <strong>Please upload pictures of events sponsored by UPPF companies</strong><br>
+                    <input ng-model="food.F11S1" type="file">
+                </div>
+
+                <div class="list" style="margin-left: 5px;margin-right: 5px">
+                    <strong> Task 5: School Initiatives? </strong>
+                </div>
+
+                <div class="card">
+                    <div class="item item-text-wrap item-borderless">
+                        9 Does your school measure height and weight of all the students?
+                    </div>
+                    <div class="row " style="padding-left: 20px">
+                        <div class="col fs-12">
+                            <input ng-model="food.Q12F1" type="radio" ng-value="'Y'" name="l">&nbsp;<span
+                                style="position:absolute"> Yes</span>
+                        </div>
+                        <div class="col fs-12">
+                            <input ng-model="food.Q12F1" type="radio" ng-value="'N'" name="l">&nbsp;<span
+                                style="position:absolute"> No</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" ng-show="food.Q12F1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        9(a) How regularly is height and weight of the students measured?:
+                    </div>
+                    <ion-item class="fs-14 item-text-wrap">
+                        <input ng-model="food.Q12F2" type="radio" ng-value="'1'" name="m"><span
+                            style="position:absolute">&nbsp;Monthly</span>
+                    </ion-item>
+                    <ion-item class="fs-14 item-text-wrap">
+                        <input ng-model="food.Q12F2" type="radio" ng-value="'2'" name="m"><span
+                            style="position:absolute">&nbsp;Quarterly</span>
+                    </ion-item>
+                    <ion-item class="fs-14 item-text-wrap">
+                        <input ng-model="food.Q12F2" type="radio" ng-value="'3'" name="m"><span
+                            style="position:absolute">&nbsp;Bi-annually</span>
+                    </ion-item>
+                    <ion-item class="fs-14 item-text-wrap">
+                        <input ng-model="food.Q12F2" type="radio" ng-value="'4'" name="m"><span
+                            style="position:absolute">&nbsp;Annually</span>
+                    </ion-item>
+                </div>
+
+                <div class="card">
+                    <div class="item item-text-wrap item-borderless">
+                        10 Is cooking part of any regular subjects or extracurricular activities?
+                    </div>
+                    <div class="row " style="padding-left: 20px">
+                        <div class="col fs-12">
+                            <input ng-model="food.Q13F1" type="radio" ng-value="'Y'" name="n">&nbsp;<span
+                                style="position:absolute"> Yes</span>
+                        </div>
+                        <div class="col fs-12">
+                            <input ng-model="food.Q13F1" type="radio" ng-value="'N'" name="n">&nbsp;<span
+                                style="position:absolute"> No</span>
+                        </div>
                     </div>
 
                 </div>
 
+                <div class="card" ng-show="food.Q13F1 == 'Y'">
+                    <div class="item item-text-wrap item-borderless">
+                        10(a) Please share the details:
+                    </div>
+                    <div class="item-input">
+                        <input type="text" class="textbox" ng-model="food.Q13F2" placeholder="Your Answer Here">
+                    </div>
+                </div>
+
                 <div class="list" style="margin-left: 5px;margin-right: 5px">
-                    <strong>Please upload pictures of your Audit Team doing the survey</strong><br>
+                    <strong>
+                        Please upload pictures of your Audit Team doing the survey
+                    </strong>
+                    <br />
                     Please upload all supporting documents related to this section here. Note: files must be in one of
                     the
                     following formats: PDF Document (.pdf), Word Document (.doc, .docx), Image File (.jpg, .jpeg). File
                     size
                     per document should not exceed 500 KB.
-                    <input ng-model="food.Q11F1S1" type="file">
+                    <input ng-model="food.Q11F1S1" type="file" multiple>
                 </div>
 
                 <div class="list card">
                     <!--||questionfood.id==numberOfQuestions-1-->
                     <div class="button-bar">
+                        <a class="button background-color text-white"
+                           ion-chevron-right nav-clear ng-click="goToPrev()">PREV</a>&nbsp;
 
-                        <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1"
-                           ion-chevron-right nav-clear ng-click="quiz2(food)">NEXT</a>
-                        <!-- ng-click="quiz2()" -->
-                        <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
+                        <a class="button background-color text-white" ng-disabled="!validNext()"
+                           ion-chevron-right nav-clear ng-click="quiz2(food)">NEXT</a>&nbsp;
+
+                        <a class="button background-color text-white"
+                           ion-chevron-right nav-clear ng-click="saveData(food)">SAVE</a>
                     </div>
                 </div>
             </form>

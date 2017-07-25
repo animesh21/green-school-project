@@ -2,9 +2,10 @@
 
     <ion-content scroll="false">
         <div class="row" style="padding-top: 0px;padding-bottom: 0px">
-
-            <progress id="progressbar" max="100" value="100" class="progress"></progress>
+            <progress id="progressbar" max="100" value="{{ progress }}" class="progress"></progress>
         </div>
+        <p style="align-content: center">Progress: {{ progress }}% </p>
+
         <ion-scroll direction="y" class="theroot">
             <div class="card">
                 <div class="item item-text-wrap item-borderless">

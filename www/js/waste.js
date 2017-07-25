@@ -6,6 +6,16 @@ angular.module('starter.waste', [])
       $('.progressBarIndicator').css("background", "red");
     });
 
+    $scope.waste = {};
+
+    $scope.progress = 75;
+
+    $scope.readMore = {};
+
+    $scope.toggleReadMore = function (n) {
+      $scope.readMore[n] = 1 - ($scope.readMore[n] || 0);
+    };
+
     $scope.tutorialURL = $sce.trustAsResourceUrl('https://www.youtube.com/embed/CI-iGmii5Yk?enablejsapi=1');
 
     $scope.iFrameID = 'wasteFrame';
