@@ -462,6 +462,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 
 .validation-error {
   color: red;
+  padding: 3%;
 }
 
 .popup-buttons button {
@@ -528,3 +529,20 @@ ul.water-list {
   list-style-type: disc;
   padding-left: 8%;
 }
+
+.badge {
+  background-color: #9b9796;
+  font-size: 19px;
+  display: inline-block;
+  width: 27px;
+  height: 27px;
+  margin-left: 5px;
+  border-radius: 50%;
+  text-align: left;
+  vertical-align: top;
+  line-height: 27px;
+  font-family: 'Lato Bold', sans-serif;
+  font-weight: normal;
+  color: white;
+}
+

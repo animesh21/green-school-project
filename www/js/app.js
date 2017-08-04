@@ -5,6 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
+// server credentials: ssh -i ~/Downloads/GSP-files/access\ keys/gsppem.pem greenschool_u@52.25.148.111 -p 9090
 
 angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
   'starter.quiz2', 'starter.quiz3', 'multipleChoice.services',
@@ -61,6 +62,44 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
       }
     };
   })
+
+  .directive('limitTo', [function () {
+    return {
+      restrict: "A",
+      link: function (scope, elem, attrs) {
+        var limit = parseInt(attrs.limitTo);
+        angular.element(elem).on("keypress", function (e) {
+          if (this.value.length == limit) {
+            e.preventDefault();
+          }
+        });
+      }
+    };
+  }])
+
+  .directive("fileread", [function () {
+    return {
+      scope: {
+        fileread: "="
+      },
+      link: function (scope, element, attributes) {
+        element.bind("change", function (changeEvent) {
+          // scope.$apply(function () {
+          //   scope.fileread = changeEvent.target.files;
+          // });
+          var reader = new FileReader();
+          reader.onload = function (loadEvent) {
+            scope.$apply(function () {
+              scope.fileread = loadEvent.target.result;
+            });
+          };
+          for (var i = 0; i < 1; i++) { //changeEvent.target.files.length; i++) {
+            reader.readAsDataURL(changeEvent.target.files[i]);
+          }
+        });
+      }
+    };
+  }])
 
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider

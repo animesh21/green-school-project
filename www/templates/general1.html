@@ -26,7 +26,9 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    1. How many levels does your school have?
+                    <span>
+                        1. How many levels does your school have<span class="badge" on-hold="showToolTip('Q1')">?</span>
+                    </span>
                 </div>
                 <label class="item item-input item-select">
                     <div class="input-label fs-12">
@@ -66,7 +68,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    3. Which board of education does the school follow ?
+                    3. Which board of education does the school follow<span class="badge" on-hold="showToolTip('Q3')">?</span>
                 </div>
 
                 <ion-item class="fs-14 item-text-wrap">
@@ -109,27 +111,14 @@
                 </ion-item>
             </div>
 
-            <!--<div class="card" ng-show="general.Q3G1==1">
-                <div class="item item-text-wrap item-borderless">
-                    3(a). Select State for board of education:
-                </div>
-
-                <label class="item item-input item-select">
-                    <div class="input-label fs-12">
-                        State:
-                    </div>
-                    <select ng-model="general.Q3G2" class="fs-12" id="questiongeneralfive">
-                        <option selected>Please Choose</option>
-                        <option checked="{{ general.Q3G2 == 1 }}" ng-value="'1'">Uttar Pradesh</option>
-                    </select>
-                </label>
-            </div>
-            -->
-
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    4(a). What is the total permanent population of the school ?
+                    4(a). What is the total permanent population of the school
+                    <span class="badge" on-hold="showToolTip('Q4A')">?</span>
                 </div>
+                <span class="validation-error" ng-hide="validateQ4()">
+                    Please enter student population before proceeding.
+                </span>
 
                 <div class="row">
                     <div class="col"></div>
@@ -213,13 +202,11 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    4(b). How many visitors visit your school ?
+                    4(b). How many visitors visit your school<span class="badge" on-hold="showToolTip('Q4B')">?</span>
                 </div>
 
                 <div class="list ">
-
                     <ion-list>
-
                         <label class="item item-input">
                             <input ng-model="general.Q5G1" type="number" string-to-number
                                    placeholder="Your Answer Here" onkeypress="return isNumberKey(event);">
@@ -245,7 +232,8 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    5. What is the total number of working days of your school in a year?
+                    5. What is the total number of working days of your school in a year
+                    <span class="badge" on-hold="showToolTip('Q5')">?</span>
                 </div>
 
                 <div class="list ">
@@ -336,7 +324,10 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    7. Where is the school located?
+                    <label>
+                        7. Where is the school located
+                        <span class="badge" on-hold="showToolTip('Q7')">?</span>
+                    </label>
                 </div>
                 <div class="row ">
                     <div class="col fs-12">

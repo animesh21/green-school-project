@@ -11,7 +11,8 @@
         }
     </script>
 
-    <ion-content scroll="false" ng-init="updatePage()">
+    <ion-content scroll="false" ng-init="loadPageData()">
+
         <div class="button-bar">
             <a class="button background-color text-white" ion-chevron-right
                nav-clear ng-click="openModal()">
@@ -55,17 +56,19 @@
                 <div class="item item-text-wrap item-borderless">
                     Teachers (maximum of three teachers can be part of the team):
                 </div>
+
                 <span class="validation-error" ng-hide="validateTeacher('A')">
                     Please enter details of at least 1 teacher
                 </span>
-                <div class="row ">
+
+                <div class="row">
                     <div class="col col-10"></div>
                     <div class="col">First Name</div>
                     <div class="col">Last Name</div>
                     <div class="col"> Email ID</div>
                 </div>
 
-                <div class="row ">
+                <div class="row">
                     <div class="col col-10">1</div>
                     <div class="col">
                         <input ng-model="air.Q1A1S1" name="oneName" class="textbox"
@@ -83,7 +86,7 @@
                     </div>
                 </div>
 
-                <div class="row ">
+                <div class="row">
                     <div class="col col-10">2</div>
                     <div class="col"><input ng-model="air.Q1A2S1" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"
@@ -96,8 +99,7 @@
                                             id='twoEmail'></div>
                 </div>
 
-
-                <div class="row ">
+                <div class="row">
                     <div class="col col-10">3</div>
                     <div class="col"><input ng-model="air.Q1A3S1" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"
@@ -118,14 +120,14 @@
                 <!--<span class="validation-error" ng-hide="validStaff()">
                     Please enter details of at least one staff.
                 </span>-->
-                <div class="row ">
+                <div class="row">
                     <div class="col col-10"></div>
                     <div class="col">First Name</div>
                     <div class="col">Last Name</div>
                     <div class="col"> Email ID</div>
                 </div>
 
-                <div class="row ">
+                <div class="row">
                     <div class="col col-10">1</div>
                     <div class="col"><input ng-model="air.Q2A1S1" id='questionairtwoOneName' class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
@@ -395,7 +397,7 @@
                     <div class="col">
                         <input class="textbox" style="border:1px solid #111; text-align: center;"
                                type="number" placeholder="0.0" step="0.01"
-                               ng-value="air['Q5A110S3'] / air['Q5A110S2'] * 100" readonly>
+                               ng-value="air.Q5A110S4" readonly>
                     </div>
                 </div>
             </div>
@@ -465,7 +467,8 @@
 
             <div class="card" ng-show="air['Q6A1'] >= 3">
                 <div class="item item-text-wrap item-borderless">
-                    3(b) Provide details of school-owned motorised vehicles?
+                    3(b) Provide details of school-owned motorised vehicles
+                    <span class="badge" on-hold="showToolTip('Q3B')">?</span>
                 </div>
 
                 <div class="row">
@@ -590,7 +593,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col col-20">Authorised parking available</div>
+                    <div class="col col-20">Authorised parking available<span class="badge" on-hold="showToolTip('Q3B5')">?</span> </div>
                     <div class="col"><input ng-model="air.Q6A2S1B5" class="textbox"
                                             ng-change="updateQ6(5)"
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number
@@ -616,45 +619,75 @@
                                             readonly>
                     </div>
                 </div>
-
                 <div class="row">
-                    <div class="col col-20">Annual road worthiness certificate</div>
-                    <div class="col"><input ng-model="air.Q6A2S1B6" class="textbox"
+                    <div class="col col-20">Annual road worthiness certificate(Yes / No)</div>
+                    <div class="col">
+                        <select ng-model="air.Q6A2S1B6" ng-change="updateQ6B()"
+                                ng-options="option.name for option in data.Q3Options track by option.id"
+                                class="fs-20">
+                        </select>
+
+                        <!--<input ng-model="air.Q6A2S1B6" class="textbox"
                                             ng-change="updateQ6(6)"
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number
                                             onkeypress="return isNumberKey(event);">
+                                            -->
                     </div>
-                    <div class="col"><input ng-model="air.Q6A2S1C6" class="textbox"
+                    <div class="col">
+                        <select ng-model="air.Q6A2S1C6" ng-change="updateQ6B()"
+                                ng-options="option.name for option in data.Q3Options track by option.id"
+                                class="fs-20">
+                        </select>
+
+                        <!--<input ng-model="air.Q6A2S1C6" class="textbox"
                                             ng-change="updateQ6(6)"
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number
                                             onkeypress="return isNumberKey(event);">
+                                            -->
                     </div>
-                    <div class="col"><input ng-model="air.Q6A2S1V6" class="textbox"
+                    <div class="col">
+                        <select ng-model="air.Q6A2S1V6" ng-change="updateQ6B()"
+                                ng-options="option.name for option in data.Q3Options track by option.id"
+                                class="fs-20">
+                        </select>
+
+                        <!--<input ng-model="air.Q6A2S1V6" class="textbox"
                                             ng-change="updateQ6(6)"
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number
                                             onkeypress="return isNumberKey(event);">
+                                            -->
                     </div>
-                    <div class="col"><input ng-model="air.Q6A2S1O6" class="textbox"
+                    <div class="col">
+                        <select ng-model="air.Q6A2S1O6" ng-change="updateQ6B()"
+                                ng-options="option.name for option in data.Q3Options track by option.id"
+                                class="fs-20">
+                        </select>
+
+                        <!--<input ng-model="air.Q6A2S1O6" class="textbox"
                                             ng-change="updateQ6(6)"
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number
                                             onkeypress="return isNumberKey(event);">
+                                            -->
                     </div>
-                    <div class="col"><input ng-value="air.Q6A2S1T6" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number"
-                                            readonly>
+                    <div class="col">
+                        <input ng-value="air.Q6A2S1T6" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="text" readonly>
                     </div>
                 </div>
 
-                <div ng-show="air.Q6A2S1B4" style="padding-left: 20px">
+                <div ng-show="air.Q6A2S1B4 > 0" style="padding-left: 20px">
                     <b>Please upload supporting documents:</b>
                     <label class="col" for="puc">PUC certificates of not more than 5 buses</label>
-                    <input class="col" id="puc" name="puc" type="file" ng-model="air.Q6AFL1" multiple>
+                    <input class="col" id="puc" name="puc" type="file" fileread="air.Q6AFL1" multiple>
+                <!--<button class="button" ng-click="upload('Q6AFL1')">Upload</button>
+                    <button class="button" ng-click="takepic()">Take Picture</button> -->
                 </div>
             </div>
 
             <div class="card" ng-show="air['Q6A1'] >= 3">
                 <div class="item item-text-wrap item-borderless">
                     3(c) Specify the type of fuel used by your school’s vehicles:
+                    <span class="badge" on-hold="showToolTip('Q3C')">?</span>
                 </div>
 
                 <div class="row">
@@ -943,9 +976,9 @@
                 <div ng-show="true" style="padding-left: 20px">
                     <b>Please upload supporting documents:</b>
                     <label class="col" for="fuel">Fuel bills</label>
-                    <input class="col" name="fuel" type="file" ng-model="air.Q6AFL2" multiple>
+                    <input class="col" name="fuel" type="file" fileread="air.Q6AFL2" multiple>
                     <label class="col" for="puc">Pictures of school owned vehicles</label>
-                    <input class="col" name="puc" type="file" ng-model="air.Q6AFL3" multiple>
+                    <input class="col" name="puc" type="file" fileread="air.Q6AFL3" multiple>
                 </div>
             </div>
 
@@ -967,7 +1000,7 @@
 
             <div class="card" ng-show="air['Q6A1'] >= 3 && air['Q6A3'] == 'Y'">
                 <div class="item item-text-wrap item-borderless">
-                    3(d) Is CNG available in your area?
+                    3(e) Is CNG available in your area?
                 </div>
                 <div class="row ">
                     <div class="col fs-12">
@@ -1002,16 +1035,16 @@
             </div>
 
             <div class="card">
-
                 <div class="item item-text-wrap item-borderless">
-                    4. Please specify how many members of the school community use each type of transport:
+                    <span>4. Please specify how many members of the school community use each type of transport:</span>
+                    <span class="badge" on-hold="showToolTip('Q4')">?</span>
                 </div>
 
                 <div class="row">
                     <div class="col col-25">Mode of transport</div>
                     <div class="col">Students</div>
                     <div class="col">Teachers</div>
-                    <div class="col"> Other Staff</div>
+                    <div class="col">Other Staff</div>
                     <div class="col">Total</div>
                 </div>
 
@@ -1204,7 +1237,8 @@
             </div>
 
             <div class="list" style="margin-left: 5px;margin-right: 5px">
-                <strong>Task 5: How good is the air you breathe in your school?</strong><br>
+                <strong>Task 5: How good is the air you breathe in your school?</strong>
+                <span class="badge" on-hold="showToolTip('Q5')">?</span> <br/>
                 <p>
                     The starting point
                     <span ng-show="!readMore[5]">...</span>
@@ -1244,42 +1278,43 @@
                     6. Does the school laboratory have air quality monitoring equipment?
                 </div>
 
-
                 <div class="row ">
                     <div class="col fs-12">
-                        <input ng-model="air.Q9A1" type="radio" ng-value="'1'" name="d">&nbsp;<span
+                        <input ng-model="air.Q9A1" ng-click="checkQ9()" type="radio" ng-value="'Y'" name="d">&nbsp;<span
                             style="position:absolute">Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="air.Q9A1" type="radio" ng-value="'2'" name="d">&nbsp;<span
+                        <input ng-model="air.Q9A1" ng-click="checkQ9()" type="radio" ng-value="'N'" name="d">&nbsp;<span
                             style="position:absolute">No</span>
                     </div>
                 </div>
-                <div ng-show="air.Q9A1 == 1">
-                    <p><b>Upload supporting documents</b></p>
-                    <p>Please upload all supporting documents related to this section here:</p>
-                    <input ng-model="Q9AFL1" type="file" multiple>
-                </div>
-
             </div>
 
-            <div class="card" ng-show="air.Q9A1 == 2">
+            <div class="card" ng-show="air.Q9A1 == 'N'">
                 <div class="item item-text-wrap item-borderless">
                     6(a) If No, is there an air quality monitoring station
                     (private or government) close to your school?
                 </div>
                 <div class="row ">
                     <div class="col fs-12">
-                        <input ng-model="air.Q10A1" type="radio" ng-value="'1'" name="e">&nbsp;<span
+                        <input ng-model="air.Q10A1" type="radio" ng-value="'Y'" name="e">&nbsp;<span
                             style="position:absolute">Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="air.Q10A1" type="radio" ng-value="'2'" name="e">&nbsp;<span
+                        <input ng-model="air.Q10A1" type="radio" ng-value="'N'" name="e">&nbsp;<span
                             style="position:absolute">No</span>
                     </div>
 
                 </div>
 
+            </div>
+
+            <div class="card">
+                <div class="list">
+                    <p><b>Upload supporting documents</b></p>
+                    <p>Please upload all supporting documents related to this section here:</p>
+                    <input fileread="Q9AFL4" type="file" multiple>
+                </div>
             </div>
 
             <div class="list card">

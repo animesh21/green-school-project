@@ -11,7 +11,7 @@
         }
     </script>
 
-    <ion-content scroll="false">
+    <ion-content scroll="false" ng-init="loadPageData()">
 
         <div class="button-bar">
             <a class="button background-color text-white" ion-chevron-right
@@ -287,20 +287,22 @@
                 </div>
 
                 <div class="padding-bottom content fs-16">
-                    Task 2: Find out about the food service in your school?
+                    Task 2: Find out about the food service in your school<span class="badge" on-hold="showToolTip('T2')">?</span>
                 </div>
 
                 <div class="card">
                     <div class="item item-text-wrap item-borderless">
-                        1. Does your school have a provision/space to sell packaged food items within the campus?
+                        1. Does your school have a provision/space to sell
+                        packaged food items within the campus
+                        <span class="badge" on-hold="showToolTip('Q1')">?</span>
                     </div>
                     <div class="row " style="padding-left: 20px">
                         <div class="col fs-12">
-                            <input ng-model="food.Q4F1" id="questionfoodfour" type="radio" ng-value="'Y'"
+                            <input ng-model="food.Q4F1" ng-change="checkQ4()" type="radio" ng-value="'Y'"
                                    name="a">&nbsp;<span style="position:absolute"> Yes</span>
                         </div>
                         <div class="col fs-12">
-                            <input ng-model="food.Q4F1" id="questionfoodfour" type="radio" ng-value="'N'"
+                            <input ng-model="food.Q4F1" ng-change="checkQ4()" type="radio" ng-value="'N'"
                                    name="a">&nbsp;<span style="position:absolute">No</span>
                         </div>
                     </div>
@@ -311,20 +313,18 @@
                         2. Does your school serve midday meals?
                     </div>
                     <div class="row " style="padding-left: 20px">
-
                         <div class="col fs-12">
-                            <input ng-model="food.Q5F1" id="questionfoodfive" type="radio" ng-value="'Y'"
-                                   name="b">&nbsp;<span style="position:absolute"> Yes</span>
+                            <input ng-model="food.Q5F1" ng-change="checkQ5()" type="radio" ng-value="'Y'"
+                                   name="b">&nbsp;<span style="position:absolute">Yes</span>
                         </div>
                         <div class="col fs-12">
-                            <input ng-model="food.Q5F1" id="questionfoodfive" type="radio" ng-value="'N'"
+                            <input ng-model="food.Q5F1" ng-change="checkQ5()" type="radio" ng-value="'N'"
                                    name="b">&nbsp;<span style="position:absolute">No</span>
                         </div>
-
                     </div>
                     <div class="list" style="margin-left: 5px;margin-right: 5px" ng-show="food.Q5F1 == 'Y'">
                         <strong>Please upload picture of Mid-day meal being served</strong><br>
-                        <input ng-model="food.QF2S1" type="file" id="questionfoodsix">
+                        <input fileread="food.QF2S1" type="file">
                     </div>
                 </div>
 
@@ -334,15 +334,15 @@
                     </div>
 
                     <ion-item class="fs-14 item-text-wrap">
-                        <input ng-model="food.Q5F1S1" type="radio" ng-value="'1'" name="c"><span
+                        <input ng-model="food.Q5F1S1" ng-change="checkQ5F1()" type="radio" ng-value="1" name="c"><span
                             style="position:absolute">&nbsp; Government Scheme </span>
                     </ion-item>
                     <ion-item class="fs-14 item-text-wrap">
-                        <input ng-model="food.Q5F1S1" type="radio" ng-value="'2'" name="c"><span
+                        <input ng-model="food.Q5F1S1" ng-change="checkQ5F1()" type="radio" ng-value="2" name="c"><span
                             style="position:absolute">&nbsp; School’s personal initiative </span>
                     </ion-item>
                     <ion-item class="fs-14 item-text-wrap">
-                        <input ng-model="food.Q5F1S1" type="radio" ng-value="'3'" name="c"><span
+                        <input ng-model="food.Q5F1S1" ng-change="checkQ5F1()" type="radio" ng-value="3" name="c"><span
                             style="position:absolute">&nbsp; Others </span>
                     </ion-item>
                 </div>
@@ -438,12 +438,14 @@
 
                 <div class="list" style="margin-left: 5px;margin-right: 5px">
                     <strong> Task 3: What kind of food is served/sold in your school </strong>
+                    <span class="badge" on-hold="showToolTip('T3')">?</span>
 
                 </div>
 
                 <div class="card">
                     <div class="item item-text-wrap item-borderless">
                         3. What kind of food is being served / sold in your school
+                        <span class="badge" on-hold="showToolTip('Q3')">?</span>
                     </div>
 
                     <div class="row ">
@@ -590,7 +592,8 @@
 
                 <div class="card">
                     <div class="item item-text-wrap item-borderless">
-                        4. Does your school serve traditional Indian snacks?
+                        4. Does your school serve traditional Indian snacks
+                        <span class="badge" on-hold="showToolTip('Q4')">?</span>
                     </div>
                     <div class="row " style="padding-left: 20px">
 
@@ -610,6 +613,7 @@
                 <div class="card" ng-show="food.Q7F1 == 'Y'">
                     <div class="item item-text-wrap item-borderless">
                         4(a) Please provide the details:
+                        <span class="badge" on-hold="showToolTip('Q4A')">?</span>
                     </div>
                     <div class="row ">
                         <div class="col col-33">
@@ -676,7 +680,8 @@
 
                 <div class="card">
                     <div class="item item-text-wrap item-borderless">
-                        5. Does your school serve traditional Indian beverages?
+                        5. Does your school serve traditional Indian beverages
+                        <span class="badge" on-hold="showToolTip('Q5')">?</span>
                     </div>
                     <div class="row " style="padding-left: 20px">
                         <div class="col fs-12">
@@ -695,6 +700,7 @@
                 <div class="card" ng-show="food.Q8F1 == 'Y'">
                     <div class="item item-text-wrap item-borderless">
                         5(a) Please provide details:
+                        <span class="badge" on-hold="showToolTip('Q5A')">?</span>
                     </div>
                     <div class="row ">
                         <div class="col col-33">
@@ -773,7 +779,7 @@
 
                 <div class="card" ng-show="food.Q9F1 == 'Y'">
                     <div class="item item-text-wrap item-borderless">
-                        6(a) Please provide details:
+                        6(a) Please provide details:<span class="badge" on-hold="showToolTip('Q6A')">?</span>
                     </div>
                     <div class="item-input">
                         <input type="text" class="textbox" ng-model="food.Q9F2" placeholder="Your Answer Here">
@@ -800,6 +806,7 @@
                 <div class="card" ng-show="food.Q10F1 == 'Y'">
                     <div class="item item-text-wrap item-borderless">
                         7(a) Please provide the names:
+                        <span class="badge" on-hold="showToolTip('Q7A')">?</span>
                     </div>
                     <div class="item-input">
                         <input type="text" class="textbox" ng-model="food.Q10F2" placeholder="Your Answer Here">
@@ -826,6 +833,7 @@
                 <div class="card" ng-show="food.Q11F1 == 'Y'">
                     <div class="item item-text-wrap item-borderless">
                         8(a) Please provide the names of sponsers:
+                        <span class="badge" on-hold="showToolTip('Q8A')">?</span>
                     </div>
                     <div class="item-input">
                         <input type="text" class="textbox" ng-model="food.Q11F2" placeholder="Your Answer Here">
@@ -931,7 +939,7 @@
                     following formats: PDF Document (.pdf), Word Document (.doc, .docx), Image File (.jpg, .jpeg). File
                     size
                     per document should not exceed 500 KB.
-                    <input ng-model="food.Q11F1S1" type="file" multiple>
+                    <input fileread="food.Q11F1S1" type="file" multiple>
                 </div>
 
                 <div class="list card">

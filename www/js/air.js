@@ -1,9 +1,133 @@
 angular.module('starter.air', [])
 
-  .controller('air1Ctrl', function ($scope, $rootScope, $state, $window, $stateParams, AppServiceAPI, $ionicModal, $ionicPlatform, $ionicPopup, $sce) {
-    'use strict';
+  .controller('air1Ctrl', function ($scope, $rootScope, $state, $window, $stateParams, AppServiceAPI, $ionicModal,
+                                    $ionicPlatform, $ionicPopup, $sce, $cordovaFileTransfer, $cordovaFile,
+                                    $cordovaActionSheet, $cordovaCamera) {
 
-    $scope.air = {};
+    //File Upload Code Starts Here
+    $scope.image = null;
+    $scope.URL = null;
+    $scope.editimage = "http://studio-tesseract.co/freesprite/wp-content/uploads/2017/05/demo-150x150.png";
+    $scope.PLAN = '';
+    $scope.PLAN_TEXT = '';
+    $scope.PLAN_COUNT = '';
+    $scope.BUCKET_COUNT = '';
+    $scope.VALUE_COUNT = '';
+    $scope.enable = '';
+    //Set Default Checkbox
+    $scope.category = 18;
+    $scope.takepic = function () {
+      var actionSheetOptions = {
+        title: 'Select a picture/document',
+        buttonLabels: ['Camera', 'Choose from device'],
+        addCancelButtonWithLabel: 'Cancel',
+        androidEnableCancelButton: true
+      };
+      $ionicPlatform.ready(function () {
+        $cordovaActionSheet.show(actionSheetOptions).then(function (btnIndex) {
+          var index = btnIndex;
+          if (index === 2) {
+            $scope.cameraFunc(Camera.PictureSourceType.PHOTOLIBRARY);
+          } else if (index === 1) {
+            $scope.cameraFunc(Camera.PictureSourceType.CAMERA);
+        }
+      });
+
+      });
+    };
+
+    $scope.cameraFunc = function (picType) {
+      var options = {
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: picType,
+        allowEdit: false,
+        targetWidth: 600,
+        targetHeight: 500,
+        encodingType: Camera.EncodingType.JPEG,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: false,
+        correctOrientation: true
+      };
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+        $scope.editimage = "data:image/jpeg;base64," + imageData;
+        $scope.URL = imageData;
+      }, function (err) {
+        console.log(JSON.stringify(err));
+      });
+    };
+
+    $scope.choosepic = function () {
+      var options = {
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        destinationType: Camera.DestinationType.FILE_URI,
+        quality: 400,
+        targetWidth: 400,
+        targetHeight: 400,
+        encodingType: Camera.EncodingType.JPEG,
+        correctOrientation: true
+      };
+      $cordovaCamera.getPicture(options).then(function (imageURI) {
+        // var image = document.getElementById('myImage');
+        $scope.imgURI = "data:image/jpeg;base64," + imageURI;
+        $scope.URL = imageURI;
+        // $scope.image.push($scope.imgURI);
+        //  image.src = imageURI;
+      }, function (err) {
+        // error
+      });
+    };
+
+    var server = 'http://localhost/GSP/upload.php';
+
+    $scope.upload = function (qID) {
+      var fileTarget = $scope.air[qID];
+      var uploadOptions = {
+        fileName: qID + '.jpg'
+      };
+      console.log('File target: ' + fileTarget);
+      $cordovaFileTransfer.upload(server, fileTarget, uploadOptions).then(function (res) {
+        console.log('successfully uploaded the file: ' + JSON.stringify(res));
+      }, function (err) {
+        console.error('Error while uploading file: ' + JSON.stringify(err));
+      });
+    };
+
+    $scope.air = {
+      'Q6A2S1B6': {id: 1, name: 'Yes'},
+      'Q6A2S1C6': {id: 1, name: 'Yes'},
+      'Q6A2S1V6': {id: 1, name: 'Yes'},
+      'Q6A2S1O6': {id: 1, name: 'Yes'}
+    };
+
+    $scope.data = {
+      Q3Options: [
+        {id: 1, name: 'Yes'},
+        {id: 2, name: 'No'}
+      ]
+    };
+
+    $scope.toolTips = {
+      'Q3B': "Schools who uses a combination of school-owned and operator-owned" +
+      " vehicles has to upload information only about school-owned vehicles." +
+      " Do not add any personal vehicles.",
+      'Q3B5': "For parking area, give the number of vehicles (Of the total) that" +
+      " have designated parking areas.",
+      'Q3C': "The below is an indicative list of type of vehicles. If the school" +
+      " has other than these vehicles please provide details in `Others` section.",
+      'Q4': "Frequency of use in a month of a particular mode (write non-applicable" +
+      " in case a mode is not used)",
+      'Q5': "The teacher/coordinator in the team should ask individual class monitors" +
+      " to find out the number of students suffering from asthma, bronchitis " +
+      "and other respiratory-related issues. Record the number in the field " +
+      "given below."
+    };
+
+    // function of displaying tooltip
+    $scope.showToolTip = function (qNo) {
+      var toolTip = $scope.toolTips[qNo];
+      $scope.showPopup('Tool Tip', toolTip);
+    };
 
     $scope.progress = 10;
 
@@ -59,6 +183,39 @@ angular.module('starter.air', [])
       });
     };
 
+    // initializing data on the page
+    $scope.loadPageData = function () {
+      console.log('Updating the air page');
+      $scope.updateQ5Rows();
+      $scope.setQ4G();
+      $scope.updateQ6B();
+    };
+
+    $scope.setQ4G = function () {
+      $ionicPlatform.ready(function () {
+        $scope.getAnswer('Q4G4S3').then(function (res) {
+          console.log('Value fo Q4G4S3(total population): ' + res);
+          $scope.air.Q4G4S3 = parseInt(res);
+        });
+        // student's population
+        $scope.getAnswer('Q4G1S3').then(function (res2) {
+          $scope.air.Q4G1S3 = parseInt(res2);
+          console.log('Students population: ' + res2);
+        });
+        // teacher's population
+        $scope.getAnswer('Q4G2S3').then(function (res3) {
+          $scope.air.Q4G2S3 = parseInt(res3);
+          console.log('Teachers population: ' + res3);
+        });
+        // other staff population
+        $scope.getAnswer('Q4G3S3').then(function (res4) {
+          $scope.air.Q4G3S3 = parseInt(res4);
+          console.log('Other staff: ' + res4);
+        });
+
+      });
+    };
+
     // validation functions
     $scope.validVal = function (questionID) {
       if ($scope.air[questionID]) {
@@ -73,7 +230,7 @@ angular.module('starter.air', [])
 
     $scope.validateTeacher = function (section) {
       var qFirstName, qLastName, qEmail, isValid;
-      for(var i = 1; i <= 3; i++) {
+      for (var i = 1; i <= 3; i++) {
         qFirstName = 'Q1' + section + i + 'S1';
         qLastName = 'Q1' + section + i + 'S3';
         qEmail = 'Q1' + section + i + 'S2';
@@ -112,24 +269,25 @@ angular.module('starter.air', [])
       var qID4 = $scope.getQuestionID(n1, n2, 4);
       var totRowArea = $scope.air[qID2];
       var openRowArea = $scope.air[qID3];
-      console.log('Inside Q5check: area:' + totRowArea + ', ' + openRowArea);
       if (+openRowArea > +totRowArea) {
         $scope.showPopup('Alert', "Open area can't be greater than total area!");
         $scope.air[qID3] = totRowArea;
       }
-      $scope.air[qID4] = $scope.air[qID3] / $scope.air[qID2] * 100;
+      var percentVentilated = $scope.air[qID3] / $scope.air[qID2] * 100;
+      $scope.air[qID4] = percentVentilated.toFixed(2);
       var totColArea = {
         2: 0,
         3: 0
       };
       for (var i = 2; i <= 3; i++) {
         for (var j = 1; j <= $scope.air.Q4A1; j++) {
-          totColArea[i] = (totColArea[i] || 0) + $scope.getAbsVal($scope.getQuestionID(5, j, i))
+          totColArea[i] = (totColArea[i] || 0) + $scope.getAbsVal($scope.getQuestionID(5, j, i));
         }
       }
-      $scope.air.Q5A110S2 = totColArea[2];
-      $scope.air.Q5A110S3 = totColArea[3];
-      $scope.air.Q5A110S4 = $scope.air.Q5A110S3 / $scope.air.Q5A110S2 * 100;
+      $scope.air.Q5A110S2 = totColArea[2].toFixed(2);
+      $scope.air.Q5A110S3 = totColArea[3].toFixed(2);
+      var totPercentVentilated = $scope.air.Q5A110S3 / $scope.air.Q5A110S2 * 100;
+      $scope.air.Q5A110S4 = totPercentVentilated.toFixed(2);
     };
 
     $scope.validateQ5 = function () {
@@ -166,7 +324,7 @@ angular.module('starter.air', [])
       var qID;
       var qID1;
       var totalVehicles = 0;
-      for (var i = 0; i < qIDs.slice(0, -1).length; i++) {
+      for (var i = 0; i < (qIDs.length - 1); i++) {
         qID = qIDs[i] + n;
         qID1 = qIDs[i] + '1';
         var vehicles = $scope.getAbsVal(qID);
@@ -179,6 +337,22 @@ angular.module('starter.air', [])
         totalVehicles += $scope.getAbsVal(qID);
       }
       $scope.air[qIDs[qIDs.length - 1] + n] = totalVehicles;
+    };
+
+    $scope.updateQ6B = function () {
+      var qIDs = ['Q6A2S1B6', 'Q6A2S1C6', 'Q6A2S1V6', 'Q6A2S1O6', 'Q6A2S1T6'];
+      var numYes = 0;
+      var numNo = 0;
+      for (var i = 0; i < (qIDs.length - 1); i++) {
+        var val = $scope.air[qIDs[i]];
+        if (val.id == 1) {
+          numYes += 1;
+        }
+        else if (val.id == 2) {
+          numNo += 1;
+        }
+      }
+      $scope.air[qIDs[qIDs.length - 1]] = numYes.toString() + ' / ' + numNo.toString();
     };
 
     $scope.updateQ6C = function (type) {
@@ -296,7 +470,7 @@ angular.module('starter.air', [])
     $scope.updateQ7Row = function (n) {
       var quesPrefix = 'Q7A' + n + 'S';
       var rowTotal = 0;
-      for (var i  = 1; i <= 3; i++) {
+      for (var i = 1; i <= 3; i++) {
         rowTotal += $scope.getAbsVal(quesPrefix + i);
       }
       $scope.air[quesPrefix + 4] = rowTotal;
@@ -309,7 +483,8 @@ angular.module('starter.air', [])
           console.log('Num total: ' + res);
           numTotal = parseInt(res);
           numTotalAir = $scope.getAbsVal('Q7A12S4');
-          if (numTotal != numTotalAir) {
+
+          if (!isNaN(numTotal) && numTotal !== numTotalAir) {
             $scope.showPopup('Alert', "Total population of school entered above in Q.4 doesn't match with " +
               "total population entered in General section Q.4(a) i.e. " + numTotal);
           }
@@ -331,10 +506,17 @@ angular.module('starter.air', [])
             $scope.air.Q8A1 = val2;
 
             $scope.showPopup('Alert', "This value can't be greater than total" +
-              " no. of students entered in the General section i.e. " +  val2);
+              " no. of students entered in the General section i.e. " + val2);
           }
         });
       });
+    };
+
+    $scope.checkQ9 = function () {
+      var val = $scope.air.Q9A1;
+      if (val === 'Y') {
+        $scope.air.Q10A1 = null;
+      }
     };
 
     $scope.validateQ9 = function () {
@@ -351,41 +533,11 @@ angular.module('starter.air', [])
     };
 
     $scope.validNext = function () {
-      return $scope.validateTeacher('A') && $scope.validateStudent('A') &&
-        $scope.validVal('Q4A1') && $scope.validateQ5() &&
-        $scope.validateQ6() &&
-        $scope.validVal('Q8A1') && $scope.validateQ9();
-      // return true;
-    };
-
-    $scope.updatePage = function () {
-      $scope.updateQ5Rows();
-      $scope.setQ4G();
-    };
-
-    $scope.setQ4G = function () {
-      $ionicPlatform.ready(function () {
-        $scope.getAnswer('Q4G4S3').then(function (res) {
-          console.log('Value fo Q4G4S3(total population): ' + res);
-          $scope.air.Q4G4S3 = parseInt(res);
-        });
-        // student's population
-        $scope.getAnswer('Q4G1S3').then(function (res2) {
-          $scope.air.Q4G1S3 = parseInt(res2);
-          console.log('Students population: ' + res2);
-        });
-        // teacher's population
-        $scope.getAnswer('Q4G2S3').then(function (res3) {
-          $scope.air.Q4G2S3 = parseInt(res3);
-          console.log('Teachers population: ' + res3);
-        });
-        // other staff population
-        $scope.getAnswer('Q4G3S3').then(function (res4) {
-          $scope.air.Q4G3S3 = parseInt(res4);
-          console.log('Other staff: ' + res4);
-        });
-
-      });
+      // return $scope.validateTeacher('A') && $scope.validateStudent('A') &&
+      //   $scope.validVal('Q4A1') && $scope.validateQ5() &&
+      //   $scope.validateQ6() &&
+      //   $scope.validVal('Q8A1') && $scope.validateQ9();
+      return true;
     };
     // end validation functions
 
@@ -433,8 +585,6 @@ angular.module('starter.air', [])
         }
         //return data;
       });
-
-      $scope.data = {};
 
       $scope.quiz2 = function (air) {
 

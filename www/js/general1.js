@@ -11,17 +11,41 @@ angular.module('starter.general', [])
     };
 
     $scope.data = {
-      availableLowerLevels: [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12
-      ],
-      availableHigherLevels: [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12
-      ]
+      availableLowerLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      availableHigherLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     };
 
+    $scope.toolTips = {
+        'Q1': 'If your school has classes from Grade 6 to 11, your response' +
+              ' will be lowest level of grade: Grade 6 and Highest level of grade:' +
+              ' Grade 11. If your school has only one Grade (Grade 7) then your' +
+              ' response for both will be Grade 7',
+        'Q3': "For `Other`: School-specific curriculum board of education, " +
+              "for e.g. `Open Learning` etc.",
+        'Q4A': "Permanent members are students, teachers, non-teaching staff" +
+               " such as technical and administrative staff, guards etc.",
+        'Q4B': "Visitors are students from other schools, teachers from other " +
+               "schools, technicians, NGOs, contractors and laborers, vendors," +
+               " chief guests, etc . Please provide the average number of " +
+               "visitors for any month, between August - October.",
+        'Q5': "On an average, a day scholar school runs for 220-230 days in a year." +
+              " Residential schools may have more number of working days.",
+        'Q7': "Urban area has a municipality/corporation/cantonment board/notified" +
+              " town area, a minimum population of 5000 and a density of population" +
+              " of at least 400 per square kilometer. Any area which is not covered" +
+              " by the definition of Urban is Rural."
+    };
+
+    // function of displaying tooltip
+    $scope.showToolTip = function (qNo) {
+      var toolTip = $scope.toolTips[qNo];
+      $scope.showPopup('Tool Tip', toolTip);
+    };
+
+    // progress corresponding to current section
     $scope.progress = 5;
 
-    // function for getting answer values from other sections
+    // function for getting answer values from other sections(from db)
     $scope.getAnswer = function (questionID) {
       return AppServiceAPI.selectQuestion(questionID).then(function (res) {
         if (res.rows.length > 0) {
@@ -35,7 +59,6 @@ angular.module('starter.general', [])
     };
 
     $scope.setQ1S1 = function () {
-      console.log('setQ1 called');
       $ionicPlatform.ready(function () {
         $scope.getAnswer('Q1S1').then(function (res) {
           console.log('Getting Q1S1: ' + res);
@@ -60,7 +83,7 @@ angular.module('starter.general', [])
     };
 
     $scope.validQ3 = function () {
-      var val = $scope.general['Q3G1'];
+      var val = $scope.general.Q3G1;
       if (val) {
         if (+val == 5) {
           return $scope.validVal('Q3G1O');
@@ -76,45 +99,21 @@ angular.module('starter.general', [])
     };
 
     $scope.checkQ1 = function () {
-      // alert('You changed the select value.');
       var val1 = $scope.general.Q1G1;
       var val2 = $scope.general.Q1G2;
       if (val1 && val2) {
         if (+val1 > +val2) {
-          $scope.showPopup('Alert!', 'Higher level can not be less than lower level');
+          $scope.showPopup('Alert!', 'Higher level can not be less than the lower level');
           $scope.general.Q1G2 = val1;
         }
-        if (val1 < 5 && val2 <= 5) {
-          $scope.promptQ1();
+        if (val1 <= 5 && val2 <= 5) {
+          $scope.general.Q10G1 = 2;  // GSP audit for primary section
         }
+        else {
+          $scope.general.Q10G1 = 1;  // Regular GSP audit
+        }
+        console.log('Primary updated: ' + $scope.general.Q10G1);
       }
-    };
-
-    $scope.promptQ1 = function () {
-      $scope.general.Q10G1 = 2;
-      // var myPopup = $ionicPopup.show({
-      //   template: '<input type="radio" ng-model="general.Q10G1" ng-value="1" name="e">' +
-      //   '<span>Regular GSP Audit</span>' +
-      //   '<input type="radio" ng-model="general.Q10G1" ng-value="2" name="e">' +
-      //   '<span>GSP Audit for primary sections</span>',
-      //   title: 'Please select',
-      //   subTitle: '<p class="text-white" style="color: #FFFFFF;">Would you like to take regular GSP Audit' +
-      //   ' or GSP Audit for primary sections?</p>',
-      //   scope: $scope,
-      //   buttons: [
-      //     {
-      //       text: '<b>Save</b>',
-      //       onTap: function (e) {
-      //         if (!$scope.general.Q10G1) {
-      //           //don't allow the user to close unless he enters wifi password
-      //           e.preventDefault();
-      //         } else {
-      //           return $scope.general.Q10G1;
-      //         }
-      //       }
-      //     }
-      //   ]
-      // });
     };
 
     $scope.updatedQ2 = function (n) {
@@ -122,11 +121,17 @@ angular.module('starter.general', [])
       var qID = 'Q4G1S';
       if ($scope.general.Q2G1 == 1) {
         console.log('setting girls to 0');
-        $scope[qID + 1] = 0;
+        $scope.general[qID + 2] = 0;
       }
       else if ($scope.general.Q2G1 == 2) {
-        $scope[qID + 2] = 0;
+        $scope.general[qID + 1] = 0;
       }
+      $scope.general[qID + 3] = parseInt($scope.general[qID + 1]) + parseInt($scope.general[qID + 2]);
+    };
+
+    $scope.validateQ4 = function () {
+      var qID = 'Q4G1S3';
+      return $scope.validVal(qID);
     };
 
     $scope.checkQ6 = function () {
@@ -139,12 +144,12 @@ angular.module('starter.general', [])
     };
 
     $scope.validNext = function () {
-      return ($scope.validVal('Q1G1') && $scope.validVal('Q1G2') &&
-      $scope.validVal('Q2G1') && $scope.validQ3() &&
-      $scope.validVal('Q4G4S3') && $scope.validVal('Q5G1') &&
-      $scope.validVal('Q6G1') && $scope.validVal('Q8G1') &&
-      $scope.validVal('Q9G1'));
-      // return true;
+      // return ($scope.validVal('Q1G1') && $scope.validVal('Q1G2') &&
+      // $scope.validVal('Q2G1') && $scope.validQ3() &&
+      // $scope.validateQ4() && $scope.validVal('Q5G1') &&
+      // $scope.validVal('Q6G1') && $scope.validVal('Q8G1') &&
+      // $scope.validVal('Q9G1'));
+      return true;
     };
 
     $scope.updateNumStudents = function (rowNum) {
@@ -174,20 +179,6 @@ angular.module('starter.general', [])
       }
     };
     // validation functions end
-
-    // function for getting answer values from other sections
-    $scope.getAnswer = function (questionID) {
-      return AppServiceAPI.selectQuestion(questionID).then(function (res) {
-        if (res.rows.length > 0) {
-          var row = res.rows[0];
-          var answer = row['answer'];
-          console.log('returning answer: ' + answer);
-          return answer;
-        }
-      }, function (err) {
-        console.error('Error in db: ' + JSON.stringify(err));
-      });
-    };
 
     $scope.showPopup = function (title, message) {
       $scope.popup = $ionicPopup.show({

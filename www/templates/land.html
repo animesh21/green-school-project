@@ -365,78 +365,90 @@
                 </div>
 
                 <div class="row">
+                    <div class="col col-10">Serial</div>
                     <div class="col">Description</div>
                     <div class="col">Your school's area (m2)</div>
                 </div>
 
                 <div class="row">
-                    <div class="col"><b>A</b></div>
+                    <div class="col col-10"><b>A</b></div>
                     <div class="col">Ground coverage area</div>
                     <div class="col"><input ng-model="land.Q4L2" id="questionlandfourTwoArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
                 </div>
 
                 <div class="row ">
-                    <div class="col"><b>B1</b></div>
+                    <div class="col col-10"><b>B1</b></div>
                     <div class="col">Green landscaped area on-ground</div>
                     <div class="col"><input ng-model="land.Q4L3" id="questionlandfourThreeArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
                 </div>
+
                 <div class="row ">
-                    <div class="col"><b>B2</b></div>
+                    <div class="col col-10"><b>B2</b></div>
                     <div class="col">Play area that has grass on ground</div>
-                    <div class="col"><input ng-model="land.Q4L6" id="questionlandfourSixArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col"><input ng-model="land.Q4L4" id="questionlandfourSixArea" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
                 </div>
 
-                <div class="row ">
-                    <div class="col"><b></b></div>
-                    <div class="col">Surface parking area</div>
-                    <div class="col"><input ng-model="land.Q4L4" id="questionlandfourFourArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                <div class="row">
+                    <div class="col col-10"><b>B</b></div>
+                    <div class="col">Green area on ground(B1 + B2)</div>
+                    <div class="col"><input ng-model="Q4L5" ng-value="parseFloat(land.Q4L3) + parseFloat(land.Q4L4);" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
                 </div>
 
-                <div class="row ">
+                <div class="row">
+                    <div class="col col-10"><b>C</b></div>
                     <div class="col">Play area that is paved/ concrete on ground</div>
-                    <div class="col"><input ng-model="land.Q4L5" id="questionlandfourFiveArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col"><input ng-model="land.Q4L6" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
                 </div>
 
+                <div class="row ">
+                    <div class="col col-10"><b>D</b></div>
+                    <div class="col">Surface parking area</div>
+                    <div class="col"><input ng-model="land.Q4L7" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
+                </div>
 
                 <div class="row ">
+                    <div class="col col-10"><b>E</b></div>
                     <div class="col">Service Area on ground</div>
-                    <div class="col"><input ng-model="land.Q4L7" id="questionlandfourSevenArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col"><input ng-model="land.Q4L8" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
+                </div>
+
+                <div class="item item-text-wrap item-borderless">
+                    <b>1B</b>Built-up area of your school campus
                 </div>
 
                 <div class="row ">
+                    <div class="col col-10"><b>1. </b></div>
                     <div class="col">Roof and terrace area</div>
-                    <div class="col"><input ng-model="land.Q4L8" id="questionlandfourEightArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col"><input ng-model="land.Q4L9" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
                 </div>
 
                 <div class="row ">
+                    <div class="col col-10"><b>2. </b></div>
                     <div class="col">Green cover on exposed roof & terrace</div>
-                    <div class="col"><input ng-model="land.Q4L9" id="questionlandfourNineArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col"><input ng-model="land.Q4L10" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
                 </div>
 
                 <div class="row ">
+                    <div class="col col-10"><b>3. </b></div>
                     <div class="col">Total built up/constructed area</div>
-                    <div class="col"><input ng-model="land.Q4L10" id="questionlandfourTenArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col"><input ng-model="land.Q4L11" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
                 </div>
 
-                <div class="row ">
+                <div class="row">
+                    <div class="col col-10"><b>4. </b></div>
                     <div class="col">Total no. of floors</div>
-                    <div class="col"><input ng-model="land.Q4L11" id="questionlandfourElevenArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Others</div>
-                    <div class="col"><input ng-model="land.Q4L12" id="questionlandfourTwelveArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col"><input ng-model="land.Q4L12" id="questionlandfourElevenArea" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
                 </div>
             </div>
 

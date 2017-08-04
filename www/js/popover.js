@@ -3,7 +3,7 @@ angular.module('starter.general', ['ionic'])
 .controller('gen1Ctrl', function($scope, $ionicPopover) {
 
   $ionicPopover.fromTemplateUrl('templates/popover.html', {
-    scope: $scope,
+    scope: $scope
   }).then(function(popover) {
     $scope.popover = popover;
   });
@@ -14,6 +14,6 @@ angular.module('starter.general', ['ionic'])
     document.body.classList.remove('platform-android');
     document.body.classList.add('platform-' + p);
     $scope.demo = p;
-  }
+  };
 
 });

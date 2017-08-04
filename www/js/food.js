@@ -8,6 +8,50 @@ angular.module('starter.food', [])
 
     $scope.food = {};
 
+    $scope.toolTips = {
+      'T2': "Packaged food is any food item which is commercially prepared," +
+            " processed for a longer shelf life and is ready to eat and drink.",
+      'Q1': "Any place, permanent or temporary, run by school, outsourced to" +
+            " vendors, self help groups, shopkeepers to sell products " +
+            "during/after/before school timings/duration should be considered.",
+      'T3': "Any place, permanent or temporary, run by school, outsourced" +
+            " to vendors or self help groups or shopkeepers, to sell " +
+            "products during/after/before schools hours should be" +
+            " considered. If the space is limited please create the table" +
+            " in a word document and upload as attachment. Option to " +
+            "upload has been provided at the end of the section.",
+      'Q3': "For types and varieties of packaged food is any food item," +
+            " please mention each brand and flavour available in your" +
+            " school. For example, if Lay’s chips are available, mention" +
+            " if it is baked, herbs and onions, original salted, sunkissed" +
+            " tomatoes, american style cream onion, etc. (Please note it " +
+            "is advisable not to have hawkers, vendors and shops selling" +
+            " ultra processed packaged items near the school)",
+      'Q4': "Traditional Indian snacks are any food item prepared within" +
+            " the school on the same day for immediate consumption. " +
+            "Monitor over a period of a month.",
+      'Q4A': "If space is limited, please create the table in a word " +
+             "document and upload as attachment. Option to upload has" +
+             " been provided at the end of the section.",
+      'Q5': "Traditional Indian beverages are any drink items prepared" +
+            " within the school on the same day for immediate consumption." +
+            " Monitor over a period of a month.",
+      'Q5A': "If space is limited, please create the table in a word " +
+             "document and upload as attachment. Option to upload has" +
+             " been provided at the end of the section.",
+      'Q6A': "For example, Kitkat chocolate as consolation prize or " +
+             "food/discount coupons of Dominos or Pizza hut.",
+      'Q7A': "For example, Fanta, small packets of chips or Kurkure, etc.",
+      'Q8A': "For example, Complan, Quaker Oats, Cadbury, etc.",
+      'Q': ""
+    };
+
+    // function of displaying tooltip
+    $scope.showToolTip = function (qNo) {
+      var toolTip = $scope.toolTips[qNo];
+      $scope.showPopup('Tool Tip', toolTip);
+    };
+
     $scope.progress = 30;
 
     $scope.readMore = {};
@@ -69,6 +113,25 @@ angular.module('starter.food', [])
       console.log('video paused');
     };
 
+    $scope.loadPageData = function () {
+      $ionicPlatform.ready(function () {
+        // type of school i.e. day boarding, residential etc.
+        $scope.getAnswer('Q1S1').then(function (res) {
+          console.log('Value of Q1S1: ' + res);
+          $scope.food.Q1S1 = parseInt(res);
+          if (parseInt(res) >= 3) {
+            $scope.food.Q4F1 = 'Y';
+          }
+        });
+
+        // type of school i.e govt, private etc.
+        $scope.getAnswer('Q9G1').then(function (res) {
+          console.log('Q9G1: ' + res);
+          $scope.food.Q9G1 = parseInt(res);
+        });
+      });
+    };
+
     // validation functions
     $scope.validVal = function (questionID) {
       if ($scope.food[questionID]) {
@@ -109,6 +172,36 @@ angular.module('starter.food', [])
         }
       }
       return false;
+    };
+
+    $scope.checkQ4 = function () {
+      console.log('checking Q4');
+      if ($scope.food.Q4F1 === 'N' && $scope.food.Q1S1 >= 3) {
+        $scope.showPopup('Alert', "You've chosen to be a residential" +
+          " school in Profile section, but you're selecting 'No' in Q1.");
+      }
+    };
+
+    $scope.checkQ5 = function () {
+      if ($scope.food.Q5F1 === 'N' && $scope.food.Q9G1 === 1) {
+        $scope.showPopup('Alert', "You've chosen to be a government school in" +
+          " General section, but you're selecting 'No' in this question.");
+      }
+    };
+
+    $scope.checkQ5F1 = function () {
+      console.log('Response in this ques: ' + $scope.food.Q5F1S1 +
+        '\nResponse in General section: ' + $scope.food.Q9G1);
+      var val1 = $scope.food.Q5F1S1;  // response in this section
+      var val2 = $scope.food.Q9G1;  // response in General section
+      if (val1 === 1 && val2 === 3) {
+        $scope.showPopup('Alert', "You're a private school but you've chosen government" +
+          " scheme in this question.");
+      }
+      else if (val1 === 2 && val2 === 1) {
+        $scope.showPopup('Alert', "You're a government school but you've chosen" +
+          " school's initiative in this question.");
+      }
     };
 
     $scope.getQ5ID = function (n) {

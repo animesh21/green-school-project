@@ -2,11 +2,17 @@
 
     <script type="text/javascript">
         function isNumberKey(evt) {
-            var charCode = (evt.which) ? evt.which : event.keyCode;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
             return !(charCode > 31 && (charCode < 48 || charCode > 57));
         }
+        function isNumberInRange(evt, lo, hi) {
+            var lowerLimit = 48 + lo;
+            var higherLimit = 48 + hi;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            return !(charCode > 31 && (charCode < lowerLimit || charCode > higherLimit));
+        }
         function isDecimalNumber(evt) {
-            var charCode = (evt.which) ? evt.which : event.keyCode;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
             return !(charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57));
         }
     </script>
@@ -365,7 +371,7 @@
                 </div>
                 <div ng-show="energy.Q4E1 == 'Y'" class="row" style="padding-left: 20px">
                     <label class="col" for="ebill">Please upload a recent electricity bill</label>
-                    <input class="col" name="ebill" type="file" ng-model="energy.Q4EFL1">
+                    <input class="col" name="ebill" type="file" fileread="energy.Q4EFL1">
                 </div>
             </div>
 
@@ -396,9 +402,8 @@
                     3. Provide the details of total energy consumed by the school:
                 </div>
 
-                <span><b>Note: </b> Enter an integer in Type of use field according to the following:<br/>
-                    1. Lighting 2. Housekeeping 3. Cooking 4. Transport 5. Teaching/ learning aid
-                    6. N/A (not applicable, if your school does not use a particular source of energy).
+                <span class="badge" on-hold="showToolTip('Q6')">
+                    ?
                 </span>
 
                 <div class="row ">
@@ -407,6 +412,10 @@
                     <div class="col">Energy consumed in Megajoules (mj)</div>
                     <div class="col">Type of use</div>
                 </div>
+
+                <span class="validation-error" ng-hide="validateQ6E1()">
+                    Please enter value in the Electricity from the board box.
+                </span>
 
                 <div class="row ">
                     <div class="col">Electricity from the board (kwh)</div>
@@ -417,7 +426,7 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E1S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11" ng-keypress="updateQ6S3(1, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -429,7 +438,8 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E2S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -441,7 +451,8 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E3S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -453,7 +464,7 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E4S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -465,7 +476,7 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E5S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -477,7 +488,7 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E6S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -489,7 +500,7 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E7S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -501,7 +512,7 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E16S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -513,7 +524,7 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E8S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -525,7 +536,7 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E9S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -537,7 +548,7 @@
                                             class="textbox" style="border:1px solid #111;text-align: center;"
                                             type="number" string-to-number readonly></div>
                     <div class="col"><input ng-model="energy.Q6E10S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -549,7 +560,7 @@
                                             class="textbox" style="border:1px solid #111;text-align: center;"
                                             type="number" string-to-number readonly></div>
                     <div class="col"><input ng-model="energy.Q6E11S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -561,7 +572,7 @@
                                             class="textbox" style="border:1px solid #111;text-align: center;"
                                             type="number" string-to-number readonly></div>
                     <div class="col"><input ng-model="energy.Q6E12S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -573,7 +584,7 @@
                                             class="textbox" style="border:1px solid #111;text-align: center;"
                                             type="number" string-to-number readonly></div>
                     <div class="col"><input ng-model="energy.Q6E13S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -585,7 +596,7 @@
                                             class="textbox" style="border:1px solid #111;text-align: center;"
                                             type="number" string-to-number readonly></div>
                     <div class="col"><input ng-model="energy.Q6E14S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
                 </div>
 
                 <div class="row ">
@@ -601,7 +612,7 @@
 
                 <div class="row">
                     <strong>Please upload fuel bills</strong><br/>
-                    <input ng-model="energy.Q6EFL2" type="file">
+                    <input fileread="energy.Q6EFL2" type="file">
                 </div>
 
             </div>
@@ -707,7 +718,7 @@
                 <hr/>
                 <div class="row">
                     <strong>Please upload picture of 5 star appliances used by school</strong><br>
-                    <input ng-model="Q7EFL3" type="file" multiple>
+                    <input fileread="energy.Q7EFL3" type="file" multiple>
                 </div>
             </div>
 
@@ -732,7 +743,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    6. Are there any alternate sources of energy employed/installed in your school?
+                    6. Are there any alternate sources of energy employed/installed in your school? Current answer: {{ energy.Q9E1 }}
                 </div>
                 <div class="row " style="padding-left: 20px">
                     <div class="col fs-12">
@@ -750,7 +761,7 @@
                         Please upload a picture of alternative source of energy installed that is
                         currently in use.
                     </strong><br>
-                    <input type="file" id="questionenergyeleven"/>
+                    <input type="file" fileread="Q7EFL4">
                 </div>
             </div>
 
@@ -781,6 +792,30 @@
                            ng-checked="energy.Q6E13S1 > 0" name="f"><span
                         style="position:absolute">&nbsp;Biogas</span>
                 </ion-item>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    7. Does your school use solar water heater?
+                </div>
+                <div class="row " style="padding-left: 20px">
+                    <div class="col fs-12">
+                        <input ng-model="energy.Q10E1" type="radio" ng-value="'Y'" name="f">&nbsp;<span
+                            style="position:absolute">Yes</span>
+                    </div>
+                    <div class="col fs-12">
+                        <input ng-model="energy.Q10E1" type="radio" ng-value="'N'" name="f">&nbsp;<span
+                            style="position:absolute">No</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="list">
+                    <p><b>Upload supporting documents</b></p>
+                    <p>Please upload all supporting documents related to this section here:</p>
+                    <input fileread="Q10AFL5" type="file" multiple>
+                </div>
             </div>
 
             <div class="list card">

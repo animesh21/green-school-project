@@ -5,7 +5,28 @@ angular.module('starter.energy', [])
       $('.progressBarIndicator').css("background", "red");
     });
 
-    $scope.energy = {};
+    $scope.energy = {
+      'Q7E1S1': 0,
+      'Q7E2S1': 0,
+      'Q7E3S1': 0,
+      'Q7E4S1': 0,
+      'Q7E5S1': 0,
+      'Q7E6S1': 0,
+      'Q7E7S1': 0
+    };
+
+    $scope.toolTips = {
+      'Q6': "Enter an integer in Type of use field according to the " +
+            "following:<br/>1. Lighting<br/> 2. Housekeeping<br/> 3. Cooking " +
+            "<br/> 4. Transport <br/> 5. Teaching/ learning aid<br/> 0. If " +
+            "your school does not use a particular source of energy, then enter 0."
+    };
+
+    // function of displaying tooltip
+    $scope.showToolTip = function (qNo) {
+      var toolTip = $scope.toolTips[qNo];
+      $scope.showPopup('Tool Tip', toolTip);
+    };
 
     $scope.progress = 20;
 
@@ -91,7 +112,6 @@ angular.module('starter.energy', [])
       return false;
     };
 
-
     $scope.updateQ5 = function () {
       var val1, val2;
       $ionicPlatform.ready(function () {
@@ -120,20 +140,20 @@ angular.module('starter.energy', [])
 
       var conversionTable = {
         1: 3.6, // Electricity from grid
-        2: 45.6, // Generator(Diesel)
+        2: 44.8, // Generator(Diesel)
         3: 43.93, // Petrol
         4: 44.8, // Diesel
         5: 37.24, // CNG
         6: 43.09, // Kerosene
         7: 20.92, // coal
-        8: 18, // Animal waste(kg)
+        8: 13.77, // Animal waste(kg)
         9: 3.6, // Solar
         10: 3.6, // Wind
         11: 45.19, // LPG
-        12: 37.24, // Piped Natural Gas
-        13: 37.24, // Biogas
+        12: 13.77, // Piped Natural Gas
+        13: 13.77, // Biogas
         14: 0, // Others
-        16: 17.6 // Wood
+        16: 13.28 // Wood
       };
 
       // for updating question no. 6
@@ -168,10 +188,17 @@ angular.module('starter.energy', [])
       $scope.energy.Q6E15S2 = totalEnergy;
     };
 
+    $scope.validateQ6E1 = function () {
+      if ($scope.energy.Q4E1 === 'Y') {
+        return $scope.validVal('Q6E1S1') && $scope.validVal('Q6E1S3');
+      }
+      return true;
+    };
+
     $scope.validateQ9 = function () {
       var val = $scope.energy.Q9E1;
       if (val) {
-        if (val == 'Y'){
+        if (val === 'Y'){
           var val1 = $scope.validVal('Q9E1S1');
           var val2 = $scope.validVal('Q9E1S2');
           var val3 = $scope.validVal('Q9E1S3');
@@ -184,7 +211,7 @@ angular.module('starter.energy', [])
             return false;
           }
         }
-        else  if (val == 'N') {
+        else  if (val === 'N') {
           return true;
         }
       }
@@ -200,7 +227,7 @@ angular.module('starter.energy', [])
       val10 = $scope.getAbsVal(qID10);
       val13 = $scope.getAbsVal(qID13);
       if (val9 || val10 || val13) {
-        if ($scope.energy.Q9E1 == 'N') {
+        if ($scope.energy.Q9E1 === 'N') {
           $scope.energy.Q9E1 = 'Y';
           $scope.showPopup('Alert', "You've entered value in solar, wind or biogas field in Q 3 above");
         }
@@ -230,6 +257,33 @@ angular.module('starter.energy', [])
       }
     };
 
+    $scope.updateQ6S3 = function (n, event) {
+      var qID = 'Q6E' + n + 'S3';  // question ID of the current input
+      var charCode = (event.which) ? event.which : event.keyCode;
+      if (!(charCode > 31 && (charCode < 48 || charCode > 53))) {
+        var val = $scope.energy[qID];  // value in input box
+        // if input size is zero then don't do any further modification
+        if (!val) {
+          return true;
+        }
+        // otherwise check for number already present
+        var valArr = val.split(',');
+        var strVal = String.fromCharCode(charCode);
+        var isValidKey = valArr.indexOf(strVal) === -1;
+        if (valArr.indexOf(strVal) === -1) {
+          val = val + ',';
+          $scope.energy[qID] = val;
+          return true;
+        }
+        else {
+          event.preventDefault();
+        }
+      }
+      else {
+        event.preventDefault();
+      }
+    };
+
     $scope.validLimit = function (questionID, numLimit) {
       var val = +$scope.energy[questionID];
       if (val > numLimit) {
@@ -251,17 +305,21 @@ angular.module('starter.energy', [])
     };
 
     $scope.validNext = function () {
-      var validQ4 = $scope.validVal('Q4E1');
-      var validQ5 = $scope.validVal('Q5E1');
-      var validQ9 = $scope.validateQ9();
-      var validQ10 = $scope.validVal('Q10E1');
-      return ($scope.validateTeacher('E') && $scope.validateStudent('E') &&
-              validQ4  && validQ5 &&
-              validQ9 && validQ10);
+      // var validQ4 = $scope.validVal('Q4E1');
+      // var validQ5 = $scope.validVal('Q5E1');
+      // var validQ9 = $scope.validateQ9();
+      // var validQ10 = $scope.validVal('Q10E1');
+      // return ($scope.validateTeacher('E') && $scope.validateStudent('E') &&
+      //         validQ4  && validQ5 &&
+      //         validQ9 && validQ10);
+
+      // return true;
+      return $scope.validateQ6E1();
     };
     // validation functions end
 
     $scope.loadPageData = function () {
+      console.log('loading energy page data');
       $scope.setQ5E1();
     };
 

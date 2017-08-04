@@ -19,36 +19,36 @@ angular.module('starter.menu', [])
     };
 
     $scope.water = function () {
-      $state.go('app.water')
+      $state.go('app.water');
     };
 
     $scope.land = function () {
-      $state.go('app.land')
+      $state.go('app.land');
     };
 
     $scope.energy = function () {
-      $state.go('app.energy')
+      $state.go('app.energy');
     };
 
     $scope.waste = function () {
-      $state.go('app.waste')
+      $state.go('app.waste');
     };
 
     $scope.food = function () {
-      $state.go('app.food')
+      $state.go('app.food');
     };
 
     $scope.login = function () {
-      $state.go('login')
+      $state.go('login');
     };
 
     $scope.home = function () {
       // $window.location.reload(true);
-      $state.go('app.home')
+      $state.go('app.home');
     };
 
     $scope.quiz = function () {
       // $window.location.reload(true);
-      $state.go('app.quiz')
+      $state.go('app.quiz');
     };
   });

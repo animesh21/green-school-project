@@ -40,79 +40,81 @@ angular.module('starter.home', [])
       }, 1000);
     };
 
+    $scope.showPopup = function (title, message) {
+      $scope.popup = $ionicPopup.show({
+          title: title,
+          template: message,
+          buttons: [
+              {
+                  'text': 'OK'
+              }
+          ]
+      });
+    };
+
+
     $scope.onHold = function (cat) {
+      var info;
       if (cat == '1') {
-        var alertPopup = $ionicPopup.alert({
-          // title: '<p>GENERAL<p>',
-
-          template: 'The field of environment education is dogged by a very fundamental contradiction. While everyone, everywhere, asserts the importance of ‘learning to live sustainably’, environment remains a peripheral issue in the formal schooling system'
-
-        });
+        info = 'The field of environment education is dogged by a very' +
+            ' fundamental contradiction. While everyone, everywhere, ' +
+            'asserts the importance of ‘learning to live sustainably’,' +
+            ' environment remains a peripheral issue in the formal' +
+            ' schooling system';
+        $scope.showPopup('Info', info);
       }
 
       else if (cat == '2') {
-        var alertPopup = $ionicPopup.alert({
-          // title: '<p>GENERAL<p>',
+          info = 'A Green School is a resource-efficient building one' +
+              ' that uses little water, optimizes energy efficiency,' +
+              ' minimizes waste-generation.';
+          $scope.showPopup('Info', info);
 
-          template: 'A Green School is a resource-efficient building one that uses little water, optimizes energy efficiency, minimizes waste-generation'
-
-        });
 
       }
+
       else if (cat == '3') {
-        var alertPopup = $ionicPopup.alert({
-          // title: '<p>GENERAL<p>',
-
-          template: 'GSP makes the school community examine the air it breathes, minutely and scientifically. It also helps it assess the impact its commuting practices and other systems have on the atmosphere.'
-
-        });
-
+          info = 'GSP makes the school community examine the air it ' +
+              'breathes, minutely and scientifically. It also helps ' +
+              'it assess the impact its commuting practices and other' +
+              ' systems have on the atmosphere.';
+          $scope.showPopup('Info', info);
       }
+
       else if (cat == '4') {
-        var alertPopup = $ionicPopup.alert({
-          // title: '<p>GENERAL<p>',
-
-          template: 'Energy has transformed our material life and brought magic to our lives through its different forms—light, sound, heat and electricity. '
-
-        });
-
+        info = 'Energy has transformed our material life and brought ' +
+          'magic to our lives through its different forms—light, ' +
+          'sound, heat and electricity.';
+        $scope.showPopup('Info', info);
       }
+
       else if (cat == '5') {
-        var alertPopup = $ionicPopup.alert({
-          // title: '<p>GENERAL<p>',
-
-          template: 'Good food is all around us. For generations, Indians have incorporated biodiversity in their daily food—using millets instead of wheat or rice'
-
-        });
+        info = 'Good food is all around us. For generations, Indians ' +
+            'have incorporated biodiversity in their daily food—using' +
+            ' millets instead of wheat or rice';
+        $scope.showPopup('Info', info);
 
       }
+
       else if (cat == '6') {
-        var alertPopup = $ionicPopup.alert({
-          // title: '<p>GENERAL<p>',
-
-          template: 'The future of every country in the world, including India, or at least its ability to feed its people, depends on the health of its soil.'
-
-        });
-
+        info = 'The future of every country in the world, including' +
+          ' India, or at least its ability to feed its people,' +
+          ' depends on the health of its soil.';
+        $scope.showPopup('Info', info);
       }
+
       else if (cat == '7') {
-        var alertPopup = $ionicPopup.alert({
-          // title: '<p>GENERAL<p>',
-
-          template: 'We take water from wherever we can. From our rivers, ponds, lakes. From the ground, drawn through hand pumps and wells. In return, we give back waste'
-
-        });
-
+        info = 'We take water from wherever we can. From our rivers,' +
+            ' ponds, lakes. From the ground, drawn through hand' +
+            ' pumps and wells. In return, we give back waste';
+        $scope.showPopup('Info', info);
       }
+
       else if (cat == '8') {
-        var alertPopup = $ionicPopup.alert({
-          // title: '<p>GENERAL<p>',
-
-          template: 'Rubbish, garbage, litter, junk, scrap, trash. Waste is generated in various forms. Managing it is one of the essential services that municipal authorities are duty-bound to provide.'
-
-        });
-
+        info = 'Rubbish, garbage, litter, junk, scrap, trash. Waste is generated in various forms. Managing it is one of the essential services that municipal authorities are duty-bound to provide.';
+        $scope.showPopup('Info', info);
       }
+
       else if (cat == '9') {
         var alertPopup = $ionicPopup.alert({
           // title: '<p>GENERAL<p>',
@@ -124,10 +126,6 @@ angular.module('starter.home', [])
       }
     };
 
-    $scope.profile = function () {
-      $state.go('app.profile');
-    };
-
     $scope.onGeneral = function (cat) {
       if (cat === '11') {
         var alertPopup = $ionicPopup.alert({
@@ -136,8 +134,12 @@ angular.module('starter.home', [])
       }
     };
 
+    $scope.profile = function () {
+      $state.go('app.profile');
+    };
+
     $scope.general = function () {
-      // $window.location.reload(true);
+    // $window.location.reload(true);
       $state.go('app.general1');
     };
 

@@ -57,9 +57,7 @@
                     <div class="input-label fs-12">
                         4. Country:
                     </div>
-                    <select class="fs-12" disabled>
-                        <option selected ng-value="profile.Q4P1">{{ profile.Q4P1 }} India</option>
-                        <option checked="{{ general.Q4P1 == 1 }}" ng-value="'1'">Uttar Pradesh</option>
+                    <select class="fs-12" ng-model="profile.Q4P1" ng-options="option.name for option in data.countries track by option.id" disabled>
                     </select>
                 </label>
             </div>
@@ -70,9 +68,7 @@
                         5. State:
                     </div>
                     <select class="fs-12" ng-options="option.name for option in data.states track by option.id"
-                            ng-model="profile.Q5P1" disabled>
-                        <!--<option selected ng-value="profile.Q5P1">{{ profile.Q5P1 }}Uttar Pradesh</option>
-                        <option checked="{{ general.Q5P1 == 1 }}" ng-value="'1'"></option> -->
+                            ng-model="profile.Q5P1">
                     </select>
                 </label>
             </div>
@@ -82,9 +78,8 @@
                     <div class="input-label fs-12">
                         6. District:
                     </div>
-                    <select class="fs-12" disabled>
-                        <option selected ng-value="profile.Q6P1">{{ profile.Q6P1 }}Lucknow</option>
-                        <option checked="{{ general.Q6P1 == 1 }}" ng-value="'1'"></option>
+                    <select class="fs-12" ng-options="option.name for option in data.districts track by option.id"
+                            ng-model="profile.Q6P1">
                     </select>
                 </label>
             </div>
@@ -94,8 +89,8 @@
                     7. City:
                 </div>
                 <label class="item item-input">
-                    <input ng-value="profile.Q7P1" type="text" placeholder="City"
-                           class="textbox" readonly>
+                    <input ng-model="profile.Q7P1" type="text" placeholder="City"
+                           class="textbox">
                 </label>
             </div>
 
@@ -104,8 +99,9 @@
                     8. PIN Code:
                 </div>
                 <label class="item item-input">
-                    <input ng-value="profile.Q8P1" type="number" placeholder="PIN"
-                           class="textbox" readonly>
+                    <input ng-model="profile.Q8P1" type="number" min="0"
+                           step="1" onkeypress="return isNumberKey(event)" placeholder="PIN"
+                           class="textbox" string-to-number limit-to="6">
                 </label>
             </div>
 
@@ -116,14 +112,14 @@
                 <div class="row">
                     <div class="col-33 col">
                         <label class="item item-input">
-                            <input ng-value="profile.Q9P1" type="number" placeholder="STD Code"
-                                   class="textbox" readonly>
+                            <input ng-model="profile.Q9P1" type="number" min="0" onkeypress="return isNumberKey(event)"
+                                   placeholder="STD Code" class="textbox" string-to-number limit-to="5">
                         </label>
                     </div>
                     <div class="col-67 col">
                         <label class="item item-input">
-                            <input ng-value="profile.Q9P2" type="number" placeholder="Number"
-                                   class="textbox" readonly>
+                            <input ng-model="profile.Q9P2" type="number" min="0" onkeypress="isNumberKey(event)"
+                                   placeholder="Number" class="textbox" string-to-number limit-to="8">
                         </label>
                     </div>
                 </div>
@@ -133,10 +129,20 @@
                 <div class="item item-text-wrap item-borderless">
                     10. Mobile Number:
                 </div>
-                <label class="item item-input">
-                    <input ng-value="profile.Q10P1" type="number" placeholder="Mobile"
-                           class="textbox" readonly>
-                </label>
+                <div class="row">
+                    <div class="col col-33">
+                        <label class="item item-input">
+                            <input ng-value="profile.Q10P1" type="text" min="0"
+                                   class="textbox" readonly>
+                        </label>
+                    </div>
+                    <div class="col col-67">
+                        <label class="item item-input">
+                            <input ng-model="profile.Q10P2" type="number" min="0" onkeypress="return isNumberKey(event)"
+                                   placeholder="10 Digit Mobile Number" class="textbox" string-to-number limit-to="10">
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div class="card">
@@ -144,18 +150,18 @@
                     11. Principal's Name:
                 </div>
                 <label class="item item-input">
-                    <input ng-value="profile.Q11P1" type="text" placeholder="Principal Name"
-                           class="textbox" readonly>
+                    <input ng-model="profile.Q11P1" type="text" placeholder="Principal Name"
+                           class="textbox">
                 </label>
             </div>
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    12. GSP Coordinator's Name:
+                    12. GSP Coordinator's Name:<span class="badge" on-hold="showToolTip('Q12')">?</span>
                 </div>
                 <label class="item item-input">
-                    <input ng-value="profile.Q12P1" type="text" placeholder="GSP Coordinator Name"
-                           class="textbox" readonly>
+                    <input ng-model="profile.Q12P1" type="text" placeholder="GSP Coordinator Name"
+                           class="textbox">
                 </label>
             </div>
 
@@ -164,8 +170,8 @@
                     13. GSP Coordinator's Email:
                 </div>
                 <label class="item item-input">
-                    <input ng-value="profile.Q13P1" type="email" placeholder="GSP Coordinator Email"
-                           class="textbox" readonly>
+                    <input ng-model="profile.Q13P1" type="email" placeholder="GSP Coordinator Email"
+                           class="textbox">
                 </label>
             </div>
 
@@ -173,65 +179,44 @@
                 <div class="item item-text-wrap item-borderless">
                     14. GSP Coordinator's Mobile Number:
                 </div>
-                <label class="item item-input">
-                    <input ng-value="profile.Q14P1" type="number" placeholder="Mobile"
-                           class="textbox" readonly>
-                </label>
+                <div class="row">
+                    <div class="col col-33">
+                        <label class="item item-input">
+                            <input ng-value="profile.Q14P1" type="text" min="0"
+                                   class="textbox" readonly>
+                        </label>
+                    </div>
+                    <div class="col col-67">
+                        <label class="item item-input">
+                            <input ng-model="profile.Q14P2" type="number" min="0"
+                                   onkeypress="return isNumberKey(event)" placeholder="10 Digit Mobile Number"
+                                   class="textbox" string-to-number limit-to="10">
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     15. Please select the appropriate category for your school:
+                    <span class="badge" on-hold="showToolTip('Q15')">?</span>
                 </div>
 
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="profile.Q1S1" type="radio" ng-value="'1'" name="e"><span
-                        style="position:absolute"> &nbsp; Day Scholar </span>
-                </ion-item>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="profile.Q1S1" type="radio" ng-value="'2'" name="e"><span
-                        style="position:absolute"> &nbsp; Day Boarding </span>
-                </ion-item>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="profile.Q1S1" type="radio" ng-value="'3'" name="e"><span
-                        style="position:absolute"> &nbsp; Residential </span>
-                </ion-item>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="profile.Q1S1" type="radio" ng-value="'4'" name="e"><span
-                        style="position:absolute"> &nbsp; Day Scholar + Day Boarding </span>
-                </ion-item>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="profile.Q1S1" type="radio" ng-value="'5'" name="e"><span
-                        style="position:absolute"> &nbsp; Day Boarding + Residential </span>
-                </ion-item>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="profile.Q1S1" type="radio" ng-value="'6'" name="e"><span
-                        style="position:absolute"> &nbsp; Day Scholar + Residential </span>
-                </ion-item>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="profile.Q1S1" type="radio" ng-value="'7'" name="e"><span
-                        style="position:absolute"> &nbsp; Day Scholar + Day Boarding + Residential </span>
+                <ion-item class="fs-14 item-text-wrap" ng-repeat="(key, value) in data.schoolCategories track by $index">
+                    <input ng-model="profile.Q1S1" type="radio" ng-value="key+1" name="e"><span
+                        style="position:absolute"> &nbsp; {{ value }} </span>
                 </ion-item>
             </div>
 
-            <div class="card" ng-show="profile.Q1S1 != 3">
+            <div class="card" ng-show="profile.Q1S1 == 1 || profile.Q1S1 == 2 || profile.Q1S1 == 4">
                 <div class="item item-text-wrap item-borderless">
-                    16. How many shifts does your school have?:
+                    16. How many shifts does your school have
+                    <span class="badge" on-hold="showToolTip('Q16')">?</span>
                 </div>
 
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="profile.Q2S1" type="radio" ng-value="'1'" name="f"><span
-                        style="position:absolute"> &nbsp; Morning </span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="profile.Q2S1" type="radio" ng-value="'2'" name="f"><span
-                        style="position:absolute"> &nbsp; Evening </span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="profile.Q2S1" type="radio" ng-value="'3'" name="f"><span
-                        style="position:absolute"> &nbsp; Both </span>
+                <ion-item class="fs-14 item-text-wrap" ng-repeat="(key, value) in data.schoolShifts track by $index">
+                    <input ng-model="profile.Q2S1" type="radio" ng-value="key + 1" name="f"><span
+                        style="position:absolute"> &nbsp; {{ value }} </span>
                 </ion-item>
             </div>
 
