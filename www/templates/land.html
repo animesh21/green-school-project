@@ -1,4 +1,4 @@
-<ion-view title="Land">
+<ion-view title="Land" ng-controller="landCtrl">
 
     <script type="text/javascript">
         function isNumberKey(evt) {
@@ -28,10 +28,11 @@
         <p style="text-align: center">Progress: {{ progress }}% </p>
 
         <ion-scroll direction="y" class="theroot">
+
             <div class="padding-bottom content" style="text-align: justify;">
                 The GSP audit helps the school community
                 draw up a roadmap for sustainable use of its land.
-                The unit of measurement to be used in the Land section is Square Meter (m2).
+                <strong>The unit of measurement to be used in the Land section is Square Meter (m2).</strong>
             </div>
 
             <div class="list" style="margin-left: 5px;margin-right: 5px">
@@ -294,11 +295,13 @@
             </div>
 
             <div class="padding-bottom content fs-16">
-                Task 2: Measure the four critical areas of your school campus
+                <strong>Task 2: Measure the four critical areas of your school campus</strong>
             </div>
+
             <div class="padding-bottom content fs-14">
                 To find out the land/ site area of your school, you need to measure:
             </div>
+
             <div class="content" ><!--style="text-align: justify;">-->
                 <ul>
                     <li>Ground coverage area</li>
@@ -351,109 +354,179 @@
             </div>
 
             <div class="card">
-                <div class="row">
 
-                    <div class="col">Site area in square meter (m2)</div>
-                    <div class="col"><input ng-model="land.Q4L1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" onkeypress="return isDecimalNumber(event)"></div>
-                </div>
-            </div>
-
-            <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    1. Total Green Cover
+                    1. What is the total site/plot area of your school?
                 </div>
 
                 <div class="row">
-                    <div class="col col-10">Serial</div>
+                    <div class="col col-10"></div>
                     <div class="col">Description</div>
                     <div class="col">Your school's area (m2)</div>
                 </div>
 
                 <div class="row">
-                    <div class="col col-10"><b>A</b></div>
+                    <div class="col col-10"></div>
+                    <div class="col">Site area in square meter (m2)</div>
+                    <div class="col"><input ng-model="land.Q4L1" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" readonly></div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-10">
+                        <b>1A</b>
+                    </div>
+                    <div class="col">
+                        Total Green Cover
+                        <span class="badge" on-hold="showToolTip('Q1A')">?</span>
+                    </div>
+                    <div class="col"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-10">(a)</div>
                     <div class="col">Ground coverage area</div>
-                    <div class="col"><input ng-model="land.Q4L2" id="questionlandfourTwoArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
+                    <div class="col">
+                        <input ng-model="land.Q4L2" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01"
+                               placeholder="m²" string-to-number
+                               ng-change="updateQ4()"
+                               onkeypress="return isDecimalNumber(event);">
+                    </div>
                 </div>
 
                 <div class="row ">
-                    <div class="col col-10"><b>B1</b></div>
+                    <div class="col col-10">(b1)</div>
                     <div class="col">Green landscaped area on-ground</div>
-                    <div class="col"><input ng-model="land.Q4L3" id="questionlandfourThreeArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
+                    <div class="col">
+                        <input ng-model="land.Q4L3" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01"
+                               placeholder="m²"
+                               ng-change="updateQ4()"
+                               string-to-number onkeypress="return isDecimalNumber(event);">
+                    </div>
                 </div>
 
                 <div class="row ">
-                    <div class="col col-10"><b>B2</b></div>
+                    <div class="col col-10">(b2)</div>
                     <div class="col">Play area that has grass on ground</div>
-                    <div class="col"><input ng-model="land.Q4L4" id="questionlandfourSixArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
+                    <div class="col">
+                        <input ng-model="land.Q4L4" id="questionlandfourSixArea" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01"
+                               placeholder="m²"
+                               ng-change="updateQ4()"
+                               string-to-number onkeypress="return isDecimalNumber(event);">
+                    </div>
                 </div>
 
                 <div class="row">
-                    <div class="col col-10"><b>B</b></div>
-                    <div class="col">Green area on ground(B1 + B2)</div>
-                    <div class="col"><input ng-model="Q4L5" ng-value="parseFloat(land.Q4L3) + parseFloat(land.Q4L4);" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
+                    <div class="col col-10">(b3)</div>
+                    <div class="col">Green area on ground(b1 + b2)</div>
+                    <div class="col">
+                        <input ng-model="land.Q4L5" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01"
+                               string-to-number readonly>
+                    </div>
                 </div>
 
                 <div class="row">
-                    <div class="col col-10"><b>C</b></div>
+                    <div class="col col-10">(c)</div>
                     <div class="col">Play area that is paved/ concrete on ground</div>
-                    <div class="col"><input ng-model="land.Q4L6" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
+                    <div class="col">
+                        <input ng-model="land.Q4L6" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01"
+                               ng-change="updateQ4()"
+                               placeholder="m²" string-to-number
+                               onkeypress="return isDecimalNumber(event);">
+                    </div>
                 </div>
 
                 <div class="row ">
-                    <div class="col col-10"><b>D</b></div>
+                    <div class="col col-10">(d)</div>
                     <div class="col">Surface parking area</div>
-                    <div class="col"><input ng-model="land.Q4L7" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
+                    <div class="col">
+                        <input ng-model="land.Q4L7" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01"
+                               ng-change="updateQ4()"
+                               placeholder="m²" string-to-number
+                               onkeypress="return isDecimalNumber(event);">
+                    </div>
                 </div>
 
                 <div class="row ">
-                    <div class="col col-10"><b>E</b></div>
+                    <div class="col col-10">(e)</div>
                     <div class="col">Service Area on ground</div>
-                    <div class="col"><input ng-model="land.Q4L8" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
-                </div>
-
-                <div class="item item-text-wrap item-borderless">
-                    <b>1B</b>Built-up area of your school campus
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10"><b>1. </b></div>
-                    <div class="col">Roof and terrace area</div>
-                    <div class="col"><input ng-model="land.Q4L9" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10"><b>2. </b></div>
-                    <div class="col">Green cover on exposed roof & terrace</div>
-                    <div class="col"><input ng-model="land.Q4L10" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10"><b>3. </b></div>
-                    <div class="col">Total built up/constructed area</div>
-                    <div class="col"><input ng-model="land.Q4L11" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
+                    <div class="col">
+                        <input ng-model="land.Q4L8" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01"
+                               ng-change="updateQ4()"
+                               placeholder="m²" string-to-number
+                               onkeypress="return isDecimalNumber(event);">
+                    </div>
                 </div>
 
                 <div class="row">
-                    <div class="col col-10"><b>4. </b></div>
-                    <div class="col">Total no. of floors</div>
-                    <div class="col"><input ng-model="land.Q4L12" id="questionlandfourElevenArea" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" string-to-number onkeypress="return isDecimalNumber(event);"></div>
+                    <div class="col col-10">
+                        <b>1B</b>
+                    </div>
+                    <div class="col">
+                        Built-up area of your school campus
+                    </div>
+                    <div class="col"></div>
                 </div>
+
+                <div class="row ">
+                    <div class="col col-10">(i)</div>
+                    <div class="col">Roof and terrace area</div>
+                    <div class="col">
+                        <input ng-model="land.Q4L9" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01"
+                               placeholder="m²" string-to-number
+                               onkeypress="return isDecimalNumber(event);">
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col col-10">(ii)</div>
+                    <div class="col">Green cover on exposed roof & terrace</div>
+                    <div class="col">
+                        <input ng-model="land.Q4L10" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01"
+                               placeholder="m²" string-to-number
+                               onkeypress="return isDecimalNumber(event);">
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col col-10">(iii)</div>
+                    <div class="col">Total built up/constructed area</div>
+                    <div class="col">
+                        <input ng-model="land.Q4L11" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01"
+                               placeholder="m²" string-to-number
+                               onkeypress="return isDecimalNumber(event);">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-10">(iv)</div>
+                    <div class="col">
+                        Total no. of floors(excluding ground floor)
+                        <span class="badge" on-hold="showToolTip('Q4L12')">?</span>
+                    </div>
+                    <div class="col">
+                        <input ng-model="land.Q4L12" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" limit-to="3"
+                               string-to-number onkeypress="return isNumberKey(event);">
+                    </div>
+                </div>
+
             </div>
 
             <div class="padding-bottom content fs-16">
-                Task 3: Explore the number of species of plants and animals in your school
+                <strong>
+                    Task 3: Explore the number of species of plants and animals in your school
+                </strong>
             </div>
 
             <div class="content" style="text-align: justify;">
@@ -500,24 +573,34 @@
 
                 <div class="row ">
                     <div class="col">Plants</div>
-                    <div class="col"><input ng-model="land.Q5L1S1" id="questionlandfiveOneNative" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="land.Q5L1S2" id="questionlandfiveOneExotic" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="land.Q5L1S3" id="questionlandfiveOneTotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"
-                                            readonly="true"></div>
+                    <div class="col">
+                        <input ng-model="land.Q5L1S1" ng-change="updateQ5(1)" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event)">
+                    </div>
+                    <div class="col">
+                        <input ng-model="land.Q5L1S2" ng-change="updateQ5(1)" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event)">
+                    </div>
+                    <div class="col">
+                        <input ng-model="land.Q5L1S3" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" readonly>
+                    </div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Animals</div>
-                    <div class="col"><input ng-model="land.Q5L2S1" id="questionlandfiveTwoNative" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="land.Q5L2S2" id="questionlandfiveTwoExotic" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="land.Q5L2S3" id="questionlandfiveTwoTotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"
-                                            readonly="true"></div>
+                    <div class="col">
+                        <input ng-model="land.Q5L2S1" ng-change="updateQ5(2)" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event)">
+                    </div>
+                    <div class="col">
+                        <input ng-model="land.Q5L2S2" ng-change="updateQ5(2)" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event)">
+                    </div>
+                    <div class="col">
+                        <input ng-model="land.Q5L2S3" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" readonly>
+                    </div>
                 </div>
             </div>
 
@@ -527,22 +610,22 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    3 Do you use chemical-based pesticides in your school green cover?
+                    3. Do you use chemical-based pesticides in your school green cover?
                 </div>
                 <div class="row " style="padding-left: 20px">
 
                     <div class="col fs-12">
-                        <input ng-model="land.Q6L1" id="questionlandsix" type="radio" ng-value="'Y'"
+                        <input ng-model="land.Q6L1" type="radio" ng-value="'Y'"
                                name="b">&nbsp;<span style="position:absolute"> Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="land.Q6L1" id="questionlandsix" type="radio" ng-value="'N'"
+                        <input ng-model="land.Q6L1" type="radio" ng-value="'N'"
                                name="b">&nbsp;<span style="position:absolute">No</span>
                     </div>
-
                 </div>
             </div>
-            <div class="list" style="margin-left: 5px;margin-right: 5px">
+
+            <div class="card" ><!--style="margin-left: 5px;margin-right: 5px">-->
                 <strong>Upload supporting documents</strong><br>
                 Please upload the following supporting documents:<br>
                 Pictures of green cover<br>
@@ -550,20 +633,29 @@
                 Building construction plan<br>
                 Uploaded files must be in one of the following formats: PDF Document (.pdf), Word Document (.doc,
                 .docx), Image File (.jpg, .jpeg). File size per document should not exceed 500 KB.
-                <input ng-model="land" type="file" id="questionlandseven">
+                <input fileread="land.LFL6" type="file">
             </div>
-
 
             <div class="list card">
                 <!--||question.id==numberOfQuestions-1-->
                 <div class="button-bar">
-
-                    <a class="button background-color text-white" disabled="!validNext()"
-                       ion-chevron-right nav-clear ng-click="quiz2(land)">NEXT</a>
+                    <a class="button background-color text-white"
+                       ion-chevron-right nav-clear ng-click="goToPrev()">
+                        PREVIOUS
+                    </a> &nbsp;
+                    <a class="button background-color text-white" ng-disabled="!validNext()"
+                       ion-chevron-right nav-clear ng-click="quiz2(land)">
+                        NEXT
+                    </a> &nbsp;
+                    <a class="button background-color text-white"
+                       ion-chevron-right nav-clear ng-click="saveData()">
+                        SAVE
+                    </a>
                     <!-- ng-click="quiz2()" -->
                     <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
                 </div>
             </div>
+
         </ion-scroll>
     </ion-content>
 </ion-view>

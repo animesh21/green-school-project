@@ -1,5 +1,16 @@
 <ion-view title="Water" ng-controller="waterCtrl">
 
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            return !(charCode > 31 && (charCode < 48 || charCode > 57));
+        }
+        function isDecimalNumber(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            return !(charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57));
+        }
+    </script>
+
     <ion-content scroll="false">
 
         <div class="button-bar">
@@ -13,6 +24,7 @@
         <div class="row" style="padding-top: 0px;padding-bottom: 0px">
             <progress id="progressbar" max="100" value="{{ progress }}" class="progress"></progress>
         </div>
+
         <p style="text-align: center">Progress: {{ progress }}% </p>
 
         <ion-scroll direction="y" class="theroot">
@@ -36,11 +48,14 @@
                     </a>
                 </p>
 
-                The unit of measurement to be used in the Water section is Litre (L).
+                <strong>The unit of measurement to be used in the Water section is Litre (L).</strong>
             </div>
 
-            <div class="list" style="margin-left: 5px;margin-right: 5px">
-                <strong>Task 1: Choose your Water Audit Team</strong><br>
+            <div class="padding-bottom content fs-16">
+                <strong>Task 1: Choose your Water Audit Team</strong>
+            </div>
+
+            <div class="content" style="text-align: justify;">
                 <p>
                     Before you start,
                     <span ng-show="!readMore[2]">...</span>
@@ -74,45 +89,21 @@
                     <div class="col">Email ID</div>
                 </div>
 
-                <div class="row ">
-                    <div class="col col-10">1</div>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-10">{{ i }}</div>
                     <div class="col">
-                        <input ng-model="water.Q1W1S1" name="oneName" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="text" id="wateroneName">
+                        <input ng-model="water['Q1W' + i + 'S1']" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="text">
                     </div>
                     <div class="col">
-                        <input ng-model="water.Q1W1S3" name="oneNameLast" class="textbox"
+                        <input ng-model="water['Q1W' + i + 'S3']" class="textbox"
                                style="border:1px solid #111;text-align: center;"
                                type="text">
                     </div>
                     <div class="col">
-                        <input ng-model="water.Q1W1S2" class="textbox" style="border:1px solid #111;text-align: center;"
-                               type="email" id='wateroneEmail'>
+                        <input ng-model="water['Q1W' + i + 'S2']" class="textbox" style="border:1px solid #111;text-align: center;"
+                               type="email">
                     </div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">2</div>
-                    <div class="col"><input ng-model="water.Q1W2S1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"
-                                            id='watertwoName'></div>
-                    <div class="col"><input ng-model="water.Q1W2S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;"
-                                            type="text"></div>
-                    <div class="col"><input ng-model="water.Q1W2S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="email"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">3</div>
-                    <div class="col"><input ng-model="water.Q1W3S1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"
-                                            id='waterthreeName'></div>
-                    <div class="col"><input ng-model="water.Q1W3S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;"
-                                            type="text"></div>
-                    <div class="col"><input ng-model="water.Q1W3S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="email"></div>
                 </div>
             </div>
 
@@ -128,55 +119,13 @@
                     <div class="col"> Email ID</div>
                 </div>
 
-                <div class="row ">
-                    <div class="col col-10">1</div>
-                    <div class="col"><input ng-model="water.Q2W1S1" class="textbox"
+                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5]">
+                    <div class="col col-10">{{ i }}</div>
+                    <div class="col"><input ng-model="water['Q2W' + i + 'S1']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q2W1S3" class="textbox"
+                    <div class="col"><input ng-model="water['Q2W' + i + 'S3']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q2W1S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="email"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">2</div>
-                    <div class="col"><input ng-model="water.Q2W2S1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q2W2S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;"
-                                            type="text"></div>
-                    <div class="col"><input ng-model="water.Q2W2S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="email"></div>
-                </div>
-
-
-                <div class="row ">
-                    <div class="col col-10">3</div>
-                    <div class="col"><input ng-model="water.Q2W3S1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q2W3S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q2W3S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="email"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">4</div>
-                    <div class="col"><input ng-model="water.Q2W4S1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q2W4S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q2W4S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="email"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">5</div>
-                    <div class="col"><input ng-model="water.Q2W5S1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q2W5S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q2W5S2" class="textbox"
+                    <div class="col"><input ng-model="water['Q2W' + i + 'S2']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="email"></div>
                 </div>
             </div>
@@ -195,114 +144,21 @@
                     <div class="col">Grade</div>
                 </div>
 
-                <div class="row ">
-                    <div class="col col-10">1</div>
-                    <div class="col"><input ng-model="water.Q3W1S1" class="textbox"
+                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+                    <div class="col col-10">{{ i }}</div>
+                    <div class="col"><input ng-model="water['Q3W' + i + 'S1']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W1S2" class="textbox"
+                    <div class="col"><input ng-model="water['Q3W' + i + 'S2']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W1S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">2</div>
-                    <div class="col"><input ng-model="water.Q3W2S1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W2S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W2S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-
-                <div class="row ">
-                    <div class="col col-10">3</div>
-                    <div class="col"><input ng-model="water.Q3W3S1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W3S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W3S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">4</div>
-                    <div class="col"><input ng-model="water.Q3W4S1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W4S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W4S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">5</div>
-                    <div class="col"><input ng-model="water.Q3W5S1" id='questionwaterthreeFiveName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W5S2" id='questionwaterthreeFiveEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W5S3" id='questionwaterthreeFiveGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">6</div>
-                    <div class="col"><input ng-model="water.Q3W6S1" id='questionwaterthreeSixName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W6S2" id='questionwaterthreeSixEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W6S3" id='questionwaterthreeSixGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">7</div>
-                    <div class="col"><input ng-model="water.Q3W7S1" id='questionwaterthreeSevenName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W7S2" id='questionwaterthreeSevenEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W7S3" id='questionwaterthreeSevenGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">8</div>
-                    <div class="col"><input ng-model="water.Q3W8S1" id='questionwaterthreeEightName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W8S2" id='questionwaterthreeEightEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W8S3" id='questionwaterthreeEightGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">9</div>
-                    <div class="col"><input ng-model="water.Q3W9S1" id='questionwaterthreeNineName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W9S2" id='questionwaterthreeNineEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W9S3" id='questionwaterthreeNineGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">10</div>
-                    <div class="col"><input ng-model="water.Q3W10S1" id='questionwaterthreeTenName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W10S2" id='questionwaterthreeTenEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="water.Q3W10S3" id='questionwaterthreeTenGrade' class="textbox"
+                    <div class="col"><input ng-model="water['Q3W' + i + 'S3']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
             </div>
 
             <div class="padding-bottom content fs-16">
-                Task 2: How much water does your school use?
+                <strong>Task 2: How much water does your school use?</strong>
             </div>
-            <!-- <div class="padding-bottom content fs-14">
-             To find out the land/ site area of your school, you need to measure:
-           </div> -->
+
             <div class="content" style="text-align: justify;">
                 To find total consumption, monitor water consumption over a period of three working days, spread over
                 one month and take the average. <br>
@@ -351,27 +207,7 @@
             <div class="card">
                 <div class="list" style="margin-left: 5px;margin-right: 5px">
                     <strong>1. Calculate your school’s water consumption, per activity:</strong><br>
-                    <strong>To collect data:</strong><br>
-                    The school will use a glass (250 ml) for drinking during the audit period; they should know the
-                    volume of flush tank (if they have a flush) or volume of bucket they are using for washing clothes,
-                    etc.<br>
-                    To measure total water used in Kitchen, first measure the quantity of water (in litres) that could
-                    be used, before commencing the activity. Example: Use buckets, utensils, jars of known volume.
-                    Please monitor over a period of 15 working days.<br>
-                    <strong>Gardening:</strong> To measure total water used in Gardening, first find out what is the
-                    method of watering garden.<br>
-                    If water from water storage tank is used with hose pipes then measure the capacity of storage tank.
-                    Fill the storage tank before watering session. After watering the plants, measure the water left in
-                    the tank. Subtract the quantity of water left in the tank by total storage capacity of the tank.<br>
-                    If garden is watered manually with buckets then measure the capacity of the bucket and multiply by
-                    number of times the bucket is filled to water plants.
-                    <br>
-                    If sprinkler irrigation is used to water garden, then measure the quantity of water released by the
-                    sprinklers and multiply it by the time the sprinkler system works.
-                </div>
-
-                <div class="item item-text-wrap item-borderless">
-                    1. Total Green Cover
+                    <span class="badge" on-hold="showToolTip('Q1')">?</span>
                 </div>
 
                 <div class="row ">
@@ -382,72 +218,112 @@
                 <div class="row ">
 
                     <div class="col">Drinking</div>
-                    <div class="col"><input ng-model="water.Q4W1" id="questionwaterfourOneTotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col">
+                        <input ng-model="water.Q4W1" class="textbox"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               min="0"
+                               onkeypress="return isDecimalNumber(event)">
+                    </div>
                 </div>
 
                 <div class="row ">
 
                     <div class="col">Toilet flushing</div>
-                    <div class="col"><input ng-model="water.Q4W2S1" id="questionwaterfourTwoTotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col">
+                        <input ng-model="water.Q4W2" class="textbox"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               min="0"
+                               onkeypress="return isDecimalNumber(event)">
+                    </div>
                 </div>
-
 
                 <div class="row ">
 
                     <div class="col">Personal cleaning</div>
-                    <div class="col"><input ng-model="water.Q4W3S1" id="questionwaterfourThreeTotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col">
+                        <input ng-model="water.Q4W3" class="textbox"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               min="0"
+                               onkeypress="return isDecimalNumber(event)">
+                    </div>
                 </div>
 
                 <div class="row ">
 
                     <div class="col">Washing clothes</div>
-                    <div class="col"><input ng-model="water.Q4W4S1" id="questionwaterfourFourTotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col">
+                        <input ng-model="water.Q4W4" class="textbox"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               min="0"
+                               onkeypress="return isDecimalNumber(event)">
+                    </div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Cooking</div>
-                    <div class="col"><input ng-model="water.Q4W5S1" id="questionwaterfourFiveTotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col">
+                        <input ng-model="water.Q4W5" class="textbox"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               min="0"
+                               onkeypress="return isDecimalNumber(event)">
+                    </div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Cleaning Utensils</div>
-                    <div class="col"><input ng-model="water.Q4W6" id="questionwaterfourSixTotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col">
+                        <input ng-model="water.Q4W6" class="textbox"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               min="0"
+                               onkeypress="return isDecimalNumber(event)">
+                    </div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Washing Vegetables</div>
-                    <div class="col"><input ng-model="water.Q4W7" id="questionwaterfourSevenTotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col">
+                        <input ng-model="water.Q4W7" class="textbox"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               min="0"
+                               onkeypress="return isDecimalNumber(event)">
+                    </div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Mopping floors</div>
-                    <div class="col"><input ng-model="water.Q4W8" id="questionwaterfourEightTotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col">
+                        <input ng-model="water.Q4W8" class="textbox"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               min="0"
+                               onkeypress="return isDecimalNumber(event)">
+                    </div>
                 </div>
 
                 <div class="row ">
-                    <div class="col">Gardening</div>
-                    <div class="col"><input ng-model="water.Q4W9" id="questionwaterfourNineTotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col">
+                        Gardening
+                        <span class="badge" on-hold="showToolTip('Q4W9')">?</span>
+                    </div>
+                    <div class="col">
+                        <input ng-model="water.Q4W9" class="textbox"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               min="0"
+                               onkeypress="return isDecimalNumber(event)">
+                    </div>
                 </div>
 
                 <div class="row ">
                     <div class="col">Total</div>
-                    <div class="col"><input ng-model="water.Q4W10" id="questionwaterfourTenTotal" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"
-                                            readonly="true"></div>
+                    <div class="col">
+                        <input ng-model="water.Q4W10" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               readonly>
+                    </div>
                 </div>
             </div>
 
             <div class="padding-bottom content fs-16">
-                Task 3: What Are The Sources, Supply and Storage of Water in your School?
+                <strong>Task 3: What Are The Sources, Supply and Storage of Water in your School?</strong>
             </div>
 
             <div class="content" style="text-align: justify;">
@@ -463,13 +339,16 @@
                     </span>
                     <ul class="water-list" ng-show="readMore[4]">
                         <li>The audit team will have to interview the administrative staff to get
-                            information for Table 2 in this section.</li>
+                            information for Table 2 in this section.
+                        </li>
                         <li>Your school will have multiple sources as well as multiple suppliers.
-                            Please choose accordingly.</li>
+                            Please choose accordingly.
+                        </li>
                         <li>This activity has to be done during any one month during the audit
                             period (July–October). Ideally, the activity is done best during
                             September when the weather is not very hot and your consumption could
-                            be lower than in the summer months.</li>
+                            be lower than in the summer months.
+                        </li>
                     </ul>
                     <a ng-click="toggleReadMore(4)">
                         <span ng-show="!readMore[4]">Read More</span>
@@ -481,33 +360,29 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    2 Where does the water your school uses, come from? (please tick the correct options):
+                    2. Where does the water your school uses come from? (please tick the correct
+                    options):
                 </div>
 
-                <div class="row " style="padding-left: 20px">
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q5W1" type="checkbox" name="ba"><span
+                        style="position:absolute">&nbsp;Ground Water</span>
+                </ion-item>
 
-                    <div class="col fs-12">
-                        <input ng-model="water.Q5W1" id="questionwaterfiveOneOne" type="checkbox" name="ba">&nbsp;<span
-                            style="position:absolute"> Ground water</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input ng-model="water.Q5W2" id="questionwaterfiveOneTwo" type="checkbox" name="bb">&nbsp;<span
-                            style="position:absolute">Surface water</span>
-                    </div>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q5W2" type="checkbox" name="bb"><span
+                        style="position:absolute">&nbsp;Surface Water</span>
+                </ion-item>
 
-                </div>
-                <div class="row " style="padding-left: 20px">
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q5W3" ng-change="updateQ2()" type="checkbox" name="bc"><span
+                        style="position:absolute">&nbsp;Rain Water</span>
+                </ion-item>
 
-                    <div class="col fs-12">
-                        <input ng-model="water.Q5W3" id="questionwaterfiveOneThree" type="checkbox"
-                               name="bc">&nbsp;<span style="position:absolute"> Rain water</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input ng-model="water.Q5W4" id="questionwaterfiveOneFour" type="checkbox" name="bd">&nbsp;<span
-                            style="position:absolute">Recycled waste water</span>
-                    </div>
-
-                </div>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q5W4" type="checkbox" name="bd"><span
+                        style="position:absolute">&nbsp;Recycled Waste Water</span>
+                </ion-item>
 
             </div>
 
@@ -516,48 +391,33 @@
                     3. Who supplies the water in your school? (please tick the correct options):
                 </div>
 
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q6W1" type="checkbox" name="aa"><span
+                        style="position:absolute">&nbsp;Municipality</span>
+                </ion-item>
 
-                <div class="row " style="padding-left: 0px">
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q6W2" type="checkbox" name="ab"><span
+                        style="position:absolute">&nbsp;Panchayat</span>
+                </ion-item>
 
-                    <div class="col fs-12">
-                        <input ng-model="water.Q6W1" id="questionwaterfiveThreeOne" type="checkbox"
-                               name="aa">&nbsp;<span style="position:absolute">Municipality</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input ng-model="water.Q6W2" id="questionwaterfiveThreeTwo" type="checkbox"
-                               name="ab">&nbsp;<span style="position:absolute">Panchayat</span>
-                    </div>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q6W3" type="checkbox" name="ac"><span
+                        style="position:absolute">&nbsp;Public Health Engineering Department (PHED)</span>
+                </ion-item>
 
-                </div>
-                <div class="row " style="padding-left: 0px">
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q6W4" type="checkbox" name="ad"><span
+                        style="position:absolute">&nbsp;Private supplier</span>
+                </ion-item>
 
-                    <div class="col fs-12">
-                        <input ng-model="water.Q6W3" id="questionwaterfiveThreeThree" type="checkbox"
-                               name="ac">&nbsp;<span style="position:absolute"> Public Health Engineering Department (PHED)</span>
-                    </div>
-                </div>
-                <div class="row " style="padding-left: 0px">
-                    <div class="col fs-12">
-                        <input ng-model="water.Q6W4" id="questionwaterfiveThreeFour" type="checkbox"
-                               name="ad">&nbsp;<span style="position:absolute">Private supplier</span>
-                    </div>
-                </div>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q6W5" type="checkbox" name="ae">
+                    <span style="position:absolute">
+                        &nbsp;School’s own supply (bore well, rainwater harvesting facility, etc)
+                    </span>
+                </ion-item>
 
-                <div class="row " style="padding-left: 0px">
-
-                    <div class="col fs-12" style="padding-bottom: 20px">
-                        <input ng-model="water.Q6W5" id="questionwaterfiveThreeFive" type="checkbox"
-                               name="ae">&nbsp;<span style="position:absolute;padding-bottom: 10px"> School’s own supply (bore well, rainwater harvesting facility, etc)</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="list" style="margin-left: 5px;margin-right: 5px">
-                <strong>Upload supporting documents</strong><br>
-                Please upload all supporting documents related to this section here. Note: files must be in one of the
-                following formats: PDF Document (.pdf), Word Document (.doc, .docx), Image File (.jpg, .jpeg) <br>
-                File size per document should not exceed 500 KB.
-                <input ng-model="water.QW1S1" type="file" id="questionwatersix">
             </div>
 
             <div class="card">
@@ -568,123 +428,219 @@
                 <div class="row " style="padding-left: 20px">
 
                     <div class="col fs-12">
-                        <input ng-model="water.Q7W1" id="questionwaterseven" type="radio" name="a">&nbsp;<span
+                        <input ng-model="water.Q7W1" ng-value="'Y'" type="radio" name="c">&nbsp;<span
                             style="position:absolute">Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="water.Q7W1" id="questionwaterseven" type="radio" name="a">&nbsp;<span
+                        <input ng-model="water.Q7W1" ng-value="'N'" type="radio" name="c">&nbsp;<span
                             style="position:absolute">No</span>
                     </div>
-
                 </div>
 
             </div>
 
-            <div class="list" style="margin-left: 5px;margin-right: 5px">
+            <div class="card" ng-show="water.Q7W1 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    4(a). If supply of water is daily, please tick the correct option:
+                </div>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q7W22" type="radio" ng-value="1" name="d"><span
+                        style="position:absolute">&nbsp;≤1 hours</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q7W22" type="radio" ng-value="2" name="d"><span
+                        style="position:absolute">&nbsp;2-6 hours</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q7W22" type="radio" ng-value="3" name="d"><span
+                        style="position:absolute">&nbsp;7-12 hours</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q7W22" type="radio" ng-value="4" name="d"><span
+                        style="position:absolute">&nbsp;13-18 hours</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q7W22" type="radio" ng-value="5" name="d"><span
+                        style="position:absolute">&nbsp;19-24 hours</span>
+                </ion-item>
+
+            </div>
+
+            <div class="card" ng-show="water.Q7W1 == 'N'">
+                <div class="item item-text-wrap item-borderless">
+                    4(a). If supply of water is not daily, please tick the correct option:
+                </div>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q7W22" type="radio" ng-value="1" name="d"><span
+                        style="position:absolute">&nbsp;≤1 day in a week</span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q7W22" type="radio" ng-value="2" name="d"><span
+                        style="position:absolute">&nbsp;2 days in a week</span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q7W22" type="radio" ng-value="3" name="d"><span
+                        style="position:absolute">&nbsp;3 days in a week</span>
+                </ion-item>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q7W22" type="radio" ng-value="4" name="d"><span
+                        style="position:absolute">&nbsp;Every alternate day in a week</span>
+                </ion-item>
+
+            </div>
+
+            <div class="padding-bottom content fs-16">
                 <strong>Task 4: What are the water conservation practices followed in your school?</strong>
             </div>
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     5. What are the water conservation practices your school follows
+                    <span class="badge" on-hold="showToolTip('Q5')">?</span>
                 </div>
 
                 <div class="row ">
-                    <div class="col ">Does your school have any water and sanitation policy?</div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S1" id="questionwatereightOne" type="radio"
-                                                   name="b">&nbsp;<span style="position:absolute">Yes</span></div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S1" id="questionwatereightOne" type="radio"
-                                                   name="b">&nbsp;<span style="position:absolute">No</span></div>
+                    <div class="col col-67">Does your school have any water and sanitation policy?</div>
+                    <div class="col"><input ng-model="water.Q8W1S1" ng-value="'Y'" type="radio"
+                                            name="ea">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S1" ng-value="'N'" type="radio"
+                                            name="ea">&nbsp;<span style="position:absolute">No</span></div>
                 </div>
 
                 <div class="row ">
-                    <div class="col ">If your school has an eco-club, do they have water component?</div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S2" id="questionwatereightTwo" type="radio"
-                                                   name="c">&nbsp;<span style="position:absolute">Yes</span></div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S2" id="questionwatereightTwo" type="radio"
-                                                   name="c">&nbsp;<span style="position:absolute">No</span></div>
+                    <div class="col col-67">If your school has an eco-club, do they have water component?</div>
+                    <div class="col"><input ng-model="water.Q8W1S2" ng-value="'Y'" type="radio"
+                                            name="eb">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S2" ng-value="'N'" type="radio"
+                                            name="eb">&nbsp;<span style="position:absolute">No</span></div>
                 </div>
 
 
                 <div class="row ">
-                    <div class="col ">Do all tanks in the school have float valves installed to stop overflow?</div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S3" id="questionwatereightThree" type="radio"
-                                                   name="d">&nbsp;<span style="position:absolute">Yes</span></div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S3" id="questionwatereightThree" type="radio"
-                                                   name="d">&nbsp;<span style="position:absolute">No</span></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col ">Do the drinking water points have spill proof taps to check overflow?</div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S4" id="questionwatereightFour" type="radio"
-                                                   name="e">&nbsp;<span style="position:absolute">Yes</span></div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S4" id="questionwatereightFour" type="radio"
-                                                   name="e">&nbsp;<span style="position:absolute">No</span></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col ">Does your school use appliances with a quick-wash setting?</div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S5" id="questionwatereightFive" type="radio"
-                                                   name="f">&nbsp;<span style="position:absolute">Yes</span></div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S5" id="questionwatereightFive" type="radio"
-                                                   name="f">&nbsp;<span style="position:absolute">No</span></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col ">Are dual flush systems installed in the toilets?</div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S6" id="questionwatereightSix" type="radio"
-                                                   name="g">&nbsp;<span style="position:absolute">Yes</span></div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S6" id="questionwatereightSix" type="radio"
-                                                   name="g">&nbsp;<span style="position:absolute">No</span></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col ">Does your school encourage bottled water for drinking water?</div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S7" id="questionwatereightSeven" type="radio"
-                                                   name="h">&nbsp;<span style="position:absolute">Yes</span></div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S7" id="questionwatereightSeven" type="radio"
-                                                   name="h">&nbsp;<span style="position:absolute">No</span></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col ">Does your school grow local plant species which require limited amount of water to
-                        grow?
+                    <div class="col col-67">Do all tanks in the school have float valves installed to stop overflow?
                     </div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S8" id="questionwatereightEight" type="radio"
-                                                   name="i">&nbsp;<span style="position:absolute">Yes</span></div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S8" id="questionwatereightEight" type="radio"
-                                                   name="i">&nbsp;<span style="position:absolute">No</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S3" ng-value="'Y'" type="radio"
+                                            name="ec">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S3" ng-value="'N'" type="radio"
+                                            name="ec">&nbsp;<span style="position:absolute">No</span></div>
                 </div>
 
                 <div class="row ">
-                    <div class="col ">Has your school initiated any water conservation steps in the school or outside,
+                    <div class="col col-67">Do the drinking water points have spill proof taps to check overflow?</div>
+                    <div class="col"><input ng-model="water.Q8W1S4" ng-value="'Y'" type="radio"
+                                            name="ed">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S4" ng-value="'N'" type="radio"
+                                            name="ed">&nbsp;<span style="position:absolute">No</span></div>
+                </div>
+
+                <div class="row ">
+                    <div class="col col-67">Does your school use appliances with a quick-wash setting?</div>
+                    <div class="col"><input ng-model="water.Q8W1S5" ng-value="'Y'" type="radio"
+                                            name="ee">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S5" ng-value="'N'" type="radio"
+                                            name="ee">&nbsp;<span style="position:absolute">No</span></div>
+                </div>
+
+                <div class="row ">
+                    <div class="col col-67">Are dual flush systems installed in the toilets?</div>
+                    <div class="col"><input ng-model="water.Q8W1S6" ng-value="'Y'" type="radio"
+                                            name="ef">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S6" ng-value="'N'" type="radio"
+                                            name="ef">&nbsp;<span style="position:absolute">No</span></div>
+                </div>
+
+                <div class="row ">
+                    <div class="col col-67">Does your school encourage bottled water for drinking water?</div>
+                    <div class="col"><input ng-model="water.Q8W1S7" ng-value="'Y'" type="radio"
+                                            name="eg">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S7" ng-value="'N'" type="radio"
+                                            name="eg">&nbsp;<span style="position:absolute">No</span></div>
+                </div>
+
+                <div class="row ">
+                    <div class="col col-67">Does your school grow local plant species which require limited amount of
+                        water to grow?
+                    </div>
+                    <div class="col"><input ng-model="water.Q8W1S8" ng-value="'Y'" id="questionwatereightEight"
+                                            type="radio"
+                                            name="eh">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S8" ng-value="'N'" id="questionwatereightEight"
+                                            type="radio"
+                                            name="eh">&nbsp;<span style="position:absolute">No</span></div>
+                </div>
+
+                <div class="row ">
+                    <div class="col col-67">Has your school initiated any water conservation steps in the school or
+                        outside,
                         in the past one year?
                     </div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S9" id="questionwatereightNine" type="radio"
-                                                   name="j">&nbsp;<span style="position:absolute">Yes</span></div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S9" id="questionwatereightNine" type="radio"
-                                                   name="j">&nbsp;<span style="position:absolute">No</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S9" ng-value="'Y'" id="questionwatereightNine"
+                                            type="radio"
+                                            name="ei">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S9" ng-value="'N'" id="questionwatereightNine"
+                                            type="radio"
+                                            name="ei">&nbsp;<span style="position:absolute">No</span></div>
                 </div>
 
                 <div class="row ">
-                    <div class="col ">Does your school use a drip or irrigation system?</div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S10" id="questionwatereightTen" type="radio"
-                                                   name="k">&nbsp;<span style="position:absolute">Yes</span></div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S10" id="questionwatereightTen" type="radio"
-                                                   name="k">&nbsp;<span style="position:absolute">No</span></div>
+                    <div class="col col-67">Does your school use a drip or irrigation system?</div>
+                    <div class="col"><input ng-model="water.Q8W1S10" ng-value="'Y'" id="questionwatereightTen"
+                                            type="radio"
+                                            name="ej">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S10" ng-value="'N'" id="questionwatereightTen"
+                                            type="radio"
+                                            name="ej">&nbsp;<span style="position:absolute">No</span></div>
                 </div>
 
                 <div class="row ">
-                    <div class="col ">Any other step taken for water conservation? (if Yes, please specify)</div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S11" id="questionwatereightEleven" type="radio"
-                                                   name="l">&nbsp;<span style="position:absolute">Yes</span></div>
-                    <div class="col col-10"><input ng-model="water.Q8W1S11" id="questionwatereightEleven" type="radio"
-                                                   name="l">&nbsp;<span style="position:absolute">No</span></div>
+                    <div class="col col-67">Does your school uses any water purification technology?
+                        (For example: RO machine/plant)
+                    </div>
+                    <div class="col"><input ng-model="water.Q8W1S12" ng-value="'Y'" type="radio"
+                                            name="el">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S12" ng-value="'N'" type="radio"
+                                            name="el">&nbsp;<span style="position:absolute">No</span></div>
                 </div>
+
+                <div class="row ">
+                    <div class="col col-67">Any other step taken for water conservation? (if Yes, please specify)</div>
+                    <div class="col"><input ng-model="water.Q8W1S11" ng-value="'Y'" id="questionwatereightEleven"
+                                            type="radio"
+                                            name="ek">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water.Q8W1S11" ng-value="'N'" id="questionwatereightEleven"
+                                            type="radio"
+                                            name="ek">&nbsp;<span style="position:absolute">No</span></div>
+                </div>
+                <div class="row" ng-show="water.Q8W1S11 == 'Y'">
+                    <div class="col col-33">Please Specify:</div>
+                    <div class="col">
+                        <input ng-model="water.Q8W1S112" type="text" class="textbox"
+                               style="border:1px solid #111;text-align: center;">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="padding-bottom content fs-16 card">
+                <strong style="padding:1%;">Upload supporting documents</strong><br/>
+                <p style="padding:1%;">
+                    Please upload all supporting documents related to this section here.
+                    Note: files must be in one of the following formats: PDF Document (.pdf),
+                    Word Document (.doc, .docx), Image File (.jpg, .jpeg) <br>
+                    File size per document should not exceed 500 KB.
+                    <input fileread="water.QW1FL1" type="file">
+                </p>
+
             </div>
 
             <div class="padding-bottom content fs-16">
-                Task 5: Does your school harvest rainwater?
+                <strong>Task 5: Does your school harvest rainwater?</strong>
             </div>
 
             <div class="content" style="text-align: justify;">
@@ -713,89 +669,311 @@
                 <div class="item item-text-wrap item-borderless">
                     6. Do you have Rainwater harvesting (RWH) system in your school?
                 </div>
-
-
                 <div class="row ">
-
                     <div class="col fs-12">
-                        <input ng-model="water.Q9W1" id="questionwaternine" type="radio" name="m">&nbsp;<span
-                            style="position:absolute"> Yes</span>
+                        <input ng-model="water.Q8W2" ng-value="'Y'" ng-change="updateQ6()" type="radio" name="f">&nbsp;<span
+                            style="position:absolute">Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="water.Q10W1" id="questionwaternine" type="radio" name="m">&nbsp;<span
-                            style="position:absolute">On</span>
+                        <input ng-model="water.Q8W2" ng-value="'N'" ng-change="updateQ6()" type="radio" name="f">&nbsp;<span
+                            style="position:absolute">No</span>
                     </div>
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" ng-show="water.Q8W2 == 'Y'">
                 <div class="item item-text-wrap item-borderless">
                     6(a). Does your school harvest different catchments?
                 </div>
                 <div class="row " style="padding-left: 20px">
 
                     <div class="col fs-12">
-                        <input ng-model="water.Q11W1" id="questionwaterten" type="radio" name="n">&nbsp;<span
+                        <input ng-model="water.Q8W2S1" ng-value="'Y'" type="radio" name="g">&nbsp;<span
                             style="position:absolute">Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="water.Q12W1" id="questionwaterten" type="radio" name="n">&nbsp;<span
+                        <input ng-model="water.Q8W2S1" ng-value="'N'" type="radio" name="g">&nbsp;<span
                             style="position:absolute">No</span>
                     </div>
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S1 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    6(a)(1). Which is the catchment area being harvested by your school?
+                </div>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="1" name="h"><span
+                        style="position:absolute">&nbsp;Rooftop</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="2" name="h"><span
+                        style="position:absolute">&nbsp;Paved</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="3" name="h"><span
+                        style="position:absolute">&nbsp;Unpaved</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="4" name="h"><span
+                        style="position:absolute">&nbsp;Rooftop + Paved</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="5" name="h"><span
+                        style="position:absolute">&nbsp;Paved + Unpaved</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="6" name="h"><span
+                        style="position:absolute">&nbsp;Rooftop + Unpaved</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="7" name="h"><span
+                        style="position:absolute">&nbsp;Rooftop + Paved + Unpaved</span>
+                </ion-item>
+
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y'">
+
                 <div class="item item-text-wrap item-borderless">
                     6(b). How does your school harvest rainwater?
                 </div>
-                <div class="row " style="padding-left: 20px">
 
-                    <div class="col fs-12">
-                        <input ng-model="water.Q13W1S1" id="questionwatereleven" type="radio" name="o">&nbsp;<span
-                            style="position:absolute">By storing</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input ng-model="water.Q13W1S1" id="questionwatereleven" type="radio" name="o">&nbsp;<span
-                            style="position:absolute">By recharging groundwater</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input ng-model="water.Q13W1S1" id="questionwatereleven" type="radio" name="o">&nbsp;<span
-                            style="position:absolute">Combination of both</span>
-                    </div>
-                </div>
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2" type="radio" ng-value="1" name="i"><span
+                        style="position:absolute">&nbsp;By storing</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2" type="radio" ng-value="2" name="i"><span
+                        style="position:absolute">&nbsp;By recharging groundwater</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2" type="radio" ng-value="3" name="i"><span
+                        style="position:absolute">&nbsp;Combination of both</span>
+                </ion-item>
+
             </div>
 
-            <div class="card">
+            <div class="card" ng-show="water.Q8W2 == 'Y' && (water.Q8W2S2 == 1 || water.Q8W2S2 == 3)">
                 <div class="item item-text-wrap item-borderless">
-                    6(b)(1). Does your school have groundwater recharge structure?
+                    6(b)(1). If your school only stores rainwater, please select the use of stored
+                    rainwater:
                 </div>
-                <div class="row " style="padding-left: 20px">
 
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2S1" type="checkbox" name="ia"><span
+                        style="position:absolute">&nbsp;Drinking</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2S2" type="checkbox" name="ib"><span
+                        style="position:absolute">&nbsp;Gardening</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2S3" type="checkbox" name="ic"><span
+                        style="position:absolute">&nbsp;Mopping</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2S4" type="checkbox" name="id"><span
+                        style="position:absolute">&nbsp;Toilets</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2S5" type="checkbox" name="ie"><span
+                        style="position:absolute">&nbsp;Washing vehicles</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2S6" type="checkbox" name="if"><span
+                        style="position:absolute">&nbsp;Kitchen (Cooking / Washing vegetables and utensils)</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2S7" type="checkbox" name="ig"><span
+                        style="position:absolute">&nbsp;Shower, Brushing teeth, Bathing, Hand washing</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2S8" type="checkbox" name="ih"><span
+                        style="position:absolute">&nbsp;Swimming Pool</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2S9" type="checkbox" name="ii"><span
+                        style="position:absolute">&nbsp;Fire Fighting</span>
+                </ion-item>
+
+                <ion-item class="fs-14 item-text-wrap">
+                    <input ng-model="water.Q8W2S2S10" type="checkbox" name="ij"><span
+                        style="position:absolute">&nbsp;Desert Coolers</span>
+                </ion-item>
+
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y' && (water.Q8W2S2 == 1 || water.Q8W2S2 == 3)">
+                <div class="item item-text-wrap item-borderless">
+                    6(b)(2). Does your school have rainwater storage tank?
+                </div>
+
+                <div class="row ">
                     <div class="col fs-12">
-                        <input ng-model="water.Q11W1S1" id="questionwatertwelve" type="radio" name="p">&nbsp;<span
+                        <input ng-model="water.Q8W2S2S1S1" ng-value="'Y'" type="radio" name="j">&nbsp;<span
                             style="position:absolute">Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="water.Q11W1S1" id="questionwatertwelve" type="radio" name="p">&nbsp;<span
+                        <input ng-model="water.Q8W2S2S1S1" ng-value="'N'" type="radio" name="j">&nbsp;<span
                             style="position:absolute">No</span>
                     </div>
+                </div>
 
+            </div>
+
+            <div class="card"
+                 ng-show="water.Q8W2 == 'Y' && (water.Q8W2S2 == 1 || water.Q8W2S2 == 3) && water.Q8W2S2S1S1 == 'Y'">
+
+                <div class="item item-text-wrap item-borderless">
+                    If yes, please provide:
+                </div>
+
+                <div class="row">
+                    <div class="col col-67">
+                        6(b)(2)A. Total number of storage tank:
+                    </div>
+                    <div class="col">
+                        <input ng-model="water.Q8W2S2S3A" class="textbox"
+                               style="border:1px solid #111;text-align: center;"
+                               type="number" min="0" string-to-number limit-to="3"
+                               onkeypress="return isNumberKey(event)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-67">
+                        6(b)(2)B. Total capacity of each storage tank (litres):
+                    </div>
+                    <div class="col">
+                        <input ng-model="water.Q8W2S2S4B" class="textbox"
+                               style="border:1px solid #111;text-align: center;"
+                               type="number" min="0" string-to-number limit-to="5"
+                               onkeypress="return isDecimalNumber(event)">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        6(b)(2)C. Location of tanks:
+                    </div>
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water.Q8W2S2S5C" ng-value="i" type="radio" name="k">
+                    </div>
+                    <div class="col">
+                        <span style="position: absolute">{{ data.locationOfTanks[i] }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        6(b)(2)D. Material options for tanks:
+                    </div>
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3, 4]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water.Q8W2S2S6D" ng-value="i" type="radio" name="l">
+                    </div>
+                    <div class="col">
+                        <span style="position: absolute;">{{ data.materialOptions[i] }}</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" ng-show="water.Q8W2 == 'Y' && (water.Q8W2S2 == 2 || water.Q8W2S2 == 3)">
+                <div class="item item-text-wrap item-borderless">
+                    6(b)(3). Does your school have groundwater recharge structure?
+                </div>
+                <div class="row ">
+                    <div class="col fs-12">
+                        <input ng-model="water.Q8W2S2S7S3" ng-value="'Y'" type="radio" name="m">&nbsp;<span
+                            style="position:absolute">Yes</span>
+                    </div>
+                    <div class="col fs-12">
+                        <input ng-model="water.Q8W2S2S7S3" ng-value="'N'" type="radio" name="m">&nbsp;<span
+                            style="position:absolute">No</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y' &&
+            (water.Q8W2S2 == 2 || water.Q8W2S2 == 3) && water.Q8W2S2S7S3 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    6(b)(3)(i). Please share the total number of groundwater recharge structures
+                </div>
+                <div class="row">
+                    <input ng-model="water.Q8W2S2S8S1" type="number" min="0" class="textbox"
+                           style="border:1px solid #111;text-align: center;"
+                           string-to-number limit-to="3"
+                           onkeypress="return isNumberKey(event)">
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y' &&
+            (water.Q8W2S2 == 2 || water.Q8W2S2 == 3) && water.Q8W2S2S7S3 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    6(b)(3)(ii). Please tick the type of groundwater recharge structures used in your school:
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water['Q8W2S2S9' + i]" type="checkbox">
+                    </div>
+                    <div class="col">
+                        <span style="position: absolute;">{{ data.rechargeStructures[i] }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S2">
+                <div class="item item-text-wrap item-borderless">
+                    6(b)(4). If your school practices rainwater harvesting,
+                    then what is the ratio between storage and recharge?
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water.Q8W2S2S10S4" ng-value="i" type="radio" name="n">
+                    </div>
+                    <div class="col">
+                        <span style="position: absolute;">{{ data.storageRechargeRatio[i] }}</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y'">
                 <div class="item item-text-wrap item-borderless">
                     6(c). How much area in your school is harvested?
                 </div>
                 <div class="row " style="padding-left: 20px">
 
                     <div class="col fs-12">
-                        <input ng-model="water.Q12W1S1" id="questionwaterthirteen" type="radio" name="q">&nbsp;<span
+                        <input ng-model="water.Q8W2S4" ng-value="1" type="radio" name="q">&nbsp;<span
                             style="position:absolute">10 to 20 per cent</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="water.Q12W1S1" id="questionwaterthirteen" type="radio" name="q">&nbsp;<span
+                        <input ng-model="water.Q8W2S4" ng-value="2" type="radio" name="q">&nbsp;<span
                             style="position:absolute">21 to 30 per cent</span>
                     </div>
                 </div>
@@ -803,24 +981,23 @@
                 <div class="row " style="padding-left: 20px">
 
                     <div class="col fs-12">
-                        <input ng-model="water.Q12W1S1" id="questionwaterthirteen" type="radio" name="q">&nbsp;<span
+                        <input ng-model="water.Q8W2S4" ng-value="3" type="radio" name="q">&nbsp;<span
                             style="position:absolute">31 to 40 per cent</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="water.Q12W1S1" id="questionwaterthirteen" type="radio" name="q">&nbsp;<span
+                        <input ng-model="water.Q8W2S4" ng-value="4" type="radio" name="q">&nbsp;<span
                             style="position:absolute">41 to 50 per cent</span>
                     </div>
-
                 </div>
 
                 <div class="row " style="padding-left: 20px">
 
                     <div class="col fs-12">
-                        <input ng-model="water.Q12W1S1" id="questionwaterthirteen" type="radio" name="q">&nbsp;<span
+                        <input ng-model="water.Q8W2S4" ng-value="5" type="radio" name="q">&nbsp;<span
                             style="position:absolute">51 to 60 per cent</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="water.Q12W1S1" id="questionwaterthirteen" type="radio" name="q">&nbsp;<span
+                        <input ng-model="water.Q8W2S4" ng-value="6" type="radio" name="q">&nbsp;<span
                             style="position:absolute">61 to 70 per cent</span>
                     </div>
 
@@ -829,19 +1006,20 @@
                 <div class="row " style="padding-left: 20px">
 
                     <div class="col fs-12">
-                        <input ng-model="water.Q12W1S1" id="questionwaterthirteen" type="radio" name="q">&nbsp;<span
+                        <input ng-model="water.Q8W2S4" ng-value="7" type="radio" name="q">&nbsp;<span
                             style="position:absolute">71 to 80 per cent</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="water.Q12W1S1" id="questionwaterthirteen" type="radio" name="q">&nbsp;<span
+                        <input ng-model="water.Q8W2S4" ng-value="8" type="radio" name="q">&nbsp;<span
                             style="position:absolute">81 to 90 per cent</span>
                     </div>
 
                 </div>
+
                 <div class="row " style="padding-left: 20px">
 
                     <div class="col fs-12">
-                        <input ng-model="water.Q12W1S1" id="questionwaterthirteen" type="radio" name="q">&nbsp;<span
+                        <input ng-model="water.Q8W2S4" ng-value="9" type="radio" name="q">&nbsp;<span
                             style="position:absolute">91 to 100 per cent</span>
                     </div>
                     <div class="col fs-12">
@@ -849,78 +1027,65 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" ng-show="water.Q8W2 == 'Y'">
                 <div class="item item-text-wrap item-borderless">
-                    6(d). Please select (from the list given below) the rainwater harvesting structures present in your
-                    school:
+                    6(d). Please select (from the list given below) the rainwater harvesting
+                    structures present in your school:
                 </div>
 
-                <div class="row " style="padding-left: 20px">
+                <div class="row " style="padding-left: 20px" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8]">
 
                     <div class="col fs-12">
-                        <input ng-model="water.Q13W1S1" id="questionwaterfourteen1" type="checkbox"
-                               name="ce">&nbsp;<span style="position:absolute"> Conduits</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input ng-model="water.Q13W1S1" id="questionwaterfourteen2" type="checkbox"
-                               name="cf">&nbsp;<span style="position:absolute">Gutters</span>
+                        <input ng-model="water['Q8W2S3' + i]" type="checkbox" ng-value="i">&nbsp;
+                        <span style="position:absolute"> {{ data.rainWaterStructures[i] }}</span>
                     </div>
 
                 </div>
-                <div class="row " style="padding-left: 20px">
+            </div>
 
-                    <div class="col fs-12">
-                        <input ng-model="water.Q13W1S1" id="questionwaterfourteen3" type="checkbox"
-                               name="cg">&nbsp;<span style="position:absolute">Filter unit</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input ng-model="water.Q13W1S1" id="questionwaterfourteen4" type="checkbox"
-                               name="ch">&nbsp;<span style="position:absolute">First flush</span>
-                    </div>
+            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S33">
+                <div class="item item-text-wrap item-borderless">
+                    6(d)(1) Where is your filter unit?
                 </div>
-
-                <div class="row " style="padding-left: 20px">
-
-                    <div class="col fs-12">
-                        <input ng-model="water.Q13W1S1" id="questionwaterfourteen5" type="checkbox"
-                               name="ca">&nbsp;<span style="position:absolute">Storage tank</span>
+                <div class="row" ng-repeat="i in [1, 2, 3, 4]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water.Q8W2S4S1" ng-value="i" type="radio" name="r">
                     </div>
-                    <div class="col fs-12">
-                        <input ng-model="water.Q13W1S1" id="questionwaterfourteen6" type="checkbox"
-                               name="cb">&nbsp;<span style="position:absolute">Collection sump</span>
-                    </div>
-
-                </div>
-                <div class="row " style="padding-left: 20px">
-
-                    <div class="col fs-12">
-                        <input ng-model="water.Q13W1S1" id="questionwaterfourteen7" type="checkbox"
-                               name="cc">&nbsp;<span style="position:absolute">Pump unit</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input ng-model="water.Q13W1S1" id="questionwaterfourteen8" type="checkbox"
-                               name="cd">&nbsp;<span style="position:absolute">Recharge structure</span>
+                    <div class="col">
+                        {{ data.filterUnit[i] }}
                     </div>
                 </div>
             </div>
 
-            <div class="list" style="margin-left: 5px;margin-right: 5px">
-                <strong>Please share the maintenance and monitoring details of rainwater harvesting structure/s of your
-                    school by answering the questionwaters below:</strong>
+            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S33">
+                <div class="item item-text-wrap item-borderless">
+                    6(d)(2) Types of filter used in your school:
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3, 4]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water['Q8W2S4S2' + i]" type="checkbox">
+                    </div>
+                    <div class="col">
+                        {{ data.typeOfFilter[i] }}
+                    </div>
+                </div>
+
             </div>
 
-            <div class="card">
+            <div class="card" ng-show="water.Q8W2 == 'Y'">
                 <div class="item item-text-wrap item-borderless">
                     6(e). Rate your catchment on cleanliness:
                 </div>
                 <div class="row " style="padding-left: 20px">
 
                     <div class="col fs-12">
-                        <input ng-model="water.Q14W1S1" id="questionwaterfifteen" type="radio" name="r">&nbsp;<span
+                        <input ng-model="water.Q8W2S5" ng-value="1" type="radio" name="s">&nbsp;<span
                             style="position:absolute">Good</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="water.Q14W1S1" id="questionwaterfifteen" type="radio" name="r">&nbsp;<span
+                        <input ng-model="water.Q8W2S5" ng-value="2" type="radio" name="s">&nbsp;<span
                             style="position:absolute">Average</span>
                     </div>
 
@@ -928,7 +1093,7 @@
                 <div class="row " style="padding-left: 20px">
 
                     <div class="col fs-12">
-                        <input ng-model="water.Q14W1S1" id="questionwaterfifteen" type="radio" name="r">&nbsp;<span
+                        <input ng-model="water.Q8W2S5" ng-value="3" type="radio" name="s">&nbsp;<span
                             style="position:absolute">Poor</span>
                     </div>
                     <div class="col fs-12">
@@ -937,12 +1102,483 @@
                 </div>
             </div>
 
+            <div class="card" ng-show="water.Q8W2 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    6(f) Does your school clean your catchment and system(structure)?
+                </div>
+                <div class="row">
+                    <div class="col col-50">
+                        <input ng-model="water.Q8W2S61" ng-value="'Y'" type="radio" name="t">
+                        <span style="position: absolute">Yes</span>
+                    </div>
+                    <div class="col">
+                        <input ng-model="water.Q8W2S61" ng-value="'N'" type="radio" name="t">
+                        <span style="position: absolute">No</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S61 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    6(f)(1) Please specify when does your school clean the catchment and RWH system?
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water.Q8W2S7" ng-value="i" type="radio" name="u">
+                    </div>
+                    <div class="col">
+                        {{ data.catchmentClean[i] }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    6(g) Does your school monitor the rainwater harvesting structure for its efficiency?
+                </div>
+                <div class="row">
+                    <div class="col col-50">
+                        <input ng-model="water.Q8W2S8" ng-value="'Y'" type="radio" name="v">
+                        <span style="position: absolute">Yes</span>
+                    </div>
+                    <div class="col">
+                        <input ng-model="water.Q8W2S8" ng-value="'N'" type="radio" name="v">
+                        <span style="position: absolute">No</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S8 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    6(g)(1) Please specify when does your school monitor the groundwater level?
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water.Q8W2S9" ng-value="i" type="radio" name="v1">
+                    </div>
+                    <div class="col">
+                        {{ data.catchmentClean[i] }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    6(h) What is the trend of groundwater level in your school across the year?
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water.Q8W2S10" ng-value="i" type="radio" name="v2">
+                    </div>
+                    <div class="col">
+                        {{ data.groundWaterTrend[i] }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S10 == 1">
+                <div class="item item-text-wrap item-borderless">
+                    6(h)(1) Please specify how much was the decrease?
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water.Q8W2S11" ng-value="i" type="radio" name="v3">
+                    </div>
+                    <div class="col">
+                        {{ data.groundWaterLevelChange[i] }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S10 == 2">
+                <div class="item item-text-wrap item-borderless">
+                    6(h)(1) Please specify how much was the increase?
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water.Q8W2S12" ng-value="i" type="radio" name="v3">
+                    </div>
+                    <div class="col">
+                        {{ data.groundWaterLevelChange[i] }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    6(i) If your school&#39;s RWH structure is more than a year old, is there any
+                    improvement in the groundwater quality after the implementation of the RWH
+                    structure?
+                </div>
+                <div class="row">
+                    <div class="col col-50">
+                        <input ng-model="water.Q8W2S13" ng-value="'Y'" type="radio" name="v4">
+                        <span style="position: absolute">Yes</span>
+                    </div>
+                    <div class="col">
+                        <input ng-model="water.Q8W2S13" ng-value="'N'" type="radio" name="v4">
+                        <span style="position: absolute">No</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q8W2 == 'N'">
+                <div class="item item-text-wrap item-borderless">
+                    6(a) Calculate your school’s rainwater harvesting potential (in litres).
+                </div>
+                <div class="row ">
+                    <input ng-model="water.Q8W2S6A" class="textbox"
+                           style="border:1px solid #111;text-align: center;" type="number" min="0"
+                           onkeypress="return isDecimalNumber(event)">
+                </div>
+                <div style="padding: 2%;">
+                    <b>To calculate the maximum rainwater harvesting potential:</b>
+                    <p>Area = length X breadth<br/>
+                        Roof top potential (cu.m ) = Rooftop area (in sq m) x mm
+                        (if in mm then convert to m) of rainfall x 0.8<br/>
+                        Paved potential (cu.m.) = Paved area (sq m) x mm (if in mm then convert to m)
+                        of rainfall x 0.6 <br/>
+                        Unpaved potential (cu.m.) = Unpaved area (sq m) x mm (if in mm then convert to m)
+                        of rainfall x 0.10 <br/>
+                        <b>Maximum rainwater harvesting potential of the school</b> = Maximum Rooftop potential
+                        ___(cu.m) + Maximum Paved potential__ (cu.m) + Maximum Unpaved potential ______(cu.m) <br/>
+                        Run-off coefficient is the amount of rainwater retained in an area and
+                        mainly dependent on roof type and catchment.<br/>
+                    </p>
+                    <table style="border: 1px solid black">
+                        <tr>
+                            <th>Area</th>
+                            <th>Catchment run-off coefficient</th>
+                        </tr>
+                        <tr>
+                            <td>Roof</td>
+                            <td>0.8</td>
+                        </tr>
+                        <tr>
+                            <td>Paved area Driveways/courtyards, roads</td>
+                            <td>0.6</td>
+                        </tr>
+                        <tr>
+                            <td>Unpaved area garden, playground</td>
+                            <td>0.1</td>
+                        </tr>
+                    </table>
+                    <b>Note:</b> For Average Rainfall Data refer to
+                    <a href="http://www.greenschoolsprogramme.org/knowledge-bank/water/annexure-i/"
+                       target="_blank">
+                        Knowledge Bank
+                    </a>
+                </div>
+            </div>
+
+            <div class="padding-bottom content fs-16">
+                <strong>
+                    Task 6: Are the plumbing and sanitation facilities
+                    in your school adequate?
+                </strong>
+            </div>
+
+            <div class="content" style="text-align: justify;">
+                <p>
+                    Hygiene and <span ng-show="!readMore[6]">...</span>
+                    <span ng-show="readMore[6]">
+                        sanitation facilities are vitally important for a child’s health. Lack of
+                        these hampers attendance, especially of girls in senior grades.<br/>
+                    </span>
+                    <a ng-click="toggleReadMore(6)">
+                        <span ng-show="!readMore[6]">Read More</span>
+                        <span ng-show="readMore[6]">Read Less</span>
+                    </a>
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    7. Please share details about sanitation and hygiene practices in your school:
+                    <span class="badge" on-hold="showToolTip('Q7')">?</span>
+                </div>
+
+                <div class="row " ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8]">
+                    <div class="col col-67">{{ data.hygienePractices[i] }}</div>
+                    <div class="col"><input ng-model="water['Q8W3S' + i]" ng-value="'Y'" type="radio"
+                                            name="va{{ i }}">&nbsp;<span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water['Q8W1S' + i]" ng-value="'N'" type="radio"
+                                            name="va{{ i }}">&nbsp;<span style="position:absolute">No</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="row ">
+                    <div class="col col-67">8. How many drinking water taps do you have?</div>
+                    <div class="col">
+                        <input ng-model="water.Q9W1" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               onkeypress="return isNumberKey(event)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="row ">
+                    <div class="col col-67">9. How many hand-pumps do you have?</div>
+                    <div class="col">
+                        <input ng-model="water.Q10W1" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               onkeypress="return isNumberKey(event)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="row ">
+                    <div class="col col-67">
+                        10. How many ablution taps(taps used for washing hands only)
+                        do you have?
+                    </div>
+                    <div class="col">
+                        <input ng-model="water.Q11W1" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               onkeypress="return isNumberKey(event)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    11. How many water closets (used for defecation and urination) do you have?
+                </div>
+                <div class="row">
+                    <div class="col"> Number of toilets:</div>
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-20">
+                        {{ data.numToilets[i] }}
+                    </div>
+                    <div class="col col-20">
+                        <input ng-model="water['Q13W1S' + i]" class="textbox" ng-change="updateQ13()"
+                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               onkeypress="return isNumberKey(event)">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-20">
+                        Total
+                    </div>
+                    <div class="col col-20">
+                        <input ng-model="water.Q13W1S4" ng-value="water.Q13W1S4" class="textbox"
+                               style="border: 1px solid #111; text-align: center;"
+                               type="number" min="0" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="row ">
+                    <div class="col col-67">
+                        12. How many urinals (strictly used for urination only) do you have?
+                    </div>
+                    <div class="col">
+                        <input ng-model="water.Q14W1" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               onkeypress="return isNumberKey(event)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="row ">
+                    <div class="col col-67">
+                        13. How many other water outlets (example: taps in play fields,
+                        sprinklers, swimming pool) do you have?
+                    </div>
+                    <div class="col">
+                        <input ng-model="water.Q15W1" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               onkeypress="return isNumberKey(event)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    14. Is there a water storage system in place to supply water in the toilets?
+                </div>
+
+                <div class="row " style="padding-left: 20px">
+
+                    <div class="col fs-12">
+                        <input ng-model="water.Q16W1" ng-value="'Y'" type="radio" name="vb1">&nbsp;<span
+                            style="position:absolute">Yes</span>
+                    </div>
+                    <div class="col fs-12">
+                        <input ng-model="water.Q16W1" ng-value="'N'" type="radio" name="vb1">&nbsp;<span
+                            style="position:absolute">No</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    15. Is the water supply sufficient?
+                </div>
+
+                <div class="row " style="padding-left: 20px">
+
+                    <div class="col fs-12">
+                        <input ng-model="water.Q17W1" ng-value="'Y'" type="radio" name="vc1">&nbsp;<span
+                            style="position:absolute">Yes</span>
+                    </div>
+                    <div class="col fs-12">
+                        <input ng-model="water.Q17W1" ng-value="'N'" type="radio" name="vc1">&nbsp;<span
+                            style="position:absolute">No</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    16. Are the toilets cleaned?
+                </div>
+
+                <div class="row " style="padding-left: 20px">
+
+                    <div class="col fs-12">
+                        <input ng-model="water.Q18W1" ng-value="'Y'" type="radio" name="vd1">&nbsp;<span
+                            style="position:absolute">Yes</span>
+                    </div>
+                    <div class="col fs-12">
+                        <input ng-model="water.Q18W1" ng-value="'N'" type="radio" name="vd1">&nbsp;<span
+                            style="position:absolute">No</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card" ng-show="water.Q18W1 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    16(a) If yes, please specify:
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water.Q18W2" ng-value="i" type="radio" name="ve1">
+                    </div>
+                    <div class="col">
+                        {{ data.toiletCleanFreq[i] }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="padding-bottom content fs-16">
+                <strong>
+                    Task 7: Does your school reuse/recycle waste water?<br/>
+                    Go to <a href="http://www.greenschoolsprogramme.org/knowledge-bank/water/#recyclingSewageWater"
+                       target="_blank">
+                        knowledge portal
+                    </a>
+                </strong>
+            </div>
+
+            <div class="content" style="text-align: justify;">
+                <p>
+                    Water recycling is<span ng-show="!readMore[7]">...</span>
+                    <span ng-show="readMore[7]">
+                        the process of treating waste or used water,
+                        in order to upgrade its quality, so that it
+                        can be used again. When water, once used for
+                        a particular purpose, is put to use again,
+                        it is then being reused.<br/>
+                    </span>
+                    <a ng-click="toggleReadMore(7)">
+                        <span ng-show="!readMore[7]">Read More</span>
+                        <span ng-show="readMore[7]">Read Less</span>
+                    </a>
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    17. Does your school treat wastewater?
+                </div>
+
+                <div class="row " style="padding-left: 20px">
+                    <div class="col fs-12">
+                        <input ng-model="water.Q19W1" ng-value="'Y'" type="radio" name="vf1">&nbsp;<span
+                            style="position:absolute">Yes</span>
+                    </div>
+                    <div class="col fs-12">
+                        <input ng-model="water.Q19W1" ng-value="'N'" type="radio" name="vf1">&nbsp;<span
+                            style="position:absolute">No</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    18. Does your school reuse the treated wastewater?
+                </div>
+
+                <div class="row " style="padding-left: 20px">
+                    <div class="col fs-12">
+                        <input ng-model="water.Q20W1" ng-value="'Y'" type="radio" name="vg1">&nbsp;<span
+                            style="position:absolute">Yes</span>
+                    </div>
+                    <div class="col fs-12">
+                        <input ng-model="water.Q20W1" ng-value="'N'" type="radio" name="vg1">&nbsp;<span
+                            style="position:absolute">No</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q20W1 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    18(a) How does your school reuse wastewater?
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water.Q20W2" ng-value="i" type="radio" name="vh1">
+                    </div>
+                    <div class="col">
+                        {{ data.howDoesReuse[i] }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-show="water.Q20W1 == 'N'">
+                <div class="item item-text-wrap item-borderless">
+                    18(a) Please specify the fate of wastewater:
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water.Q20W2" ng-value="i" type="radio" name="vh1">
+                    </div>
+                    <div class="col">
+                        {{ data.fateOfWasteWater[i] }}
+                    </div>
+                </div>
+            </div>
+
             <div class="list card">
                 <!--||question.id==numberOfQuestions-1-->
                 <div class="button-bar">
 
-                    <a class="button background-color text-white" disabled="!validNext()"
+                    <a class="button background-color text-white"
+                       ion-chevron-right nav-clear ng-click="goToPrev()">PREVIOUS</a>
+                    &nbsp;
+                    <a class="button background-color text-white" ng-disabled="!validNext()"
                        ion-chevron-right nav-clear ng-click="quiz2()">NEXT</a>
+                    &nbsp;
+                    <a class="button background-color text-white"
+                       ion-chevron-right nav-clear ng-click="saveData()">SAVE</a>
                     <!-- ng-click="quiz2()" -->
                     <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
                 </div>

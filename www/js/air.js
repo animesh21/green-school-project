@@ -2,7 +2,7 @@ angular.module('starter.air', [])
 
   .controller('air1Ctrl', function ($scope, $rootScope, $state, $window, $stateParams, AppServiceAPI, $ionicModal,
                                     $ionicPlatform, $ionicPopup, $sce, $cordovaFileTransfer, $cordovaFile,
-                                    $cordovaActionSheet, $cordovaCamera) {
+                                    $cordovaActionSheet, $cordovaCamera, ValidationService) {
 
     //File Upload Code Starts Here
     $scope.image = null;
@@ -100,6 +100,8 @@ angular.module('starter.air', [])
       'Q6A2S1O6': {id: 1, name: 'Yes'}
     };
 
+    $scope.other = {};
+
     $scope.data = {
       Q3Options: [
         {id: 1, name: 'Yes'},
@@ -174,7 +176,7 @@ angular.module('starter.air', [])
     $scope.getAnswer = function (questionID) {
       return AppServiceAPI.selectQuestion(questionID).then(function (res) {
         if (res.rows.length > 0) {
-          var row = res.rows[0];
+          var row = res.rows.item(0);
           return row.answer;
         }
       }, function (err) {
@@ -195,21 +197,22 @@ angular.module('starter.air', [])
       $ionicPlatform.ready(function () {
         $scope.getAnswer('Q4G4S3').then(function (res) {
           console.log('Value fo Q4G4S3(total population): ' + res);
-          $scope.air.Q4G4S3 = parseInt(res);
+          // $scope.general.Q4G4S3 = parseInt(res);
+          $scope.other.Q4G4S3 = parseInt(res);
         });
         // student's population
         $scope.getAnswer('Q4G1S3').then(function (res2) {
-          $scope.air.Q4G1S3 = parseInt(res2);
+          $scope.other.Q4G1S3 = parseInt(res2);
           console.log('Students population: ' + res2);
         });
         // teacher's population
         $scope.getAnswer('Q4G2S3').then(function (res3) {
-          $scope.air.Q4G2S3 = parseInt(res3);
+          $scope.other.Q4G2S3 = parseInt(res3);
           console.log('Teachers population: ' + res3);
         });
         // other staff population
         $scope.getAnswer('Q4G3S3').then(function (res4) {
-          $scope.air.Q4G3S3 = parseInt(res4);
+          $scope.other.Q4G3S3 = parseInt(res4);
           console.log('Other staff: ' + res4);
         });
 
@@ -442,10 +445,10 @@ angular.module('starter.air', [])
       var val;
       var colTotals = [0, 0, 0, 0];
       var maxColTotals = [
-        $scope.air.Q4G1S3,
-        $scope.air.Q4G2S3,
-        $scope.air.Q4G3S3,
-        $scope.air.Q4G4S3
+        $scope.other.Q4G1S3,
+        $scope.other.Q4G2S3,
+        $scope.other.Q4G3S3,
+        $scope.other.Q4G4S3
       ];
       for (var j = 0; j <= 3; j++) {
         for (var i = 1; i <= 11; i++) {
@@ -520,12 +523,12 @@ angular.module('starter.air', [])
     };
 
     $scope.validateQ9 = function () {
-      var val = $scope.getAbsVal('Q9A1');
+      var val = $scope.air.Q9A1;
       if (val) {
-        if (val == 1) {
+        if (val === 'Y') {
           return true;
         }
-        else if (val == 2) {
+        else if (val === 'N') {
           return $scope.validVal('Q10A1');
         }
       }
@@ -533,23 +536,27 @@ angular.module('starter.air', [])
     };
 
     $scope.validNext = function () {
-      // return $scope.validateTeacher('A') && $scope.validateStudent('A') &&
-      //   $scope.validVal('Q4A1') && $scope.validateQ5() &&
-      //   $scope.validateQ6() &&
-      //   $scope.validVal('Q8A1') && $scope.validateQ9();
-      return true;
+      var validate = $scope.validateTeacher('A') && $scope.validateStudent('A') &&
+        $scope.validVal('Q4A1') && $scope.validateQ5() &&
+        $scope.validateQ6() &&
+        $scope.validVal('Q8A1') && $scope.validateQ9();
+      $rootScope.sectionsCompleted.air = validate;
+      return validate;
     };
     // end validation functions
 
-    $scope.saveData = function (data) {
-      angular.forEach(data, function (item, index) {
-        AppServiceAPI.update($rootScope.user, index, item, 10, 2);
+    $scope.saveData = function () {
+      ValidationService.saveData($scope.air, 2).then(function () {
+        AppServiceAPI.sync(2).then(function () {
+          ValidationService.logoutUser();
+        });
       });
-      AppServiceAPI.sync();
     };
 
     $scope.goToPrev = function () {
-      $state.go('app.general1');
+      ValidationService.saveData($scope.air, 2).then(function () {
+        $state.go('app.general1');
+      });
     };
 
     $scope.toggleReadMore = function (n) {
@@ -565,51 +572,24 @@ angular.module('starter.air', [])
             'text': 'OK'
           }
         ]
-      })
+      });
     };
 
     $ionicPlatform.ready(function () {
 
-      AppServiceAPI.select(2).then(function (res) {
-
-        if (res.rows.length > 0) {
-          angular.forEach(res.rows, function (item, index) {
-            var questionid = res.rows.item(index).questionid;
-            //console.log(questionid,res.rows.item(index).answer,item,index);
-            $scope.air[questionid] = res.rows.item(index).answer;
-          });
-
+      ValidationService.getData(2).then(function (res) {
+        for (var qID in res) {
+          $scope.air[qID] = res[qID];
         }
-        else {
-          console.log("No Record Found");
-        }
-        //return data;
       });
-
-      $scope.quiz2 = function (air) {
-
-        angular.forEach(air, function (item, index) {
-          AppServiceAPI.update($rootScope.user, index, item, 10, 2);
-        });
-        // AppServiceAPI.select(2).then(function(res) {
-
-        // 	if(res.rows.length > 0) {
-        //         angular.forEach(res.rows, function(item,index) {
-        //         	questionid = res.rows.item(index).questionid
-        //         	console.log(questionid,res.rows.item(index).answer,item,index);
-        //         	//$scope.air[questionid] = res.rows.item(index).answer;
-        //         });
-
-        // 	}
-        // 	else
-        // 	{
-        // 		console.log("No Record Found")
-        // 	}
-        // 	//return data;
-        // });
-
-        AppServiceAPI.sync();
-        $state.go('app.energy');
-      };
     });
+
+    $scope.quiz2 = function (air) {
+
+      ValidationService.quiz2(air, 2);
+
+      AppServiceAPI.sync(2);
+      $state.go('app.energy');
+    };
+
   });

@@ -35,7 +35,8 @@
                         Lowest level of grade:
                     </div>
                     <select ng-change="checkQ1()" ng-model="general.Q1G1"
-                            ng-options="level for level in data.availableLowerLevels track by level" class="fs-12">
+                            ng-options="level for level in data.availableLowerLevels track by level"
+                            string-to-number class="fs-12">
                     </select>
                 </label>
                 <label class="item item-input item-select">
@@ -43,7 +44,8 @@
                         Highest level of grade:
                     </div>
                     <select ng-change="checkQ1()" ng-model="general.Q1G2"
-                            ng-options="level for level in data.availableHigherLevels track by level" class="fs-12">
+                            ng-options="level for level in data.availableHigherLevels track by level"
+                            string-to-number class="fs-12">
                     </select>
                 </label>
             </div>
@@ -215,7 +217,7 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="general.Q1S1 >= 3">
+            <div class="card" ng-show="other.Q1S1 >= 3">
                 <div class="item item-text-wrap item-borderless">
                     4(c). How many family members stay in the school campus?
                 </div>
@@ -331,11 +333,11 @@
                 </div>
                 <div class="row ">
                     <div class="col fs-12">
-                        <input ng-model="general.Q8G1" id="questiongeneralten" type="radio" ng-value="'1'" name="c">&nbsp;<span
+                        <input ng-model="general.Q8G1" type="radio" ng-value="1" name="c">&nbsp;<span
                             style="position:absolute"> Urban Area</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="general.Q8G1" id="questiongeneralten" type="radio" ng-value="'2'" name="c">&nbsp;<span
+                        <input ng-model="general.Q8G1" type="radio" ng-value="2" name="c">&nbsp;<span
                             style="position:absolute">Rural Area</span>
                     </div>
                 </div>
@@ -346,15 +348,15 @@
                     8. Whether your school is:
                 </div>
                 <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q9G1" type="radio" ng-value="'1'" name="d"><span
+                    <input ng-model="general.Q9G1" type="radio" ng-value="1" ng-checked="general.Q9G1 == 1" string-to-number name="d"><span
                         style="position:absolute">&nbsp; Government School </span>
                 </ion-item>
                 <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q9G1" type="radio" ng-value="'2'" name="d"><span
+                    <input ng-model="general.Q9G1" type="radio" ng-value="2" ng-checked="general.Q9G1 == 2" string-to-number name="d"><span
                         style="position:absolute">&nbsp; Government–aided School </span>
                 </ion-item>
                 <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q9G1" type="radio" ng-value="'3'" name="d"><span
+                    <input ng-model="general.Q9G1" type="radio" ng-value="3" ng-checked="general.Q9G1 == 3" string-to-number name="d"><span
                         style="position:absolute">&nbsp; Private School </span>
                 </ion-item>
             </div>
@@ -376,7 +378,7 @@
                     </a>
                     &nbsp;
                     <a class="button background-color text-white" ng-hide="false"
-                       ion-chevron-right nav-clear ng-click="saveData(general)">
+                       ion-chevron-right nav-clear ng-click="saveData()">
                         SAVE
                     </a>
 

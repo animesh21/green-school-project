@@ -1,6 +1,7 @@
 angular.module('starter.home', [])
 
-  .controller('homeCtrl', function ($scope, $state, $ionicModal, $timeout, $ionicPopup, $window) {
+  .controller('homeCtrl', function ($scope, $state, $ionicModal, $timeout, $ionicPopup, $window,
+                                    $rootScope) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -139,38 +140,75 @@ angular.module('starter.home', [])
     };
 
     $scope.general = function () {
-    // $window.location.reload(true);
-      $state.go('app.general1');
+      if ($rootScope.sectionsCompleted.profile) {
+        $state.go('app.general1');
+      }
+      else {
+        $scope.showPopup('Alert', "Please complete previous section first");
+      }
     };
 
     $scope.air = function () {
-      // $window.location.reload(true);
-      $state.go('app.air1');
+      if ($rootScope.sectionsCompleted.general && $rootScope.sectionsCompleted.profile) {
+        $state.go('app.air1');
+      }
+      else {
+        $scope.showPopup('Alert', "Please complete previous section first");
+      }
     };
 
     $scope.energy = function () {
-      // $window.location.reload(true);
-      $state.go('app.energy');
+      if ($rootScope.sectionsCompleted.general && $rootScope.sectionsCompleted.profile &&
+      $rootScope.sectionsCompleted.air) {
+        $state.go('app.energy');
+      }
+      else {
+        $scope.showPopup('Alert', "Please complete previous section first");
+      }
     };
 
     $scope.food = function () {
-      // $window.location.reload(true);
-      $state.go('app.food');
+      if ($rootScope.sectionsCompleted.general && $rootScope.sectionsCompleted.profile &&
+      $rootScope.sectionsCompleted.air && $rootScope.sectionsCompleted.energy) {
+        $state.go('app.food');
+      }
+      else {
+        $scope.showPopup('Alert', "Please complete previous section first");
+      }
     };
 
     $scope.land = function () {
-      // $window.location.reload(true);
-      $state.go('app.land');
+      if ($rootScope.sectionsCompleted.general && $rootScope.sectionsCompleted.profile &&
+      $rootScope.sectionsCompleted.air && $rootScope.sectionsCompleted.energy &&
+      $rootScope.sectionsCompleted.food) {
+        $state.go('app.land');
+      }
+      else {
+        $scope.showPopup('Alert', "Please complete previous section first");
+      }
     };
 
     $scope.water = function () {
-      // $window.location.reload(true);
-      $state.go('app.water');
+      if ($rootScope.sectionsCompleted.general && $rootScope.sectionsCompleted.profile &&
+      $rootScope.sectionsCompleted.air && $rootScope.sectionsCompleted.energy &&
+      $rootScope.sectionsCompleted.food && $rootScope.sectionsCompleted.land) {
+        $state.go('app.water');
+      }
+      else {
+        $scope.showPopup('Alert', "Please complete previous section first");
+      }
     };
 
     $scope.waste = function () {
-      // $window.location.reload(true);
-      $state.go('app.waste');
+      if ($rootScope.sectionsCompleted.general && $rootScope.sectionsCompleted.profile &&
+      $rootScope.sectionsCompleted.air && $rootScope.sectionsCompleted.energy &&
+      $rootScope.sectionsCompleted.food && $rootScope.sectionsCompleted.land &&
+      $rootScope.sectionsCompleted.water) {
+        $state.go('app.waste');
+      }
+      else {
+        $scope.showPopup('Alert', "Please complete previous section first");
+      }
     };
 
     $scope.feedback = function () {

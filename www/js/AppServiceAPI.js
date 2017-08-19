@@ -1,6 +1,7 @@
 angular.module('starter.api', [])
   .factory('AppServiceAPI', function ($http, $cordovaSQLite, $ionicPlatform) {
     var db = null;
+
     $ionicPlatform.ready(function () {
       if (window.cordova) {
         db = $cordovaSQLite.openDB({name: "quiz.db", location: 'default'}); //device
@@ -30,7 +31,8 @@ angular.module('starter.api', [])
       },
 
       insert: function (userid, questionid, answer, score, type) {
-        var query = "INSERT INTO gsp_answers (userid,questionid,answer,score,type) VALUES (?,?,?,?,?)";
+        var query = "INSERT OR REPLACE INTO gsp_answers (userid, questionid, answer, score, type) VALUES" +
+          " (?,?,?,?,?)";
         return $cordovaSQLite.execute(db, query, [userid, questionid, answer, score, type]).then(function (res) {
           // console.log("INSERT ID -> " + res.insertId);
           return res;
@@ -45,42 +47,37 @@ angular.module('starter.api', [])
         });
       },
 
-      sync: function () {
+      sync: function (type) {
         var data = {};
-        var query = "SELECT * FROM gsp_answers";
-        $cordovaSQLite.execute(db, query).then(function (res) {
+        var query = "SELECT * FROM gsp_answers WHERE type = ?";
+        return $cordovaSQLite.execute(db, query, [type]).then(function (res) {
           if (res.rows.length > 0) {
-            //console.log(res.rows);
+            // console.log('Found ' + res.rows.length + ' entries of type: ' + type);
+            // console.log('Data sent to the api: ');
+            console.log(res.rows);
             var questionid;
-            angular.forEach(res.rows, function (item, index) {
-              questionid = res.rows.item(index).questionid;
-              // console.log(questionid, res.rows.item(index).answer, item, index);
-              data[questionid] = res.rows.item;
-            });
+            // console.log('Saving to the api: ' + JSON.stringify(res.rows));
+            for (var i = 0; i < res.rows.length; i++) {
+
+              var item = res.rows.item(i);
+              data[item.questionid] = item.answer;
+            }
             // console.log(data);
             $http({
               method: "POST",
-              url: "http://studio-tesseract.co/GSP/api/Gsp/users/",
+              url: "http://greenschoolsprogramme.org/audit2017/api/Gsp/users/",
+              // url: "http://127.0.0.1/GSP/api/Gsp/users/",
               data: {survey: res.rows},
               headers: {
                 "Content-Type": "application/json"
               }
             }).then(function (response) {
-              console.log(response);
+              console.log('Saved data to the api');
+              // console.log('response after saving to the api: ' + JSON.stringify(response));
+            }, function (err) {
+              console.error('Error while saving to the api: ' + JSON.stringify(err));
             });
-
-            /*$cordovaSQLite.execute(db, query).then(function(res) {
-             if(res.rows.length > 0)
-             angular.forEach(res.rows, function(item,index) {
-             //questionid = res.rows.item(index).questionid
-             console.log(item);
-             //$scope.air[questionid] = res.rows.item(index).answer;
-             });
-             });*/
-
           }
-
-          //$http.post("http://studio-tesseract.co/GSP/api/Gsp/users/",)
         });
       },
 

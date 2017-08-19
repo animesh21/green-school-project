@@ -1,12 +1,15 @@
 angular.module('starter.food', [])
 
   .controller('foodCtrl', function ($scope, $rootScope, $state, $window, $stateParams,
-                                    AppServiceAPI, $ionicPlatform, $sce, $ionicModal, $ionicPopup) {
+                                    AppServiceAPI, $ionicPlatform, $sce, $ionicModal, $ionicPopup,
+                                    ValidationService) {
     $(document).ready(function () {
       $('.progressBarIndicator').css("background", "red");
     });
 
     $scope.food = {};
+
+    $scope.other = {};
 
     $scope.toolTips = {
       'T2': "Packaged food is any food item which is commercially prepared," +
@@ -42,8 +45,7 @@ angular.module('starter.food', [])
       'Q6A': "For example, Kitkat chocolate as consolation prize or " +
              "food/discount coupons of Dominos or Pizza hut.",
       'Q7A': "For example, Fanta, small packets of chips or Kurkure, etc.",
-      'Q8A': "For example, Complan, Quaker Oats, Cadbury, etc.",
-      'Q': ""
+      'Q8A': "For example, Complan, Quaker Oats, Cadbury, etc."
     };
 
     // function of displaying tooltip
@@ -118,7 +120,7 @@ angular.module('starter.food', [])
         // type of school i.e. day boarding, residential etc.
         $scope.getAnswer('Q1S1').then(function (res) {
           console.log('Value of Q1S1: ' + res);
-          $scope.food.Q1S1 = parseInt(res);
+          $scope.other.Q1S1 = parseInt(res);
           if (parseInt(res) >= 3) {
             $scope.food.Q4F1 = 'Y';
           }
@@ -127,7 +129,7 @@ angular.module('starter.food', [])
         // type of school i.e govt, private etc.
         $scope.getAnswer('Q9G1').then(function (res) {
           console.log('Q9G1: ' + res);
-          $scope.food.Q9G1 = parseInt(res);
+          $scope.other.Q9G1 = parseInt(res);
         });
       });
     };
@@ -176,14 +178,14 @@ angular.module('starter.food', [])
 
     $scope.checkQ4 = function () {
       console.log('checking Q4');
-      if ($scope.food.Q4F1 === 'N' && $scope.food.Q1S1 >= 3) {
+      if ($scope.food.Q4F1 === 'N' && $scope.other.Q1S1 >= 3) {
         $scope.showPopup('Alert', "You've chosen to be a residential" +
           " school in Profile section, but you're selecting 'No' in Q1.");
       }
     };
 
     $scope.checkQ5 = function () {
-      if ($scope.food.Q5F1 === 'N' && $scope.food.Q9G1 === 1) {
+      if ($scope.food.Q5F1 === 'N' && $scope.other.Q9G1 === 1) {
         $scope.showPopup('Alert', "You've chosen to be a government school in" +
           " General section, but you're selecting 'No' in this question.");
       }
@@ -191,9 +193,9 @@ angular.module('starter.food', [])
 
     $scope.checkQ5F1 = function () {
       console.log('Response in this ques: ' + $scope.food.Q5F1S1 +
-        '\nResponse in General section: ' + $scope.food.Q9G1);
+        '\nResponse in General section: ' + $scope.other.Q9G1);
       var val1 = $scope.food.Q5F1S1;  // response in this section
-      var val2 = $scope.food.Q9G1;  // response in General section
+      var val2 = $scope.other.Q9G1;  // response in General section
       if (val1 === 1 && val2 === 3) {
         $scope.showPopup('Alert', "You're a private school but you've chosen government" +
           " scheme in this question.");
@@ -253,12 +255,12 @@ angular.module('starter.food', [])
             return false;
           }
         }
-        else if (val == 'N') {
+        else if (val === 'N') {
           s1 = $scope.food.Q5F1S1;
-          if (s1 == 'N') {
+          if (s1 === 'N') {
             return true;
           }
-          else if(s1 == 'Y') {
+          else if(s1 === 'Y') {
             s2 = $scope.validVal('Q5F1S2');
             s3 = $scope.validVal('Q5F1S3');
             s4 = $scope.validVal('Q5F1S4');
@@ -295,10 +297,10 @@ angular.module('starter.food', [])
     $scope.validateQ7AndQ8 = function (n) {
       var qID = 'Q' + n + 'F1';
       var val = $scope.food[qID];
-      if (val == 'N') {
+      if (val === 'N') {
         return true;
       }
-      else if (val == 'Y') {
+      else if (val === 'Y') {
         return $scope.validateF1S(n);
       }
       else {
@@ -321,10 +323,10 @@ angular.module('starter.food', [])
     $scope.validateQ9AndQ10 = function (n) {
       var qID = 'Q' + n + 'F1';
       var val = $scope.food[qID];
-      if (val == 'N') {
+      if (val === 'N') {
         return true;
       }
-      else if (val == 'Y') {
+      else if (val === 'Y') {
         var qID2 = 'Q' + n + 'F2';
         return $scope.validVal(qID2);
       }
@@ -335,10 +337,10 @@ angular.module('starter.food', [])
 
     $scope.validateQ11 = function () {
       var val = $scope.food.Q11F1;
-      if (val == 'N') {
+      if (val === 'N') {
         return true;
       }
-      else if (val == 'Y') {
+      else if (val === 'Y') {
         return $scope.validVal('Q11F2') && $scope.validVal('Q11F3');
       }
       return false;
@@ -357,11 +359,13 @@ angular.module('starter.food', [])
     };
 
     $scope.validNext = function () {
-      return $scope.validateTeacher('F') && $scope.validateStudent('F') &&
+      var validate = $scope.validateTeacher('F') && $scope.validateStudent('F') &&
              $scope.validVal('Q4F1') && $scope.validateQ5() &&
              $scope.validateQ7AndQ8(7) && $scope.validateQ7AndQ8(8) &&
              $scope.validateQ9AndQ10(9) && $scope.validateQ9AndQ10(10) &&
              $scope.validateQ11() && $scope.validateQ12() && $scope.validateQ13();
+      $rootScope.sectionsCompleted.food = validate;
+      return validate;
     };
     // end validation functions
 
@@ -369,7 +373,7 @@ angular.module('starter.food', [])
     $scope.getAnswer = function (questionID) {
       return AppServiceAPI.selectQuestion(questionID).then(function (res) {
         if (res.rows.length > 0) {
-          var row = res.rows[0];
+          var row = res.rows.item(0);
           return row.answer;
         }
       }, function (err) {
@@ -378,15 +382,18 @@ angular.module('starter.food', [])
       });
     };
 
-    $scope.saveData = function (data) {
-      angular.forEach(data, function (item, index) {
-        AppServiceAPI.update($rootScope.user, index, item, 10, 4);
+    $scope.saveData = function () {
+      ValidationService.saveData($scope.food, 4).then(function () {
+        AppServiceAPI.sync(4).then(function () {
+          ValidationService.logoutUser();
+        });
       });
-      AppServiceAPI.sync();
     };
 
     $scope.goToPrev = function () {
-      $state.go('app.energy');
+      ValidationService.saveData($scope.food, 4).then(function () {
+        $state.go('app.energy');
+      });
     };
 
     $scope.showPopup = function (title, message) {
@@ -398,34 +405,22 @@ angular.module('starter.food', [])
             'text': 'OK'
           }
         ]
-      })
+      });
     };
 
     $ionicPlatform.ready(function () {
 
-      AppServiceAPI.select(4).then(function (res) {
-
-        if (res.rows.length > 0) {
-          angular.forEach(res.rows, function (item, index) {
-            questionid = res.rows.item(index).questionid
-            //console.log(questionid,res.rows.item(index).answer,item,index);
-            $scope.food[questionid] = res.rows.item(index).answer;
-          });
-
+      ValidationService.getData(4).then(function (res) {
+        for (var qID in res) {
+          $scope.food[qID] = res[qID];
         }
-        else {
-          console.log("No Record Found")
-        }
-        //return data;
       });
     });
 
     $scope.quiz2 = function (food) {
 
-      angular.forEach(food, function (item, index) {
-        AppServiceAPI.update($rootScope.user, index, item, 10, 4);
-      });
-      AppServiceAPI.sync();
+      ValidationService.quiz2(food, 4);
+      AppServiceAPI.sync(4);
       $state.go('app.land');
     };
   });

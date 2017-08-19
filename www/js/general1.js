@@ -1,6 +1,7 @@
 angular.module('starter.general', [])
 
-  .controller('gen1Ctrl', function ($scope, $rootScope, $state, $window, $stateParams, AppServiceAPI, $ionicPlatform, $ionicPopup) {
+  .controller('gen1Ctrl', function ($scope, $rootScope, $state, $window, $stateParams,
+                                    AppServiceAPI, $ionicPlatform, $ionicPopup, ValidationService) {
     $(document).ready(function () {
       $('.progressBarIndicator').css("background", "red");
     });
@@ -9,6 +10,8 @@ angular.module('starter.general', [])
       Q1G1: 1,
       Q1G2: 12
     };
+
+    $scope.other = {};
 
     $scope.data = {
       availableLowerLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -49,7 +52,7 @@ angular.module('starter.general', [])
     $scope.getAnswer = function (questionID) {
       return AppServiceAPI.selectQuestion(questionID).then(function (res) {
         if (res.rows.length > 0) {
-          var row = res.rows[0];
+          var row = res.rows.item(0);
           return row.answer;
         }
       }, function (err) {
@@ -62,7 +65,7 @@ angular.module('starter.general', [])
       $ionicPlatform.ready(function () {
         $scope.getAnswer('Q1S1').then(function (res) {
           console.log('Getting Q1S1: ' + res);
-          $scope.general.Q1S1 = res;
+          $scope.other.Q1S1 = parseInt(res);
         }, function (err) {
           console.error("Can't get Q1S1: " + JSON.stringify(err));
         });
@@ -85,10 +88,10 @@ angular.module('starter.general', [])
     $scope.validQ3 = function () {
       var val = $scope.general.Q3G1;
       if (val) {
-        if (+val == 5) {
+        if (+val === 5) {
           return $scope.validVal('Q3G1O');
         }
-        else if (+val == 1) {
+        else if (+val === 1) {
           return $scope.validVal('Q3G2');
         }
         else {
@@ -144,26 +147,27 @@ angular.module('starter.general', [])
     };
 
     $scope.validNext = function () {
-      // return ($scope.validVal('Q1G1') && $scope.validVal('Q1G2') &&
-      // $scope.validVal('Q2G1') && $scope.validQ3() &&
-      // $scope.validateQ4() && $scope.validVal('Q5G1') &&
-      // $scope.validVal('Q6G1') && $scope.validVal('Q8G1') &&
-      // $scope.validVal('Q9G1'));
-      return true;
+      var validated = ($scope.validVal('Q1G1') && $scope.validVal('Q1G2') &&
+      $scope.validVal('Q2G1') && $scope.validQ3() &&
+      $scope.validateQ4() && $scope.validVal('Q5G1') &&
+      $scope.validVal('Q6G1') && $scope.validVal('Q8G1') &&
+      $scope.validVal('Q9G1'));
+      $rootScope.sectionsCompleted.general = validated;
+      return validated;
     };
 
     $scope.updateNumStudents = function (rowNum) {
       if (rowNum) {
 
-        if (+rowNum == 1) {
+        if (+rowNum === 1) {
           $scope.general.Q4G1S3 = $scope.getAbsVal('Q4G1S1') +
             $scope.getAbsVal('Q4G1S2');
         }
-        else if (+rowNum == 2) {
+        else if (+rowNum === 2) {
           $scope.general.Q4G2S3 = $scope.getAbsVal('Q4G2S1') +
             $scope.getAbsVal('Q4G2S2');
         }
-        else if (+rowNum == 3) {
+        else if (+rowNum === 3) {
           $scope.general.Q4G3S3 = $scope.getAbsVal('Q4G3S1') +
             $scope.getAbsVal('Q4G3S2');
         }
@@ -192,43 +196,36 @@ angular.module('starter.general', [])
       });
     };
 
-    $scope.saveData = function (data) {
-      angular.forEach(data, function (item, index) {
-        AppServiceAPI.update($rootScope.user, index, item, 10, 1);
+    $scope.saveData = function () {
+      ValidationService.saveData($scope.general, 1).then(function () {
+        AppServiceAPI.sync(1).then(function () {
+          ValidationService.logoutUser();
+        });
       });
-      AppServiceAPI.sync();
     };
 
     $scope.goToPrev = function () {
-      $state.go('app.profile');
+      ValidationService.saveData($scope.general, 1).then(function () {
+        $state.go('app.profile');
+      });
     };
 
     $ionicPlatform.ready(function () {
-
-      AppServiceAPI.select(1).then(function (res) {
-
-        if (res.rows.length > 0) {
-          angular.forEach(res.rows, function (item, index) {
-            questionid = res.rows.item(index).questionid;
-            //console.log(questionid,res.rows.item(index).answer,item,index);
-            $scope.general[questionid] = res.rows.item(index).answer;
-          });
+      console.log('device ready in general');
+      ValidationService.getData(1).then(function (res) {
+        for (var qID in res) {
+          $scope.general[qID] = res[qID];
         }
-        else {
-          console.log("No Record Found");
-        }
-
-        //return data;
       });
-
     });
 
     $scope.quiz2 = function (general) {
+      ValidationService.quiz2(general, 1);
 
-      angular.forEach(general, function (item, index) {
-        AppServiceAPI.update($rootScope.user, index, item, 10, 1);
-      });
-      AppServiceAPI.sync();
+      // angular.forEach(general, function (item, index) {
+      //   AppServiceAPI.update($rootScope.user, index, item, 10, 1);
+      // });
+      AppServiceAPI.sync(1);
       $state.go('app.air1');
     };
   });

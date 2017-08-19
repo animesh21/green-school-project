@@ -5,7 +5,8 @@
 angular.module('starter.profile', [])
 
   .controller('profileCtrl', function ($scope, $rootScope, $state, $window, $stateParams,
-                                       AppServiceAPI, $ionicPlatform, $ionicPopup) {
+                                       AppServiceAPI, $ionicPlatform, $ionicPopup, $ionicLoading,
+                                       $q, ValidationService, $http) {
 
     $(document).ready(function () {
       $('.progressBarIndicator').css("background", "red");
@@ -14,23 +15,13 @@ angular.module('starter.profile', [])
     /*
      * Default data to be displayed on the form
      * This should become dynamic after in sync with the api
-     * and database. TODO: make it dynamic
+     * and database.
      */
     $scope.data = {
 
       countries: [
-        {id: '1', name: 'India'},
-        {id: '2', name: 'Pakistan'}
-      ],
-
-      states: [
-        {id: '1', name: 'Andamean & Nicobar Islands'},
-        {id: '34', name: 'Uttar Pradesh'}
-      ],
-
-      districts: [
-        {id: '1', name: 'Lucknow'},
-        {id: '2', name: 'Rae Bareli'}
+        'India',
+        'Pakistan'
       ],
 
       schoolCategories: [
@@ -51,11 +42,13 @@ angular.module('starter.profile', [])
 
     };
 
+    // setting default state and district
+    $scope.data.states = $rootScope.states;
+
+    $scope.data.districts = $rootScope.districts;
+
     // defining object to store responses of the user to survey questions
     $scope.profile = {
-      Q4P1: {id: '1', name: 'India'},
-      Q5P1: {id: '34', name: 'Uttar Pradesh'},
-      Q6P1: {id: '1', name: 'Lucknow'},
       Q10P1: '+91',
       Q14P1: '+91'
     };
@@ -89,6 +82,17 @@ angular.module('starter.profile', [])
       });
     };
 
+    $scope.showLoading = function (message) {
+      $ionicLoading.show({
+        template: '<p>Loading...</p><ion-spinner></ion-spinner><p>' +
+                  message + '</p>'
+      });
+    };
+
+    $scope.hide = function () {
+      $ionicLoading.hide();
+    };
+
     // value of progress for this section
     $scope.progress = 5;
 
@@ -99,11 +103,22 @@ angular.module('starter.profile', [])
       return false;
     };
 
+    $scope.updateDistricts = function () {
+      var url = 'http://greenschoolsprogramme.org/audit2017/api/Gsp/states/stateid/' + $scope.profile.state;
+      // var url = 'http://localhost/GSP/api/Gsp/states/stateid/' + $scope.profile.state;
+      $http.get(url).then(function (res) {
+        // console.log('Response of districts: ' + JSON.stringify(res));
+        $scope.data.districts = res.data;
+      }, function (err) {
+        console.error('Error at the district endpoint: ' + JSON.stringify(err));
+      });
+    };
+
     $scope.validQ15 = function () {
       var val1 = $scope.getAbsVal('Q1S1');
       if (val1) {
-        if (val1 == 3) {
-          $scope.profile.Q2S1 = null;
+        if (val1 === 3 || val1 === 5 || val1 === 6 || val1 === 7) {
+          $scope.profile.Q2S1 = 0;
           return true;
         }
         else if ($scope.getAbsVal('Q2S1')) {
@@ -118,59 +133,52 @@ angular.module('starter.profile', [])
     };
 
     $scope.validNext = function () {
-      // var qID, isValidQues;
-      // var questionsWith2ndPart = [9, 10, 14];  // these questions would be checked for id with `P2` prefix
-      // for (var i = 5; i <= 15; i++) {
-      //   if (i == 15) {
-      //     isValidQues = $scope.validQ15();
-      //   }
-      //   else {
-      //     if (questionsWith2ndPart.indexOf(i) == -1) {
-      //       qID = 'Q' + i + 'P1';
-      //     }
-      //     else {
-      //       qID = 'Q' + i + 'P2';
-      //     }
-      //     isValidQues = $scope.validVal(qID);
-      //   }
-      //   if (!isValidQues) {
-      //     return false;
-      //   }
-      // }
+      var qID, isValidQues;
+      var qIDs = ['state', 'district', 'city', 'pincode', 'telephone',
+        'mobile', 'principle_name', 'coname', 'coemail', 'comobile'];
+      var questionsWith2ndPart = [9, 10, 14];  // these questions would be checked for id with `P2` prefix
+      for (var i = 5; i <= 15; i++) {
+        if (i === 15) {
+          isValidQues = $scope.validQ15();
+        }
+        else {
+          qID = qIDs[i - 5];
+          isValidQues = $scope.validVal(qID);
+        }
+        if (!isValidQues) {
+          $rootScope.sectionsCompleted.profile = false;
+          return false;
+        }
+      }
+      $rootScope.sectionsCompleted.profile = true;
       return true;
     };
 
     $scope.saveData = function () {
-      AppServiceAPI.sync();
-      angular.forEach($scope.profile, function (item, index) {
-        AppServiceAPI.update($rootScope.user, index, item, 10, 0);
+      ValidationService.saveData($scope.profile, 0).then(function () {
+        AppServiceAPI.sync(0).then(function () {
+          ValidationService.logoutUser();
+        });
       });
     };
 
     $ionicPlatform.ready(function () {
-      AppServiceAPI.select(0).then(function (res) {
-        if (res.rows.length > 0) {
-          var questionid;
-          angular.forEach(res.rows, function (item, index) {
-            questionid = res.rows.item(index).questionid;
-            //console.log(questionid,res.rows.item(index).answer,item,index);
-            $scope.profile[questionid] = res.rows.item(index).answer;
-          });
+      console.log('device ready hai');
+
+      ValidationService.getData(0).then(function (res) {
+        // console.log('Returned: ' +  JSON.stringify(res));
+        for (var qID in res) {
+          $scope.profile[qID] = res[qID];
         }
-        else {
-          console.log("No Record Found");
-        }
-        //return data;
+        // console.log(JSON.stringify($scope.profile));
       });
+
 
     });
 
     $scope.quiz2 = function (profile) {
-
-      angular.forEach(profile, function (item, index) {
-        AppServiceAPI.update($rootScope.user, index, item, 10, 0);
-      });
-      AppServiceAPI.sync();
+      ValidationService.quiz2(profile, 0);
+      AppServiceAPI.sync(0);
       $state.go('app.general1');
     };
   });

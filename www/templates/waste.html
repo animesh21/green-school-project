@@ -1,4 +1,14 @@
 <ion-view title="Waste">
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            return !(charCode > 31 && (charCode < 48 || charCode > 57));
+        }
+        function isDecimalNumber(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            return !(charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57));
+        }
+    </script>
 
     <ion-content scroll="false">
 
@@ -16,264 +26,319 @@
         <p style="text-align: center">Progress: {{ progress }}% </p>
 
         <ion-scroll direction="y" class="theroot">
-            <div class="padding-bottom content" style="text-align: justify;">To understand water, it is important to
-                know the source of water in your school premise. As you know, most cities in India have to deal with
-                depleting water supply, marked by falling ground water levels, vanishing water bodies, severe pollution
-                and urban floods. With their own supplies drying up, cities are forced to source water from further and
-                further away. This is expensive. The questions below will help students to understand where their water
-                is coming from – at a cost.
 
-                The unit of measurement to be used in the Water section is Litre (L).
+            <div class="padding-bottom content" style="text-align: justify;">
+                    Schools can
+                    <span ng-show="!readMore[1]">...</span>
+                    <span ng-show="readMore[1]">
+                        provide excellent educational opportunities for creating awareness
+                        about waste and its management.
+                    </span>
+                    <ul class="water-list" ng-show="readMore[1]">
+                        <li>
+                            Waste reduction initiatives save natural resources,
+                            energy and landfill space.
+                        </li>
+                        <li>
+                            Reducing, reusing, recycling waste material will improve the economic and
+                            environmental performance of the school.
+                        </li>
+                        <li>
+                            The school&#39;s waste management programme has the potential to transform
+                            the school environment into a laboratory for learning.
+                        </li>
+                        <li>
+                            It also provides numerous opportunities for the students to understand this
+                            issue and its implications on the local environment.
+                        </li>
+                    </ul>
+                    <a ng-click="toggleReadMore(1)">
+                        <span ng-show="!readMore[1]">Read More</span>
+                        <span ng-show="readMore[1]">Read Less</span>
+                    </a>
+                <br/>
+                <br/>
+
+                <strong>Unit of measurement should remain constant: Kilogram (kg).</strong>
             </div>
 
             <div class="padding-bottom content fs-16">
-                Task 2: How much water does your school use?
+                <strong>Task 1: Choose your Waste Audit Team.</strong>
             </div>
-            <!-- <div class="padding-bottom content fs-14">
-             To find out the land/ site area of your school, you need to measure:
-           </div> -->
+
             <div class="content" style="text-align: justify;">
-                To find total consumption, monitor water consumption over a period of three working days, spread over
-                one month and take the average. <br>
-                For example: you can monitor the water consumption on August 5, August 15 and August 25. Add all three
-                total consumptions and then divide it with number of days of observation (that is three days). You will
-                get an average per day water consumption.
-                <p class="fs-16"> To collect data: </p>
-                <p class="fs-16"> The bill method:</p>
-                If the school’s water meter is monitored regularly—water bills by the government/municipality state the
-                actual amount used—students can simply compile bills to assess total consumption.
-                <p class="fs-16"> Monitoring overhead tanks:</p>
-                If the bills are irregular and incorrect, then monitor the overhead tanks. Note the difference in levels
-                of water in your overhead tank between the beginning and the end of the day. Ensure that the tanks are
-                full when the day begins. Check the water level when school is over by noting the difference in levels
-                of water in your overhead tank between beginning and end of a day. Estimate consumption.
-                <p class="fs-16"> Using the motor method:</p>
-                If your school uses groundwater, take a bucket and know its measurement. Then switch on the
-                underground-water pump. Let the water run out of the hosepipe into the bucket. Check how long it takes
-                to fill up the bucket. You can now calculate the flow of water in litres per minute. Find out (from the
-                gardener or other administrative staff) the number of hours the pump motor runs per day. Multiply the
-                number of hours the motor runs by 60 to get the number of minutes the motor runs. Multiply the number of
-                minutes the motor is run by how much water comes out from the hose pipe in a minute. The administrative
-                staff and the plumber would be helpful in gauging the above. Conduct an audit for two or three days and
-                then take an average to find the total consumption.
-
-
-            </div>
-
-            <div class="padding-bottom content fs-16">
-                Task 3: What Are The Sources, Supply and Storage of Water in your School?
-            </div>
-            <div class="content" style="text-align: justify;">
-                To understand water, it is important to know the source of water in your school premises. As you know,
-                most cities in India have to deal with depleting water supply, marked by falling ground water levels,
-                vanishing water bodies, severe pollution and urban floods. With their own supplies drying up, cities are
-                forced to source water from further and further away. This is expensive.<br>
-                The questions below will help students to understand where their water is coming from – at a cost.
-
-            </div>
-
-            <!--  <div class="card">
-                 <div class="item item-text-wrap item-borderless">
-                     1.Does your school have access to an electricity bill?
-                 </div>
-
-
-                 <div class="row ">
-
-                     <div class="col fs-12">
-                         <input type="radio" ng-model="choice22" ng-value="'e'" name="b">&nbsp;<span style="position:absolute"> Yes</span>
-                     </div>
-                     <div class="col fs-12">
-                         <input type="radio" ng-model="choice32" ng-value="'f'" name="b">&nbsp;<span style="position:absolute">On</span>
-                     </div>
-
-                 </div>
-
-             </div>
-  -->         <!-- <div class="padding-bottom content fs-16">
-              Task 2: Measure the four critical areas of your school campus
-            </div> -->
-            <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    2 Where does the water your school uses, come from? (please tick the correct options):
-                </div>
-
-
-                <div class="row " style="padding-left: 20px">
-
-                    <div class="col fs-12">
-                        <input id="questionone" type="checkbox" ng-model="choice2" ng-value="'e'" name="b">&nbsp;<span
-                            style="position:absolute"> Ground water</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input id="questionone" type="checkbox" ng-model="choice12" ng-value="'f'" name="b">&nbsp;<span
-                            style="position:absolute">Surface water</span>
-                    </div>
-
-                </div>
-                <div class="row " style="padding-left: 20px">
-
-                    <div class="col fs-12">
-                        <input id="questionone" type="checkbox" ng-model="choice22" ng-value="'g'" name="b">&nbsp;<span
-                            style="position:absolute"> Rain water</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input id="questionone" type="checkbox" ng-model="choice32" ng-value="'h'" name="b">&nbsp;<span
-                            style="position:absolute">Recycled waste water</span>
-                    </div>
-
+                <div>
+                    The housekeeping
+                    <span ng-show="!readMore[2]">...</span>
+                    <span ng-show="readMore[2]">
+                        and cleaning staff of your school shall
+                        be the core members of your team, as you will have to
+                        enlist their help at every task. A teacher with interest
+                        in waste and five to 10 students will be ideal for your
+                        team. Administrative staff is important as they will
+                        provide the permissions required for the housekeeping
+                        staff to work with you.
+                    </span>
+                    <a ng-click="toggleReadMore(2)">
+                        <span ng-show="!readMore[2]">Read More</span>
+                        <span ng-show="readMore[2]">Read Less</span>
+                    </a>
                 </div>
 
             </div>
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    3. Who supplies the water in your school? (please tick the correct options):
+                    Teachers (maximum of three teachers can be part of the team):
                 </div>
-
-
-                <div class="row " style="padding-left: 0px">
-
-                    <div class="col fs-12">
-                        <input id="questiontwo" type="checkbox" ng-model="z" ng-value="'e'" name="u">&nbsp;<span
-                            style="position:absolute">Municipality</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input id="questiontwo" type="checkbox" ng-model="a" ng-value="'f'" name="u">&nbsp;<span
-                            style="position:absolute">Panchayat</span>
-                    </div>
-
-                </div>
-                <div class="row " style="padding-left: 0px">
-
-                    <div class="col fs-12">
-                        <input id="questiontwo" type="checkbox" ng-model="q" ng-value="'g'" name="u">&nbsp;<span
-                            style="position:absolute"> Public Health Engineering Department (PHED)</span>
-                    </div>
-                </div>
-                <div class="row " style="padding-left: 0px">
-                    <div class="col fs-12">
-                        <input id="questiontwo" type="checkbox" ng-model="w" ng-value="'h'" name="u">&nbsp;<span
-                            style="position:absolute">Private supplier</span>
-                    </div>
-                </div>
-
-                <div class="row " style="padding-left: 0px">
-
-                    <div class="col fs-12" style="padding-bottom: 20px">
-                        <input id="questiontwo" type="checkbox" ng-model="s" ng-value="'i'" name="u">&nbsp;<span
-                            style="position:absolute;padding-bottom: 10px"> School’s own supply (bore well, rainwater harvesting facility, etc)</span>
-                    </div>
-                    <!-- <div class="col col-20">
-
-                    </div> -->
-
-                </div>
-
-            </div>
-
-            <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    4. Does your school get daily water supply?
-                </div>
-
-
-                <div class="row " style="padding-left: 20px">
-
-                    <div class="col fs-12">
-                        <input id="questionthree" type="radio" ng-model="choice2" ng-value="'e'" name="b">&nbsp;<span
-                            style="position:absolute">Yes</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input id="questionthree" type="radio" ng-model="choice12" ng-value="'f'" name="b">&nbsp;<span
-                            style="position:absolute">No</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="padding-bottom content fs-16">
-                Task 5: Does your school harvest rainwater?
-            </div>
-            <div class="content" style="text-align: justify;">
-                Rainfall (precipitation) is the primary source of freshwater on land. In this section, you will find out
-                how much rainwater your school can catch, and how much your school can harvest. Rainwater harvesting is
-                a traditional, time-tested method of collecting rainwater and using it to recharge groundwater or
-                storing it for other uses.<br>
-                To know the types of catchment
-
-            </div>
-            <!-- <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    5. What is the average number of sunny days in your area ?
-                </div>
-
-                <div class="list ">
-
-                    <ion-list>
-
-                        <label class="item item-input">
-    <input type="number" placeholder="Answer here!"></textarea>
-  </label>
-                    </ion-list>
-                </div>
-            </div>
-            -->
-            <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    6. Do you have Rainwater harvesting (RWH) system in your school?
-                </div>
-
+                <span class="validation-error" ng-hide="validateTeacher('Wa')">
+                    Please enter details of at least 1 teacher
+                </span>
 
                 <div class="row ">
+                    <div class="col col-10"></div>
+                    <div class="col">First Name</div>
+                    <div class="col">Last Name</div>
+                    <div class="col">Email ID</div>
+                </div>
 
-                    <div class="col fs-12">
-                        <input id="questionfour" type="radio" ng-model="choice22" ng-value="'e'" name="b">&nbsp;<span
-                            style="position:absolute"> Yes</span>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-10">{{ i }}</div>
+                    <div class="col">
+                        <input ng-model="waste['Q1Wa' + i + 'S1']" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="text">
                     </div>
-                    <div class="col fs-12">
-                        <input id="questionfour" type="radio" ng-model="choice32" ng-value="'f'" name="b">&nbsp;<span
-                            style="position:absolute">On</span>
+                    <div class="col">
+                        <input ng-model="waste['Q1Wa' + i + 'S3']" class="textbox"
+                               style="border:1px solid #111;text-align: center;"
+                               type="text">
                     </div>
+                    <div class="col">
+                        <input ng-model="waste['Q1Wa' + i + 'S2']" class="textbox" style="border:1px solid #111;text-align: center;"
+                               type="email">
+                    </div>
+                </div>
+            </div>
 
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    Administrative staff (maximum of five staff can be part of the team):
+                </div>
+
+                <div class="row ">
+                    <div class="col col-10"></div>
+                    <div class="col">First Name</div>
+                    <div class="col">Last Name</div>
+                    <div class="col"> Email ID</div>
+                </div>
+
+                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5]">
+                    <div class="col col-10">{{ i }}</div>
+                    <div class="col"><input ng-model="waste['Q2Wa' + i + 'S1']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col"><input ng-model="waste['Q2Wa' + i + 'S3']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col"><input ng-model="waste['Q2Wa' + i + 'S2']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="email"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    Students (maximum of ten students can be part of the team):
+                </div>
+                <span class="validation-error" ng-hide="validateStudent('Wa')">
+                    Please enter details of at least 1 student.
+                </span>
+                <div class="row ">
+                    <div class="col col-10"></div>
+                    <div class="col">First Name</div>
+                    <div class="col">Last Name</div>
+                    <div class="col">Grade</div>
+                </div>
+
+                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+                    <div class="col col-10">{{ i }}</div>
+                    <div class="col"><input ng-model="waste['Q3Wa' + i + 'S1']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col"><input ng-model="waste['Q3Wa' + i + 'S2']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                    <div class="col"><input ng-model="waste['Q3Wa' + i + 'S3']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text"></div>
+                </div>
+            </div>
+
+            <div class="padding-bottom content fs-16">
+                <strong>Task 2: What is the waste segregation system in your school?</strong>
+            </div>
+
+            <div class="content" style="text-align: justify;">
+                <div>
+                    Segregation means
+                    <span ng-show="!readMore[3]">...</span>
+                    <span ng-show="readMore[3]">
+                        sorting. Let’s understand the waste
+                        segregation system because the amount of waste recycled
+                        or reused will depend on the method of collection. To
+                        understand the waste segregation system of your school,
+                        fill the table below. <br/>
+                        <b>To collect data:</b> Students will
+                        have to survey the waste collection area and talk to
+                        the house-keeping staff to know whether waste is
+                        segregated in the school and in what quantity.
+                    </span>
+                    <a ng-click="toggleReadMore(3)">
+                        <span ng-show="!readMore[3]">Read More</span>
+                        <span ng-show="readMore[3]">Read Less</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    1. Does your school segregate solid waste?
+                </div>
+                <div class="row " style="padding-left: 20px">
+                    <div class="col fs-12" ng-repeat="i in [1, 2]">
+                        <input ng-model="waste.Q4Wa1" ng-value="data.yesNo[i][0]" type="radio" name="a">&nbsp;<span
+                            style="position:absolute">{{ data.yesNo[i][1] }}</span>
+                    </div>
                 </div>
 
             </div>
 
+            <div class="card" ng-show="waste.Q4Wa1 == 'Y'">
+                <div class="item item-text-wrap item-borderless">
+                    1(a) Who segregates the waste at source?
+                </div>
+                <ion-item class="fs-14 item-text-wrap" ng-repeat="i in [1, 2, 3, 4, 5]">
+                    <input ng-model="waste['Q4Wa2S' + i]" type="checkbox" name="a{{ i }}"><span
+                        style="position:absolute">&nbsp;{{ data.whoSegregates[i] }}</span>
+                </ion-item>
+                <div class="row" ng-show="waste.Q4Wa2S5">
+                    <div class="col col-20">
+                        Please specify
+                    </div>
+                    <div class="col">
+                        <input ng-model="waste['Q4Wa2S6']" class="textbox"
+                               style="border:1px solid #111;text-align: center;"
+                               type="text">
+                    </div>
+                </div>
+            </div>
 
-            <!-- <div class="card">
-                <div class="item item-text-wrap">
-                    4. question text here ?
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    2. How many categories does your school segregate waste into
+                    <span class="badge" on-hold="showToolTip('Q2')">?</span>
+                </div>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-10">
+                        <input ng-model="waste.Q4Wa2" ng-value="i" type="radio" name="ab">
+                    </div>
+                    <div class="col">
+                        {{ data.categoriesSegregated[i] }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="item item-text-wrap item-borderless">
+                    2(a) How many categories does your school segregate waste into?
                 </div>
 
+                <div class="row">
+                    <div class="col col-20"><b>No. of waste collection points with no bin</b></div>
+                    <div class="col"><b>No. of waste collection points with one bin(mixed waste)</b></div>
+                    <div class="col"><b>No. of waste collection points with one bin(for only dry waste)</b></div>
+                    <div class="col"><b>No. of waste collection points with two bins(wet & dry)</b></div>
+                    <div class="col"><b>No. of waste collection points with three bins or more</b></div>
+                    <div class="col"><b>Total no. of waste collection points</b></div>
+                </div>
 
-                <label class="item item-input item-select ">
-    <div class="input-label txt-align">
-        &nbsp;
-    </div>
-    <select>
-        <option selected>Default</option>
-        <option >Green</option>
-        <option>Red</option>
-        <option >Green</option>
-        <option>Red</option>
-    </select>
-</label>
-            </div> -->
+                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+                    <div class="col col-20">
+                        {{ data.wasteCollectionPoints[i] }}
+                        <span ng-show="i == 3" class="badge" on-hold="showToolTip('Q5W3')">?</span>
+                    </div>
+                    <div class="col"><input ng-model="waste['Q5Wa' + i + 'S1']" class="textbox"
+                                            ng-change="updateQ5(i, 1)"
+                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number
+                                            onkeypress="return isNumberKey(event);">
+                    </div>
+                    <div class="col"><input ng-model="waste['Q5Wa' + i + 'S2']" class="textbox"
+                                            ng-change="updateQ5(i, 2)"
+                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number
+                                            onkeypress="return isNumberKey(event);">
+                    </div>
+                    <div class="col"><input ng-model="waste['Q5Wa' + i + 'S3']" class="textbox"
+                                            ng-change="updateQ5(i, 3)"
+                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number
+                                            onkeypress="return isNumberKey(event);">
+                    </div>
+                    <div class="col"><input ng-model="waste['Q5Wa' + i + 'S4']" class="textbox"
+                                            ng-change="updateQ5(i, 4)"
+                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number
+                                            onkeypress="return isNumberKey(event);">
+                    </div>
+                    <div class="col"><input ng-model="waste['Q5Wa' + i + 'S5']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number"
+                                            readonly>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col col-20">Total</div>
+                    <div class="col"><input ng-model="waste['Q5Wa11S1']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number
+                                            readonly>
+                    </div>
+                    <div class="col"><input ng-model="waste['Q5Wa11S2']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number
+                                            readonly>
+                    </div>
+                    <div class="col"><input ng-model="waste['Q5Wa11S3']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number
+                                            readonly>
+                    </div>
+                    <div class="col"><input ng-model="waste['Q5Wa11S4']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number
+                                            readonly>
+                    </div>
+                    <div class="col"><input ng-model="waste['Q5Wa11S5']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="number"
+                                            readonly>
+                    </div>
+                </div>
+
+                <div style="padding-left: 20px">
+                    <b>Please upload supporting documents:</b>
+                    <span>
+                        Uploaded files must be in one of the following formats: PDF Document (.pdf),
+                        Word Document (.doc, .docx), Image File (.jpg, .jpeg). File size per document
+                        should not exceed 500 KB.
+                    </span>
+                    <label class="col">Picture of dustbins in classroom showing segregation at source</label>
+                    <input class="col" type="file" fileread="waste.Q5WaFL1">
+                    <label class="col" for="puc">Picture of playground with more than two dustbins</label>
+                    <input class="col" name="puc" type="file" fileread="waste.Q5WaFL2">
+                </div>
+
+            </div>
 
             <div class="list card">
-                <!--||question.id==numberOfQuestions-1-->
                 <div class="button-bar">
-
-                    <a class="button background-color text-white" ng-hide="question.id==numberOfQuestions-1"
-                       ion-chevron-right nav-clear ng-click="home()">NEXT</a>
-                    <!-- ng-click="quiz2()" -->
-                    <!--  <a class="button background-color text-white" ng-show="question.id>=numberOfQuestions-1" ion-chevron-right nav-clear href="#/tab/results">COMPLETE</a> -->
+                    <a class="button background-color text-white"
+                       ion-chevron-right nav-clear ng-click="goToPrev()">PREV</a>
+                    &nbsp;
+                    <a class="button background-color text-white" ng-disabled="!validNext()"
+                       ion-chevron-right nav-clear ng-click="quiz2(waste)">NEXT</a>
+                    &nbsp;
+                    <a class="button background-color text-white"
+                       ion-chevron-right nav-clear ng-click="saveData()">SAVE</a>
                 </div>
             </div>
+
         </ion-scroll>
     </ion-content>
 </ion-view>

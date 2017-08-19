@@ -8,6 +8,21 @@ angular.module('starter.land', [])
 
     $scope.land = {};
 
+    $scope.toolTips = {
+      'Q1A': "Ideally, total green landscaped area on-ground available in" +
+             " school should be 30 per cent of total site area (in " +
+             "square meters). Also, total green area on exposed roof " +
+             "&amp; terraces should be 50 per cent of the total area" +
+             " of exposed roof &amp; terrace (in square meters).",
+      'Q4L12': "Please give number of floors only."
+    };
+
+    // function of displaying tooltip
+    $scope.showToolTip = function (qNo) {
+      var toolTip = $scope.toolTips[qNo];
+      $scope.showPopup('Tool Tip', toolTip);
+    };
+
     $scope.progress = 40;
 
     $scope.readMore = {};
@@ -16,7 +31,8 @@ angular.module('starter.land', [])
       $scope.readMore[n] = 1 - ($scope.readMore[n] || 0);
     };
 
-    $scope.tutorialURL = $sce.trustAsResourceUrl('https://www.youtube.com/embed/todM6wToHHQ?enablejsapi=1');
+    $scope.tutorialURL = $sce.trustAsResourceUrl('https://www.youtube.com/embed/' +
+      'todM6wToHHQ?enablejsapi=1');
 
     $scope.iFrameID = 'landFrame';
 
@@ -94,8 +110,38 @@ angular.module('starter.land', [])
       return false;
     };
 
+    $scope.updateQ4 = function () {
+      var qIDs = ['Q4L2', 'Q4L3', 'Q4L4', 'Q4L6', 'Q4L7', 'Q4L8'];
+      var val;
+      var totVal = 0;
+      var totValL5 = 0;
+      for (var i = 0; i < qIDs.length; i++) {
+        val = $scope.getAbsVal(qIDs[i]);
+        totVal += val;
+        // sum of b1 and b2
+        if (i === 1 || i === 2) {
+          totValL5 += val;
+        }
+      }
+      $scope.land.Q4L1 = totVal;
+      $scope.land.Q4L5 = totValL5;
+    };
+
+    $scope.updateQ5 = function (n) {
+      var qIDs = [1, 2, 3].map(function (x) {
+        return 'Q5L' + n + 'S' + x;
+      });
+      var totVal = 0;
+      for (var i = 0; i < qIDs.length - 1; i++) {
+        totVal += $scope.getAbsVal(qIDs[i]);
+      }
+      $scope.land[qIDs[2]] = totVal;
+    };
+
     $scope.validNext = function () {
-      return $scope.validateTeacher('L') && $scope.validateStudent('L');
+      var validate = $scope.validateTeacher('L') && $scope.validateStudent('L');
+      $rootScope.sectionsCompleted.land = validate;
+      return validate;
     };
     // validation functions end
 
@@ -103,10 +149,8 @@ angular.module('starter.land', [])
     $scope.getAnswer = function (questionID) {
       return AppServiceAPI.selectQuestion(questionID).then(function (res) {
         if (res.rows.length > 0) {
-          var row = res.rows[0];
-          var answer = row['answer'];
-          console.log('returning answer: ' + answer);
-          return answer;
+          var row = res.rows.item(0);
+          return row.answer;
         }
       }, function (err) {
         console.error('Error in db: ' + JSON.stringify(err));
@@ -125,41 +169,32 @@ angular.module('starter.land', [])
       });
     };
 
-    $scope.saveData = function (data) {
-      angular.forEach(data, function (item, index) {
-        AppServiceAPI.update($rootScope.user, index, item, 10, 5);
+    $scope.saveData = function () {
+      ValidationService.saveData($scope.land, 5).then(function () {
+        AppServiceAPI.sync(5).then(function () {
+          ValidationService.logoutUser();
+        });
       });
-      AppServiceAPI.sync();
     };
 
     $scope.goToPrev = function () {
-      $state.go('app.food');
+      ValidationService.saveData($scope.land, 5).then(function () {
+        $state.go('app.food');
+      });
     };
 
     $ionicPlatform.ready(function () {
 
-      AppServiceAPI.select(5).then(function (res) {
-
-        if (res.rows.length > 0) {
-          angular.forEach(res.rows, function (item, index) {
-            questionid = res.rows.item(index).questionid;
-            //console.log(questionid,res.rows.item(index).answer,item,index);
-            $scope.land[questionid] = res.rows.item(index).answer;
-          });
-
+      ValidationService.getData(5).then(function (res) {
+        for (var qID in res) {
+          $scope.land[qID] = res[qID];
         }
-        else {
-          console.log("No Record Found")
-        }
-        //return data;
       });
     });
 
     $scope.quiz2 = function (land) {
-      angular.forEach(land, function (item, index) {
-        AppServiceAPI.update($rootScope.user, index, item, 10, 5);
-      });
-      AppServiceAPI.sync();
+      ValidationService.quiz2(land, 5);
+      AppServiceAPI.sync(5);
       $state.go('app.water');
     };
   });

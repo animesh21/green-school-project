@@ -1,6 +1,7 @@
 angular.module('starter.energy', [])
 
-  .controller('energyCtrl', function ($scope, $rootScope, $state, $window, $stateParams, AppServiceAPI, $ionicPlatform, $sce, $ionicModal, $ionicPopup) {
+  .controller('energyCtrl', function ($scope, $rootScope, $state, $window, $stateParams, AppServiceAPI,
+                                      $ionicPlatform, $sce, $ionicModal, $ionicPopup, ValidationService) {
     $(document).ready(function () {
       $('.progressBarIndicator').css("background", "red");
     });
@@ -13,6 +14,26 @@ angular.module('starter.energy', [])
       'Q7E5S1': 0,
       'Q7E6S1': 0,
       'Q7E7S1': 0
+    };
+
+    $scope.data = {
+      sourcesOfEnergy: {
+        1: 'Electricity from the board (kwh)',
+        2: 'Electricity from generator (diesel) (litres)',
+        3: 'Petrol (litres)',
+        4: 'Diesel (litres)',
+        5: 'CNG (kg)',
+        6: 'Kerosene (litres)',
+        7: 'Coal (kg)',
+        8: 'Animal waste (kg)',
+        9: 'Solar (kwh)',
+        10: 'Wind (kWh)',
+        11: 'LPG (kg)',
+        12: 'Piped Natural Gas (kg)',
+        13: 'Biogas (kg)',
+        14: 'Others(Specify)',
+        16: 'Wood (kg)'
+      }
     };
 
     $scope.toolTips = {
@@ -71,13 +92,12 @@ angular.module('starter.energy', [])
     $scope.getAnswer = function (questionID) {
       return AppServiceAPI.selectQuestion(questionID).then(function (res) {
         if (res.rows.length > 0) {
-          var row = res.rows[0];
-          var answer = row.answer;
-          return answer;
+          var row = res.rows.item(0);
+          return row.answer;
         }
       }, function (err) {
-        return err;
         console.error('Error in db: ' + JSON.stringify(err));
+        return err;
       });
     };
 
@@ -157,7 +177,7 @@ angular.module('starter.energy', [])
       };
 
       // for updating question no. 6
-      if (n == 9 || n == 10 || n == 13) {
+      if (n === 9 || n === 10 || n === 13) {
         var qID9 = 'Q6E9S1';
         var qID10 = 'Q6E10S1';
         var qID13 = 'Q6E13S1';
@@ -168,16 +188,14 @@ angular.module('starter.energy', [])
         if (val9 || val10 || val13) {
           $scope.energy.Q9E1 = 'Y';
         }
-        else {
-          $scope.energy.Q9E1 = 'N';
-        }
       }
 
       var conversionFactor = conversionTable[n];
       var qID1 = 'Q6E' + n + 'S1';
       var qID2 = 'Q6E' + n + 'S2';
 
-      $scope.energy[qID2] = $scope.getAbsVal(qID1) * conversionFactor;
+      var valInMJ = $scope.getAbsVal(qID1) * conversionFactor;
+      $scope.energy[qID2] = valInMJ.toFixed(2);
 
       var totalEnergy = 0;
       var qID;
@@ -185,7 +203,7 @@ angular.module('starter.energy', [])
         qID = 'Q6E' + key + 'S2';
         totalEnergy += $scope.getAbsVal(qID);
       });
-      $scope.energy.Q6E15S2 = totalEnergy;
+      $scope.energy.Q6E15S2 = totalEnergy.toFixed(2);
     };
 
     $scope.validateQ6E1 = function () {
@@ -305,16 +323,15 @@ angular.module('starter.energy', [])
     };
 
     $scope.validNext = function () {
-      // var validQ4 = $scope.validVal('Q4E1');
-      // var validQ5 = $scope.validVal('Q5E1');
-      // var validQ9 = $scope.validateQ9();
-      // var validQ10 = $scope.validVal('Q10E1');
-      // return ($scope.validateTeacher('E') && $scope.validateStudent('E') &&
-      //         validQ4  && validQ5 &&
-      //         validQ9 && validQ10);
-
-      // return true;
-      return $scope.validateQ6E1();
+      var validQ4 = $scope.validVal('Q4E1');
+      var validQ5 = $scope.validVal('Q5E1');
+      var validQ9 = $scope.validateQ9();
+      var validQ10 = $scope.validVal('Q10E1');
+      var validate = ($scope.validateTeacher('E') && $scope.validateStudent('E') &&
+              validQ4  && validQ5 &&
+              validQ9 && validQ10);
+      $rootScope.sectionsCompleted.energy = validate;
+      return validate;
     };
     // validation functions end
 
@@ -337,15 +354,18 @@ angular.module('starter.energy', [])
       });
     };
 
-    $scope.saveData = function (data) {
-      angular.forEach(data, function (item, index) {
-        AppServiceAPI.update($rootScope.user, index, item, 10, 3);
+    $scope.saveData = function () {
+      ValidationService.saveData($scope.energy, 3).then(function () {
+        AppServiceAPI.sync(3).then(function () {
+          ValidationService.logoutUser();
+        });
       });
-      AppServiceAPI.sync();
     };
 
     $scope.goToPrev = function () {
-      $state.go('app.air1');
+      ValidationService.saveData($scope.energy, 3).then(function () {
+        $state.go('app.air1');
+      });
     };
 
     $scope.toggleReadMore = function (n) {
@@ -365,28 +385,19 @@ angular.module('starter.energy', [])
     };
 
     $ionicPlatform.ready(function () {
-      AppServiceAPI.select(3).then(function (res) {
 
-        if (res.rows.length > 0) {
-          angular.forEach(res.rows, function (item, index) {
-            var questionid = res.rows.item(index).questionid;
-            //console.log(questionid,res.rows.item(index).answer,item,index);
-            $scope.energy[questionid] = res.rows.item(index).answer;
-          });
+      ValidationService.getData(3).then(function (res) {
+        for (var qID in res) {
+          $scope.energy[qID] = res[qID];
         }
-        else {
-          console.log("No Record Found");
-        }
-        //return data;
       });
     });
 
     $scope.quiz2 = function (energy) {
 
-      angular.forEach(energy, function (item, index) {
-        AppServiceAPI.update($rootScope.user, index, item, 10, 3);
-      });
-      AppServiceAPI.sync();
+      ValidationService.quiz2(energy, 3);
+
+      AppServiceAPI.sync(3);
       $state.go('app.food');
     };
   });

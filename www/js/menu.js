@@ -1,5 +1,6 @@
 angular.module('starter.menu', [])
-  .controller('menuCtrl', function ($scope, $state, $stateParams, $window) {
+  .controller('menuCtrl', function ($scope, $state, $stateParams, $window, $rootScope,
+                                    ValidationService, AppServiceAPI) {
 
     $scope.faq = function () {
       alert("faqqqq");
@@ -39,7 +40,11 @@ angular.module('starter.menu', [])
     };
 
     $scope.login = function () {
-      $state.go('login');
+      $rootScope.user = null;
+      $rootScope.school = null;
+      AppServiceAPI.sync().then(function () {
+        ValidationService.logoutUser();
+      });
     };
 
     $scope.home = function () {

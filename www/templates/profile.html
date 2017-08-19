@@ -1,4 +1,4 @@
-<ion-view title="School Profile" ng-controller="profileCtrl" ng-init="console.log('Inside profile init');">
+<ion-view title="School Profile" ng-controller="profileCtrl">
     <script type="text/javascript">
         function isNumberKey(evt) {
             var charCode = (evt.which) ? evt.which : event.keyCode;
@@ -18,26 +18,27 @@
         <div class="row" style="padding-top: 0px;padding-bottom: 0px">
             <progress id="progressbar" max="100" value="{{ progress }}" class="progress"></progress>
         </div>
+
         <p style="text-align: center">Progress: {{ progress }}% </p>
 
         <ion-scroll direction="y" class="theroot">
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    1. Name of the School / Institution:
+                    1. Name of the School / Institution:{{ profile.name }}
                 </div>
                 <label class="item item-input">
-                    <input ng-value="profile.Q1P1" type="text" placeholder="Name of the School/Institution"
+                    <input ng-value="profile.name" type="text" placeholder="Name of the School/Institution"
                            class="textbox" readonly>
                 </label>
             </div>
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    2. Address line 1:
+                    2. Address line 1:{{ profile.address1 }}
                 </div>
                 <label class="item item-input">
-                    <input ng-value="profile.Q2P1" type="text" placeholder="Address line 1"
+                    <input ng-value="profile.address1" type="text" placeholder="Address line 1"
                            class="textbox" readonly>
                 </label>
             </div>
@@ -47,7 +48,7 @@
                     3. Address line 2:
                 </div>
                 <label class="item item-input">
-                    <input ng-value="profile.Q3P1" type="text" placeholder="Address line 2"
+                    <input ng-value="profile.address2" type="text" placeholder="Address line 2"
                            class="textbox" readonly>
                 </label>
             </div>
@@ -57,7 +58,8 @@
                     <div class="input-label fs-12">
                         4. Country:
                     </div>
-                    <select class="fs-12" ng-model="profile.Q4P1" ng-options="option.name for option in data.countries track by option.id" disabled>
+                    <select class="fs-12" ng-model="profile.country"
+                                ng-options="option for option in data.countries" disabled>
                     </select>
                 </label>
             </div>
@@ -67,8 +69,10 @@
                     <div class="input-label fs-12">
                         5. State:
                     </div>
-                    <select class="fs-12" ng-options="option.name for option in data.states track by option.id"
-                            ng-model="profile.Q5P1">
+                    <select class="fs-12" ng-model="profile.state" ng-change="updateDistricts()">
+                        <option ng-repeat="(key, value) in data.states" value="{{ key }}">
+                            {{ value }}
+                        </option>
                     </select>
                 </label>
             </div>
@@ -78,8 +82,10 @@
                     <div class="input-label fs-12">
                         6. District:
                     </div>
-                    <select class="fs-12" ng-options="option.name for option in data.districts track by option.id"
-                            ng-model="profile.Q6P1">
+                    <select class="fs-12" ng-model="profile.district">
+                        <option ng-repeat="(key, value) in data.districts" value="{{ key }}">
+                            {{ value }}
+                        </option>
                     </select>
                 </label>
             </div>
@@ -89,7 +95,7 @@
                     7. City:
                 </div>
                 <label class="item item-input">
-                    <input ng-model="profile.Q7P1" type="text" placeholder="City"
+                    <input ng-model="profile.city" type="text" placeholder="City"
                            class="textbox">
                 </label>
             </div>
@@ -99,7 +105,7 @@
                     8. PIN Code:
                 </div>
                 <label class="item item-input">
-                    <input ng-model="profile.Q8P1" type="number" min="0"
+                    <input ng-model="profile.pincode" type="number" min="0"
                            step="1" onkeypress="return isNumberKey(event)" placeholder="PIN"
                            class="textbox" string-to-number limit-to="6">
                 </label>
@@ -112,13 +118,13 @@
                 <div class="row">
                     <div class="col-33 col">
                         <label class="item item-input">
-                            <input ng-model="profile.Q9P1" type="number" min="0" onkeypress="return isNumberKey(event)"
+                            <input ng-model="profile.std" type="number" min="0" onkeypress="return isNumberKey(event)"
                                    placeholder="STD Code" class="textbox" string-to-number limit-to="5">
                         </label>
                     </div>
                     <div class="col-67 col">
                         <label class="item item-input">
-                            <input ng-model="profile.Q9P2" type="number" min="0" onkeypress="isNumberKey(event)"
+                            <input ng-model="profile.telephone" type="number" min="0" onkeypress="isNumberKey(event)"
                                    placeholder="Number" class="textbox" string-to-number limit-to="8">
                         </label>
                     </div>
@@ -138,7 +144,7 @@
                     </div>
                     <div class="col col-67">
                         <label class="item item-input">
-                            <input ng-model="profile.Q10P2" type="number" min="0" onkeypress="return isNumberKey(event)"
+                            <input ng-model="profile.mobile" type="number" min="0" onkeypress="return isNumberKey(event)"
                                    placeholder="10 Digit Mobile Number" class="textbox" string-to-number limit-to="10">
                         </label>
                     </div>
@@ -150,7 +156,7 @@
                     11. Principal's Name:
                 </div>
                 <label class="item item-input">
-                    <input ng-model="profile.Q11P1" type="text" placeholder="Principal Name"
+                    <input ng-model="profile.principle_name" type="text" placeholder="Principal Name"
                            class="textbox">
                 </label>
             </div>
@@ -160,7 +166,7 @@
                     12. GSP Coordinator's Name:<span class="badge" on-hold="showToolTip('Q12')">?</span>
                 </div>
                 <label class="item item-input">
-                    <input ng-model="profile.Q12P1" type="text" placeholder="GSP Coordinator Name"
+                    <input ng-model="profile.coname" type="text" placeholder="GSP Coordinator Name"
                            class="textbox">
                 </label>
             </div>
@@ -170,7 +176,7 @@
                     13. GSP Coordinator's Email:
                 </div>
                 <label class="item item-input">
-                    <input ng-model="profile.Q13P1" type="email" placeholder="GSP Coordinator Email"
+                    <input ng-model="profile.coemail" type="email" placeholder="GSP Coordinator Email"
                            class="textbox">
                 </label>
             </div>
@@ -188,7 +194,7 @@
                     </div>
                     <div class="col col-67">
                         <label class="item item-input">
-                            <input ng-model="profile.Q14P2" type="number" min="0"
+                            <input ng-model="profile.comobile" type="number" min="0"
                                    onkeypress="return isNumberKey(event)" placeholder="10 Digit Mobile Number"
                                    class="textbox" string-to-number limit-to="10">
                         </label>
@@ -231,7 +237,7 @@
                     </a>
                     &nbsp;
                     <a class="button background-color text-white"
-                       ion-chevron-right nav-clear ng-click="saveData(profile)">
+                       ion-chevron-right nav-clear ng-click="saveData()">
                         SAVE
                     </a>
                     <!-- ng-click="quiz2()" -->

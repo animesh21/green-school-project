@@ -400,6 +400,7 @@
                                ng-value="air.Q5A110S4" readonly>
                     </div>
                 </div>
+
             </div>
 
             <div class="list" style="margin-left: 5px;margin-right: 5px">
@@ -423,7 +424,8 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    3. What is the ownership of the vehicles used by your school? Please choose what is applicable:
+                    3. What is the ownership of the vehicles used by your school? Please
+                    choose what is applicable:
                 </div>
                 <ion-item class="fs-14 item-text-wrap">
                     <input ng-model="air.Q6A1" type="radio" ng-value="'1'" name="a"><span
@@ -466,6 +468,7 @@
             </div>
 
             <div class="card" ng-show="air['Q6A1'] >= 3">
+
                 <div class="item item-text-wrap item-borderless">
                     3(b) Provide details of school-owned motorised vehicles
                     <span class="badge" on-hold="showToolTip('Q3B')">?</span>
@@ -619,6 +622,7 @@
                                             readonly>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col col-20">Annual road worthiness certificate(Yes / No)</div>
                     <div class="col">
@@ -627,11 +631,6 @@
                                 class="fs-20">
                         </select>
 
-                        <!--<input ng-model="air.Q6A2S1B6" class="textbox"
-                                            ng-change="updateQ6(6)"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number
-                                            onkeypress="return isNumberKey(event);">
-                                            -->
                     </div>
                     <div class="col">
                         <select ng-model="air.Q6A2S1C6" ng-change="updateQ6B()"
@@ -639,11 +638,6 @@
                                 class="fs-20">
                         </select>
 
-                        <!--<input ng-model="air.Q6A2S1C6" class="textbox"
-                                            ng-change="updateQ6(6)"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number
-                                            onkeypress="return isNumberKey(event);">
-                                            -->
                     </div>
                     <div class="col">
                         <select ng-model="air.Q6A2S1V6" ng-change="updateQ6B()"
@@ -651,11 +645,6 @@
                                 class="fs-20">
                         </select>
 
-                        <!--<input ng-model="air.Q6A2S1V6" class="textbox"
-                                            ng-change="updateQ6(6)"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number
-                                            onkeypress="return isNumberKey(event);">
-                                            -->
                     </div>
                     <div class="col">
                         <select ng-model="air.Q6A2S1O6" ng-change="updateQ6B()"
@@ -663,11 +652,6 @@
                                 class="fs-20">
                         </select>
 
-                        <!--<input ng-model="air.Q6A2S1O6" class="textbox"
-                                            ng-change="updateQ6(6)"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number
-                                            onkeypress="return isNumberKey(event);">
-                                            -->
                     </div>
                     <div class="col">
                         <input ng-value="air.Q6A2S1T6" class="textbox"
@@ -677,14 +661,19 @@
 
                 <div ng-show="air.Q6A2S1B4 > 0" style="padding-left: 20px">
                     <b>Please upload supporting documents:</b>
-                    <label class="col" for="puc">PUC certificates of not more than 5 buses</label>
-                    <input class="col" id="puc" name="puc" type="file" fileread="air.Q6AFL1" multiple>
-                <!--<button class="button" ng-click="upload('Q6AFL1')">Upload</button>
-                    <button class="button" ng-click="takepic()">Take Picture</button> -->
+                    <span>
+                        Uploaded files must be in one of the following formats: PDF Document
+                        (.pdf), Word Document (.doc, .docx), Image File (.jpg, .jpeg). File
+                        size per document should not exceed 500 KB.
+                    </span>
+                    <label class="col">PUC certificates of not more than 5 buses</label>
+                    <input class="col" type="file" fileread="air.Q6AFL1" multiple>
                 </div>
+
             </div>
 
             <div class="card" ng-show="air['Q6A1'] >= 3">
+
                 <div class="item item-text-wrap item-borderless">
                     3(c) Specify the type of fuel used by your school’s vehicles:
                     <span class="badge" on-hold="showToolTip('Q3C')">?</span>
@@ -975,11 +964,17 @@
 
                 <div ng-show="true" style="padding-left: 20px">
                     <b>Please upload supporting documents:</b>
-                    <label class="col" for="fuel">Fuel bills</label>
-                    <input class="col" name="fuel" type="file" fileread="air.Q6AFL2" multiple>
-                    <label class="col" for="puc">Pictures of school owned vehicles</label>
-                    <input class="col" name="puc" type="file" fileread="air.Q6AFL3" multiple>
+                    <span>
+                        Uploaded files must be in one of the following formats: PDF Document
+                        (.pdf), Word Document (.doc, .docx), Image File (.jpg, .jpeg). File
+                        size per document should not exceed 500 KB.
+                    </span>
+                    <label class="col">Fuel bills</label>
+                    <input class="col" name="fuel" type="file" fileread="air.Q6AFL2">
+                    <label class="col">Pictures of school owned vehicles</label>
+                    <input class="col" type="file" fileread="air.Q6AFL3">
                 </div>
+
             </div>
 
             <div class="card" ng-show="air['Q6A1'] >= 3">
@@ -1313,7 +1308,12 @@
                 <div class="list">
                     <p><b>Upload supporting documents</b></p>
                     <p>Please upload all supporting documents related to this section here:</p>
-                    <input fileread="Q9AFL4" type="file" multiple>
+                    <span>
+                        Uploaded files must be in one of the following formats: PDF Document
+                        (.pdf), Word Document (.doc, .docx), Image File (.jpg, .jpeg). File
+                        size per document should not exceed 500 KB.
+                    </span>
+                    <input fileread="Q9AFL4" type="file">
                 </div>
             </div>
 
@@ -1332,7 +1332,7 @@
                     </a>
                     &nbsp;
                     <a class="button background-color text-white"
-                       ion-chevron-right nav-clear ng-click="saveData(air)">
+                       ion-chevron-right nav-clear ng-click="saveData()">
                         SAVE
                     </a>
                     <!-- ng-click="quiz2()" -->

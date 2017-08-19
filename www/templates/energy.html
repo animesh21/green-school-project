@@ -417,18 +417,20 @@
                     Please enter value in the Electricity from the board box.
                 </span>
 
-                <div class="row ">
-                    <div class="col">Electricity from the board (kwh)</div>
-                    <div class="col"><input ng-model="energy.Q6E1S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(1)" class="textbox"
+                <div class="row " ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 16, 8, 9, 10, 11, 12, 13, 14]">
+                    <div class="col">{{ data.sourcesOfEnergy[i] }}</div>
+                    <div class="col"><input ng-model="energy['Q6E' + i + 'S1']" onkeypress="return isDecimalNumber(event);"
+                                            ng-change="updateQ6(i)" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E1S2" ng-value="energy.Q6E1S2" class="textbox"
+                    <div class="col"><input ng-model="energy['Q6E' + i + 'S2']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
-                    <div class="col"><input ng-model="energy.Q6E1S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11" ng-keypress="updateQ6S3(1, $event)"></div>
+                    <div class="col"><input ng-model="energy['Q6E' + i + 'S3']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11" ng-keypress="updateQ6S3(i, $event)"></div>
                 </div>
 
+
+                <!--
                 <div class="row ">
                     <div class="col">Electricity from generator (diesel) (litres)</div>
                     <div class="col"><input ng-model="energy.Q6E2S1" onkeypress="return isDecimalNumber(event);"
@@ -439,7 +441,7 @@
                     </div>
                     <div class="col"><input ng-model="energy.Q6E2S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            ng-keypress="updateQ6S3(2, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -452,7 +454,7 @@
                     </div>
                     <div class="col"><input ng-model="energy.Q6E3S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            ng-keypress="updateQ6S3(3, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -464,7 +466,8 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E4S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            ng-keypress="updateQ6S3(4, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -476,7 +479,8 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E5S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            ng-keypress="updateQ6S3(5, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -488,7 +492,8 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E6S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            ng-keypress="updateQ6S3(6, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -500,7 +505,8 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E7S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            ng-keypress="updateQ6S3(7, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -512,7 +518,8 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E16S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            ng-keypress="updateQ6S3(16, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -524,7 +531,8 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E8S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            ng-keypress="updateQ6S3(8, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -536,7 +544,8 @@
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy.Q6E9S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            ng-keypress="updateQ6S3(9, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -548,7 +557,8 @@
                                             class="textbox" style="border:1px solid #111;text-align: center;"
                                             type="number" string-to-number readonly></div>
                     <div class="col"><input ng-model="energy.Q6E10S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            ng-keypress="updateQ6S3(10, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -560,7 +570,8 @@
                                             class="textbox" style="border:1px solid #111;text-align: center;"
                                             type="number" string-to-number readonly></div>
                     <div class="col"><input ng-model="energy.Q6E11S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            ng-keypress="updateQ6S3(11, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -572,7 +583,8 @@
                                             class="textbox" style="border:1px solid #111;text-align: center;"
                                             type="number" string-to-number readonly></div>
                     <div class="col"><input ng-model="energy.Q6E12S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            ng-keypress="updateQ6S3(12, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -584,7 +596,8 @@
                                             class="textbox" style="border:1px solid #111;text-align: center;"
                                             type="number" string-to-number readonly></div>
                     <div class="col"><input ng-model="energy.Q6E13S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            ng-keypress="updateQ6S3(13, $event)"></div>
                 </div>
 
                 <div class="row ">
@@ -596,9 +609,11 @@
                                             class="textbox" style="border:1px solid #111;text-align: center;"
                                             type="number" string-to-number readonly></div>
                     <div class="col"><input ng-model="energy.Q6E14S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"  onkeypress="return isNumberInRange(event, 0, 5)"></div>
+                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
+                                            ng-keypress="updateQ6S3(14, $event)"></div>
                 </div>
 
+                -->
                 <div class="row ">
                     <div class="col">Total</div>
                     <div class="col"><input ng-hide="true" ng-value="energy.Q6E15S1" class="textbox"
@@ -733,9 +748,9 @@
                 <div class="list ">
                     <ion-list>
                         <label class="item item-input">
-                            <input ng-model="energy.Q10E1" type="number" string-to-number
+                            <input ng-model="energy.Q8E1" type="number" string-to-number
                                    onkeypress="return isNumberKey(event);" placeholder="Answer here!"
-                                   ng-change="validLimit('Q10E1', 366)">
+                                   ng-change="validLimit('Q8E1', 366)">
                         </label>
                     </ion-list>
                 </div>
@@ -743,7 +758,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    6. Are there any alternate sources of energy employed/installed in your school? Current answer: {{ energy.Q9E1 }}
+                    6. Are there any alternate sources of energy employed/installed in your school?
                 </div>
                 <div class="row " style="padding-left: 20px">
                     <div class="col fs-12">
@@ -831,7 +846,7 @@
                     </a> &nbsp;
 
                     <a class="button background-color text-white"
-                       ion-chevron-right nav-clear ng-click="saveData(energy)">
+                       ion-chevron-right nav-clear ng-click="saveData()">
                         SAVE
                     </a>
                 </div>
