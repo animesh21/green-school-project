@@ -25,7 +25,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    1. Name of the School / Institution:{{ profile.name }}
+                    1. Name of the School / Institution:
                 </div>
                 <label class="item item-input">
                     <input ng-value="profile.name" type="text" placeholder="Name of the School/Institution"
@@ -35,7 +35,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    2. Address line 1:{{ profile.address1 }}
+                    2. Address line 1:
                 </div>
                 <label class="item item-input">
                     <input ng-value="profile.address1" type="text" placeholder="Address line 1"
@@ -163,7 +163,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    12. GSP Coordinator's Name:<span class="badge" on-hold="showToolTip('Q12')">?</span>
+                    12. GSP Coordinator's Name:<span class="badge gbadge" on-hold="showToolTip('Q12')">?</span>
                 </div>
                 <label class="item item-input">
                     <input ng-model="profile.coname" type="text" placeholder="GSP Coordinator Name"
@@ -205,7 +205,7 @@
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     15. Please select the appropriate category for your school:
-                    <span class="badge" on-hold="showToolTip('Q15')">?</span>
+                    <span class="badge gbadge" on-hold="showToolTip('Q15')">?</span>
                 </div>
 
                 <ion-item class="fs-14 item-text-wrap" ng-repeat="(key, value) in data.schoolCategories track by $index">

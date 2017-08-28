@@ -316,7 +316,7 @@ angular.module('starter.water', [])
 
     $scope.validNext = function () {
       var validate = $scope.validateTeacher('W') && $scope.validateStudent('W');
-      $rootScope.sectionsCompletedk.water = validate;
+      $rootScope.sectionsCompleted = validate;
       return validate;
     };
     // validation functions end
@@ -331,7 +331,9 @@ angular.module('starter.water', [])
 
     $scope.goToPrev = function () {
       ValidationService.saveData($scope.water, 6).then(function () {
-        $state.go('app.land');
+        AppServiceAPI.sync(6).then(function () {
+          $state.go('app.land');
+        });
       });
     };
 
@@ -356,11 +358,12 @@ angular.module('starter.water', [])
       });
     };
 
-    $scope.quiz2 = function (waste) {
-
-      ValidationService.quiz2(waste, 6);
-      AppServiceAPI.sync(6);
-      $state.go('app.waste');
+    $scope.quiz2 = function (water) {
+      ValidationService.quiz2(water, 6).then(function () {
+        AppServiceAPI.sync(6).then(function () {
+          $state.go('app.waste');
+        });
+      });
     };
     // $window.location.reload(true);
 

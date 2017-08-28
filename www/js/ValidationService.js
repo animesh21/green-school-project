@@ -1,6 +1,6 @@
 angular.module('starter.validation', [])
   .factory('ValidationService', function ($ionicLoading, $ionicPopup, $q, $rootScope,
-                                          AppServiceAPI, $state) {
+                                          AppServiceAPI, $state, $http) {
 
     var showPopup = function (title, message) {
       var popup = $ionicPopup.show({
@@ -44,7 +44,7 @@ angular.module('starter.validation', [])
         showLoading('Please wait');
         angular.forEach(answers, function (item, index) {
           var deferred = $q.defer();
-          // console.log('Q: ' + index + ', A: ' + item + ', User: ' + $rootScope.user);
+          console.log('Q: ' + index + ', A: ' + item + ', User: ' + $rootScope.user);
           AppServiceAPI.update($rootScope.user, index, item, 10, type).then(function (res) {
             deferred.resolve(res);
           }, function (err) {
@@ -53,12 +53,14 @@ angular.module('starter.validation', [])
           });
           promises.push(deferred.promise);
         });
-        $q.all(promises).then(function (res) {
+        return $q.all(promises).then(function (res) {
           hide();
           showPopup('Done', "Answers saved successfully");
+          return res;
         }, function (err) {
           hide();
           console.error("Couldn't resolve all promises: " + JSON.stringify(err));
+          return err;
         });
       },
 
@@ -85,6 +87,11 @@ angular.module('starter.validation', [])
       },
 
       logoutUser: function () {
+        AppServiceAPI.updateUser($rootScope.user).then(function (res) {
+          console.log('Logged out user from db: ' + JSON.stringify(res.rowsAffected));
+        }, function (err) {
+          console.error("Can't logout user from db: " + JSON.stringify(err));
+        });
         $rootScope.school = null;
         $rootScope.user = null;
         $state.go('login');
@@ -108,8 +115,28 @@ angular.module('starter.validation', [])
           // console.log('returning: ' + JSON.stringify(queryData));
           return queryData;
         });
-      }
+      },
 
+      uploadImages: function (images) {
+        var server = 'http://studio-tesseract.co/GSP/upload.php';
+        var image;
+        var data = {};
+        for (var i = 0; i < images.length; i++) {
+          image = images[i];
+          data.profile_image = image;
+          var req = {
+            method: 'POST',
+            url: server,
+            headers: {'Content-Type': "application/x-www-form-urlencoded"},
+            data: data
+          };
+          $http(req).then(function (response) {
+            console.log("Uploaded image " + i + ": " + JSON.stringify(response));
+          });
+        }
+      }
     };
+
+
 
   });

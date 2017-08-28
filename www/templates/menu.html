@@ -34,7 +34,7 @@
                     <br/>
 
                     <p class="fs-16 text-white" menu-close ng-click="home()" style="text-align: center;">
-                        {{ school.name }}
+                        {{ schoolName }}
                     </p>
                 </ion-item>
                 <div class="padding-left">
@@ -70,15 +70,15 @@
                         WASTE
                     </ion-item>
 
-                    <ion-item class="item-borderless fs-12" menu-close ng-click="quiz()">
+                    <ion-item class="item-borderless fs-12" menu-close ng-click="feedback()">
                         FEEDBACK
                     </ion-item>
 
-                    <ion-item class="item-borderless fs-12" menu-close href="#/app/FAQ">
+                    <ion-item class="item-borderless fs-12" menu-close ng-click="faq()">
                         FAQ
                     </ion-item>
 
-                    <ion-item class="item-borderless fs-12" menu-close href="#/app/help">
+                    <ion-item class="item-borderless fs-12" menu-close ng-click="help()">
                         HELP
                     </ion-item>
 

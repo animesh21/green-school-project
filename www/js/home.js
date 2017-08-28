@@ -53,7 +53,6 @@ angular.module('starter.home', [])
       });
     };
 
-
     $scope.onHold = function (cat) {
       var info;
       if (cat == '1') {
@@ -140,7 +139,7 @@ angular.module('starter.home', [])
     };
 
     $scope.general = function () {
-      if ($rootScope.sectionsCompleted.profile) {
+      if (true) {
         $state.go('app.general1');
       }
       else {
@@ -149,7 +148,7 @@ angular.module('starter.home', [])
     };
 
     $scope.air = function () {
-      if ($rootScope.sectionsCompleted.general && $rootScope.sectionsCompleted.profile) {
+      if (true) {
         $state.go('app.air1');
       }
       else {
@@ -158,8 +157,7 @@ angular.module('starter.home', [])
     };
 
     $scope.energy = function () {
-      if ($rootScope.sectionsCompleted.general && $rootScope.sectionsCompleted.profile &&
-      $rootScope.sectionsCompleted.air) {
+      if (true) {
         $state.go('app.energy');
       }
       else {
@@ -168,8 +166,7 @@ angular.module('starter.home', [])
     };
 
     $scope.food = function () {
-      if ($rootScope.sectionsCompleted.general && $rootScope.sectionsCompleted.profile &&
-      $rootScope.sectionsCompleted.air && $rootScope.sectionsCompleted.energy) {
+      if (true) {
         $state.go('app.food');
       }
       else {
@@ -178,9 +175,7 @@ angular.module('starter.home', [])
     };
 
     $scope.land = function () {
-      if ($rootScope.sectionsCompleted.general && $rootScope.sectionsCompleted.profile &&
-      $rootScope.sectionsCompleted.air && $rootScope.sectionsCompleted.energy &&
-      $rootScope.sectionsCompleted.food) {
+      if (true) {
         $state.go('app.land');
       }
       else {
@@ -189,9 +184,7 @@ angular.module('starter.home', [])
     };
 
     $scope.water = function () {
-      if ($rootScope.sectionsCompleted.general && $rootScope.sectionsCompleted.profile &&
-      $rootScope.sectionsCompleted.air && $rootScope.sectionsCompleted.energy &&
-      $rootScope.sectionsCompleted.food && $rootScope.sectionsCompleted.land) {
+      if (true) {
         $state.go('app.water');
       }
       else {
@@ -200,10 +193,7 @@ angular.module('starter.home', [])
     };
 
     $scope.waste = function () {
-      if ($rootScope.sectionsCompleted.general && $rootScope.sectionsCompleted.profile &&
-      $rootScope.sectionsCompleted.air && $rootScope.sectionsCompleted.energy &&
-      $rootScope.sectionsCompleted.food && $rootScope.sectionsCompleted.land &&
-      $rootScope.sectionsCompleted.water) {
+      if (true) {
         $state.go('app.waste');
       }
       else {

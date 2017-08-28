@@ -369,7 +369,7 @@
                     <div class="col col-10"></div>
                     <div class="col">Site area in square meter (m2)</div>
                     <div class="col"><input ng-model="land.Q4L1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" readonly></div>
+                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly></div>
                 </div>
 
                 <div class="row">
@@ -411,7 +411,7 @@
                     <div class="col col-10">(b2)</div>
                     <div class="col">Play area that has grass on ground</div>
                     <div class="col">
-                        <input ng-model="land.Q4L4" id="questionlandfourSixArea" class="textbox"
+                        <input ng-model="land.Q4L4" class="textbox"
                                style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01"
                                placeholder="m²"
                                ng-change="updateQ4()"
@@ -575,15 +575,15 @@
                     <div class="col">Plants</div>
                     <div class="col">
                         <input ng-model="land.Q5L1S1" ng-change="updateQ5(1)" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event)">
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0" onkeypress="return isNumberKey(event)">
                     </div>
                     <div class="col">
                         <input ng-model="land.Q5L1S2" ng-change="updateQ5(1)" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event)">
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0" onkeypress="return isNumberKey(event)">
                     </div>
                     <div class="col">
                         <input ng-model="land.Q5L1S3" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" readonly>
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                 </div>
 
@@ -591,15 +591,15 @@
                     <div class="col">Animals</div>
                     <div class="col">
                         <input ng-model="land.Q5L2S1" ng-change="updateQ5(2)" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event)">
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0" onkeypress="return isNumberKey(event)">
                     </div>
                     <div class="col">
                         <input ng-model="land.Q5L2S2" ng-change="updateQ5(2)" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" min="0" onkeypress="return isNumberKey(event)">
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0" onkeypress="return isNumberKey(event)">
                     </div>
                     <div class="col">
                         <input ng-model="land.Q5L2S3" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" readonly>
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
                     </div>
                 </div>
             </div>

@@ -79,50 +79,23 @@
                     <div class="col">Email ID</div>
                 </div>
 
-                <div class="row ">
-                    <div class="col col-10">1</div>
+                <div class="row" ng-repeat="i in [1, 2, 3]">
+                    <div class="col col-10">{{ i }}</div>
                     <div class="col">
-                        <input ng-model="energy.Q1E1S1" name="oneName" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="text" id="energyoneName">
+                        <input ng-model="energy['Q1E' + i + 'S1']" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="text">
                     </div>
                     <div class="col">
-                        <input ng-model="energy.Q1E1S3" name="oneNameLast" class="textbox"
+                        <input ng-model="energy['Q1E' + i + 'S3']" class="textbox"
                                style="border:1px solid #111;text-align: center;"
                                type="text">
                     </div>
                     <div class="col">
-                        <input ng-model="energy.Q1E1S2" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="email" id='energyoneEmail'>
+                        <input ng-model="energy['Q1E' + i + 'S2']" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="email">
                     </div>
                 </div>
 
-                <div class="row ">
-                    <div class="col col-10">2</div>
-                    <div class="col">
-                        <input ng-model="energy.Q1E2S1" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="text" id='energytwoName'></div>
-                    <div class="col">
-                        <input ng-model="energy.Q1E2S3" class="textbox"
-                               style="border:1px solid #111;text-align: center;"
-                               type="text"></div>
-                    <div class="col">
-                        <input ng-model="energy.Q1E2S2" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="email" id='energytwoEmail'></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">3</div>
-                    <div class="col">
-                        <input ng-model="energy.Q1E3S1" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="text" id='energythreeName'></div>
-                    <div class="col">
-                        <input ng-model="energy.Q1E3S3" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col">
-                        <input ng-model="energy.Q1E3S2" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="email" id='energythreeEmail'>
-                    </div>
-                </div>
             </div>
 
             <div class="card">
@@ -313,7 +286,7 @@
             </div>
 
             <div class="list" style="margin-left: 5px;margin-right: 5px">
-                <strong>Task 2: How much energy does your school consume?</strong><br />
+                <strong>Task 2: How much energy does your school consume?</strong><br/>
             </div>
 
             <div class="content" style="text-align: justify;">
@@ -324,26 +297,26 @@
                         section you will be asked questions related to energy consumption of your
                         school. This will involve finding out the different sources of energy used
                         and jotting down the monthly consumption.
-                        <br />
-                        <br />
+                        <br/>
+                        <br/>
                         <span class="fs-16">
                             <b>To collect data:</b>
                         </span>
-                        <br />
+                        <br/>
                         Please collect all the bills that your school receives for its energy
                         consumption, e.g. electricity and gas bills. If the frequency of any energy
                         consumption bill is fortnightly, bi-monthly, quarterly or half yearly, try
                         to convert them into monthly averages. Take an average of the bills for a
                         minimum of four months – e.g January to April.
-                        <br /><span class="fs-16"><b>Electricity:</b></span><br />
+                        <br/><span class="fs-16"><b>Electricity:</b></span><br/>
                         The audit team will have to get in touch with the administrative staff in
                         the school office to procure the electricity bills.
-                        <br /><span class="fs-16"><b> Diesel:</b></span><br />
+                        <br/><span class="fs-16"><b> Diesel:</b></span><br/>
                         Ask the generator attendant to show the log book of fuels and find out how
                         many litres are being used. If diesel is being used for transport, the transport
                         in-charge will have the register/log book with details about the amount consumed
                         and cost paid. Remember the energy output of a generator would be taken only in terms of input, i.e, fuel used.
-                        <br /><span class="fs-16"><b>LPG:</b></span><br />
+                        <br/><span class="fs-16"><b>LPG:</b></span><br/>
                         Ask the mess/canteen staff, how many cylinders are used in one month on an average. Remember each gas
                         cylinder generally weighs 14.2 kg.
                     </span>
@@ -359,13 +332,13 @@
                     1.Does your school has access to an electricity bill?
                 </div>
 
-                <div class="row " style="padding-left: 20px">
+                <div class="row" style="padding-left: 20px">
                     <div class="col fs-12">
-                        <input ng-model="energy.Q4E1" id="questionenergyfour" type="radio" ng-value="'Y'" name="b">&nbsp;<span
+                        <input ng-model="energy.Q4E1" type="radio" ng-value="'Y'" name="b">&nbsp;<span
                             style="position:absolute"> Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="energy.Q4E1" id="questionenergyfour" type="radio" ng-value="'N'" name="b">&nbsp;<span
+                        <input ng-model="energy.Q4E1" type="radio" ng-value="'N'" name="b">&nbsp;<span
                             style="position:absolute">No</span>
                     </div>
                 </div>
@@ -419,201 +392,20 @@
 
                 <div class="row " ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 16, 8, 9, 10, 11, 12, 13, 14]">
                     <div class="col">{{ data.sourcesOfEnergy[i] }}</div>
-                    <div class="col"><input ng-model="energy['Q6E' + i + 'S1']" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(i)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
+                    <div class="col">
+                        <input ng-model="energy['Q6E' + i + 'S1']" onkeypress="return isDecimalNumber(event);"
+                               ng-change="updateQ6(i)" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number>
+                    </div>
                     <div class="col"><input ng-model="energy['Q6E' + i + 'S2']" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
+                                            style="border:1px solid #111;text-align: center;" type="number"
+                                            string-to-number readonly>
                     </div>
                     <div class="col"><input ng-model="energy['Q6E' + i + 'S3']" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11" ng-keypress="updateQ6S3(i, $event)"></div>
-                </div>
-
-
-                <!--
-                <div class="row ">
-                    <div class="col">Electricity from generator (diesel) (litres)</div>
-                    <div class="col"><input ng-model="energy.Q6E2S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(2)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E2S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
-                    </div>
-                    <div class="col"><input ng-model="energy.Q6E2S3" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(2, $event)"></div>
+                                            ng-keypress="updateQ6S3(i, $event)"></div>
                 </div>
 
-                <div class="row ">
-                    <div class="col">Petrol (litres)</div>
-                    <div class="col"><input ng-model="energy.Q6E3S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(3)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E3S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
-                    </div>
-                    <div class="col"><input ng-model="energy.Q6E3S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(3, $event)"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Diesel (litres)</div>
-                    <div class="col"><input ng-model="energy.Q6E4S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(4)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E4S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
-                    </div>
-                    <div class="col"><input ng-model="energy.Q6E4S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(4, $event)"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">CNG (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E5S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(5)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E5S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
-                    </div>
-                    <div class="col"><input ng-model="energy.Q6E5S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(5, $event)"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Kerosene (litres)</div>
-                    <div class="col"><input ng-model="energy.Q6E6S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(6)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E6S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
-                    </div>
-                    <div class="col"><input ng-model="energy.Q6E6S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(6, $event)"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Coal (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E7S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(7)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E7S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
-                    </div>
-                    <div class="col"><input ng-model="energy.Q6E7S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(7, $event)"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Wood (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E16S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(16)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E16S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
-                    </div>
-                    <div class="col"><input ng-model="energy.Q6E16S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(16, $event)"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Animal waste (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E8S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(8)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E8S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
-                    </div>
-                    <div class="col"><input ng-model="energy.Q6E8S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(8, $event)"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Solar (kwh)</div>
-                    <div class="col"><input ng-model="energy.Q6E9S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(9)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E9S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
-                    </div>
-                    <div class="col"><input ng-model="energy.Q6E9S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(9, $event)"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Wind (kWh)</div>
-                    <div class="col"><input ng-model="energy.Q6E10S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(10)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E10S2"
-                                            class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="number" string-to-number readonly></div>
-                    <div class="col"><input ng-model="energy.Q6E10S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(10, $event)"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">LPG (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E11S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(11)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E11S2"
-                                            class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="number" string-to-number readonly></div>
-                    <div class="col"><input ng-model="energy.Q6E11S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(11, $event)"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Piped Natural Gas (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E12S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(12)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E12S2"
-                                            class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="number" string-to-number readonly></div>
-                    <div class="col"><input ng-model="energy.Q6E12S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(12, $event)"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Biogas (kg)</div>
-                    <div class="col"><input ng-model="energy.Q6E13S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(13)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E13S2"
-                                            class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="number" string-to-number readonly></div>
-                    <div class="col"><input ng-model="energy.Q6E13S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(13, $event)"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Others(Specify)</div>
-                    <div class="col"><input ng-model="energy.Q6E14S1" onkeypress="return isDecimalNumber(event);"
-                                            ng-change="updateQ6(14)" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q6E14S2"
-                                            class="textbox" style="border:1px solid #111;text-align: center;"
-                                            type="number" string-to-number readonly></div>
-                    <div class="col"><input ng-model="energy.Q6E14S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text" limit-to="11"
-                                            ng-keypress="updateQ6S3(14, $event)"></div>
-                </div>
-
-                -->
                 <div class="row ">
                     <div class="col">Total</div>
                     <div class="col"><input ng-hide="true" ng-value="energy.Q6E15S1" class="textbox"
@@ -644,96 +436,27 @@
                     <div class="col"> BEE Star Rating</div>
                 </div>
 
-                <div class="row ">
-                    <div class="col">Air Conditioners</div>
-                    <div class="col"><input ng-model="energy.Q7E1S1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q7E1S2" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number
-                                            placeholder="(in tons)"></div>
-                    <div class="col"><input ng-model="energy.Q7E1S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number
-                                            ng-change="validQ7S3('Q7E1S3')"></div>
+                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7]">
+                    <div class="col">{{ data.appliances[i]['name'] }}</div>
+                    <div class="col"><input ng-model="energy['Q7E' + i + 'S1']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;"
+                                            onkeypress="return isNumberKey(event);" type="number" string-to-number>
+                    </div>
+                    <div class="col"><input ng-model="energy['Q7E' + i + 'S2']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;"
+                                            onkeypress="return isNumberKey(event);" type="number" string-to-number
+                                            placeholder="(in {{ data.appliances[i]['unit'] }})">
+                    </div>
+                    <div class="col"><input ng-model="energy['Q7E' + i + 'S3']" class="textbox"
+                                            style="border:1px solid #111;text-align: center;"
+                                            onkeypress="return isNumberKey(event);" type="number" string-to-number
+                                            ng-change="validQ7S3('Q7E' + i + 'S3')"></div>
                 </div>
 
-                <div class="row ">
-                    <div class="col">Refrigerator</div>
-                    <div class="col"><input ng-model="energy.Q7E2S1" id="questionenergysevenTwoNumber" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q7E2S2" id="questionenergysevenTwoSize" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number
-                                            placeholder="(in litres)"></div>
-                    <div class="col"><input ng-model="energy.Q7E23" id="questionenergysevenTwoBEE" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number
-                                            ng-change="validQ7S3('Q7E2S3')"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Microwave</div>
-                    <div class="col"><input ng-model="energy.Q7E3S1" id="questionenergysevenThreeNumber" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q7E3S2" id="questionenergysevenThreeSize" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number
-                                            placeholder="(in litres)"></div>
-                    <div class="col"><input ng-model="energy.Q7E3S3" id="questionenergysevenThreeBEE" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number
-                                            ng-change="validQ7S3('Q7E3S3')"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Tube Lights</div>
-                    <div class="col"><input ng-model="energy.Q7E4S1" id="questionenergysevenFourNumber" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q7E4S2" id="questionenergysevenFourSize" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number
-                                            placeholder="(in watts)"></div>
-                    <div class="col"><input ng-model="energy.Q7E4S3" id="questionenergysevenFourBEE" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number
-                                            ng-change="validQ7S3('Q7E4S3')"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">CFL Bulbs</div>
-                    <div class="col"><input ng-model="energy.Q7E5S1" id="questionenergysevenFiveNumber" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q7E5S2" id="questionenergysevenFiveSize" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number
-                                            placeholder="(in watts)"></div>
-                    <div class="col"><input ng-model="energy.Q7E5S3" id="questionenergysevenFiveBEE" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number
-                                            ng-change="validQ7S3('Q7E5S3')"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">LED Lights</div>
-                    <div class="col"><input ng-model="energy.Q7E6S1" id="questionenergysevenSixNumber" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);"
-                                            type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q7E6S2" id="questionenergysevenSixSize" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);"
-                                            type="number" string-to-number
-                                            placeholder="(in watts)"></div>
-                    <div class="col"><input ng-model="energy.Q7E6S3" id="questionenergysevenSixBEE" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);"
-                                            type="number" string-to-number
-                                            ng-change="validQ7S3('Q7E6S3')"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Fans</div>
-                    <div class="col"><input ng-model="energy.Q7E7S1" id="questionenergysevenSevenNumber" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number></div>
-                    <div class="col"><input ng-model="energy.Q7E7S2" id="questionenergysevenSevenSize" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number
-                                            placeholder="(in watts)"></div>
-                    <div class="col"><input ng-model="energy.Q7E7S3" id="questionenergysevenSevenBEE" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" onkeypress="return isNumberKey(event);" type="number" string-to-number
-                                            ng-change="validQ7S3('Q7E7S3')"></div>
-                </div>
                 <hr/>
                 <div class="row">
                     <strong>Please upload picture of 5 star appliances used by school</strong><br>
-                    <input fileread="energy.Q7EFL3" type="file" multiple>
+                    <input fileread="energy.Q7EFL3" type="file">
                 </div>
             </div>
 

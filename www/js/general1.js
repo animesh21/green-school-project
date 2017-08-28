@@ -1,10 +1,12 @@
 angular.module('starter.general', [])
 
   .controller('gen1Ctrl', function ($scope, $rootScope, $state, $window, $stateParams,
-                                    AppServiceAPI, $ionicPlatform, $ionicPopup, ValidationService) {
+                                    AppServiceAPI, $ionicPlatform, $ionicPopup, ValidationService,
+                                    $timeout) {
     $(document).ready(function () {
       $('.progressBarIndicator').css("background", "red");
     });
+
     // defining object to store responses of the user to survey questions
     $scope.general = {
       Q1G1: 1,
@@ -15,28 +17,39 @@ angular.module('starter.general', [])
 
     $scope.data = {
       availableLowerLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      availableHigherLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+      availableHigherLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      schoolTypes: {
+        1: 'Government School',
+        2: 'Government–aided School',
+        3: 'Private School'
+      },
+      schoolAreas: {
+        1: 'Urban Area',
+        2: 'Rural Area'
+      }
     };
 
+    $scope.data.states = $rootScope.states;
+
     $scope.toolTips = {
-        'Q1': 'If your school has classes from Grade 6 to 11, your response' +
-              ' will be lowest level of grade: Grade 6 and Highest level of grade:' +
-              ' Grade 11. If your school has only one Grade (Grade 7) then your' +
-              ' response for both will be Grade 7',
-        'Q3': "For `Other`: School-specific curriculum board of education, " +
-              "for e.g. `Open Learning` etc.",
-        'Q4A': "Permanent members are students, teachers, non-teaching staff" +
-               " such as technical and administrative staff, guards etc.",
-        'Q4B': "Visitors are students from other schools, teachers from other " +
-               "schools, technicians, NGOs, contractors and laborers, vendors," +
-               " chief guests, etc . Please provide the average number of " +
-               "visitors for any month, between August - October.",
-        'Q5': "On an average, a day scholar school runs for 220-230 days in a year." +
-              " Residential schools may have more number of working days.",
-        'Q7': "Urban area has a municipality/corporation/cantonment board/notified" +
-              " town area, a minimum population of 5000 and a density of population" +
-              " of at least 400 per square kilometer. Any area which is not covered" +
-              " by the definition of Urban is Rural."
+      'Q1': 'If your school has classes from Grade 6 to 11, your response' +
+      ' will be lowest level of grade: Grade 6 and Highest level of grade:' +
+      ' Grade 11. If your school has only one Grade (Grade 7) then your' +
+      ' response for both will be Grade 7',
+      'Q3': "For `Other`: School-specific curriculum board of education, " +
+      "for e.g. `Open Learning` etc.",
+      'Q4A': "Permanent members are students, teachers, non-teaching staff" +
+      " such as technical and administrative staff, guards etc.",
+      'Q4B': "Visitors are students from other schools, teachers from other " +
+      "schools, technicians, NGOs, contractors and laborers, vendors," +
+      " chief guests, etc . Please provide the average number of " +
+      "visitors for any month, between August - October.",
+      'Q5': "On an average, a day scholar school runs for 220-230 days in a year." +
+      " Residential schools may have more number of working days.",
+      'Q7': "Urban area has a municipality/corporation/cantonment board/notified" +
+      " town area, a minimum population of 5000 and a density of population" +
+      " of at least 400 per square kilometer. Any area which is not covered" +
+      " by the definition of Urban is Rural."
     };
 
     // function of displaying tooltip
@@ -56,8 +69,8 @@ angular.module('starter.general', [])
           return row.answer;
         }
       }, function (err) {
-        return err;
         console.error('Error in db: ' + JSON.stringify(err));
+        return err;
       });
     };
 
@@ -68,6 +81,13 @@ angular.module('starter.general', [])
           $scope.other.Q1S1 = parseInt(res);
         }, function (err) {
           console.error("Can't get Q1S1: " + JSON.stringify(err));
+        });
+        $scope.getAnswer('state').then(function (res) {
+          console.log('Getting state: ' + res);
+          $scope.general.Q3G2 = parseInt(res);
+          $scope.other.state = parseInt(res);
+        }, function (err) {
+          console.error("Can't get state: " + JSON.stringify(err));
         });
       });
 
@@ -152,7 +172,7 @@ angular.module('starter.general', [])
       $scope.validateQ4() && $scope.validVal('Q5G1') &&
       $scope.validVal('Q6G1') && $scope.validVal('Q8G1') &&
       $scope.validVal('Q9G1'));
-      $rootScope.sectionsCompleted.general = validated;
+      $rootScope.sectionsCompleted = validated;  // TODO: Set it to numeric value of the section
       return validated;
     };
 
@@ -206,7 +226,17 @@ angular.module('starter.general', [])
 
     $scope.goToPrev = function () {
       ValidationService.saveData($scope.general, 1).then(function () {
+        AppServiceAPI.sync(1).then(function () {
+          $state.go('app.profile');
+          // $timeout(function () {
+          //   $window.location.reload(true);
+          // });
+        }, function (err) {
+          console.error("Error while saving to the api: " + JSON.stringify(err));
+        });
         $state.go('app.profile');
+      }, function (err) {
+        console.error("Error in saving to db: " + JSON.stringify(err));
       });
     };
 
@@ -220,13 +250,15 @@ angular.module('starter.general', [])
     });
 
     $scope.quiz2 = function (general) {
-      ValidationService.quiz2(general, 1);
-
-      // angular.forEach(general, function (item, index) {
-      //   AppServiceAPI.update($rootScope.user, index, item, 10, 1);
-      // });
-      AppServiceAPI.sync(1);
-      $state.go('app.air1');
+      ValidationService.quiz2(general, 1).then(function () {
+        AppServiceAPI.sync(1).then(function () {
+          $state.go('app.air1');
+        }, function (err) {
+          console.error("Can't save to api: " + JSON.stringify(err));
+        }, function (err) {
+          console.error('Error in saving to db: ' + JSON.stringify(err));
+        });
+      });
     };
   });
 

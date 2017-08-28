@@ -27,7 +27,7 @@
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     <span>
-                        1. How many levels does your school have<span class="badge" on-hold="showToolTip('Q1')">?</span>
+                        1. How many levels does your school have<span class="badge gbadge" on-hold="showToolTip('Q1')">?</span>
                     </span>
                 </div>
                 <label class="item item-input item-select">
@@ -70,7 +70,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    3. Which board of education does the school follow<span class="badge" on-hold="showToolTip('Q3')">?</span>
+                    3. Which board of education does the school follow<span class="badge gbadge" on-hold="showToolTip('Q3')">?</span>
                 </div>
 
                 <ion-item class="fs-14 item-text-wrap">
@@ -86,9 +86,10 @@
                         <div class="input-label fs-12">
                             State:
                         </div>
-                        <select ng-model="general.Q3G2" class="fs-12" id="questiongeneralfive">
-                            <option selected>Please Choose</option>
-                            <option checked="{{ general.Q3G2 == 1 }}" ng-value="'1'">Uttar Pradesh</option>
+                        <select ng-model="general.Q3G2" class="fs-12">
+                            <option ng-repeat="(key, value) in data.states" value="{{ key }}">
+                                {{ value }}
+                            </option>
                         </select>
                     </label>
                 </div>
@@ -204,16 +205,15 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    4(b). How many visitors visit your school<span class="badge" on-hold="showToolTip('Q4B')">?</span>
+                    4(b). How many visitors visit your school
+                    <span class="badge gbadge" on-hold="showToolTip('Q4B')">?</span>
                 </div>
 
                 <div class="list ">
-                    <ion-list>
-                        <label class="item item-input">
-                            <input ng-model="general.Q5G1" type="number" string-to-number
-                                   placeholder="Your Answer Here" onkeypress="return isNumberKey(event);">
-                        </label>
-                    </ion-list>
+                    <label class="item item-input">
+                        <input ng-model="general.Q5G1" type="number" string-to-number
+                               placeholder="Your Answer Here" onkeypress="return isNumberKey(event);">
+                    </label>
                 </div>
             </div>
 
@@ -234,20 +234,15 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    5. What is the total number of working days of your school in a year
-                    <span class="badge" on-hold="showToolTip('Q5')">?</span>
+                    5. What is the total number of working days of your school in a year<span class="badge gbadge" id="badge-5" on-hold="showToolTip('Q5')">?</span>
                 </div>
 
-                <div class="list ">
-
-                    <ion-list>
-
-                        <label class="item item-input">
-                            <input ng-model="general.Q6G1" type="number" string-to-number
-                                   placeholder="Your Answer Here" ng-change="checkQ6()"
-                                   onkeypress="return isNumberKey(event);">
-                        </label>
-                    </ion-list>
+                <div class="row">
+                    <label class="item item-input">
+                        <input ng-model="general.Q6G1" type="number" string-to-number
+                               placeholder="Your Answer Here" ng-change="checkQ6()"
+                               onkeypress="return isNumberKey(event);">
+                    </label>
                 </div>
             </div>
 
@@ -273,51 +268,51 @@
                     <div class="row">
                         <div class="col col-20" style="text-align: center;">
 
-                            <input ng-model="general.Q7G1" id="questiongeneralnineOne" type="checkbox" name="month"
+                            <input ng-model="general.Q7G1" type="checkbox" name="month"
                                    value="Jan">
                         </div>
                         <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G2" id="questiongeneralninetwo" type="checkbox" name="month"
+                            <input ng-model="general.Q7G2" type="checkbox" name="month"
                                    value="Feb">
                         </div>
                         <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G3" id="questiongeneralnineThree" type="checkbox" name="month"
+                            <input ng-model="general.Q7G3" type="checkbox" name="month"
                                    value="Mar">
                         </div>
                         <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G4" id="questiongeneralnineFour" type="checkbox" name="month"
+                            <input ng-model="general.Q7G4" type="checkbox" name="month"
                                    value="Apr">
                         </div>
                         <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G5" id="questiongeneralnineFive" type="checkbox" name="month"
+                            <input ng-model="general.Q7G5" type="checkbox" name="month"
                                    value="may">
                         </div>
                         <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G6" id="questiongeneralnineSix" type="checkbox" name="month"
+                            <input ng-model="general.Q7G6" type="checkbox" name="month"
                                    value="Jun">
                         </div>
                         <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G7" id="questiongeneralnineSeven" type="checkbox" name="month"
+                            <input ng-model="general.Q7G7" type="checkbox" name="month"
                                    value="Jul">
                         </div>
                         <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G8" id="questiongeneralnineEight" type="checkbox" name="month"
+                            <input ng-model="general.Q7G8" type="checkbox" name="month"
                                    value="Aug">
                         </div>
                         <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G9" id="questiongeneralnineNine" type="checkbox" name="month"
+                            <input ng-model="general.Q7G9" type="checkbox" name="month"
                                    value="Sep">
                         </div>
                         <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G10" id="questiongeneralnineTen" type="checkbox" name="month"
+                            <input ng-model="general.Q7G10" type="checkbox" name="month"
                                    value="Oct">
                         </div>
                         <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G11" id="questiongeneralnineEleven" type="checkbox" name="month"
+                            <input ng-model="general.Q7G11" type="checkbox" name="month"
                                    value="Nov">
                         </div>
                         <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G12" id="questiongeneralnineTwelve" type="checkbox" name="month"
+                            <input ng-model="general.Q7G12" type="checkbox" name="month"
                                    value="Dec">
                         </div>
                     </div>
@@ -327,18 +322,14 @@
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     <label>
-                        7. Where is the school located
+                        7. Where is the school located?
                         <span class="badge" on-hold="showToolTip('Q7')">?</span>
                     </label>
                 </div>
                 <div class="row ">
-                    <div class="col fs-12">
-                        <input ng-model="general.Q8G1" type="radio" ng-value="1" name="c">&nbsp;<span
-                            style="position:absolute"> Urban Area</span>
-                    </div>
-                    <div class="col fs-12">
-                        <input ng-model="general.Q8G1" type="radio" ng-value="2" name="c">&nbsp;<span
-                            style="position:absolute">Rural Area</span>
+                    <div class="col fs-12" ng-repeat="i in [1, 2]">
+                        <input ng-model="general.Q8G1" type="radio" ng-value="i" name="c">&nbsp;<span
+                            style="position:absolute">{{ data.schoolAreas[i] }} Area</span>
                     </div>
                 </div>
             </div>
@@ -347,17 +338,9 @@
                 <div class="item item-text-wrap item-borderless">
                     8. Whether your school is:
                 </div>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q9G1" type="radio" ng-value="1" ng-checked="general.Q9G1 == 1" string-to-number name="d"><span
-                        style="position:absolute">&nbsp; Government School </span>
-                </ion-item>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q9G1" type="radio" ng-value="2" ng-checked="general.Q9G1 == 2" string-to-number name="d"><span
-                        style="position:absolute">&nbsp; Government–aided School </span>
-                </ion-item>
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="general.Q9G1" type="radio" ng-value="3" ng-checked="general.Q9G1 == 3" string-to-number name="d"><span
-                        style="position:absolute">&nbsp; Private School </span>
+                <ion-item class="fs-14 item-text-wrap" ng-repeat="i in [1, 2, 3]">
+                    <input data-ng-model="general.Q9G1" type="radio" ng-value="i"  string-to-number name="d">
+                    <span style="position:absolute">&nbsp;{{ data.schoolTypes[i] }}</span>
                 </ion-item>
             </div>
 

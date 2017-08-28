@@ -140,7 +140,7 @@ angular.module('starter.land', [])
 
     $scope.validNext = function () {
       var validate = $scope.validateTeacher('L') && $scope.validateStudent('L');
-      $rootScope.sectionsCompleted.land = validate;
+      $rootScope.sectionsCompleted = validate;
       return validate;
     };
     // validation functions end
@@ -179,7 +179,9 @@ angular.module('starter.land', [])
 
     $scope.goToPrev = function () {
       ValidationService.saveData($scope.land, 5).then(function () {
-        $state.go('app.food');
+        AppServiceAPI.sync(5).then(function () {
+          $scope.go('app.food');
+        });
       });
     };
 
@@ -193,8 +195,10 @@ angular.module('starter.land', [])
     });
 
     $scope.quiz2 = function (land) {
-      ValidationService.quiz2(land, 5);
-      AppServiceAPI.sync(5);
-      $state.go('app.water');
+      ValidationService.quiz2(land, 5).then(function () {
+        AppServiceAPI.sync(5).then(function () {
+          $state.go('app.water');
+        });
+      });
     };
   });

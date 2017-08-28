@@ -10,11 +10,13 @@
 angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
   'starter.quiz2', 'starter.quiz3', 'multipleChoice.services',
   'starter.help', 'starter.menu', 'starter.login', 'ngCordova',
-  'starter.home', 'starter.home2', 'starter.profile', 'starter.general',
+  'starter.home', 'starter.profile', 'starter.general',
   'starter.air', 'starter.energy', 'starter.food', 'starter.land', 'starter.water',
   'starter.waste', 'starter.feedback', 'starter.api', 'starter.validation'])
 
-  .run(function ($ionicPlatform, $cordovaSQLite, $window, $rootScope) {
+  .run(function ($ionicPlatform, $cordovaSQLite, $window, $rootScope, AppServiceAPI, $state, $http) {
+
+    'use strict';
 
     // for converting data from api to number
     $rootScope.typeOf = function (value) {
@@ -41,12 +43,47 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
       else {
         db = window.openDatabase("quiz.db", '1', 'my', 1024 * 1024 * 100); // browser
       }
-      $cordovaSQLite.execute(db, "drop table gsp_answers");
+      // $cordovaSQLite.execute(db, "drop table gsp_answers");
+      // $cordovaSQLite.execute(db, "drop table gsp_users").then(function(res){
+      //   console.log('Dropped gsp_users: ' + JSON.stringify(res));
+      // }, function(err){
+      //   console.error('Error dropping: ' + JSON.stringify(err));
+      // });
       $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS gsp_answers (userid integer NOT NULL,questionid varchar(100) PRIMARY KEY,answer varchar(100),score integer,type integer)");
-      $cordovaSQLite.execute(db, "DELETE FROM gsp_answers");
+      $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS gsp_users (id INTEGER PRIMARY KEY, user_id INTEGER," +
+        " school_name VARCHAR(200), state INTEGER, completeness INTEGER DEFAULT 0, login_status INTEGER DEFAULT 0)")
+        .then(function (res) {
+        $cordovaSQLite.execute(db, "SELECT user_id, school_name, state FROM gsp_users WHERE login_status = ?", [1]).then(function (res) {
+          console.log("Selected users: " + JSON.stringify(res.rows.length));
+          var num_users = res.rows.length;
+          if (num_users > 0) {
+            var user_data = res.rows.item(0);
+            console.log("Selected user: " + JSON.stringify(user_data));
+            var userID = user_data.user_id;
+            var schoolName = user_data.school_name;
+            var state = user_data.state;
+            $rootScope.states = {"1":"Andaman and Nicobar (AN)","2":"Andhra Pradesh (AP)","3":"Arunachal Pradesh (AR)","4":"Assam (AS)","5":"Bihar (BR)","6":"Chandigarh (CH)","7":"Chhattisgarh (CG)","8":"Dadra and Nagar Haveli (DN)","9":"Daman and Diu (DD)","10":"Delhi (DL)","11":"Goa (GA)","12":"Gujarat (GJ)","13":"Haryana (HR)","14":"Himachal Pradesh (HP)","15":"Jammu and Kashmir (JK)","16":"Jharkhand (JH)","17":"Karnataka (KA)","18":"Kerala (KL)","19":"Lakshdweep (LD)","20":"Madhya Pradesh (MP)","21":"Maharashtra (MH)","22":"Manipur (MN)","23":"Meghalaya (ML)","24":"Mizoram (MZ)","25":"Nagaland (NL)","26":"Odisha (OD)","27":"Puducherry (PY)","28":"Punjab (PB)","29":"Rajasthan (RJ)","30":"Sikkim (SK)","31":"Tamil Nadu (TN)","32":"Telangana (TG)","33":"Tripura (TR) ","34":"Uttar Pradesh (UP)","35":"Uttarakhand (UK)","36":"West Bengal (WB)","":"Select State"}
+            $rootScope.user = userID;
+            $rootScope.schoolName = schoolName;
+            $http.get('http://greenschoolsprogramme.org/audit2017/api/Gsp/states/stateid/' + state)
+              .then(function (res) {
+              $rootScope.districts = res.data;
+            }, function (err) {
+              console.error('error in getting districts: ' + JSON.stringify(err));
+            });
+            $state.go('app.home');
+          }
+        }, function (err) {
+          console.error("Error selecting user: " + JSON.stringify(err));
+        });
+      }, function (err) {
+        console.error('Error in creating table: ' + JSON.stringify(err));
+      });
+      // $cordovaSQLite.execute(db, "DELETE FROM gsp_answers");
     }, function (error) {
       console.error('Error in platform ready: ' + error);
     });
+
   })
 
   .directive('stringToNumber', function () {
@@ -69,7 +106,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
       link: function (scope, elem, attrs) {
         var limit = parseInt(attrs.limitTo);
         angular.element(elem).on("keypress", function (e) {
-          if (this.value.length == limit) {
+          if (this.value.length === limit) {
             e.preventDefault();
           }
         });
@@ -102,66 +139,28 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
   }])
 
   .config(function ($stateProvider, $urlRouterProvider) {
+
+    'use strict';
+
     $stateProvider
 
       .state('app', {
+        cache: false,
         url: '/app',
         abstract: true,
         templateUrl: 'templates/menu.html',
         controller: 'menuCtrl'
       })
 
-      .state('app.FAQ', {
-        url: '/FAQ',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/FAQ.html',
-            controller: 'faqCtrl'
-          }
-        }
-      })
-
-      .state('app.help', {
-        url: '/help',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/help.html',
-            controller: 'helpCtrl'
-          }
-        }
-      })
-
-      .state('app.quiz', {
-        url: '/quiz',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/quiz.html',
-            controller: 'QuestionCtrl'
-          }
-        }
-      })
-
-      .state('app.quiz2', {
-        url: '/quiz2',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/quiz2.html',
-            controller: 'QuestionCtrl2'
-          }
-        }
-      })
-
-      .state('app.quiz3', {
-        url: '/quiz3',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/quiz3.html',
-            controller: 'QuestionCtrl3'
-          }
-        }
+      .state('login', {
+        url: '/login',
+        cache: true,
+        templateUrl: 'templates/login.html',
+        controller: 'loginCtrl'
       })
 
       .state('app.home', {
+        cache: false,
         url: '/home',
         views: {
           'menuContent': {
@@ -171,24 +170,8 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
         }
       })
 
-      .state('app.home2', {
-        url: '/home2',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/home-modal2.html',
-            controller: 'homeCtrl2'
-          }
-        }
-      })
-
-      .state('login', {
-        url: '/login',
-        cache: false,
-        templateUrl: 'templates/login.html',
-        controller: 'loginCtrl'
-      })
-
       .state('app.tab', {
+        cache: false,
         url: '/tab',
         views: {
           'menuContent': {
@@ -199,6 +182,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
       })
 
       .state('app.profile', {
+        cache: false,
         url: '/profile',
         views: {
           'menuContent': {
@@ -208,17 +192,8 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
         }
       })
 
-      .state('app.air1', {
-        url: '/air1',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/air.html',
-            controller: 'air1Ctrl'
-          }
-        }
-      })
-
       .state('app.general1', {
+        cache: false,
         url: '/general1',
         views: {
           'menuContent': {
@@ -228,7 +203,19 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
         }
       })
 
+      .state('app.air1', {
+        cache: false,
+        url: '/air1',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/air.html',
+            controller: 'air1Ctrl'
+          }
+        }
+      })
+
       .state('app.energy', {
+        cache: false,
         url: '/energy',
         views: {
           'menuContent': {
@@ -239,6 +226,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
       })
 
       .state('app.food', {
+        cache: false,
         url: '/food',
         views: {
           'menuContent': {
@@ -249,6 +237,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
       })
 
       .state('app.land', {
+        cache: false,
         url: '/land',
         views: {
           'menuContent': {
@@ -259,6 +248,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
       })
 
       .state('app.water', {
+        cache: false,
         url: '/water',
         views: {
           'menuContent': {
@@ -269,6 +259,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
       })
 
       .state('app.waste', {
+        cache: false,
         url: '/waste',
         views: {
           'menuContent': {
@@ -279,6 +270,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
       })
 
       .state('app.feedback', {
+        cache: false,
         url: '/feedback',
         views: {
           'menuContent': {
@@ -286,7 +278,63 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
             controller: 'feedbackCtrl'
           }
         }
+      })
+
+      .state('app.FAQ', {
+        cache: false,
+        url: '/FAQ',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/FAQ.html',
+            controller: 'faqCtrl'
+          }
+        }
+      })
+
+      .state('app.help', {
+        cache: false,
+        url: '/help',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/help.html',
+            controller: 'helpCtrl'
+          }
+        }
+      })
+
+      .state('app.quiz', {
+        cache: false,
+        url: '/quiz',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/quiz.html',
+            controller: 'QuestionCtrl'
+          }
+        }
+      })
+
+      .state('app.quiz2', {
+        cache: false,
+        url: '/quiz2',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/quiz2.html',
+            controller: 'QuestionCtrl2'
+          }
+        }
+      })
+
+      .state('app.quiz3', {
+        cache: false,
+        url: '/quiz3',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/quiz3.html',
+            controller: 'QuestionCtrl3'
+          }
+        }
       });
+
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('login');
   });

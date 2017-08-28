@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ionicframework.greenschool845333" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>GreenSchool</name>
+    <name>Green School Programme</name>
     <description>
-        An Ionic Framework and Cordova project.
+        A mobile application for filling the Green School Programme audit.
     </description>
-    <author email="you@example.com" href="http://example.com/">
-      Your Name Here
+    <author email="contact@studiotesseract.biz" href="http://studio-tesseract.com/">
+      Studio Tesseract
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -43,6 +43,7 @@
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <allow-navigation href="http://192.168.0.36:8100" />
+    <preference name="SplashShowOnlyFirstTime" value="false" />
     <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="^4.1.0" />
     <plugin name="cordova-plugin-actionsheet" spec="git+https://github.com/EddyVerbruggen/cordova-plugin-actionsheet.git" />

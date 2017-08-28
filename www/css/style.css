@@ -544,6 +544,17 @@ ul.water-list {
   font-family: 'Lato Bold', sans-serif;
   font-weight: normal;
   color: white;
+  position: relative !important;
+  float: right;
+  margin-right: 2%;
+}
+
+.gbadge {
+  margin-top: -2%;
+}
+
+#badge-5 {
+
 }
 
 table, th, td {

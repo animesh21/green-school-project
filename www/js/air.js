@@ -4,19 +4,15 @@ angular.module('starter.air', [])
                                     $ionicPlatform, $ionicPopup, $sce, $cordovaFileTransfer, $cordovaFile,
                                     $cordovaActionSheet, $cordovaCamera, ValidationService) {
 
+    'use strict';
     //File Upload Code Starts Here
-    $scope.image = null;
-    $scope.URL = null;
-    $scope.editimage = "http://studio-tesseract.co/freesprite/wp-content/uploads/2017/05/demo-150x150.png";
-    $scope.PLAN = '';
-    $scope.PLAN_TEXT = '';
-    $scope.PLAN_COUNT = '';
-    $scope.BUCKET_COUNT = '';
-    $scope.VALUE_COUNT = '';
-    $scope.enable = '';
-    //Set Default Checkbox
-    $scope.category = 18;
+    $scope.images = {
+      'puc_certificate': [],
+      '': []
+    };
+
     $scope.takepic = function () {
+      console.log('inside take pic');
       var actionSheetOptions = {
         title: 'Select a picture/document',
         buttonLabels: ['Camera', 'Choose from device'],
@@ -25,14 +21,12 @@ angular.module('starter.air', [])
       };
       $ionicPlatform.ready(function () {
         $cordovaActionSheet.show(actionSheetOptions).then(function (btnIndex) {
-          var index = btnIndex;
-          if (index === 2) {
+          if (btnIndex === 2) {
             $scope.cameraFunc(Camera.PictureSourceType.PHOTOLIBRARY);
-          } else if (index === 1) {
+          } else if (btnIndex === 1) {
             $scope.cameraFunc(Camera.PictureSourceType.CAMERA);
-        }
-      });
-
+          }
+        });
       });
     };
 
@@ -51,46 +45,14 @@ angular.module('starter.air', [])
       };
       $cordovaCamera.getPicture(options).then(function (imageData) {
         $scope.editimage = "data:image/jpeg;base64," + imageData;
-        $scope.URL = imageData;
+        $scope.images.push($scope.editimage);
       }, function (err) {
-        console.log(JSON.stringify(err));
+        console.log('Error in get picture: ' + JSON.stringify(err));
       });
     };
 
-    $scope.choosepic = function () {
-      var options = {
-        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-        destinationType: Camera.DestinationType.FILE_URI,
-        quality: 400,
-        targetWidth: 400,
-        targetHeight: 400,
-        encodingType: Camera.EncodingType.JPEG,
-        correctOrientation: true
-      };
-      $cordovaCamera.getPicture(options).then(function (imageURI) {
-        // var image = document.getElementById('myImage');
-        $scope.imgURI = "data:image/jpeg;base64," + imageURI;
-        $scope.URL = imageURI;
-        // $scope.image.push($scope.imgURI);
-        //  image.src = imageURI;
-      }, function (err) {
-        // error
-      });
-    };
-
-    var server = 'http://localhost/GSP/upload.php';
-
-    $scope.upload = function (qID) {
-      var fileTarget = $scope.air[qID];
-      var uploadOptions = {
-        fileName: qID + '.jpg'
-      };
-      console.log('File target: ' + fileTarget);
-      $cordovaFileTransfer.upload(server, fileTarget, uploadOptions).then(function (res) {
-        console.log('successfully uploaded the file: ' + JSON.stringify(res));
-      }, function (err) {
-        console.error('Error while uploading file: ' + JSON.stringify(err));
-      });
+    $scope.upload = function () {
+      ValidationService.uploadImages($scope.images);
     };
 
     $scope.air = {
@@ -107,6 +69,14 @@ angular.module('starter.air', [])
         {id: 1, name: 'Yes'},
         {id: 2, name: 'No'}
       ]
+    };
+
+    $scope.getList = function (n) {
+      var arr = [];
+      for(var i = 1; i <= n; i++) {
+        arr.push(i);
+      }
+      return arr;
     };
 
     $scope.toolTips = {
@@ -540,7 +510,7 @@ angular.module('starter.air', [])
         $scope.validVal('Q4A1') && $scope.validateQ5() &&
         $scope.validateQ6() &&
         $scope.validVal('Q8A1') && $scope.validateQ9();
-      $rootScope.sectionsCompleted.air = validate;
+      $rootScope.sectionsCompleted = validate;
       return validate;
     };
     // end validation functions
@@ -555,7 +525,9 @@ angular.module('starter.air', [])
 
     $scope.goToPrev = function () {
       ValidationService.saveData($scope.air, 2).then(function () {
-        $state.go('app.general1');
+        AppServiceAPI.sync(2).then(function () {
+          $state.go('app.general1');
+        });
       });
     };
 
@@ -585,11 +557,16 @@ angular.module('starter.air', [])
     });
 
     $scope.quiz2 = function (air) {
-
-      ValidationService.quiz2(air, 2);
-
-      AppServiceAPI.sync(2);
-      $state.go('app.energy');
+      ValidationService.quiz2(air, 2).then(function () {
+        AppServiceAPI.sync(2).then(function () {
+          $state.go('app.energy');
+        }, function (err) {
+          console.error("Can't save to api: " + JSON.stringify(err));
+        }, function (err) {
+          console.error('Error in saving to db: ' + JSON.stringify(err));
+        });
+      });
     };
+
 
   });

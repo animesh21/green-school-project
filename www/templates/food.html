@@ -458,10 +458,10 @@
                     <div class="row ">
                         <div class="col">
                             <p>
-                                Savoury snacks and similar packaged food
+                                Savoury snacks and
                                 <span ng-show="!readMore[2]">...</span>
                                 <span ng-show="readMore[2]">
-                                    like chips, Kurkure, Cheetos,
+                                    similar packaged food like chips, Kurkure, Cheetos,
                                     potato crisps, corn snacks, nuts and seeds, etc.
                                 </span>
                                 <a ng-click="toggleReadMore(2)">
@@ -856,7 +856,8 @@
                     </div>
                 </div>
 
-                <div class="list" style="margin-left: 5px;margin-right: 5px">
+                <div class="list" style="margin-left: 5px;margin-right: 5px"
+                     ng-if="food.Q11F1 == 'Y' || food.Q10F1 == 'Y' || food.Q9F1 == 'Y'">
                     <strong>Please upload pictures of events sponsored by UPPF companies</strong><br>
                     <input fileread="food.F11S1" type="file">
                 </div>

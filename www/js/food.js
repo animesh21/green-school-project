@@ -364,7 +364,7 @@ angular.module('starter.food', [])
              $scope.validateQ7AndQ8(7) && $scope.validateQ7AndQ8(8) &&
              $scope.validateQ9AndQ10(9) && $scope.validateQ9AndQ10(10) &&
              $scope.validateQ11() && $scope.validateQ12() && $scope.validateQ13();
-      $rootScope.sectionsCompleted.food = validate;
+      $rootScope.sectionsCompleted = validate;
       return validate;
     };
     // end validation functions
@@ -392,7 +392,9 @@ angular.module('starter.food', [])
 
     $scope.goToPrev = function () {
       ValidationService.saveData($scope.food, 4).then(function () {
-        $state.go('app.energy');
+        AppServiceAPI.sync(4).then(function () {
+          $state.go('app.energy');
+        });
       });
     };
 
@@ -418,9 +420,10 @@ angular.module('starter.food', [])
     });
 
     $scope.quiz2 = function (food) {
-
-      ValidationService.quiz2(food, 4);
-      AppServiceAPI.sync(4);
-      $state.go('app.land');
+      ValidationService.quiz2(food, 4).then(function () {
+        AppServiceAPI.sync(4).then(function () {
+          $state.go('app.land');
+        });
+      });
     };
   });

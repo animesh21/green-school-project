@@ -1,16 +1,29 @@
 angular.module('starter.login', [])
-  .controller('loginCtrl', function ($scope, $rootScope, $state, $stateParams, $cordovaInAppBrowser, $http, $ionicLoading, AppServiceAPI, $ionicPopup, $q) {
+  .controller('loginCtrl', function ($scope, $rootScope, $state, $stateParams, $cordovaInAppBrowser,
+                                     $http, $ionicLoading, AppServiceAPI, $ionicPopup, $q, $ionicPlatform) {
+
+    'use strict';
+
+    $ionicPlatform.ready(function () {
+      console.log('Device is ready in login');
+      // AppServiceAPI.selectUser('animesh').then(function (res) {
+      //   console.log("Query res: " + JSON.stringify(res));
+      // }, function (err) {
+      //   console.error('Error in query: ' + JSON.stringify(err));
+      // });
+    });
 
     $scope.show = function () {
       $ionicLoading.show({
-        template: '<p>Loading...</p><ion-spinner></ion-spinner>'
+        template: '<p>Loading...</p><ion-spinner></ion-spinner>',
+        duration: 3000
       });
     };
 
     $scope.showLoading = function (message) {
       $ionicLoading.show({
         template: '<p>Loading...</p><ion-spinner></ion-spinner><p>' +
-                  message + '</p>'
+        message + '</p>'
       });
     };
 
@@ -79,33 +92,43 @@ angular.module('starter.login', [])
           else {
             // assigning school data
             $rootScope.school = response.data.school;
+            $rootScope.schoolName = response.data.school.name;
 
-            // setting variable to check completeness of sections
-            $rootScope.sectionsCompleted = {
-              profile: true,
-              general: false,
-              air: false,
-              energy: false,
-              land: false,
-              food: false,
-              water: false,
-              waste: false
-            };
+            var answer_data = response.data.data;
+
+            // getting user_id of the school
+            var user_id;
+            for (var prop in answer_data) {
+              user_id = answer_data[prop].user;
+              break;
+            }
+            $rootScope.user = user_id;
 
             // getting state of the school
             var state = $rootScope.school.state;
+
+            AppServiceAPI.deleteAllUsers().then(function (res) {
+              AppServiceAPI.insertUser($rootScope.user, $rootScope.schoolName, state, 0, 1).then(function (res) {
+                console.log("logged in user inserted: " + JSON.stringify(res));
+              }, function (err) {
+                console.error("error in inserting logged in user: " + JSON.stringify(err));
+              });
+            }, function (err) {
+              console.error("error deleting all users: " + JSON.stringify(err));
+            });
+
             // getting districts of the corresponding state from the api
             $http.get('http://greenschoolsprogramme.org/audit2017/api/Gsp/states/stateid/' + state)
             // $http.get('http://localhost/GSP/api/Gsp/states/stateid/' + state)
-              .then(function (response) {
-                $rootScope.districts = response.data;
+              .then(function (res) {
+                $rootScope.districts = res.data;
                 // console.log('Districts fetched: ' + JSON.stringify($rootScope.districts));
               });
             $rootScope.states = response.data.states;
             // console.log('States: ' + JSON.stringify($rootScope.states));
             // console.log('School data: ' + JSON.stringify($rootScope.school));
-            angular.forEach(response.data.data, function (answerObj, quesID) {
-              console.log('Q: ' + quesID + '; A: ' + JSON.stringify(answerObj));
+            angular.forEach(answer_data, function (answerObj, quesID) {
+              // console.log('Q: ' + quesID + '; A: ' + JSON.stringify(answerObj));
 
               // create a $q deffered promise
               var deferred = $q.defer();
@@ -155,6 +178,20 @@ angular.module('starter.login', [])
           }
         }, function (error) {
           $scope.hide();
+          if (error.status === 404) {
+            $scope.showPopup(
+              'Invalid Credentials!',
+              'The credentials you entered did not match, please try again with valid credentials.'
+            );
+            $state.go('login');
+          }
+          else if (error.status === -1) {
+            $scope.showPopup(
+              'No Internet Connection!',
+              "Please connect to the internet before logging in"
+            );
+            $state.go('login');
+          }
           console.error('Error in the response: ' + JSON.stringify(error));
         });
     };

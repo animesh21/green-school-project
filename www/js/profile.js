@@ -8,10 +8,10 @@ angular.module('starter.profile', [])
                                        AppServiceAPI, $ionicPlatform, $ionicPopup, $ionicLoading,
                                        $q, ValidationService, $http) {
 
+    'use strict';
     $(document).ready(function () {
       $('.progressBarIndicator').css("background", "red");
     });
-
     /*
      * Default data to be displayed on the form
      * This should become dynamic after in sync with the api
@@ -44,7 +44,6 @@ angular.module('starter.profile', [])
 
     // setting default state and district
     $scope.data.states = $rootScope.states;
-
     $scope.data.districts = $rootScope.districts;
 
     // defining object to store responses of the user to survey questions
@@ -54,14 +53,14 @@ angular.module('starter.profile', [])
     };
 
     $scope.toolTips = {
-        'Q12': "Coordinating teacher's name / Name of the teacher responsible for GSP Audit",
-        'Q15': "Please choose what is applicable. If 60% or 75% of your school’s" +
-               " population belongs to one category and the remaining to another, select the" +
-               " category the majority of students belong to. For example: If 75% of" +
-               " the students are day boarders and 25% are residential, select " +
-               "‘Day Boarding’. But if 50% of the students are day boarders and" +
-               " 50% are residential, select ‘Day Boarding + Residential’.",
-        'Q16': "Not applicable in the case of residential school."
+      'Q12': "Coordinating teacher's name / Name of the teacher responsible for GSP Audit",
+      'Q15': "Please choose what is applicable. If 60% or 75% of your school’s" +
+      " population belongs to one category and the remaining to another, select the" +
+      " category the majority of students belong to. For example: If 75% of" +
+      " the students are day boarders and 25% are residential, select " +
+      "‘Day Boarding’. But if 50% of the students are day boarders and" +
+      " 50% are residential, select ‘Day Boarding + Residential’.",
+      'Q16': "Not applicable in the case of residential school."
     };
 
     // function of displaying tooltip
@@ -85,7 +84,7 @@ angular.module('starter.profile', [])
     $scope.showLoading = function (message) {
       $ionicLoading.show({
         template: '<p>Loading...</p><ion-spinner></ion-spinner><p>' +
-                  message + '</p>'
+        message + '</p>'
       });
     };
 
@@ -146,11 +145,11 @@ angular.module('starter.profile', [])
           isValidQues = $scope.validVal(qID);
         }
         if (!isValidQues) {
-          $rootScope.sectionsCompleted.profile = false;
+          $rootScope.sectionsCompleted = false;
           return false;
         }
       }
-      $rootScope.sectionsCompleted.profile = true;
+      $rootScope.sectionsCompleted = true;
       return true;
     };
 
@@ -163,7 +162,9 @@ angular.module('starter.profile', [])
     };
 
     $ionicPlatform.ready(function () {
-      console.log('device ready hai');
+
+
+
 
       ValidationService.getData(0).then(function (res) {
         // console.log('Returned: ' +  JSON.stringify(res));
@@ -173,12 +174,18 @@ angular.module('starter.profile', [])
         // console.log(JSON.stringify($scope.profile));
       });
 
-
     });
 
     $scope.quiz2 = function (profile) {
-      ValidationService.quiz2(profile, 0);
-      AppServiceAPI.sync(0);
-      $state.go('app.general1');
+      ValidationService.quiz2(profile, 0).then(function () {
+        AppServiceAPI.sync(0).then(function () {
+          $state.go('app.general1');
+        }, function (err) {
+          console.error('Error while sending to the api: ' + JSON.stringify(err));
+        });
+      }, function (err) {
+        console.error('Error while saving to db: ' + JSON.stringify(err));
+      });
+
     };
   });

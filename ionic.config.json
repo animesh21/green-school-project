@@ -1,8 +1,11 @@
 {
-  "name": "GreenSchool",
+  "name": "Green School Programme",
   "app_id": "517da09c",
   "type": "ionic1",
   "watchPatterns": [
     "scss/**/*"
-  ]
+  ],
+  "integrations": {
+    "cordova": {}
+  }
 }

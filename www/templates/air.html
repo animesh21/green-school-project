@@ -327,7 +327,7 @@
 
                 <div class="list " style="margin-left: 5px;margin-right: 5px">
 
-                    <input ng-model="air.Q4A1" id='questionairFour' class="textbox"
+                    <input ng-model="air.Q4A1" class="textbox"
                            style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0" step="1"
                            ng-change="updateQ5Rows()"
                            onkeypress="return isNumberKey(event);">
@@ -660,14 +660,23 @@
                 </div>
 
                 <div ng-show="air.Q6A2S1B4 > 0" style="padding-left: 20px">
-                    <b>Please upload supporting documents:</b>
+                    <b>Please upload picture of supporting documents:</b>
                     <span>
-                        Uploaded files must be in one of the following formats: PDF Document
-                        (.pdf), Word Document (.doc, .docx), Image File (.jpg, .jpeg). File
+                        Uploaded files must be in .jpg, .jpeg format. File
                         size per document should not exceed 500 KB.
                     </span>
                     <label class="col">PUC certificates of not more than 5 buses</label>
-                    <input class="col" type="file" fileread="air.Q6AFL1" multiple>
+                    <!--<input class="col" type="file" fileread="air.Q6AFL1" multiple>-->
+                    <button ng-click="takepic()" type="button">Take Picture</button>
+                </div>
+                <div class="row">
+                    <div class="col col-20">Uploaded Image:</div>
+                    <div class="col" ng-repeat="i in getList(images.length)">
+                        <img src="{{ images[i] }}" height="100" width="100">
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="button" ion-button ng-click="upload()">Upload</button>
                 </div>
 
             </div>

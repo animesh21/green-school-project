@@ -33,6 +33,15 @@ angular.module('starter.energy', [])
         13: 'Biogas (kg)',
         14: 'Others(Specify)',
         16: 'Wood (kg)'
+      },
+      appliances: {
+        1: {name: 'Air Conditioners', unit: 'tons'},
+        2: {name: 'Refrigerator', unit: 'litres'},
+        3: {name: 'Microwave', unit: 'litres'},
+        4: {name: 'Tube Lights', unit: 'watts'},
+        5: {name: 'CFL Bulbs', unit: 'watts'},
+        6: {name: 'LED Lights', unit: 'watts'},
+        7: {name: 'Fans', unit: 'watts'}
       }
     };
 
@@ -247,7 +256,7 @@ angular.module('starter.energy', [])
       if (val9 || val10 || val13) {
         if ($scope.energy.Q9E1 === 'N') {
           $scope.energy.Q9E1 = 'Y';
-          $scope.showPopup('Alert', "You've entered value in solar, wind or biogas field in Q 3 above");
+          $scope.showPopup('Alert', "You've entered value in solar, wind or biogas field in Q3 above");
         }
       }
     };
@@ -325,12 +334,14 @@ angular.module('starter.energy', [])
     $scope.validNext = function () {
       var validQ4 = $scope.validVal('Q4E1');
       var validQ5 = $scope.validVal('Q5E1');
+      var validQ6E1 = $scope.validateQ6E1();
       var validQ9 = $scope.validateQ9();
       var validQ10 = $scope.validVal('Q10E1');
+
       var validate = ($scope.validateTeacher('E') && $scope.validateStudent('E') &&
               validQ4  && validQ5 &&
-              validQ9 && validQ10);
-      $rootScope.sectionsCompleted.energy = validate;
+              validQ9 && validQ10 && validQ6E1);
+      $rootScope.sectionsCompleted = validate;
       return validate;
     };
     // validation functions end
@@ -364,7 +375,10 @@ angular.module('starter.energy', [])
 
     $scope.goToPrev = function () {
       ValidationService.saveData($scope.energy, 3).then(function () {
-        $state.go('app.air1');
+        AppServiceAPI.sync(3).then(function () {
+          console.log('going to air page');
+          $state.go('app.air1');
+        });
       });
     };
 
@@ -394,10 +408,15 @@ angular.module('starter.energy', [])
     });
 
     $scope.quiz2 = function (energy) {
-
-      ValidationService.quiz2(energy, 3);
-
-      AppServiceAPI.sync(3);
-      $state.go('app.food');
+      ValidationService.quiz2(energy, 3).then(function () {
+        AppServiceAPI.sync(3).then(function () {
+          $state.go('app.food');
+        }, function (err) {
+          console.error("Can't save to api: " + JSON.stringify(err));
+        }, function (err) {
+          console.error('Error in saving to db: ' + JSON.stringify(err));
+        });
+      });
     };
+
   });
