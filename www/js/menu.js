@@ -4,9 +4,15 @@ angular.module('starter.menu', [])
     function ($scope, $state, $stateParams, $window, $rootScope,
               ValidationService, AppServiceAPI) {
 
+      'use strict';
+
       $scope.home = function () {
         // $window.location.reload(true);
         $state.go('app.home');
+      };
+
+      $scope.syncFromServer = function () {
+        $state.go('app.syncFromServer');
       };
 
       $scope.profile = function () {
@@ -53,8 +59,22 @@ angular.module('starter.menu', [])
         $state.go('app.help');
       };
 
+      $scope.toggleHelp = function () {
+        if ($state.current.name === 'app.help') {
+          $state.go('app.home');
+        }
+        else {
+          $state.go('app.help');
+        }
+      };
+
+      $scope.settings = function () {
+        console.log('going to settings');
+        $state.go('app.settings');
+      };
+
       $scope.login = function () {
-        AppServiceAPI.sync().then(function () {
+        AppServiceAPI.sync(100).then(function () {
           ValidationService.logoutUser();
         });
       };

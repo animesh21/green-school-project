@@ -257,7 +257,6 @@ angular.module('starter.waste', [])
         2: 'As part of extracurricular activities such as guest lectures',
         3: 'By the showcasing of posters and stickers'
       }
-
     };
 
     $scope.getList = function (n) {
@@ -526,7 +525,7 @@ angular.module('starter.waste', [])
     $scope.goToPrev = function () {
       ValidationService.saveData($scope.waste, 7).then(function () {
         AppServiceAPI.sync(7).then(function () {
-          $state.go('app.water');
+          $state.go('app.water', {}, {'reload': true});
         });
       });
     };

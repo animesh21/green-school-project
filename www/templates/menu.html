@@ -9,7 +9,7 @@
                 </button>
             </ion-nav-buttons>
             <ion-nav-buttons side="right">
-                <button class="text-white button button-icon button-clear " menu-toggle="right">
+                <button class="text-white button button-icon button-clear " menu-toggle="right" ng-click="toggleHelp()">
                     <img src="img/logogsp (3).png" height="100%" width="100%">
                 </button>
 
@@ -19,11 +19,6 @@
     </ion-side-menu-content>
 
     <ion-side-menu side="left">
-        <!--  <ion-header-bar  >
-           <h1 class="title fs-16">ABC PUBLIC SCHOOL </h1>
-         </ion-header-bar> -->
-        <!-- <h1 class="">Left</h1> -->
-        <!-- <div class="ion-header-bar"> ABC PUBLIC SCHOOL </div> -->
         <ion-content class="my-menu">
             <!-- <div style="padding-top:10px"></div> -->
             <ion-list>
@@ -38,6 +33,10 @@
                     </p>
                 </ion-item>
                 <div class="padding-left">
+                    <ion-item class="item-borderless fs-12" ng-click="syncFromServer()" menu-close>
+                        SYNC FROM PORTAL
+                    </ion-item>
+
                     <ion-item class="item-borderless fs-12" ng-click="profile()" menu-close>
                         SCHOOL PROFILE
                     </ion-item>
@@ -78,6 +77,11 @@
                         FAQ
                     </ion-item>
 
+                    <ion-item class="item-borderless fs-12" menu-close ng-click="settings()">
+                        SETTINGS
+                    </ion-item>
+
+<!--
                     <ion-item class="item-borderless fs-12" menu-close ng-click="help()">
                         HELP
                     </ion-item>
@@ -85,6 +89,7 @@
                     <ion-item class="item-borderless fs-12" menu-close ng-click="login()">
                         SIGN OUT
                     </ion-item>
+-->
                 </div>
             </ion-list>
         </ion-content>

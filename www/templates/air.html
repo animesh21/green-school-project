@@ -24,6 +24,7 @@
         <div class="row" style="padding-top: 0px;padding-bottom: 0px">
             <progress id="progressbar" max="100" value="{{ progress }}" class="progress"></progress>
         </div>
+
         <p style="text-align: center">Progress: {{ progress }}% </p>
 
         <ion-scroll direction="y" class="theroot">
@@ -471,7 +472,7 @@
 
                 <div class="item item-text-wrap item-borderless">
                     3(b) Provide details of school-owned motorised vehicles
-                    <span class="badge" on-hold="showToolTip('Q3B')">?</span>
+                    <span class="badge" ng-click="showToolTip('Q3B')">?</span>
                 </div>
 
                 <div class="row">
@@ -596,7 +597,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col col-20">Authorised parking available<span class="badge" on-hold="showToolTip('Q3B5')">?</span> </div>
+                    <div class="col col-20">Authorised parking available<span class="badge" ng-click="showToolTip('Q3B5')">?</span> </div>
                     <div class="col"><input ng-model="air.Q6A2S1B5" class="textbox"
                                             ng-change="updateQ6(5)"
                                             style="border:1px solid #111;text-align: center;" type="number" string-to-number
@@ -624,34 +625,38 @@
                 </div>
 
                 <div class="row">
-                    <div class="col col-20">Annual road worthiness certificate(Yes / No)</div>
+                    <div class="col col-20">Annual road worthiness certificate(Yes / No){{ air.Q6A2S1B6 }}</div>
                     <div class="col">
-                        <select ng-model="air.Q6A2S1B6" ng-change="updateQ6B()"
-                                ng-options="option.name for option in data.Q3Options track by option.id"
-                                class="fs-20">
+                        <select ng-model="air.Q6A2S1B6" ng-change="updateQ6B()" class="fs-20">
+                            <option ng-repeat="option in data.Q3Options" value="{{ option.name }}">
+                                {{ option.name }}
+                            </option>
                         </select>
-
                     </div>
                     <div class="col">
-                        <select ng-model="air.Q6A2S1C6" ng-change="updateQ6B()"
-                                ng-options="option.name for option in data.Q3Options track by option.id"
-                                class="fs-20">
+                        <select ng-model="air.Q6A2S1C6" ng-change="updateQ6B()" class="fs-20">
+                            <option ng-repeat="option in data.Q3Options" value="{{ option.name }}">
+                                {{ option.name }}
+                            </option>
                         </select>
 
                     </div>
                     <div class="col">
                         <select ng-model="air.Q6A2S1V6" ng-change="updateQ6B()"
-                                ng-options="option.name for option in data.Q3Options track by option.id"
                                 class="fs-20">
+                            <option ng-repeat="option in data.Q3Options" value="{{ option.name }}">
+                                {{ option.name }}
+                            </option>
                         </select>
 
                     </div>
                     <div class="col">
                         <select ng-model="air.Q6A2S1O6" ng-change="updateQ6B()"
-                                ng-options="option.name for option in data.Q3Options track by option.id"
                                 class="fs-20">
+                            <option ng-repeat="option in data.Q3Options" value="{{ option.name }}">
+                                {{ option.name }}
+                            </option>
                         </select>
-
                     </div>
                     <div class="col">
                         <input ng-value="air.Q6A2S1T6" class="textbox"
@@ -659,33 +664,36 @@
                     </div>
                 </div>
 
-                <div ng-show="air.Q6A2S1B4 > 0" style="padding-left: 20px">
+                <div class="list" ng-if-start="air.Q6A2S1B4 > 0" style="padding-left: 20px">
                     <b>Please upload picture of supporting documents:</b>
                     <span>
                         Uploaded files must be in .jpg, .jpeg format. File
                         size per document should not exceed 500 KB.
                     </span>
-                    <label class="col">PUC certificates of not more than 5 buses</label>
-                    <!--<input class="col" type="file" fileread="air.Q6AFL1" multiple>-->
-                    <button ng-click="takepic()" type="button">Take Picture</button>
-                </div>
-                <div class="row">
-                    <div class="col col-20">Uploaded Image:</div>
-                    <div class="col" ng-repeat="i in getList(images.length)">
-                        <img src="{{ images[i] }}" height="100" width="100">
-                    </div>
-                </div>
-                <div class="row">
-                    <button type="button" ion-button ng-click="upload()">Upload</button>
                 </div>
 
+                <div class="list" style="padding-left: 20px">
+                    <label class="col"><b>PUC certificates of the buses</b></label>
+                    <button class="button button-small button-assertive" ng-click="takepic('PUC_Certificate')" type="button">Take Picture</button>
+                    <button class="button button-small button-assertive" type="button" ng-click="remove('PUC_Certificate')">Remove Picture</button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.PUC_Certificate.length > 0"
+                         ng-repeat="i in get0List(images.PUC_Certificate.length)">
+                        <img src="{{ images.PUC_Certificate[i] }}" height="100" width="100" alt="PUC certificate">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px" ng-if-end>
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('PUC_Certificate')">Upload</button>
+                </div>
             </div>
 
             <div class="card" ng-show="air['Q6A1'] >= 3">
 
                 <div class="item item-text-wrap item-borderless">
                     3(c) Specify the type of fuel used by your school’s vehicles:
-                    <span class="badge" on-hold="showToolTip('Q3C')">?</span>
+                    <span class="badge" ng-click="showToolTip('Q3C')">?</span>
                 </div>
 
                 <div class="row">
@@ -971,19 +979,30 @@
                     <div class="col"></div>
                 </div>
 
-                <div ng-show="true" style="padding-left: 20px">
-                    <b>Please upload supporting documents:</b>
+                <div class="list" style="padding-left: 20px">
+                    <b>Please upload picture of supporting documents:</b>
                     <span>
-                        Uploaded files must be in one of the following formats: PDF Document
-                        (.pdf), Word Document (.doc, .docx), Image File (.jpg, .jpeg). File
+                        Uploaded files must be in .jpg, .jpeg format. File
                         size per document should not exceed 500 KB.
                     </span>
-                    <label class="col">Fuel bills</label>
-                    <input class="col" name="fuel" type="file" fileread="air.Q6AFL2">
-                    <label class="col">Pictures of school owned vehicles</label>
-                    <input class="col" type="file" fileread="air.Q6AFL3">
                 </div>
 
+                <div class="list" style="padding-left: 20px">
+                    <label class="col"><b>Fuel Bills</b></label>
+                    <label class="col"><b>Pictures of school owned vehicles</b></label>
+                    <button class="button button-assertive button-small" type="button" ng-click="takepic('Fuels')">Take Picture</button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Fuels')">Remove Picture</button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Fuels.length > 0"
+                         ng-repeat="i in get0List(images.Fuels.length)">
+                        <img src="{{ images.Fuels[i] }}" height="100" width="100" alt="Fuel Bills">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px" ng-if-end>
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Fuels')">Upload</button>
+                </div>
             </div>
 
             <div class="card" ng-show="air['Q6A1'] >= 3">
@@ -992,17 +1011,17 @@
                 </div>
                 <div class="row ">
                     <div class="col fs-12">
-                        <input ng-model="air.Q6A3" type="radio" ng-value="'Y'" name="c">&nbsp;<span
+                        <input ng-model="air.Q6A3" ng-change="updateQ6A3()" type="radio" ng-value="'Y'" name="c">&nbsp;<span
                             style="position:absolute">Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="air.Q6A3" type="radio" ng-value="'N'" name="c">&nbsp;<span
+                        <input ng-model="air.Q6A3" ng-change="updateQ6A3()" type="radio" ng-value="'N'" name="c">&nbsp;<span
                             style="position:absolute">No</span>
                     </div>
                 </div>
             </div>
 
-            <div class="card" ng-show="air['Q6A1'] >= 3 && air['Q6A3'] == 'Y'">
+            <div class="card" ng-show="air.Q6A1 >= 3 && air.Q6A3 == 'Y'">
                 <div class="item item-text-wrap item-borderless">
                     3(e) Is CNG available in your area?
                 </div>
@@ -1041,7 +1060,7 @@
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     <span>4. Please specify how many members of the school community use each type of transport:</span>
-                    <span class="badge" on-hold="showToolTip('Q4')">?</span>
+                    <span class="badge" ng-click="showToolTip('Q4')">?</span>
                 </div>
 
                 <div class="row">
@@ -1179,7 +1198,7 @@
                 </div>
 
                 <div class="row">
-                  <b>(B) Non Polluting Mode</b>
+                  <b>(C) Non Polluting Mode</b>
                 </div>
 
                 <div class="row">
@@ -1242,7 +1261,7 @@
 
             <div class="list" style="margin-left: 5px;margin-right: 5px">
                 <strong>Task 5: How good is the air you breathe in your school?</strong>
-                <span class="badge" on-hold="showToolTip('Q5')">?</span> <br/>
+                <span class="badge" ng-click="showToolTip('Q5')">?</span> <br/>
                 <p>
                     The starting point
                     <span ng-show="!readMore[5]">...</span>
@@ -1292,6 +1311,30 @@
                             style="position:absolute">No</span>
                     </div>
                 </div>
+
+                <div class="list" style="padding-left: 20px" ng-if-start="air.Q9A1 == 'Y'">
+                    <b>Please upload picture of supporting documents:</b>
+                    <span>
+                        Uploaded files must be in .jpg, .jpeg format. File
+                        size per document should not exceed 500 KB.
+                    </span>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <label class="col"><b>Picture of Air Quality Monitoring equipment of the school</b></label>
+                    <button class="button button-assertive button-small" type="button" ng-click="takepic('Air_Quality_Monitoring')">Take Picture</button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Air_Quality_Monitoring')">Remove Picture</button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Air_Quality_Monitoring.length > 0"
+                         ng-repeat="i in get0List(images.Air_Quality_Monitoring.length)">
+                        <img src="{{ images.Air_Quality_Monitoring[i] }}" height="100" width="100" alt="Air Quality Monitoring">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px" ng-if-end>
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Air_Quality_Monitoring')">Upload</button>
+                </div>
             </div>
 
             <div class="card" ng-show="air.Q9A1 == 'N'">
@@ -1308,21 +1351,32 @@
                         <input ng-model="air.Q10A1" type="radio" ng-value="'N'" name="e">&nbsp;<span
                             style="position:absolute">No</span>
                     </div>
-
                 </div>
-
             </div>
 
             <div class="card">
-                <div class="list">
-                    <p><b>Upload supporting documents</b></p>
-                    <p>Please upload all supporting documents related to this section here:</p>
+                <div class="list" style="padding-left: 20px">
+                    <b>Please upload picture of supporting documents:</b>
                     <span>
-                        Uploaded files must be in one of the following formats: PDF Document
-                        (.pdf), Word Document (.doc, .docx), Image File (.jpg, .jpeg). File
+                        Uploaded files must be in .jpg, .jpeg format. File
                         size per document should not exceed 500 KB.
                     </span>
-                    <input fileread="Q9AFL4" type="file">
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <label class="col"><b>Picture of audit team doing the survey</b></label>
+                    <button class="button button-assertive button-small" type="button" ng-click="takepic('Supporting_Document_Air')">Take Picture</button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Supporting_Document_Air')">Remove Picture</button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Supporting_Document_Air.length > 0"
+                         ng-repeat="i in get0List(images.Supporting_Document_Air.length)">
+                        <img src="{{ images.Supporting_Document_Air[i] }}" height="100" width="100" alt="Supporting Document Air">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Supporting_Document_Air')">Upload</button>
                 </div>
             </div>
 

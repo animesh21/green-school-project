@@ -71,14 +71,14 @@ angular.module('starter.login', [])
       $scope.show();
 
       var email = user.email.replace("@", "-");
-      var pass = user.password;
+      var password = user.password;
       // console.log('username: ' + email);
       // temporary bypassing authentication for testing
       // $scope.hide();
       // $state.go('app.home');
       // end test code
-      $http.get("http://greenschoolsprogramme.org/audit2017/api/Gsp/users/email/" + email + "/password/" + pass)
-      // $http.get("http://127.0.0.1/GSP/api/Gsp/users/email/" + email + "/password/" + pass)
+      $http.get("http://greenschoolsprogramme.org/audit2017/api/Gsp/users/email/" + email + "/password/" + password)
+      // $http.get("http://127.0.0.1/GSP/api/Gsp/users/email/" + email + "/password/" + password)
         .then(function (response) {
           // console.log('Response from API: ' + JSON.stringify(response));
           if (!response.data.data) {
@@ -108,7 +108,7 @@ angular.module('starter.login', [])
             var state = $rootScope.school.state;
 
             AppServiceAPI.deleteAllUsers().then(function (res) {
-              AppServiceAPI.insertUser($rootScope.user, $rootScope.schoolName, state, 0, 1).then(function (res) {
+              AppServiceAPI.insertUser($rootScope.user, email, password, $rootScope.schoolName, state, 0, 1).then(function (res) {
                 console.log("logged in user inserted: " + JSON.stringify(res));
               }, function (err) {
                 console.error("error in inserting logged in user: " + JSON.stringify(err));

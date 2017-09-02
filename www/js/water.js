@@ -4,6 +4,8 @@ angular.module('starter.water', [])
                                      AppServiceAPI, $ionicPlatform, $ionicModal, $sce, $ionicPopup,
                                      ValidationService) {
 
+    'use strict';
+
     $(document).ready(function () {
       $('.progressBarIndicator').css("background", "red");
     });
@@ -11,6 +13,27 @@ angular.module('starter.water', [])
     $scope.water = {};
 
     $scope.data = {
+
+      waterSupplier: {
+        1: 'Municipality',
+        2: 'Panchayat',
+        3: 'Public Health Engineering Department (PHED)',
+        4: 'Private Supplier',
+        5: 'School’s own supply (bore well, rainwater harvesting facility, etc)'
+      },
+
+      rainWaterUses: {
+        1: 'Drinking',
+        2: 'Gardening',
+        3: 'Mopping',
+        4: 'Toilets',
+        5: 'Washing Vehicles',
+        6: 'Kitchen (Cooking / Washing vegetables and utensils)',
+        7: 'Shower, Brushing teeth, Bathing, Hand washing',
+        8: 'Swimming Pool',
+        9: 'Fire Fighting',
+        10: 'Desert Coolers'
+      },
 
       locationOfTanks: {
         1: 'Underground',
@@ -127,6 +150,14 @@ angular.module('starter.water', [])
         3: 'Used for gardening and horticulture'
       }
 
+    };
+
+    $scope.getList = function (n) {
+      var arr = [];
+      for(var i = 1; i <= n; i++) {
+        arr.push(i);
+      }
+      return arr;
     };
 
     $scope.toolTips = {

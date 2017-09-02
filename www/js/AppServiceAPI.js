@@ -47,14 +47,14 @@ angular.module('starter.api', [])
         });
       },
 
-      insertUser: function (user_id, school_name, state, completeness, login_status) {
-        var query = "INSERT INTO gsp_users (user_id, school_name, state, completeness, login_status) VALUES " +
-          "(?, ?, ?, ?, ?)";
-        return $cordovaSQLite.execute(db, query, [user_id, school_name, state, completeness, login_status]);
+      insertUser: function (user_id, email, password, school_name, state, completeness, login_status) {
+        var query = "INSERT INTO gsp_users (user_id, email, password, school_name, state, completeness, login_status) VALUES " +
+          "(?, ?, ?, ?, ?, ?, ?)";
+        return $cordovaSQLite.execute(db, query, [user_id, email, password, school_name, state, completeness, login_status]);
       },
 
       selectUser: function (login_status) {
-        var query = "SELECT user_id, completeness FROM gsp_users WHERE login_status = ?";
+        var query = "SELECT user_id, completeness, email, password FROM gsp_users WHERE login_status = ?";
         return $cordovaSQLite.execute(db, query, [login_status]);
       },
 
@@ -71,8 +71,16 @@ angular.module('starter.api', [])
 
       sync: function (type) {
         var data = {};
-        var query = "SELECT * FROM gsp_answers WHERE type = ? AND userid = ?";
-        return $cordovaSQLite.execute(db, query, [type, $rootScope.user]).then(function (res) {
+        var query, queryBinding;
+        if (type === 100) {
+          query = "SELECT * FROM gsp_answers WHERE userid = ?";
+          queryBinding = [$rootScope.user];
+        }
+        else {
+          query = "SELECT * FROM gsp_answers WHERE type = ? AND userid = ?";
+          queryBinding = [type, $rootScope.user];
+        }
+        return $cordovaSQLite.execute(db, query, queryBinding).then(function (res) {
           if (res.rows.length > 0) {
             // console.log('Found ' + res.rows.length + ' entries of type: ' + type);
             // console.log('Data sent to the api: ');

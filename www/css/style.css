@@ -547,6 +547,7 @@ ul.water-list {
   position: relative !important;
   float: right;
   margin-right: 2%;
+  /*margin-right: 40px;*/
 }
 
 .gbadge {

@@ -20,15 +20,23 @@
         <div class="row" style="padding-top: 0px;padding-bottom: 0px">
             <progress id="progressbar" max="100" value="{{ progress }}" class="progress"></progress>
         </div>
+
         <p style="text-align: center">Progress: {{ progress }}% </p>
 
         <ion-scroll direction="y" class="theroot">
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    <span>
-                        1. How many levels does your school have<span class="badge gbadge" on-hold="showToolTip('Q1')">?</span>
-                    </span>
+                    <div>
+                        1. How many levels does your school have
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col col-60"></div>
+                    <div class="col col-40">
+                        <span class="badge gbadge" ng-click="showToolTip('Q1')">?</span>
+                    </div>
                 </div>
                 <label class="item item-input item-select">
                     <div class="input-label fs-12">
@@ -70,7 +78,13 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    3. Which board of education does the school follow<span class="badge gbadge" on-hold="showToolTip('Q3')">?</span>
+                    3. Which board of education does the school follow
+                </div>
+                <div class="row">
+                    <div class="col col-60"></div>
+                    <div class="col col-40">
+                        <span class="badge gbadge" ng-click="showToolTip('Q3')">?</span>
+                    </div>
                 </div>
 
                 <ion-item class="fs-14 item-text-wrap">
@@ -87,7 +101,7 @@
                             State:
                         </div>
                         <select ng-model="general.Q3G2" class="fs-12">
-                            <option ng-repeat="(key, value) in data.states" value="{{ key }}">
+                            <option ng-repeat="(key, value) in data.states track by $index" value="{{ key }}">
                                 {{ value }}
                             </option>
                         </select>
@@ -117,7 +131,7 @@
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     4(a). What is the total permanent population of the school
-                    <span class="badge" on-hold="showToolTip('Q4A')">?</span>
+                    <span class="badge" ng-click="showToolTip('Q4A')">?</span>
                 </div>
                 <span class="validation-error" ng-hide="validateQ4()">
                     Please enter student population before proceeding.
@@ -206,7 +220,12 @@
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     4(b). How many visitors visit your school
-                    <span class="badge gbadge" on-hold="showToolTip('Q4B')">?</span>
+                </div>
+                <div class="row">
+                    <div class="col col-60"></div>
+                    <div class="col col-40">
+                        <span class="badge gbadge" ng-click="showToolTip('Q4B')">?</span>
+                    </div>
                 </div>
 
                 <div class="list ">
@@ -234,7 +253,14 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    5. What is the total number of working days of your school in a year<span class="badge gbadge" id="badge-5" on-hold="showToolTip('Q5')">?</span>
+                    5. What is the total number of working days of your school in a year
+                </div>
+                <div class="row">
+                    <div class="col col-60"></div>
+                    <div class="col col-40">
+                        <span class="badge gbadge" id="badge-5"
+                              ng-click="showToolTip('Q5')">?</span>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -250,70 +276,16 @@
                 <div class="item item-text-wrap item-borderless">
                     <span>6. Please select the month(s) in which the GSP audit was carried out?</span>
                 </div>
+
                 <ion-scroll direction="x" class="wide-as-needed" style="padding-bottom:0px">
                     <div class="row">
-                        <div class="col col-20" style="text-align: center;">Jan</div>
-                        <div class="col col-20" style="text-align: center;">Feb</div>
-                        <div class="col col-20" style="text-align: center;">Mar</div>
-                        <div class="col col-20" style="text-align: center;">Apr</div>
-                        <div class="col col-20" style="text-align: center;">May</div>
-                        <div class="col col-20" style="text-align: center;">Jun</div>
-                        <div class="col col-20" style="text-align: center;">Jul</div>
-                        <div class="col col-20" style="text-align: center;">Aug</div>
-                        <div class="col col-20" style="text-align: center;">Sep</div>
-                        <div class="col col-20" style="text-align: center;">Oct</div>
-                        <div class="col col-20" style="text-align: center;">Nov</div>
-                        <div class="col col-20" style="text-align: center;">Dec</div>
+                        <div class="col col-20" style="text-align: center;" ng-repeat="(key, month) in data.months">
+                            {{ month }}
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col col-20" style="text-align: center;">
-
-                            <input ng-model="general.Q7G1" type="checkbox" name="month"
-                                   value="Jan">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G2" type="checkbox" name="month"
-                                   value="Feb">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G3" type="checkbox" name="month"
-                                   value="Mar">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G4" type="checkbox" name="month"
-                                   value="Apr">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G5" type="checkbox" name="month"
-                                   value="may">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G6" type="checkbox" name="month"
-                                   value="Jun">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G7" type="checkbox" name="month"
-                                   value="Jul">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G8" type="checkbox" name="month"
-                                   value="Aug">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G9" type="checkbox" name="month"
-                                   value="Sep">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G10" type="checkbox" name="month"
-                                   value="Oct">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G11" type="checkbox" name="month"
-                                   value="Nov">
-                        </div>
-                        <div class="col col-20" style="text-align: center;">
-                            <input ng-model="general.Q7G12" type="checkbox" name="month"
-                                   value="Dec">
+                        <div class="col col-20" style="text-align: center;" ng-repeat="i in getList(12)">
+                            <input ng-model="general['Q7G' + i]" type="checkbox" name="month{{ i }}">
                         </div>
                     </div>
                 </ion-scroll>
@@ -323,7 +295,7 @@
                 <div class="item item-text-wrap item-borderless">
                     <label>
                         7. Where is the school located?
-                        <span class="badge" on-hold="showToolTip('Q7')">?</span>
+                        <span class="badge" ng-click="showToolTip('Q7')">?</span>
                     </label>
                 </div>
                 <div class="row ">
@@ -339,7 +311,7 @@
                     8. Whether your school is:
                 </div>
                 <ion-item class="fs-14 item-text-wrap" ng-repeat="i in [1, 2, 3]">
-                    <input data-ng-model="general.Q9G1" type="radio" ng-value="i"  string-to-number name="d">
+                    <input data-ng-model="general.Q9G1" type="radio" ng-value="i" string-to-number name="d">
                     <span style="position:absolute">&nbsp;{{ data.schoolTypes[i] }}</span>
                 </ion-item>
             </div>

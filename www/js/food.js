@@ -2,10 +2,84 @@ angular.module('starter.food', [])
 
   .controller('foodCtrl', function ($scope, $rootScope, $state, $window, $stateParams,
                                     AppServiceAPI, $ionicPlatform, $sce, $ionicModal, $ionicPopup,
-                                    ValidationService) {
+                                    ValidationService, UploadService, $ionicLoading) {
     $(document).ready(function () {
       $('.progressBarIndicator').css("background", "red");
     });
+
+    //File Upload Code Starts Here
+    $scope.images = {
+      Mid_Day_Meal: [],
+      Lunch_Boxes: [],
+      Canteen_Food_Items: [],
+      Traditional_Food_Items_In_Canteen: [],
+      Audit_Team_doing_Survey: [],
+      UPPF: []
+    };
+
+    $scope.showLoading = function (message) {
+      $ionicLoading.show({
+        template: '<p>Loading...</p><ion-spinner></ion-spinner><p>' +
+        message + '</p>'
+      });
+    };
+
+    $scope.hide = function () {
+      $ionicLoading.hide();
+    };
+
+    $scope.get0List = function (n) {
+      var arr = [];
+      for(var i = 0; i < n; i++) {
+        arr.push(i);
+      }
+      return arr;
+    };
+
+    $scope.takepic = function (data_id) {
+      var num_images = $scope.images[data_id].length;
+      if (num_images >= 3) {
+        $scope.showPopup('Alert', "Can't upload more than 3 images in one question from mobile");
+      }
+      else {
+        $ionicPlatform.ready().then(function () {
+          UploadService.takePic().then(function (imageData) {
+            var imageStr = "data:image/jpeg;base64," + imageData;
+            console.log('Image data: ' + imageStr);
+            $scope.images[data_id].push(imageStr);
+          }, function (err) {
+            console.error("Error in getting picture: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error("Error in platform ready: " + JSON.stringify(err));
+        });
+      }
+    };
+
+    $scope.upload = function (data_id) {
+      $scope.showLoading('Uploading, please wait');
+      var images = $scope.images[data_id];
+      var numImages = images.length;
+      if (numImages <= 0) {
+        $scope.showPopup('Warning', "Please select an image first");
+      }
+      else {
+        for (var i = 0; i < images.length; i++) {
+          var image_data = images[i];
+          var ques = 'mobile_' + i;
+          if (image_data) {
+            UploadService.uploadImage(image_data, data_id, ques);
+          }
+        }
+        $scope.hide();
+        $scope.showPopup('Success', numImages + " images uploaded successfully");
+      }
+    };
+
+    $scope.remove = function (data_id) {
+      $scope.images[data_id].pop();
+    };
+    // file upload code ends
 
     $scope.food = {};
 

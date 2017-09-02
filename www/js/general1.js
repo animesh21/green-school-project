@@ -13,11 +13,15 @@ angular.module('starter.general', [])
       Q1G2: 12
     };
 
+    $scope.trueVar = true;
+
     $scope.other = {};
 
     $scope.data = {
       availableLowerLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       availableHigherLevels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',
+        'Sep', 'Oct', 'Nov', 'Dec'],
       schoolTypes: {
         1: 'Government School',
         2: 'Government–aided School',
@@ -204,6 +208,14 @@ angular.module('starter.general', [])
     };
     // validation functions end
 
+    $scope.getList = function (n) {
+      var arr = [];
+      for(var i = 1; i <= n; i++) {
+        arr.push(i);
+      }
+      return arr;
+    };
+
     $scope.showPopup = function (title, message) {
       $scope.popup = $ionicPopup.show({
         title: title,
@@ -240,10 +252,17 @@ angular.module('starter.general', [])
       });
     };
 
+    $scope.gspMonthChange = function (n) {
+      var qID = 'Q7G' + n;
+      $scope.general[qID] = !$scope.general[qID];
+      console.log('Changed month to: ' + $scope.general[qID]);
+    };
+
     $ionicPlatform.ready(function () {
       console.log('device ready in general');
       ValidationService.getData(1).then(function (res) {
         for (var qID in res) {
+          console.log('Setting qID: ' + qID + ', Ans: ' + res[qID]);
           $scope.general[qID] = res[qID];
         }
       });

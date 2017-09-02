@@ -115,28 +115,6 @@ angular.module('starter.validation', [])
           // console.log('returning: ' + JSON.stringify(queryData));
           return queryData;
         });
-      },
-
-      uploadImages: function (images) {
-        var server = 'http://studio-tesseract.co/GSP/upload.php';
-        var image;
-        var data = {};
-        for (var i = 0; i < images.length; i++) {
-          image = images[i];
-          data.profile_image = image;
-          var req = {
-            method: 'POST',
-            url: server,
-            headers: {'Content-Type': "application/x-www-form-urlencoded"},
-            data: data
-          };
-          $http(req).then(function (response) {
-            console.log("Uploaded image " + i + ": " + JSON.stringify(response));
-          });
-        }
       }
     };
-
-
-
   });

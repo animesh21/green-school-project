@@ -342,9 +342,30 @@
                             style="position:absolute">No</span>
                     </div>
                 </div>
-                <div ng-show="energy.Q4E1 == 'Y'" class="row" style="padding-left: 20px">
-                    <label class="col" for="ebill">Please upload a recent electricity bill</label>
-                    <input class="col" name="ebill" type="file" fileread="energy.Q4EFL1">
+                <div ng-if-start="energy.Q4E1 == 'Y'" class="list" style="padding-left: 20px">
+                    <b>Please upload picture of supporting documents:</b>
+                    <span>
+                        Uploaded files must be in .jpg, .jpeg format. File
+                        size per document should not exceed 500 KB.
+                    </span>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <label class="col"><b>Please upload a recent electricity bill</b></label>
+                    <button class="button button-assertive button-small" type="button" ng-click="takepic('Electricity_Bill')">Take Picture</button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Electricity_Bill')">Remove Picture</button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Electricity_Bill.length > 0"
+                         ng-repeat="i in get0List(images.Electricity_Bill.length)">
+                        <img src="{{ images.Electricity_Bill[i] }}" height="100" width="100" alt="Electricity Bill">
+                    </div>
+                </div>
+
+                <div ng-if-end class="list" style="padding-left: 20px">
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Electricity_Bill')">
+                        Upload
+                    </button>
                 </div>
             </div>
 
@@ -375,7 +396,7 @@
                     3. Provide the details of total energy consumed by the school:
                 </div>
 
-                <span class="badge" on-hold="showToolTip('Q6')">
+                <span class="badge" ng-click="showToolTip('Q6')">
                     ?
                 </span>
 
@@ -417,9 +438,30 @@
                     <div class="col"></div>
                 </div>
 
-                <div class="row">
-                    <strong>Please upload fuel bills</strong><br/>
-                    <input fileread="energy.Q6EFL2" type="file">
+                <div class="list" style="padding-left: 20px">
+                    <b>Please upload picture of supporting documents:</b>
+                    <span>
+                        Uploaded files must be in .jpg, .jpeg format. File
+                        size per document should not exceed 500 KB.
+                    </span>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <label class="col"><b>Please upload fuel bills</b></label>
+                    <button class="button button-assertive button-small" type="button" ng-click="takepic('Fuels_Bills')">Take Picture</button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Fuels_Bills')">Remove Picture</button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Fuels_Bills.length > 0"
+                         ng-repeat="i in get0List(images.Fuels_Bills.length)">
+                        <img src="{{ images.Fuels_Bills[i] }}" height="100" width="100" alt="Fuels Bills">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Fuels_Bills')">
+                        Upload
+                    </button>
                 </div>
 
             </div>
@@ -454,9 +496,31 @@
                 </div>
 
                 <hr/>
-                <div class="row">
-                    <strong>Please upload picture of 5 star appliances used by school</strong><br>
-                    <input fileread="energy.Q7EFL3" type="file">
+
+                <div class="list" style="padding-left: 20px">
+                    <b>Please upload picture of supporting documents:</b>
+                    <span>
+                        Uploaded files must be in .jpg, .jpeg format. File
+                        size per document should not exceed 500 KB.
+                    </span>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <label class="col"><b>Please upload a picture of 5 star appliances used by your school</b></label>
+                    <button class="button button-assertive button-small" type="button" ng-click="takepic('Five_Star_Appliances')">Take Picture</button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Five_Star_Appliances')">Remove Picture</button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Five_Star_Appliances.length > 0"
+                         ng-repeat="i in get0List(images.Five_Star_Appliances.length)">
+                        <img src="{{ images.Five_Star_Appliances[i] }}" height="100" width="100" alt="Five Star Appliances">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Five_Star_Appliances')">
+                        Upload
+                    </button>
                 </div>
             </div>
 
@@ -494,13 +558,35 @@
                     </div>
                 </div>
 
-                <div ng-show="energy.Q9E1 == 'Y'" class="row" style="margin-left: 5px;margin-right: 5px">
-                    <strong>
-                        Please upload a picture of alternative source of energy installed that is
-                        currently in use.
-                    </strong><br>
-                    <input type="file" fileread="Q7EFL4">
+                <div ng-if-start="energy.Q9E1 == 'Y'" class="list" style="padding-left: 20px">
+                    <b>Please upload picture of supporting documents:</b>
+                    <span>
+                        Uploaded files must be in .jpg, .jpeg format. File
+                        size per document should not exceed 500 KB.
+                    </span>
                 </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <label class="col">
+                        <b>Please upload a picture of alternative source of energy installed that
+                            is currently in use.</b>
+                    </label>
+                    <button class="button button-assertive button-small" type="button" ng-click="takepic('Alternative_Source_of_Energy')">Take Picture</button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Alternative_Source_of_Energy')">Remove Picture</button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Alternative_Source_of_Energy.length > 0"
+                         ng-repeat="i in get0List(images.Alternative_Source_of_Energy.length)">
+                        <img src="{{ images.Alternative_Source_of_Energy[i] }}" height="100" width="100" alt="Alternative Source of Energy">
+                    </div>
+                </div>
+
+                <div ng-if-end class="list" style="padding-left: 20px">
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Alternative_Source_of_Energy')">
+                        Upload
+                    </button>
+                </div>
+
             </div>
 
             <div class="card" ng-show="energy.Q9E1 == 'Y'">
@@ -549,10 +635,32 @@
             </div>
 
             <div class="card">
-                <div class="list">
-                    <p><b>Upload supporting documents</b></p>
-                    <p>Please upload all supporting documents related to this section here:</p>
-                    <input fileread="Q10AFL5" type="file" multiple>
+                <div class="list" style="padding-left: 20px">
+                    <b>Please upload picture of supporting documents:</b>
+                    <span>
+                        Uploaded files must be in .jpg, .jpeg format. File
+                        size per document should not exceed 500 KB.
+                    </span>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <label class="col">
+                        <b>Picture of audit team doing the survey.</b>
+                    </label>
+                    <button class="button button-assertive button-small" type="button" ng-click="takepic('Supporting_Document_Energy')">Take Picture</button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Supporting_Document_Energy')">Remove Picture</button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Supporting_Document_Energy.length > 0"
+                         ng-repeat="i in get0List(images.Supporting_Document_Energy.length)">
+                        <img src="{{ images.Supporting_Document_Energy[i] }}" height="100" width="100" alt="Alternative Source of Energy">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Supporting_Document_Energy')">
+                        Upload
+                    </button>
                 </div>
             </div>
 

@@ -233,7 +233,7 @@
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     2. How many categories does your school segregate waste into
-                    <span class="badge" on-hold="showToolTip('Q2')">?</span>
+                    <span class="badge" ng-click="showToolTip('Q2')">?</span>
                 </div>
                 <div class="row" ng-repeat="i in [1, 2, 3]">
                     <div class="col col-10">
@@ -262,7 +262,7 @@
                 <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
                     <div class="col col-20">
                         {{ data.wasteCollectionPoints[i] }}
-                        <span ng-show="i == 3" class="badge" on-hold="showToolTip('Q5W3')">?</span>
+                        <span ng-show="i == 3" class="badge" ng-click="showToolTip('Q5W3')">?</span>
                     </div>
                     <div class="col" ng-repeat="j in [1, 2, 3, 4]">
                         <input ng-model="waste['Q5Wa' + i + 'S' + j]" class="textbox"
@@ -325,7 +325,7 @@
             <div class="card" ng-if="x == 2">
                 <div class="item item-text-wrap item-borderless">
                     4. Does your school recycle any generated waste?
-                    <span class="badge" on-hold="showToolTip('Q4')">?</span>
+                    <span class="badge" ng-click="showToolTip('Q4')">?</span>
                 </div>
                 <div class="row " style="padding-left: 20px">
                     <div class="col fs-12" ng-repeat="i in [1, 2]">
@@ -340,7 +340,7 @@
 
                 <div class="item item-text-wrap item-borderless">
                     {{ data.wasteGeneratedOrRecycled[x]['ques'] }}
-                    <span ng-if="x == 1" class="badge" on-hold="showToolTip('Q3')">?</span>
+                    <span ng-if="x == 1" class="badge" ng-click="showToolTip('Q3')">?</span>
                 </div>
 
                 <div class="row" ng-repeat-start="i in [1, 2, 3, 4, 5]">
@@ -553,7 +553,7 @@
                 <div class="item item-text-wrap item-borderless">
                     8. Does your school have the following? If yes, please give the
                     numbers of items in working condition and those that are not.
-                    <span class="badge" on-hold="showToolTip('Q8')">?</span>
+                    <span class="badge" ng-click="showToolTip('Q8')">?</span>
                 </div>
                 <div class="row">
                     <div class="col col-20">

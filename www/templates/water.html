@@ -207,7 +207,7 @@
             <div class="card">
                 <div class="list" style="margin-left: 5px;margin-right: 5px">
                     <strong>1. Calculate your school’s water consumption, per activity:</strong><br>
-                    <span class="badge" on-hold="showToolTip('Q1')">?</span>
+                    <span class="badge" ng-click="showToolTip('Q1')">?</span>
                 </div>
 
                 <div class="row ">
@@ -220,7 +220,7 @@
                     <div class="col">Drinking</div>
                     <div class="col">
                         <input ng-model="water.Q4W1" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
                                min="0"
                                onkeypress="return isDecimalNumber(event)">
                     </div>
@@ -231,7 +231,7 @@
                     <div class="col">Toilet flushing</div>
                     <div class="col">
                         <input ng-model="water.Q4W2" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
                                min="0"
                                onkeypress="return isDecimalNumber(event)">
                     </div>
@@ -242,7 +242,7 @@
                     <div class="col">Personal cleaning</div>
                     <div class="col">
                         <input ng-model="water.Q4W3" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
                                min="0"
                                onkeypress="return isDecimalNumber(event)">
                     </div>
@@ -253,7 +253,7 @@
                     <div class="col">Washing clothes</div>
                     <div class="col">
                         <input ng-model="water.Q4W4" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
                                min="0"
                                onkeypress="return isDecimalNumber(event)">
                     </div>
@@ -263,7 +263,7 @@
                     <div class="col">Cooking</div>
                     <div class="col">
                         <input ng-model="water.Q4W5" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
                                min="0"
                                onkeypress="return isDecimalNumber(event)">
                     </div>
@@ -273,7 +273,7 @@
                     <div class="col">Cleaning Utensils</div>
                     <div class="col">
                         <input ng-model="water.Q4W6" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
                                min="0"
                                onkeypress="return isDecimalNumber(event)">
                     </div>
@@ -283,7 +283,7 @@
                     <div class="col">Washing Vegetables</div>
                     <div class="col">
                         <input ng-model="water.Q4W7" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
                                min="0"
                                onkeypress="return isDecimalNumber(event)">
                     </div>
@@ -293,7 +293,7 @@
                     <div class="col">Mopping floors</div>
                     <div class="col">
                         <input ng-model="water.Q4W8" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
                                min="0"
                                onkeypress="return isDecimalNumber(event)">
                     </div>
@@ -302,11 +302,11 @@
                 <div class="row ">
                     <div class="col">
                         Gardening
-                        <span class="badge" on-hold="showToolTip('Q4W9')">?</span>
+                        <span class="badge" ng-click="showToolTip('Q4W9')">?</span>
                     </div>
                     <div class="col">
                         <input ng-model="water.Q4W9" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
                                min="0"
                                onkeypress="return isDecimalNumber(event)">
                     </div>
@@ -316,7 +316,7 @@
                     <div class="col">Total</div>
                     <div class="col">
                         <input ng-model="water.Q4W10" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0"
                                readonly>
                     </div>
                 </div>
@@ -365,22 +365,22 @@
                 </div>
 
                 <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q5W1" type="checkbox" name="ba"><span
+                    <input ng-model="water.Q5W1" ng-checked="water.Q5W1 === 'true'" type="checkbox"><span
                         style="position:absolute">&nbsp;Ground Water</span>
                 </ion-item>
 
                 <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q5W2" type="checkbox" name="bb"><span
+                    <input ng-model="water.Q5W2" ng-checked="water.Q5W2 === 'true'" type="checkbox"><span
                         style="position:absolute">&nbsp;Surface Water</span>
                 </ion-item>
 
                 <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q5W3" ng-change="updateQ2()" type="checkbox" name="bc"><span
+                    <input ng-model="water.Q5W3" ng-checked="water.Q5W3 === 'true'" ng-change="updateQ2()" type="checkbox"><span
                         style="position:absolute">&nbsp;Rain Water</span>
                 </ion-item>
 
                 <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q5W4" type="checkbox" name="bd"><span
+                    <input ng-model="water.Q5W4" ng-checked="water.Q5W4 === 'true'" type="checkbox"><span
                         style="position:absolute">&nbsp;Recycled Waste Water</span>
                 </ion-item>
 
@@ -391,31 +391,10 @@
                     3. Who supplies the water in your school? (please tick the correct options):
                 </div>
 
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q6W1" type="checkbox" name="aa"><span
-                        style="position:absolute">&nbsp;Municipality</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q6W2" type="checkbox" name="ab"><span
-                        style="position:absolute">&nbsp;Panchayat</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q6W3" type="checkbox" name="ac"><span
-                        style="position:absolute">&nbsp;Public Health Engineering Department (PHED)</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q6W4" type="checkbox" name="ad"><span
-                        style="position:absolute">&nbsp;Private supplier</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q6W5" type="checkbox" name="ae">
-                    <span style="position:absolute">
-                        &nbsp;School’s own supply (bore well, rainwater harvesting facility, etc)
-                    </span>
+                <ion-item class="fs-14 item-text-wrap" ng-repeat="i in [1, 2, 3, 4, 5]">
+                    <input ng-model="water['Q6W' + i]" ng-checked="water['Q6W' + i] === 'true'"
+                           type="checkbox"><span
+                        style="position:absolute">&nbsp;{{ data.waterSupplier[i] }}</span>
                 </ion-item>
 
             </div>
@@ -502,7 +481,7 @@
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     5. What are the water conservation practices your school follows
-                    <span class="badge" on-hold="showToolTip('Q5')">?</span>
+                    <span class="badge" ng-click="showToolTip('Q5')">?</span>
                 </div>
 
                 <div class="row ">
@@ -769,54 +748,10 @@
                     rainwater:
                 </div>
 
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2S1" type="checkbox" name="ia"><span
-                        style="position:absolute">&nbsp;Drinking</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2S2" type="checkbox" name="ib"><span
-                        style="position:absolute">&nbsp;Gardening</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2S3" type="checkbox" name="ic"><span
-                        style="position:absolute">&nbsp;Mopping</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2S4" type="checkbox" name="id"><span
-                        style="position:absolute">&nbsp;Toilets</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2S5" type="checkbox" name="ie"><span
-                        style="position:absolute">&nbsp;Washing vehicles</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2S6" type="checkbox" name="if"><span
-                        style="position:absolute">&nbsp;Kitchen (Cooking / Washing vegetables and utensils)</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2S7" type="checkbox" name="ig"><span
-                        style="position:absolute">&nbsp;Shower, Brushing teeth, Bathing, Hand washing</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2S8" type="checkbox" name="ih"><span
-                        style="position:absolute">&nbsp;Swimming Pool</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2S9" type="checkbox" name="ii"><span
-                        style="position:absolute">&nbsp;Fire Fighting</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2S10" type="checkbox" name="ij"><span
-                        style="position:absolute">&nbsp;Desert Coolers</span>
+                <ion-item class="fs-14 item-text-wrap" ng-repeat="i in getList(10)">
+                    <input ng-model="water['Q8W2S2S' + i]" type="checkbox"
+                           ng-checked="water['Q8W2S2S' + i] === 'true'"><span
+                        style="position:absolute">&nbsp;{{ data.rainWaterUses[i] }}</span>
                 </ion-item>
 
             </div>
@@ -937,7 +872,8 @@
                 <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7]">
                     <div class="col col-10"></div>
                     <div class="col col-10">
-                        <input ng-model="water['Q8W2S2S9' + i]" type="checkbox">
+                        <input ng-model="water['Q8W2S2S9' + i]" ng-checked="water['Q8W2S2S9' + i] === 'true'"
+                               type="checkbox">
                     </div>
                     <div class="col">
                         <span style="position: absolute;">{{ data.rechargeStructures[i] }}</span>
@@ -1036,7 +972,8 @@
                 <div class="row " style="padding-left: 20px" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8]">
 
                     <div class="col fs-12">
-                        <input ng-model="water['Q8W2S3' + i]" type="checkbox" ng-value="i">&nbsp;
+                        <input ng-model="water['Q8W2S3' + i]" type="checkbox"
+                               ng-checked="water['Q8W2S3' + i] === 'true'">&nbsp;
                         <span style="position:absolute"> {{ data.rainWaterStructures[i] }}</span>
                     </div>
 
@@ -1065,7 +1002,8 @@
                 <div class="row" ng-repeat="i in [1, 2, 3, 4]">
                     <div class="col col-10"></div>
                     <div class="col col-10">
-                        <input ng-model="water['Q8W2S4S2' + i]" type="checkbox">
+                        <input ng-model="water['Q8W2S4S2' + i]"
+                               ng-checked="water['Q8W2S4S2' + i] === 'true'" type="checkbox">
                     </div>
                     <div class="col">
                         {{ data.typeOfFilter[i] }}
@@ -1300,7 +1238,7 @@
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     7. Please share details about sanitation and hygiene practices in your school:
-                    <span class="badge" on-hold="showToolTip('Q7')">?</span>
+                    <span class="badge" ng-click="showToolTip('Q7')">?</span>
                 </div>
 
                 <div class="row " ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8]">
@@ -1317,7 +1255,8 @@
                     <div class="col col-67">8. How many drinking water taps do you have?</div>
                     <div class="col">
                         <input ng-model="water.Q9W1" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               style="border:1px solid #111;text-align: center;" type="number"
+                               string-to-number min="0"
                                onkeypress="return isNumberKey(event)">
                     </div>
                 </div>
@@ -1328,7 +1267,8 @@
                     <div class="col col-67">9. How many hand-pumps do you have?</div>
                     <div class="col">
                         <input ng-model="water.Q10W1" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               style="border:1px solid #111;text-align: center;" type="number"
+                               string-to-number min="0"
                                onkeypress="return isNumberKey(event)">
                     </div>
                 </div>
@@ -1342,7 +1282,8 @@
                     </div>
                     <div class="col">
                         <input ng-model="water.Q11W1" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               style="border:1px solid #111;text-align: center;" type="number"
+                               string-to-number min="0"
                                onkeypress="return isNumberKey(event)">
                     </div>
                 </div>
@@ -1361,7 +1302,8 @@
                     </div>
                     <div class="col col-20">
                         <input ng-model="water['Q13W1S' + i]" class="textbox" ng-change="updateQ13()"
-                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               style="border:1px solid #111;text-align: center;" type="number"
+                               string-to-number min="0"
                                onkeypress="return isNumberKey(event)">
                     </div>
                 </div>
@@ -1372,7 +1314,7 @@
                     <div class="col col-20">
                         <input ng-model="water.Q13W1S4" ng-value="water.Q13W1S4" class="textbox"
                                style="border: 1px solid #111; text-align: center;"
-                               type="number" min="0" readonly>
+                               type="number" string-to-number min="0" readonly>
                     </div>
                 </div>
             </div>
@@ -1384,7 +1326,8 @@
                     </div>
                     <div class="col">
                         <input ng-model="water.Q14W1" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               style="border:1px solid #111;text-align: center;" type="number"
+                               string-to-number min="0"
                                onkeypress="return isNumberKey(event)">
                     </div>
                 </div>
@@ -1398,7 +1341,8 @@
                     </div>
                     <div class="col">
                         <input ng-model="water.Q15W1" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" min="0"
+                               style="border:1px solid #111;text-align: center;" type="number"
+                               string-to-number min="0"
                                onkeypress="return isNumberKey(event)">
                     </div>
                 </div>
@@ -1539,7 +1483,7 @@
 
             <div class="card" ng-show="water.Q20W1 == 'Y'">
                 <div class="item item-text-wrap item-borderless">
-                    18(a) How does your school reuse wastewater?
+                    18(a) How does your school reuse waste-water?
                 </div>
                 <div class="row" ng-repeat="i in [1, 2, 3]">
                     <div class="col col-10"></div>
@@ -1554,7 +1498,7 @@
 
             <div class="card" ng-show="water.Q20W1 == 'N'">
                 <div class="item item-text-wrap item-borderless">
-                    18(a) Please specify the fate of wastewater:
+                    18(a) Please specify the fate of waste-water:
                 </div>
                 <div class="row" ng-repeat="i in [1, 2, 3]">
                     <div class="col col-10"></div>

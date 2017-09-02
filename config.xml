@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ionicframework.greenschool845333" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Green School Programme</name>
+    <name>GSP</name>
     <description>
         A mobile application for filling the Green School Programme audit.
     </description>
@@ -47,6 +47,7 @@
     <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="^4.1.0" />
     <plugin name="cordova-plugin-actionsheet" spec="git+https://github.com/EddyVerbruggen/cordova-plugin-actionsheet.git" />
+    <plugin name="cordova-plugin-apprate" spec="^1.3.0" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="cordova-plugin-console" spec="^1.0.7" />
     <plugin name="cordova-plugin-device" spec="^1.1.6" />

@@ -12,7 +12,8 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
   'starter.help', 'starter.menu', 'starter.login', 'ngCordova',
   'starter.home', 'starter.profile', 'starter.general',
   'starter.air', 'starter.energy', 'starter.food', 'starter.land', 'starter.water',
-  'starter.waste', 'starter.feedback', 'starter.api', 'starter.validation'])
+  'starter.waste', 'starter.feedback', 'starter.api', 'starter.validation',
+  'starter.upload', 'starter.user_settings', 'starter.syncFromServer'])
 
   .run(function ($ionicPlatform, $cordovaSQLite, $window, $rootScope, AppServiceAPI, $state, $http) {
 
@@ -44,14 +45,15 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
         db = window.openDatabase("quiz.db", '1', 'my', 1024 * 1024 * 100); // browser
       }
       // $cordovaSQLite.execute(db, "drop table gsp_answers");
-      // $cordovaSQLite.execute(db, "drop table gsp_users").then(function(res){
+      // $cordovaSQLite.execute(db, "DROP TABLE gsp_users").then(function(res){
       //   console.log('Dropped gsp_users: ' + JSON.stringify(res));
       // }, function(err){
       //   console.error('Error dropping: ' + JSON.stringify(err));
       // });
       $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS gsp_answers (userid integer NOT NULL,questionid varchar(100) PRIMARY KEY,answer varchar(100),score integer,type integer)");
-      $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS gsp_users (id INTEGER PRIMARY KEY, user_id INTEGER," +
-        " school_name VARCHAR(200), state INTEGER, completeness INTEGER DEFAULT 0, login_status INTEGER DEFAULT 0)")
+      $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS gsp_users (id INTEGER PRIMARY KEY, " +
+        "user_id INTEGER, email VARCHAR(200), password VARCHAR(50), school_name VARCHAR(200), " +
+        "state INTEGER, completeness INTEGER DEFAULT 0, login_status INTEGER DEFAULT 0)")
         .then(function (res) {
         $cordovaSQLite.execute(db, "SELECT user_id, school_name, state FROM gsp_users WHERE login_status = ?", [1]).then(function (res) {
           console.log("Selected users: " + JSON.stringify(res.rows.length));
@@ -62,7 +64,7 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
             var userID = user_data.user_id;
             var schoolName = user_data.school_name;
             var state = user_data.state;
-            $rootScope.states = {"1":"Andaman and Nicobar (AN)","2":"Andhra Pradesh (AP)","3":"Arunachal Pradesh (AR)","4":"Assam (AS)","5":"Bihar (BR)","6":"Chandigarh (CH)","7":"Chhattisgarh (CG)","8":"Dadra and Nagar Haveli (DN)","9":"Daman and Diu (DD)","10":"Delhi (DL)","11":"Goa (GA)","12":"Gujarat (GJ)","13":"Haryana (HR)","14":"Himachal Pradesh (HP)","15":"Jammu and Kashmir (JK)","16":"Jharkhand (JH)","17":"Karnataka (KA)","18":"Kerala (KL)","19":"Lakshdweep (LD)","20":"Madhya Pradesh (MP)","21":"Maharashtra (MH)","22":"Manipur (MN)","23":"Meghalaya (ML)","24":"Mizoram (MZ)","25":"Nagaland (NL)","26":"Odisha (OD)","27":"Puducherry (PY)","28":"Punjab (PB)","29":"Rajasthan (RJ)","30":"Sikkim (SK)","31":"Tamil Nadu (TN)","32":"Telangana (TG)","33":"Tripura (TR) ","34":"Uttar Pradesh (UP)","35":"Uttarakhand (UK)","36":"West Bengal (WB)","":"Select State"}
+            $rootScope.states = {"1":"Andaman and Nicobar (AN)","2":"Andhra Pradesh (AP)","3":"Arunachal Pradesh (AR)","4":"Assam (AS)","5":"Bihar (BR)","6":"Chandigarh (CH)","7":"Chhattisgarh (CG)","8":"Dadra and Nagar Haveli (DN)","9":"Daman and Diu (DD)","10":"Delhi (DL)","11":"Goa (GA)","12":"Gujarat (GJ)","13":"Haryana (HR)","14":"Himachal Pradesh (HP)","15":"Jammu and Kashmir (JK)","16":"Jharkhand (JH)","17":"Karnataka (KA)","18":"Kerala (KL)","19":"Lakshdweep (LD)","20":"Madhya Pradesh (MP)","21":"Maharashtra (MH)","22":"Manipur (MN)","23":"Meghalaya (ML)","24":"Mizoram (MZ)","25":"Nagaland (NL)","26":"Odisha (OD)","27":"Puducherry (PY)","28":"Punjab (PB)","29":"Rajasthan (RJ)","30":"Sikkim (SK)","31":"Tamil Nadu (TN)","32":"Telangana (TG)","33":"Tripura (TR) ","34":"Uttar Pradesh (UP)","35":"Uttarakhand (UK)","36":"West Bengal (WB)","":"Select State"};
             $rootScope.user = userID;
             $rootScope.schoolName = schoolName;
             $http.get('http://greenschoolsprogramme.org/audit2017/api/Gsp/states/stateid/' + state)
@@ -298,6 +300,28 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
           'menuContent': {
             templateUrl: 'templates/help.html',
             controller: 'helpCtrl'
+          }
+        }
+      })
+
+      .state('app.settings', {
+        cache: false,
+        url: '/settings',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/user_settings.html',
+            controller: 'settingsCtrl'
+          }
+        }
+      })
+
+      .state('app.syncFromServer', {
+        cache: false,
+        url: '/sync-from-server',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/sync_from_server.html',
+            controller: 'syncFromServerCtrl'
           }
         }
       })

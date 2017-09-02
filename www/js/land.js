@@ -178,9 +178,10 @@ angular.module('starter.land', [])
     };
 
     $scope.goToPrev = function () {
+      console.log('going previous to food');
       ValidationService.saveData($scope.land, 5).then(function () {
         AppServiceAPI.sync(5).then(function () {
-          $scope.go('app.food');
+          $state.go('app.food');
         });
       });
     };

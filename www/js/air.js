@@ -2,57 +2,78 @@ angular.module('starter.air', [])
 
   .controller('air1Ctrl', function ($scope, $rootScope, $state, $window, $stateParams, AppServiceAPI, $ionicModal,
                                     $ionicPlatform, $ionicPopup, $sce, $cordovaFileTransfer, $cordovaFile,
-                                    $cordovaActionSheet, $cordovaCamera, ValidationService) {
+                                    $cordovaActionSheet, $cordovaCamera, ValidationService, $ionicLoading, UploadService) {
 
     'use strict';
+
     //File Upload Code Starts Here
     $scope.images = {
-      'puc_certificate': [],
-      '': []
+      PUC_Certificate: [],
+      Fuels: [],
+      Air_Quality_Monitoring: [],
+      Supporting_Document_Air: []
     };
 
-    $scope.takepic = function () {
-      console.log('inside take pic');
-      var actionSheetOptions = {
-        title: 'Select a picture/document',
-        buttonLabels: ['Camera', 'Choose from device'],
-        addCancelButtonWithLabel: 'Cancel',
-        androidEnableCancelButton: true
-      };
-      $ionicPlatform.ready(function () {
-        $cordovaActionSheet.show(actionSheetOptions).then(function (btnIndex) {
-          if (btnIndex === 2) {
-            $scope.cameraFunc(Camera.PictureSourceType.PHOTOLIBRARY);
-          } else if (btnIndex === 1) {
-            $scope.cameraFunc(Camera.PictureSourceType.CAMERA);
-          }
+    $scope.showLoading = function (message) {
+      $ionicLoading.show({
+        template: '<p>Loading...</p><ion-spinner></ion-spinner><p>' +
+        message + '</p>'
+      });
+    };
+
+    $scope.hide = function () {
+      $ionicLoading.hide();
+    };
+
+    $scope.get0List = function (n) {
+      var arr = [];
+      for(var i = 0; i < n; i++) {
+        arr.push(i);
+      }
+      return arr;
+    };
+
+    $scope.takepic = function (data_id) {
+      var num_images = $scope.images[data_id].length;
+      if (num_images >= 3) {
+        $scope.showPopup('Alert', "Can't upload more than 3 images in one question from mobile");
+      }
+      else {
+        $ionicPlatform.ready().then(function () {
+          UploadService.takePic().then(function (imageData) {
+            // console.log('Image data: ' + imageData);
+            $scope.images[data_id].push("data:image/jpeg;base64," + imageData);
+          }, function (err) {
+            console.error("Error in getting picture: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error("Error in platform ready: " + JSON.stringify(err));
         });
-      });
+      }
     };
 
-    $scope.cameraFunc = function (picType) {
-      var options = {
-        quality: 50,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: picType,
-        allowEdit: false,
-        targetWidth: 600,
-        targetHeight: 500,
-        encodingType: Camera.EncodingType.JPEG,
-        popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: false,
-        correctOrientation: true
-      };
-      $cordovaCamera.getPicture(options).then(function (imageData) {
-        $scope.editimage = "data:image/jpeg;base64," + imageData;
-        $scope.images.push($scope.editimage);
-      }, function (err) {
-        console.log('Error in get picture: ' + JSON.stringify(err));
-      });
+    $scope.upload = function (data_id) {
+      $scope.showLoading('Uploading, please wait');
+      var images = $scope.images[data_id];
+      var numImages = images.length;
+      if (numImages <= 0) {
+        $scope.showPopup('Warning', "Please select an image first");
+      }
+      else {
+        for (var i = 0; i < images.length; i++) {
+          var image_data = images[i];
+          var ques = 'mobile_' + i;
+          if (image_data) {
+            UploadService.uploadImage(image_data, data_id, ques);
+          }
+        }
+        $scope.hide();
+        $scope.showPopup('Success', numImages + " images uploaded successfully");
+      }
     };
 
-    $scope.upload = function () {
-      ValidationService.uploadImages($scope.images);
+    $scope.remove = function (data_id) {
+      $scope.images[data_id].pop();
     };
 
     $scope.air = {
@@ -318,10 +339,10 @@ angular.module('starter.air', [])
       var numNo = 0;
       for (var i = 0; i < (qIDs.length - 1); i++) {
         var val = $scope.air[qIDs[i]];
-        if (val.id == 1) {
+        if (val === 'Yes') {
           numYes += 1;
         }
-        else if (val.id == 2) {
+        else if (val === 'No') {
           numNo += 1;
         }
       }
@@ -388,6 +409,15 @@ angular.module('starter.air', [])
       return false;
     };
 
+    $scope.updateQ6A3 = function () {
+      var qID = 'Q6A3';
+      var val = $scope.air[qID];
+      if (val === 'N') {
+        $scope.air.Q6A3S1 = null;
+      }
+
+    };
+
     $scope.validateQ6B = function () {
       if ($scope.getAbsVal('Q6A2S1T1')) {
         return true;
@@ -400,8 +430,14 @@ angular.module('starter.air', [])
     };
 
     $scope.validateQ6D = function () {
-      if ($scope.validVal('Q6A3')) {
-        return $scope.validVal('Q6A3S1');
+      var val = $scope.air.Q6A3;
+      if (val) {
+        if (val === 'N') {
+          return true;
+        }
+        else {
+          return $scope.validVal('Q6A3S1');
+        }
       }
       return false;
     };
@@ -553,6 +589,7 @@ angular.module('starter.air', [])
         for (var qID in res) {
           $scope.air[qID] = res[qID];
         }
+        $scope.updateQ5Rows();
       });
     });
 

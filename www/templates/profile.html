@@ -163,7 +163,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    12. GSP Coordinator's Name:<span class="badge gbadge" on-hold="showToolTip('Q12')">?</span>
+                    12. GSP Coordinator's Name:<span class="badge gbadge" ng-click="showToolTip('Q12')">?</span>
                 </div>
                 <label class="item item-input">
                     <input ng-model="profile.coname" type="text" placeholder="GSP Coordinator Name"
@@ -205,7 +205,7 @@
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     15. Please select the appropriate category for your school:
-                    <span class="badge gbadge" on-hold="showToolTip('Q15')">?</span>
+                    <span class="badge gbadge" ng-click="showToolTip('Q15')">?</span>
                 </div>
 
                 <ion-item class="fs-14 item-text-wrap" ng-repeat="(key, value) in data.schoolCategories track by $index">
@@ -217,7 +217,7 @@
             <div class="card" ng-show="profile.Q1S1 == 1 || profile.Q1S1 == 2 || profile.Q1S1 == 4">
                 <div class="item item-text-wrap item-borderless">
                     16. How many shifts does your school have
-                    <span class="badge" on-hold="showToolTip('Q16')">?</span>
+                    <span class="badge" ng-click="showToolTip('Q16')">?</span>
                 </div>
 
                 <ion-item class="fs-14 item-text-wrap" ng-repeat="(key, value) in data.schoolShifts track by $index">

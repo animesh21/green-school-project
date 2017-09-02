@@ -1,0 +1,11 @@
+<ion-view title="Settings" ng-controller="settingsCtrl">
+    <ion-content scroll="false">
+        <ion-scroll direction="y" class="theroot">
+            <div class="list">
+                <ion-item ng-repeat="i in [1, 2, 3, 4]">
+                    <span class="button-positive" ng-click="data.setting_options[i].onClick()">{{ data.setting_options[i].name }}</span>
+                </ion-item>
+            </div>
+        </ion-scroll>
+    </ion-content>
+</ion-view>
