@@ -93,7 +93,7 @@ angular.module('starter.profile', [])
     };
 
     // value of progress for this section
-    $scope.progress = 5;
+    $scope.progress = $rootScope.completeness;
 
     $scope.validVal = function (questionID) {
       if ($scope.profile[questionID]) {
@@ -145,11 +145,9 @@ angular.module('starter.profile', [])
           isValidQues = $scope.validVal(qID);
         }
         if (!isValidQues) {
-          $rootScope.sectionsCompleted = false;
           return false;
         }
       }
-      $rootScope.sectionsCompleted = true;
       return true;
     };
 
@@ -177,6 +175,22 @@ angular.module('starter.profile', [])
     });
 
     $scope.quiz2 = function (profile) {
+      AppServiceAPI.updateUserCompleteness($rootScope.user, 5)
+        .then(function (res) {
+          console.log('Upldated completeness in profile: ' + JSON.stringify(res));
+          AppServiceAPI.getUserCompleteness($rootScope.user).then(function (res) {
+            console.log("User completeness from db: " + JSON.stringify(res));
+            if (res.rows.length > 0) {
+              var completeness_data = res.rows.item(0);
+              $rootScope.completeness = completeness_data.completeness;
+              console.log('User completeness set to : ' + JSON.stringify($rootScope.completeness));
+            }
+          }, function (err) {
+            console.error("Can't get completeness: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error('Error in updating completeness: ' + JSON.stringify(err));
+        });
       ValidationService.quiz2(profile, 0).then(function () {
         AppServiceAPI.sync(0).then(function () {
           $state.go('app.general1');

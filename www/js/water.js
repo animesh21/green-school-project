@@ -2,17 +2,98 @@ angular.module('starter.water', [])
 
   .controller('waterCtrl', function ($scope, $rootScope, $state, $window, $stateParams,
                                      AppServiceAPI, $ionicPlatform, $ionicModal, $sce, $ionicPopup,
-                                     ValidationService) {
+                                     ValidationService, $ionicLoading, UploadService) {
 
     'use strict';
 
-    $(document).ready(function () {
-      $('.progressBarIndicator').css("background", "red");
-    });
+    //File Upload Code Starts Here
+    $scope.images = {
+      Task_4_Supporting_docs: [],
+      Water_Treatment_Process: [],
+      Flow_Chart_Hand_Drwan: [],
+      Supporting_Document_Water: []
+    };
+
+    $scope.showLoading = function (message) {
+      $ionicLoading.show({
+        template: '<p>Loading...</p><ion-spinner></ion-spinner><p>' +
+        message + '</p>'
+      });
+    };
+
+    $scope.hide = function () {
+      $ionicLoading.hide();
+    };
+
+    $scope.get0List = function (n) {
+      var arr = [];
+      for(var i = 0; i < n; i++) {
+        arr.push(i);
+      }
+      return arr;
+    };
+
+    $scope.takepic = function (data_id) {
+      var num_images = $scope.images[data_id].length;
+      if (num_images >= 3) {
+        $scope.showPopup('Alert', "Can't upload more than 3 images in one question from mobile");
+      }
+      else {
+        $ionicPlatform.ready().then(function () {
+          UploadService.takePic().then(function (imageData) {
+            // var imageStr = "data:image/jpeg;base64," + imageData;
+            // console.log('Image data: ' + imageStr);
+            $scope.images[data_id].push(imageData);
+          }, function (err) {
+            console.error("Error in getting picture: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error("Error in platform ready: " + JSON.stringify(err));
+        });
+      }
+    };
+
+    $scope.upload = function (data_id) {
+      var images = $scope.images[data_id];
+      var numImages = images.length;
+      if (numImages <= 0) {
+        $scope.showPopup('Warning', "Please select an image first");
+      }
+      else {
+        $scope.showLoading('Uploading, please wait');
+        for (var i = 0; i < images.length; i++) {
+          var image_data = images[i];
+          var ques = 'mobile_' + i;
+          if (image_data) {
+            UploadService.uploadImage(image_data, data_id, ques);
+          }
+        }
+        $scope.hide();
+        $scope.showPopup('Success', numImages + " images uploaded successfully");
+      }
+    };
+
+    $scope.remove = function (data_id) {
+      $scope.images[data_id].pop();
+    };
+    // file upload code ends
 
     $scope.water = {};
 
     $scope.data = {
+
+      typesOfConsumption: {
+        1: 'Drinking',
+        2: 'Toilet flushing',
+        3: 'Personal cleaning',
+        4: 'Washing clothes',
+        5: 'Cooking',
+        6: 'Cleaning Utensils',
+        7: 'Washing Vegetables',
+        8: 'Mopping Floors',
+        9: 'Gardening',
+        10: 'Others'
+      },
 
       waterSupplier: {
         1: 'Municipality',
@@ -20,6 +101,22 @@ angular.module('starter.water', [])
         3: 'Public Health Engineering Department (PHED)',
         4: 'Private Supplier',
         5: 'School’s own supply (bore well, rainwater harvesting facility, etc)'
+      },
+
+      catchmentAreas: {
+        1: 'Rooftop',
+        2: 'Paved',
+        3: 'Unpaved',
+        4: 'Rooftop + paved',
+        5: 'Paved + unpaved',
+        6: 'Rooftop + unpaved',
+        7: 'Rooftop + paved + unpaved'
+      },
+
+      howHarvested: {
+        1: 'By storing',
+        2: 'By recharging groundwater',
+        3: 'Combination of both'
       },
 
       rainWaterUses: {
@@ -39,8 +136,8 @@ angular.module('starter.water', [])
         1: 'Underground',
         2: 'Overground',
         3: 'Semi-underground',
-        4: 'Underground + overground',
-        5: 'Overground + semi-underground',
+        4: 'Overground + semi-underground',
+        5: 'Underground + semi-underground',
         6: 'Underground + overground + semi-underground'
       },
 
@@ -49,6 +146,12 @@ angular.module('starter.water', [])
         2: 'RCC',
         3: 'Brick',
         4: 'Combination of PVC, RCC and Brick'
+      },
+
+      rechargeStructuresPrimary: {
+        1: 'Recharge well',
+        2: 'Recharge trenches',
+        3: 'Recharge through ponds/water bodies'
       },
 
       rechargeStructures: {
@@ -124,6 +227,11 @@ angular.module('starter.water', [])
         7: 'Are the toilets situated in the right location in terms of' +
            ' privacy and safety?',
         8: 'Is there sufficient light during day time?'
+      },
+
+      hygienePracticesPrimary: {
+        9: 'Do you use soap to wash hands before and after lunch?',
+        10: 'Do you use soap to wash hands before and after using the toilet?'
       },
 
       numToilets: {
@@ -203,7 +311,7 @@ angular.module('starter.water', [])
       $scope.showPopup('Tool Tip', toolTip);
     };
 
-    $scope.progress = 50;
+    $scope.progress = $rootScope.completeness;
 
     $scope.readMore = {};
 
@@ -309,14 +417,14 @@ angular.module('starter.water', [])
     };
 
     $scope.updateQ4 = function () {
-      var qIDs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (x) {
+      var qIDs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(function (x) {
         return 'Q4W' + x;
       });
       var totVal = 0;
       for (var i = 0; i < qIDs.length - 1; i++) {
         totVal += $scope.getAbsVal(qIDs[i]);
       }
-      $scope.water[qIDs[9]] = totVal;
+      $scope.water[qIDs[10]] = totVal;
     };
 
     $scope.updateQ6 = function () {
@@ -336,7 +444,7 @@ angular.module('starter.water', [])
       var qID, val, total = 0;
       for (var i = 0; i < (qIDs.length - 1); i++) {
         qID = qIDs[i];
-        val = $scope.water[qID] || 0;
+        val = parseInt($scope.water[qID]) || 0;
         if (val) {
           total += val;
         }
@@ -345,9 +453,23 @@ angular.module('starter.water', [])
       $scope.water[qIDs[3]] = total;
     };
 
+    $scope.updateQ20 = function () {
+      var qID1 = 'Q20W1';
+      var qID2, val1;
+      val1 = $scope.water[qID1];
+      if (val1) {
+        if (val1 === 'Y') {
+          qID2 = 'Q20W3';
+        }
+        else if (val1 === 'N') {
+          qID2 = 'Q20W2';
+        }
+        $scope.water[qID2] = null;
+      }
+    };
+
     $scope.validNext = function () {
       var validate = $scope.validateTeacher('W') && $scope.validateStudent('W');
-      $rootScope.sectionsCompleted = validate;
       return validate;
     };
     // validation functions end
@@ -390,6 +512,22 @@ angular.module('starter.water', [])
     };
 
     $scope.quiz2 = function (water) {
+      AppServiceAPI.updateUserCompleteness($rootScope.user, 75)
+        .then(function (res) {
+          console.log('Upldated completeness in profile: ' + JSON.stringify(res));
+          AppServiceAPI.getUserCompleteness($rootScope.user).then(function (res) {
+            console.log("User completeness from db: " + JSON.stringify(res));
+            if (res.rows.length > 0) {
+              var completeness_data = res.rows.item(0);
+              $rootScope.completeness = completeness_data.completeness;
+              console.log('User completeness set to : ' + JSON.stringify($rootScope.completeness));
+            }
+          }, function (err) {
+            console.error("Can't get completeness: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error('Error in updating completeness: ' + JSON.stringify(err));
+        });
       ValidationService.quiz2(water, 6).then(function () {
         AppServiceAPI.sync(6).then(function () {
           $state.go('app.waste');

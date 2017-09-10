@@ -1,4 +1,4 @@
-<ion-view title="Air" ng-controller="air1Ctrl">
+<ion-view title="Air {{ primaryText }}" ng-controller="air1Ctrl">
 
     <script type="text/javascript">
         function isNumberKey(evt) {
@@ -336,7 +336,7 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" ng-if="!primary">
 
                 <div class="item item-text-wrap item-borderless">
                     2. To calculate the Window-floor ratio of classrooms in your school, please fill the table
@@ -404,6 +404,30 @@
 
             </div>
 
+            <div class="card" ng-if="primary">
+
+                <div class="item item-text-wrap item-borderless">
+                    2. Are the rooms in your school well-ventilated
+                    <span class="badge" ng-click="showToolTip('Q2P')">?</span>
+                </div>
+
+                <div class="row">
+                    <div class="col col-60"> Total number of classrooms in your school</div>
+                        <input ng-model="air['Q5A1']" class="textbox"
+                               style="border:1px solid #111; text-align: center;" type="number"
+                               string-to-number readonly>
+                </div>
+
+                <div class="row ">
+                    <div class="col col-60"> Total number of well-ventilated classrooms in your school</div>
+                        <input ng-change="checkQ2P()" ng-model="air['Q5A2']" class="textbox"
+                               style="border:1px solid #111; text-align: center;" type="number"
+                               string-to-number min="0"
+                               onkeypress="return isNumberKey(event);">
+                </div>
+
+            </div>
+
             <div class="list" style="margin-left: 5px;margin-right: 5px">
                 <strong>Task 3: How eco-friendly are the vehicles in your school?</strong><br>
                 <p>
@@ -450,7 +474,7 @@
                 </ion-item>
             </div>
 
-            <div class="card" ng-show="air['Q6A1'] >= 3">
+            <div class="card" ng-if="air['Q6A1'] >= 3 && !primary">
                 <div class="item item-text-wrap item-borderless">
                     3(a) If your school uses buses (hired, operator-owned or school owned),
                     then does your school have “road worthiness certificate”?
@@ -471,7 +495,7 @@
             <div class="card" ng-show="air['Q6A1'] >= 3">
 
                 <div class="item item-text-wrap item-borderless">
-                    3(b) Provide details of school-owned motorised vehicles
+                    <span ng-if="primary">3(a)</span><span ng-if="!primary">3(b)</span> Provide details of school-owned motorised vehicles
                     <span class="badge" ng-click="showToolTip('Q3B')">?</span>
                 </div>
 
@@ -624,8 +648,8 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col col-20">Annual road worthiness certificate(Yes / No){{ air.Q6A2S1B6 }}</div>
+                <div class="row" ng-if="!primary">
+                    <div class="col col-20">Annual road worthiness certificate(Yes / No)</div>
                     <div class="col">
                         <select ng-model="air.Q6A2S1B6" ng-change="updateQ6B()" class="fs-20">
                             <option ng-repeat="option in data.Q3Options" value="{{ option.name }}">
@@ -673,13 +697,17 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
-                    <label class="col"><b>PUC certificates of the buses</b></label>
+                    <label class="col">
+                        <b ng-if="!primary">PUC certificates of the buses</b>
+                        <b ng-if="primary">Picture of school owned vehicle and parking area</b>
+                    </label>
                     <button class="button button-small button-assertive" ng-click="takepic('PUC_Certificate')" type="button">Take Picture</button>
                     <button class="button button-small button-assertive" type="button" ng-click="remove('PUC_Certificate')">Remove Picture</button>
                     <div class="col col-25">Uploaded Images:</div>
                     <div class="col" ng-if="images.PUC_Certificate.length > 0"
                          ng-repeat="i in get0List(images.PUC_Certificate.length)">
-                        <img src="{{ images.PUC_Certificate[i] }}" height="100" width="100" alt="PUC certificate">
+                        <!--<img src="{{ images.PUC_Certificate[i] }}" image-u-r-l="{{ images.PUC_Certificate[i] }}" height="100" width="100" alt="PUC certificate">-->
+                        <img src="" image-u-r-l="{{ images.PUC_Certificate[i] }}" height="100" width="100" alt="PUC certificate">
                     </div>
                 </div>
 
@@ -692,7 +720,7 @@
             <div class="card" ng-show="air['Q6A1'] >= 3">
 
                 <div class="item item-text-wrap item-borderless">
-                    3(c) Specify the type of fuel used by your school’s vehicles:
+                    <span ng-if="!primary">3(c)</span><span ng-if="primary">3(b)</span> Specify the type of fuel used by your school’s vehicles:
                     <span class="badge" ng-click="showToolTip('Q3C')">?</span>
                 </div>
 
@@ -979,7 +1007,7 @@
                     <div class="col"></div>
                 </div>
 
-                <div class="list" style="padding-left: 20px">
+                <div class="list" style="padding-left: 20px" ng-if-start="!primary">
                     <b>Please upload picture of supporting documents:</b>
                     <span>
                         Uploaded files must be in .jpg, .jpeg format. File
@@ -995,7 +1023,7 @@
                     <div class="col col-25">Uploaded Images:</div>
                     <div class="col" ng-if="images.Fuels.length > 0"
                          ng-repeat="i in get0List(images.Fuels.length)">
-                        <img src="{{ images.Fuels[i] }}" height="100" width="100" alt="Fuel Bills">
+                        <img src="" image-u-r-l="{{ images.Fuels[i] }}" height="100" width="100" alt="Fuel Bills">
                     </div>
                 </div>
 
@@ -1005,7 +1033,7 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="air['Q6A1'] >= 3">
+            <div class="card" ng-if="air['Q6A1'] >= 3 && !primary">
                 <div class="item item-text-wrap item-borderless">
                     3(d) Is CNG available in your state?
                 </div>
@@ -1021,7 +1049,7 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="air.Q6A1 >= 3 && air.Q6A3 == 'Y'">
+            <div class="card" ng-if="air.Q6A1 >= 3 && air.Q6A3 == 'Y' && !primary">
                 <div class="item item-text-wrap item-borderless">
                     3(e) Is CNG available in your area?
                 </div>
@@ -1282,7 +1310,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    5. How many students suffer from respiratory problems ?
+                    5. How many students suffer from <span ng-if="!primary">respiratory</span><span ng-if="primary">breathing and coughing</span> problems ?
                 </div>
 
                 <div class="list">
@@ -1296,7 +1324,7 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" ng-if-start="!primary">
                 <div class="item item-text-wrap item-borderless">
                     6. Does the school laboratory have air quality monitoring equipment?
                 </div>
@@ -1327,7 +1355,7 @@
                     <div class="col col-25">Uploaded Images:</div>
                     <div class="col" ng-if="images.Air_Quality_Monitoring.length > 0"
                          ng-repeat="i in get0List(images.Air_Quality_Monitoring.length)">
-                        <img src="{{ images.Air_Quality_Monitoring[i] }}" height="100" width="100" alt="Air Quality Monitoring">
+                        <img src="" image-u-r-l="{{ images.Air_Quality_Monitoring[i] }}" height="100" width="100" alt="Air Quality Monitoring">
                     </div>
                 </div>
 
@@ -1337,7 +1365,7 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="air.Q9A1 == 'N'">
+            <div class="card" ng-show="air.Q9A1 == 'N'" ng-if-end>
                 <div class="item item-text-wrap item-borderless">
                     6(a) If No, is there an air quality monitoring station
                     (private or government) close to your school?
@@ -1370,7 +1398,7 @@
                     <div class="col col-25">Uploaded Images:</div>
                     <div class="col" ng-if="images.Supporting_Document_Air.length > 0"
                          ng-repeat="i in get0List(images.Supporting_Document_Air.length)">
-                        <img src="{{ images.Supporting_Document_Air[i] }}" height="100" width="100" alt="Supporting Document Air">
+                        <img src="" image-u-r-l="{{ images.Supporting_Document_Air[i] }}" height="100" width="100" alt="Supporting Document Air">
                     </div>
                 </div>
 
@@ -1390,7 +1418,7 @@
                     </a>
                     &nbsp;
                     <a class="button background-color text-white"
-                       ng-disabled="!validNext()" ion-chevron-right nav-clear ng-click="validateQ7()">
+                       ng-disabled="(!primary && !validNext()) || (primary && !validNextPrimary())" ion-chevron-right nav-clear ng-click="validateQ7()">
                         NEXT
                     </a>
                     &nbsp;

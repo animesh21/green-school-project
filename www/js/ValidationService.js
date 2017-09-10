@@ -87,14 +87,19 @@ angular.module('starter.validation', [])
       },
 
       logoutUser: function () {
-        AppServiceAPI.updateUser($rootScope.user).then(function (res) {
+        AppServiceAPI.logoutUser($rootScope.user).then(function (res) {
           console.log('Logged out user from db: ' + JSON.stringify(res.rowsAffected));
+          AppServiceAPI.deleteAllAnswers($rootScope.user).then(function (res) {
+            console.log("Deleted all the answers from the database: " + JSON.stringify(res));
+          }, function (err) {
+            console.error("Error in deleting answers: " + JSON.stringify(err));
+          });
+          $rootScope.school = null;
+          $rootScope.user = null;
+          $state.go('login');
         }, function (err) {
           console.error("Can't logout user from db: " + JSON.stringify(err));
         });
-        $rootScope.school = null;
-        $rootScope.user = null;
-        $state.go('login');
       },
 
       getData: function (sectionID) {

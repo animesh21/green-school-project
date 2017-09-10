@@ -139,71 +139,75 @@ angular.module('starter.home', [])
     };
 
     $scope.general = function () {
-      if (true) {
+      if ($rootScope.completeness >= 5) {
         $state.go('app.general1');
       }
       else {
-        $scope.showPopup('Alert', "Please complete previous section first");
+        $scope.showPopup('Alert', "Please complete profile section first");
       }
     };
 
     $scope.air = function () {
-      if (true) {
+      if ($rootScope.completeness >= 10) {
         $state.go('app.air1');
       }
       else {
-        $scope.showPopup('Alert', "Please complete previous section first");
+        $scope.showPopup('Alert', "Please complete general section first");
       }
     };
 
     $scope.energy = function () {
-      if (true) {
+      if ($rootScope.completeness >= 20) {
         $state.go('app.energy');
       }
       else {
-        $scope.showPopup('Alert', "Please complete previous section first");
+        $scope.showPopup('Alert', "Please complete air section first");
       }
     };
 
     $scope.food = function () {
-      if (true) {
+      if ($rootScope.completeness >= 30) {
         $state.go('app.food');
       }
       else {
-        $scope.showPopup('Alert', "Please complete previous section first");
+        $scope.showPopup('Alert', "Please complete energy section first");
       }
     };
 
     $scope.land = function () {
-      if (true) {
+      if ($rootScope.completeness >= 40) {
         $state.go('app.land');
       }
       else {
-        $scope.showPopup('Alert', "Please complete previous section first");
+        $scope.showPopup('Alert', "Please complete food section first");
       }
     };
 
     $scope.water = function () {
-      if (true) {
+      if ($rootScope.completeness >= 50) {
         $state.go('app.water');
       }
       else {
-        $scope.showPopup('Alert', "Please complete previous section first");
+        $scope.showPopup('Alert', "Please complete land section first");
       }
     };
 
     $scope.waste = function () {
-      if (true) {
+      if ($rootScope.completeness >= 75) {
         $state.go('app.waste');
       }
       else {
-        $scope.showPopup('Alert', "Please complete previous section first");
+        $scope.showPopup('Alert', "Please complete water section first");
       }
     };
 
     $scope.feedback = function () {
-      // $window.location.reload(true);
-      $state.go('app.feedback');
+      if ($rootScope.completeness >= 100) {
+        $state.go('app.feedback');
+      }
+      else {
+        $scope.showPopup('Alert', "Please complete the survey first");
+      }
     };
 
   })

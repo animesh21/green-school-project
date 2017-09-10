@@ -1,8 +1,7 @@
 angular.module('starter.general', [])
 
   .controller('gen1Ctrl', function ($scope, $rootScope, $state, $window, $stateParams,
-                                    AppServiceAPI, $ionicPlatform, $ionicPopup, ValidationService,
-                                    $timeout) {
+                                    AppServiceAPI, $ionicPlatform, $ionicPopup, ValidationService) {
     $(document).ready(function () {
       $('.progressBarIndicator').css("background", "red");
     });
@@ -58,12 +57,13 @@ angular.module('starter.general', [])
 
     // function of displaying tooltip
     $scope.showToolTip = function (qNo) {
+      console.log('Showing tooltip: ' + qNo);
       var toolTip = $scope.toolTips[qNo];
       $scope.showPopup('Tool Tip', toolTip);
     };
 
     // progress corresponding to current section
-    $scope.progress = 5;
+    $scope.progress = $rootScope.completeness;
 
     // function for getting answer values from other sections(from db)
     $scope.getAnswer = function (questionID) {
@@ -135,11 +135,25 @@ angular.module('starter.general', [])
         }
         if (val1 <= 5 && val2 <= 5) {
           $scope.general.Q10G1 = 2;  // GSP audit for primary section
+          AppServiceAPI.updateUserPrimary($rootScope.user, 1).then(function (res) {
+            console.log('Setting to primary: ' + JSON.stringify(res));
+          }, function (err) {
+            console.error('Error in setting to primary: ' + JSON.stringify(err));
+          });
+          $rootScope.primary = true;
+          $rootScope.primaryText = "\(Primary\)";
         }
         else {
           $scope.general.Q10G1 = 1;  // Regular GSP audit
+          AppServiceAPI.updateUserPrimary($rootScope.user, 0).then(function (res) {
+            console.log('Setting to primary: ' + JSON.stringify(res));
+          }, function (err) {
+            console.error('Error in setting to primary: ' + JSON.stringify(err));
+          });
+          $rootScope.primary = false;
+          $rootScope.primaryText = "";
         }
-        console.log('Primary updated: ' + $scope.general.Q10G1);
+        // console.log('Primary updated: ' + $scope.general.Q10G1);
       }
     };
 
@@ -176,8 +190,12 @@ angular.module('starter.general', [])
       $scope.validateQ4() && $scope.validVal('Q5G1') &&
       $scope.validVal('Q6G1') && $scope.validVal('Q8G1') &&
       $scope.validVal('Q9G1'));
-      $rootScope.sectionsCompleted = validated;  // TODO: Set it to numeric value of the section
-      return validated;
+      if (validated) {
+        return true;
+      }
+      else {
+        return false;
+      }
     };
 
     $scope.updateNumStudents = function (rowNum) {
@@ -269,6 +287,22 @@ angular.module('starter.general', [])
     });
 
     $scope.quiz2 = function (general) {
+      AppServiceAPI.updateUserCompleteness($rootScope.user, 10)
+        .then(function (res) {
+          console.log('Upldated completeness in general: ' + JSON.stringify(res));
+          AppServiceAPI.getUserCompleteness($rootScope.user).then(function (res) {
+            console.log("User completeness from db: " + JSON.stringify(res));
+            if (res.rows.length > 0) {
+              var completeness_data = res.rows.item(0);
+              $rootScope.completeness = completeness_data.completeness;
+              console.log('User completeness set to : ' + JSON.stringify($rootScope.completeness));
+            }
+          }, function (err) {
+            console.error("Can't get completeness: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error('Error in updating completeness: ' + JSON.stringify(err));
+        });
       ValidationService.quiz2(general, 1).then(function () {
         AppServiceAPI.sync(1).then(function () {
           $state.go('app.air1');

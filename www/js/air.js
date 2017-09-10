@@ -42,7 +42,8 @@ angular.module('starter.air', [])
         $ionicPlatform.ready().then(function () {
           UploadService.takePic().then(function (imageData) {
             // console.log('Image data: ' + imageData);
-            $scope.images[data_id].push("data:image/jpeg;base64," + imageData);
+            // $scope.images[data_id].push("data:image/jpeg;base64," + imageData);
+            $scope.images[data_id].push(imageData);
           }, function (err) {
             console.error("Error in getting picture: " + JSON.stringify(err));
           });
@@ -53,13 +54,13 @@ angular.module('starter.air', [])
     };
 
     $scope.upload = function (data_id) {
-      $scope.showLoading('Uploading, please wait');
       var images = $scope.images[data_id];
       var numImages = images.length;
       if (numImages <= 0) {
         $scope.showPopup('Warning', "Please select an image first");
       }
       else {
+        $scope.showLoading('Uploading, please wait');
         for (var i = 0; i < images.length; i++) {
           var image_data = images[i];
           var ques = 'mobile_' + i;
@@ -101,6 +102,9 @@ angular.module('starter.air', [])
     };
 
     $scope.toolTips = {
+      'Q2P': "Survey all the classrooms in your school. Consider a classroom as well" +
+      " ventilated if it has crossed ventilation – windows on one wall and door/s on" +
+      " opposite or adjacent wall.",
       'Q3B': "Schools who uses a combination of school-owned and operator-owned" +
       " vehicles has to upload information only about school-owned vehicles." +
       " Do not add any personal vehicles.",
@@ -122,7 +126,7 @@ angular.module('starter.air', [])
       $scope.showPopup('Tool Tip', toolTip);
     };
 
-    $scope.progress = 10;
+    $scope.progress = $rootScope.completeness;
 
     $scope.roomRange = [];
 
@@ -297,6 +301,11 @@ angular.module('starter.air', [])
     };
 
     $scope.updateQ5Rows = function () {
+      // for primary section
+      if ($rootScope.primary) {
+        $scope.air.Q5A1 = parseInt($scope.air.Q4A1);
+      }
+
       var numRooms = parseInt($scope.air.Q4A1);
       var range = [];
       var minVal = 1;
@@ -546,10 +555,51 @@ angular.module('starter.air', [])
         $scope.validVal('Q4A1') && $scope.validateQ5() &&
         $scope.validateQ6() &&
         $scope.validVal('Q8A1') && $scope.validateQ9();
-      $rootScope.sectionsCompleted = validate;
-      return validate;
+      if (validate) {
+        return true;
+      }
+      else {
+        return false;
+      }
     };
     // end validation functions
+
+    // primary  section validations
+    $scope.checkQ2P = function () {
+      var val1 = $scope.air.Q5A1;
+      var val2 = $scope.air.Q5A2;
+      if (val2 > val1) {
+        $scope.air.Q5A2 = val1;
+        $scope.showPopup("Alert", "Number of ventilated rooms can not exceed total" +
+          " number of rooms i.e. " + val1);
+      }
+    };
+
+    $scope.validateQ6Primary = function () {
+      var val = $scope.getAbsVal('Q6A1');
+      if (val) {
+        if (val >= 1 && val <= 2) {
+          return true;
+        }
+        else {
+          return $scope.validateQ6B() && $scope.validateQ6C();
+        }
+      }
+    };
+
+    $scope.validNextPrimary = function () {
+      var validate = $scope.validateTeacher('A') && $scope.validateStudent('A') &&
+        $scope.validVal('Q4A1') && $scope.validVal('Q5A2') &&
+        $scope.validateQ6Primary() &&
+        $scope.validVal('Q8A1');
+
+      if (validate) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    };
 
     $scope.saveData = function () {
       ValidationService.saveData($scope.air, 2).then(function () {
@@ -594,6 +644,22 @@ angular.module('starter.air', [])
     });
 
     $scope.quiz2 = function (air) {
+      AppServiceAPI.updateUserCompleteness($rootScope.user, 20)
+        .then(function (res) {
+          console.log('Upldated completeness in air: ' + JSON.stringify(res));
+          AppServiceAPI.getUserCompleteness($rootScope.user).then(function (res) {
+            console.log("User completeness from db: " + JSON.stringify(res));
+            if (res.rows.length > 0) {
+              var completeness_data = res.rows.item(0);
+              $rootScope.completeness = completeness_data.completeness;
+              console.log('User completeness set to : ' + JSON.stringify($rootScope.completeness));
+            }
+          }, function (err) {
+            console.error("Can't get completeness: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error('Error in updating completeness: ' + JSON.stringify(err));
+        });
       ValidationService.quiz2(air, 2).then(function () {
         AppServiceAPI.sync(2).then(function () {
           $state.go('app.energy');

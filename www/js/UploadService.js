@@ -43,11 +43,14 @@ angular.module('starter.upload', [])
     };
 
     var _uploadImage = function (image_data, data_id, ques) {
-      var server = 'http://studio-tesseract.co/GSP/upload.php';
+      var server = 'http://www.greenschoolsprogramme.org/audit2017/upload.php';
+      var userID = $rootScope.user;
+      console.log("uploading image with userID: " + userID);
       var username = $rootScope.schoolName.replace(/ /g, '_');
       var fileName = username + '_' + data_id + '_' + ques + '.jpg';
       var data = {
-        fileName: fileName
+        fileName: fileName,
+        user_id: userID
       };
       data.profile_image = image_data;
       var req = {

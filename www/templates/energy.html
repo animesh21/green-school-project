@@ -1,4 +1,4 @@
-<ion-view title="Energy" ng-controller="energyCtrl">
+<ion-view title="Energy {{ primaryText }}" ng-controller="energyCtrl">
 
     <script type="text/javascript">
         function isNumberKey(evt) {
@@ -357,7 +357,7 @@
                     <div class="col col-25">Uploaded Images:</div>
                     <div class="col" ng-if="images.Electricity_Bill.length > 0"
                          ng-repeat="i in get0List(images.Electricity_Bill.length)">
-                        <img src="{{ images.Electricity_Bill[i] }}" height="100" width="100" alt="Electricity Bill">
+                        <img src="" image-u-r-l="{{ images.Electricity_Bill[i] }}" height="100" width="100" alt="Electricity Bill">
                     </div>
                 </div>
 
@@ -390,7 +390,7 @@
 
             </div>
 
-            <div class="card">
+            <div class="card" ng-if="!primary">
 
                 <div class="item item-text-wrap item-borderless">
                     3. Provide the details of total energy consumed by the school:
@@ -453,7 +453,7 @@
                     <div class="col col-25">Uploaded Images:</div>
                     <div class="col" ng-if="images.Fuels_Bills.length > 0"
                          ng-repeat="i in get0List(images.Fuels_Bills.length)">
-                        <img src="{{ images.Fuels_Bills[i] }}" height="100" width="100" alt="Fuels Bills">
+                        <img src="" image-u-r-l="{{ images.Fuels_Bills[i] }}" height="100" width="100" alt="Fuels Bills">
                     </div>
                 </div>
 
@@ -466,30 +466,50 @@
 
             </div>
 
+            <div class="card" ng-if="primary">
+
+                <div class="item item-text-wrap item-borderless">
+                    3. Please share if your school uses the following types of energy:
+                </div>
+
+                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 16, 8, 9, 10, 11, 12, 13]">
+                    <div class="col col-60">{{ data.sourcesOfEnergy[i] }}</div>
+                    <div class="col">
+                        <input type="radio" ng-model="energy['Q6E' + i]" ng-value="'Y'" name="q6ep{{ i }}">
+                        <span>Yes</span>
+                    </div>
+                    <div class="col">
+                        <input type="radio" ng-model="energy['Q6E' + i]" ng-value="'N'" name="q6ep{{ i }}">
+                        <span>No</span>
+                    </div>
+                </div>
+
+            </div>
+
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
                     4. What appliances does your school have?
                 </div>
 
                 <div class="row ">
-                    <div class="col">Appliances/Equipments</div>
-                    <div class="col"> Number</div>
-                    <div class="col"> Size</div>
-                    <div class="col"> BEE Star Rating</div>
+                    <div class="col col-40"><b>Appliances/Equipments</b></div>
+                    <div class="col"> <b>Number</b></div>
+                    <div class="col" ng-if-start="!primary"> <b>Size</b></div>
+                    <div class="col" ng-if-end><b>BEE Star Rating</b></div>
                 </div>
 
-                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7]">
-                    <div class="col">{{ data.appliances[i]['name'] }}</div>
+                <div class="row" ng-repeat="i in [2, 3, 4, 5, 6, 7, 8, 9, 10]">
+                    <div class="col col-40">{{ data.appliances[i]['name'] }}</div>
                     <div class="col"><input ng-model="energy['Q7E' + i + 'S1']" class="textbox"
                                             style="border:1px solid #111;text-align: center;"
                                             onkeypress="return isNumberKey(event);" type="number" string-to-number>
                     </div>
-                    <div class="col"><input ng-model="energy['Q7E' + i + 'S2']" class="textbox"
+                    <div class="col" ng-if-start="!primary"><input ng-model="energy['Q7E' + i + 'S2']" class="textbox"
                                             style="border:1px solid #111;text-align: center;"
                                             onkeypress="return isNumberKey(event);" type="number" string-to-number
                                             placeholder="(in {{ data.appliances[i]['unit'] }})">
                     </div>
-                    <div class="col"><input ng-model="energy['Q7E' + i + 'S3']" class="textbox"
+                    <div class="col" ng-if-end><input ng-model="energy['Q7E' + i + 'S3']" class="textbox"
                                             style="border:1px solid #111;text-align: center;"
                                             onkeypress="return isNumberKey(event);" type="number" string-to-number
                                             ng-change="validQ7S3('Q7E' + i + 'S3')"></div>
@@ -497,7 +517,7 @@
 
                 <hr/>
 
-                <div class="list" style="padding-left: 20px">
+                <div class="list" style="padding-left: 20px" ng-if-start="!primary">
                     <b>Please upload picture of supporting documents:</b>
                     <span>
                         Uploaded files must be in .jpg, .jpeg format. File
@@ -512,11 +532,11 @@
                     <div class="col col-25">Uploaded Images:</div>
                     <div class="col" ng-if="images.Five_Star_Appliances.length > 0"
                          ng-repeat="i in get0List(images.Five_Star_Appliances.length)">
-                        <img src="{{ images.Five_Star_Appliances[i] }}" height="100" width="100" alt="Five Star Appliances">
+                        <img src="" image-u-r-l="{{ images.Five_Star_Appliances[i] }}" height="100" width="100" alt="Five Star Appliances">
                     </div>
                 </div>
 
-                <div class="list" style="padding-left: 20px">
+                <div class="list" style="padding-left: 20px" ng-if-end>
                     <p>Please click upload after taking/selecting all the pictures.</p>
                     <button type="button" class="button button-assertive" ng-click="upload('Five_Star_Appliances')">
                         Upload
@@ -528,7 +548,7 @@
                 <strong>Task 3: Is your school using any renewable sources of energy?</strong>
             </div>
 
-            <div class="card">
+            <div class="card" ng-if="!primary">
                 <div class="item item-text-wrap item-borderless">
                     5. What is the average number of sunny days in your area ?
                 </div>
@@ -545,7 +565,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    6. Are there any alternate sources of energy employed/installed in your school?
+                    <span ng-if="primary">5.</span><span ng-if="!primary">6.</span> Are there any alternate sources of energy employed/installed in your school?
                 </div>
                 <div class="row " style="padding-left: 20px">
                     <div class="col fs-12">
@@ -576,7 +596,7 @@
                     <div class="col col-25">Uploaded Images:</div>
                     <div class="col" ng-if="images.Alternative_Source_of_Energy.length > 0"
                          ng-repeat="i in get0List(images.Alternative_Source_of_Energy.length)">
-                        <img src="{{ images.Alternative_Source_of_Energy[i] }}" height="100" width="100" alt="Alternative Source of Energy">
+                        <img src="" image-u-r-l="{{ images.Alternative_Source_of_Energy[i] }}" height="100" width="100" alt="Alternative Source of Energy">
                     </div>
                 </div>
 
@@ -591,7 +611,7 @@
 
             <div class="card" ng-show="energy.Q9E1 == 'Y'">
                 <div class="item item-text-wrap item-borderless">
-                    6(a) If yes, do you use:
+                    <span ng-if="primary">5(a)</span><span ng-if="!primary">6(a)</span> If yes, do you use:
                 </div>
                 <ion-item class="fs-14 item-text-wrap">
                     <input ng-model="energy.Q9E1S1" ng-change="checkQ9E1S(1, 9)" type="checkbox" ng-value="'1'"
@@ -620,7 +640,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    7. Does your school use solar water heater?
+                    <span ng-if="primary">6.</span><span ng-if="!primary">7.</span> Does your school use solar water heater?
                 </div>
                 <div class="row " style="padding-left: 20px">
                     <div class="col fs-12">
@@ -652,7 +672,7 @@
                     <div class="col col-25">Uploaded Images:</div>
                     <div class="col" ng-if="images.Supporting_Document_Energy.length > 0"
                          ng-repeat="i in get0List(images.Supporting_Document_Energy.length)">
-                        <img src="{{ images.Supporting_Document_Energy[i] }}" height="100" width="100" alt="Alternative Source of Energy">
+                        <img src="" image-u-r-l="{{ images.Supporting_Document_Energy[i] }}" height="100" width="100" alt="Alternative Source of Energy">
                     </div>
                 </div>
 
@@ -672,7 +692,7 @@
                     </a> &nbsp;
 
                     <a class="button background-color text-white"
-                       ng-disabled="!validNext()" ion-chevron-right nav-clear ng-click="quiz2(energy)">
+                       ng-disabled="(!primary && !validNext()) || (primary && !validNextPrimary())" ion-chevron-right nav-clear ng-click="quiz2(energy)">
                         NEXT
                     </a> &nbsp;
 

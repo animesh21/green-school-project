@@ -44,9 +44,9 @@ angular.module('starter.food', [])
       else {
         $ionicPlatform.ready().then(function () {
           UploadService.takePic().then(function (imageData) {
-            var imageStr = "data:image/jpeg;base64," + imageData;
-            console.log('Image data: ' + imageStr);
-            $scope.images[data_id].push(imageStr);
+            // var imageStr = "data:image/jpeg;base64," + imageData;
+            // console.log('Image data: ' + imageStr);
+            $scope.images[data_id].push(imageData);
           }, function (err) {
             console.error("Error in getting picture: " + JSON.stringify(err));
           });
@@ -57,13 +57,13 @@ angular.module('starter.food', [])
     };
 
     $scope.upload = function (data_id) {
-      $scope.showLoading('Uploading, please wait');
       var images = $scope.images[data_id];
       var numImages = images.length;
       if (numImages <= 0) {
         $scope.showPopup('Warning', "Please select an image first");
       }
       else {
+        $scope.showLoading('Uploading, please wait');
         for (var i = 0; i < images.length; i++) {
           var image_data = images[i];
           var ques = 'mobile_' + i;
@@ -128,7 +128,7 @@ angular.module('starter.food', [])
       $scope.showPopup('Tool Tip', toolTip);
     };
 
-    $scope.progress = 30;
+    $scope.progress = $rootScope.completeness;
 
     $scope.readMore = {};
 
@@ -150,8 +150,7 @@ angular.module('starter.food', [])
       11: 'Packaged chips',
       12: 'Bread butter',
       13: 'Sandwich',
-      14: 'Packaged Juice',
-      15: 'Other'
+      14: 'Packaged Juice'
     };
 
     $scope.tutorialURL = $sce.trustAsResourceUrl('https://www.youtube.com/embed/9r3Lwrd9BUs?enablejsapi=1');
@@ -311,7 +310,7 @@ angular.module('starter.food', [])
       var val = $scope.food.Q5F1;
       if (val) {
         var s1, s2, s3, s4;
-        if (val == 'Y') {
+        if (val === 'Y') {
           s1 = $scope.validVal('Q5F1S1');
           s2 = true;
           var qID2;
@@ -439,9 +438,30 @@ angular.module('starter.food', [])
              $scope.validateQ9AndQ10(9) && $scope.validateQ9AndQ10(10) &&
              $scope.validateQ11() && $scope.validateQ12() && $scope.validateQ13();
       $rootScope.sectionsCompleted = validate;
-      return validate;
+      if (validate) {
+        return true;
+      }
+      else {
+        return false;
+      }
     };
     // end validation functions
+
+    // primary section validations
+    $scope.validNextPrimary = function () {
+      var validate = $scope.validateTeacher('F') && $scope.validateStudent('F') &&
+             $scope.validVal('Q4F1') && $scope.validateQ5() &&
+             // $scope.validateQ7AndQ8(7) && $scope.validateQ7AndQ8(8) &&
+             $scope.validateQ9AndQ10(9) && $scope.validateQ9AndQ10(10) &&
+             $scope.validateQ11() && $scope.validateQ12() && $scope.validateQ13();
+      $rootScope.sectionsCompleted = validate;
+      if (validate) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    };
 
     // function for getting answer values from other sections
     $scope.getAnswer = function (questionID) {
@@ -494,6 +514,22 @@ angular.module('starter.food', [])
     });
 
     $scope.quiz2 = function (food) {
+      AppServiceAPI.updateUserCompleteness($rootScope.user, 40)
+        .then(function (res) {
+          console.log('Upldated completeness in food: ' + JSON.stringify(res));
+          AppServiceAPI.getUserCompleteness($rootScope.user).then(function (res) {
+            console.log("User completeness from db: " + JSON.stringify(res));
+            if (res.rows.length > 0) {
+              var completeness_data = res.rows.item(0);
+              $rootScope.completeness = completeness_data.completeness;
+              console.log('User completeness set to : ' + JSON.stringify($rootScope.completeness));
+            }
+          }, function (err) {
+            console.error("Can't get completeness: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error('Error in updating completeness: ' + JSON.stringify(err));
+        });
       ValidationService.quiz2(food, 4).then(function () {
         AppServiceAPI.sync(4).then(function () {
           $state.go('app.land');

@@ -80,7 +80,7 @@ angular.module('starter.login', [])
       $http.get("http://greenschoolsprogramme.org/audit2017/api/Gsp/users/email/" + email + "/password/" + password)
       // $http.get("http://127.0.0.1/GSP/api/Gsp/users/email/" + email + "/password/" + password)
         .then(function (response) {
-          // console.log('Response from API: ' + JSON.stringify(response));
+          console.log('Response from API: ' + JSON.stringify(response));
           if (!response.data.data) {
             $scope.hide();
             $scope.showPopup(

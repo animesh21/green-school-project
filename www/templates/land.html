@@ -1,4 +1,4 @@
-<ion-view title="Land" ng-controller="landCtrl">
+<ion-view title="Land {{ primaryText }}" ng-controller="landCtrl">
 
     <script type="text/javascript">
         function isNumberKey(evt) {
@@ -295,14 +295,15 @@
             </div>
 
             <div class="padding-bottom content fs-16">
-                <strong>Task 2: Measure the four critical areas of your school campus</strong>
+                <strong ng-if="!primary">Task 2: Measure the four critical areas of your school campus.</strong>
+                <strong ng-if="primary">Task 2: Identify the types of areas in your school.</strong>
             </div>
 
-            <div class="padding-bottom content fs-14">
+            <div class="padding-bottom content fs-14" ng-if-start="!primary">
                 To find out the land/ site area of your school, you need to measure:
             </div>
 
-            <div class="content" ><!--style="text-align: justify;">-->
+            <div class="content" ng-if-end><!--style="text-align: justify;">-->
                 <ul>
                     <li>Ground coverage area</li>
                     <li>Open Area (on-ground)</li>
@@ -345,7 +346,7 @@
                         office. Or else, measure the constructed spaces and use the formula for
                         calculating the areas of various shapes, such as a square or rectangle, to
                         derive the data and add them all.
-                    </span><br />
+                    </span><br/>
                     <a ng-click="toggleReadMore(2)">
                         <span ng-show="!readMore[2]">Read More</span>
                         <span ng-show="readMore[2]">Read Less</span>
@@ -353,7 +354,7 @@
                 </p>
             </div>
 
-            <div class="card">
+            <div class="card" ng-if="!primary">
 
                 <div class="item item-text-wrap item-borderless">
                     1. What is the total site/plot area of your school?
@@ -369,7 +370,8 @@
                     <div class="col col-10"></div>
                     <div class="col">Site area in square meter (m2)</div>
                     <div class="col"><input ng-model="land.Q4L1" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly></div>
+                                            style="border:1px solid #111;text-align: center;" type="number"
+                                            string-to-number readonly></div>
                 </div>
 
                 <div class="row">
@@ -516,9 +518,27 @@
                     </div>
                     <div class="col">
                         <input ng-model="land.Q4L12" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01" limit-to="3"
+                               style="border:1px solid #111;text-align: center;" type="number" min="1" step="0.01"
+                               limit-to="3"
                                string-to-number onkeypress="return isNumberKey(event);">
                     </div>
+                </div>
+
+            </div>
+
+            <div class="card" ng-if="primary">
+
+                <div class="row">
+                    <div class="col col-60"><b>1. Types of Area</b></div>
+                    <div class="col"><b>Numbers</b></div>
+                </div>
+
+                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7]">
+                    <div class="col col-60">{{ data.typesOfArea[i] }}</div>
+                    <div class="col"><input ng-model="land['Q4L' + i]" class="textbox"
+                                            style="border:1px solid #111;text-align: center;"
+                                            type="number" string-to-number
+                                            onkeypress="return isNumberKey(event)" ></div>
                 </div>
 
             </div>
@@ -538,19 +558,21 @@
                         that your school campus supports. Identify and count the various
                         species of plants and animals in your school.
                         <br/>
-                        <b> To collect data:</b> <br /> Make two teams of students. One for
+                        <b> To collect data:</b> <br/> Make two teams of students. One for
                         plant species and the other for animal species. Get the school gardener
                         and the biology teacher to accompany them. Count plant species and
-                        animal species that are visible to the naked eye.<br />
-                        Native (definition): a species that occurs naturally within a region,
+                        animal species that are visible to the naked eye.<br/>
+                        <span ng-if="!primary">
+                            Native (definition): a species that occurs naturally within a region,
                         either evolving there or arriving and becoming established without
-                        human assistance<br />
+                        human assistance<br/>
                         Exotic (definition): An exotic plant or animal, which is invasive,
-                        is a species that meets the following conditions:<br />
-                            1. Originate outside the local area.<br />
-                            2. Have the potential to spread long distances on its own.<br />
+                        is a species that meets the following conditions:<br/>
+                            1. Originate outside the local area.<br/>
+                            2. Have the potential to spread long distances on its own.<br/>
                             3. Once established, have the potential to out-compete native
-                                species in the wild.<br />
+                                species in the wild.<br/>
+                        </span>
                     </span>
                     <a ng-click="toggleReadMore(3)">
                         <span ng-show="!readMore[3]">Read More</span>
@@ -559,7 +581,7 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" ng-if="!primary">
                 <div class="item item-text-wrap item-borderless">
                     2. How many species of plants and animals exist in your school?
                 </div>
@@ -575,15 +597,18 @@
                     <div class="col">Plants</div>
                     <div class="col">
                         <input ng-model="land.Q5L1S1" ng-change="updateQ5(1)" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0" onkeypress="return isNumberKey(event)">
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0"
+                               onkeypress="return isNumberKey(event)">
                     </div>
                     <div class="col">
                         <input ng-model="land.Q5L1S2" ng-change="updateQ5(1)" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0" onkeypress="return isNumberKey(event)">
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0"
+                               onkeypress="return isNumberKey(event)">
                     </div>
                     <div class="col">
                         <input ng-model="land.Q5L1S3" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number
+                               readonly>
                     </div>
                 </div>
 
@@ -591,15 +616,77 @@
                     <div class="col">Animals</div>
                     <div class="col">
                         <input ng-model="land.Q5L2S1" ng-change="updateQ5(2)" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0" onkeypress="return isNumberKey(event)">
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0"
+                               onkeypress="return isNumberKey(event)">
                     </div>
                     <div class="col">
                         <input ng-model="land.Q5L2S2" ng-change="updateQ5(2)" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0" onkeypress="return isNumberKey(event)">
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0"
+                               onkeypress="return isNumberKey(event)">
                     </div>
                     <div class="col">
                         <input ng-model="land.Q5L2S3" class="textbox"
-                               style="border:1px solid #111;text-align: center;" type="number" string-to-number readonly>
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number
+                               readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" ng-if="primary">
+                <div class="item item-text-wrap item-borderless">
+                    2. How many types of plants are there in your school?
+                </div>
+
+                <div class="row ">
+                    <div class="col col-33"><b>Flowering</b></div>
+                    <div class="col col-33"><b>Fruiting</b></div>
+                    <div class="col col-34"><b>Total</b></div>
+                </div>
+
+                <div class="row ">
+                    <div class="col col-33">
+                        <input ng-model="land.Q5L1S1" ng-change="updateQ5(1)" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0"
+                               onkeypress="return isNumberKey(event)">
+                    </div>
+                    <div class="col col-33">
+                        <input ng-model="land.Q5L1S2" ng-change="updateQ5(1)" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0"
+                               onkeypress="return isNumberKey(event)">
+                    </div>
+                    <div class="col col-34">
+                        <input ng-model="land.Q5L1S3" class="textbox" style="border:1px solid #111;text-align: center;"
+                               type="number" string-to-number readonly>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card" ng-if="primary">
+                <div class="item item-text-wrap item-borderless">
+                    3. How many types of animals and birds are there in your school?
+                </div>
+
+                <div class="row ">
+                    <div class="col col-33"><b>Birds</b></div>
+                    <div class="col col-33"><b>Animals</b></div>
+                    <div class="col col-34"><b>Total</b></div>
+                </div>
+
+                <div class="row ">
+                    <div class="col col-33">
+                        <input ng-model="land.Q5L2S1" ng-change="updateQ5(2)" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0"
+                               onkeypress="return isNumberKey(event)">
+                    </div>
+                    <div class="col col-33">
+                        <input ng-model="land.Q5L2S2" ng-change="updateQ5(2)" class="textbox"
+                               style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0"
+                               onkeypress="return isNumberKey(event)">
+                    </div>
+                    <div class="col col-34">
+                        <input ng-model="land.Q5L2S3" class="textbox" style="border:1px solid #111;text-align: center;"
+                               type="number" string-to-number readonly>
                     </div>
                 </div>
             </div>
@@ -610,7 +697,8 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    3. Do you use chemical-based pesticides in your school green cover?
+                    <span ng-if="primary">4.</span><span ng-if="!primary">3.</span> Do you use chemical-based
+                    pesticides in your school green cover?
                 </div>
                 <div class="row " style="padding-left: 20px">
 
@@ -625,15 +713,49 @@
                 </div>
             </div>
 
-            <div class="card" ><!--style="margin-left: 5px;margin-right: 5px">-->
-                <strong>Upload supporting documents</strong><br>
-                Please upload the following supporting documents:<br>
-                Pictures of green cover<br>
-                Pictures of landscaped area<br>
-                Building construction plan<br>
-                Uploaded files must be in one of the following formats: PDF Document (.pdf), Word Document (.doc,
-                .docx), Image File (.jpg, .jpeg). File size per document should not exceed 500 KB.
-                <input fileread="land.LFL6" type="file">
+            <div class="card">
+                <div class="list" style="padding-left: 20px">
+                    <b>Please upload picture of supporting documents:</b>
+                    <span>
+                        Uploaded files must be in .jpg, .jpeg format. File
+                        size per document should not exceed 500 KB.
+                    </span>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <ul class="water-list">
+                        <li>
+                            Pictures of <span ng-if="primary">Kachcha(unpaved) playground with grass</span>
+                            <span ng-if="!primary">green cover</span>
+                        </li>
+                        <li>
+                            Pictures of <span ng-if="primary">Pucca(paved) playground</span>
+                            <span ng-if="!primary">landscaped area</span>
+                        </li>
+                        <li ng-if="!primary">
+                            Building construction plan
+                        </li>
+                    </ul>
+                    <button class="button button-assertive button-small" type="button"
+                            ng-click="takepic('Green_Cover')">Take Picture
+                    </button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Green_Cover')">
+                        Remove Picture
+                    </button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Green_Cover.length > 0"
+                         ng-repeat="i in get0List(images.Green_Cover.length)">
+                        <img src="" image-u-r-l="{{ images.Green_Cover[i] }}" height="100" width="100"
+                             alt="Green_Cover">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Green_Cover')">
+                        Upload
+                    </button>
+                </div>
             </div>
 
             <div class="list card">

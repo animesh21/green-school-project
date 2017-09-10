@@ -1,12 +1,93 @@
 angular.module('starter.land', [])
 
-  .controller('landCtrl', function ($scope, $rootScope, $state, $window, $stateParams,
-                                    AppServiceAPI, $ionicPlatform, $sce, $ionicPopup, $ionicModal, ValidationService) {
-    $(document).ready(function () {
-      $('.progressBarIndicator').css("background", "red");
-    });
+  .controller('landCtrl', function ($scope, $rootScope, $state, $window, $stateParams, AppServiceAPI,
+                                    $ionicPlatform, $sce, $ionicPopup, $ionicModal, ValidationService,
+                                    $ionicLoading, UploadService) {
+
+    'use strict';
+
+    //File Upload Code Starts Here
+    $scope.images = {
+      Green_Cover: []
+    };
+
+    $scope.showLoading = function (message) {
+      $ionicLoading.show({
+        template: '<p>Loading...</p><ion-spinner></ion-spinner><p>' +
+        message + '</p>'
+      });
+    };
+
+    $scope.hide = function () {
+      $ionicLoading.hide();
+    };
+
+    $scope.get0List = function (n) {
+      var arr = [];
+      for(var i = 0; i < n; i++) {
+        arr.push(i);
+      }
+      return arr;
+    };
+
+    $scope.takepic = function (data_id) {
+      var num_images = $scope.images[data_id].length;
+      if (num_images >= 3) {
+        $scope.showPopup('Alert', "Can't upload more than 3 images in one question from mobile");
+      }
+      else {
+        $ionicPlatform.ready().then(function () {
+          UploadService.takePic().then(function (imageData) {
+            // var imageStr = "data:image/jpeg;base64," + imageData;
+            // console.log('Image data: ' + imageStr);
+            $scope.images[data_id].push(imageData);
+          }, function (err) {
+            console.error("Error in getting picture: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error("Error in platform ready: " + JSON.stringify(err));
+        });
+      }
+    };
+
+    $scope.upload = function (data_id) {
+      var images = $scope.images[data_id];
+      var numImages = images.length;
+      if (numImages <= 0) {
+        $scope.showPopup('Warning', "Please select an image first");
+      }
+      else {
+        $scope.showLoading('Uploading, please wait');
+        for (var i = 0; i < images.length; i++) {
+          var image_data = images[i];
+          var ques = 'mobile_' + i;
+          if (image_data) {
+            UploadService.uploadImage(image_data, data_id, ques);
+          }
+        }
+        $scope.hide();
+        $scope.showPopup('Success', numImages + " images uploaded successfully");
+      }
+    };
+
+    $scope.remove = function (data_id) {
+      $scope.images[data_id].pop();
+    };
+    // file upload code ends
 
     $scope.land = {};
+
+    $scope.data = {
+      typesOfArea: {
+        1: 'No. of Playgrounds',
+        2: 'No. of Kachcha(unpaved) playgrounds with grass',
+        3: 'No. of Pucca(paved) playgrounds',
+        4: 'No. of constructed buildings - Academic',
+        5: 'No. of constructed buildings - Official',
+        6: 'No. of floors(does not include ground floor)',
+        7: 'Rooftop/Terrace Gardens'
+      }
+    };
 
     $scope.toolTips = {
       'Q1A': "Ideally, total green landscaped area on-ground available in" +
@@ -23,7 +104,7 @@ angular.module('starter.land', [])
       $scope.showPopup('Tool Tip', toolTip);
     };
 
-    $scope.progress = 40;
+    $scope.progress = $rootScope.completeness;
 
     $scope.readMore = {};
 
@@ -140,7 +221,6 @@ angular.module('starter.land', [])
 
     $scope.validNext = function () {
       var validate = $scope.validateTeacher('L') && $scope.validateStudent('L');
-      $rootScope.sectionsCompleted = validate;
       return validate;
     };
     // validation functions end
@@ -196,6 +276,22 @@ angular.module('starter.land', [])
     });
 
     $scope.quiz2 = function (land) {
+      AppServiceAPI.updateUserCompleteness($rootScope.user, 50)
+        .then(function (res) {
+          console.log('Upldated completeness in land: ' + JSON.stringify(res));
+          AppServiceAPI.getUserCompleteness($rootScope.user).then(function (res) {
+            console.log("User completeness from db: " + JSON.stringify(res));
+            if (res.rows.length > 0) {
+              var completeness_data = res.rows.item(0);
+              $rootScope.completeness = completeness_data.completeness;
+              console.log('User completeness set to : ' + JSON.stringify($rootScope.completeness));
+            }
+          }, function (err) {
+            console.error("Can't get completeness: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error('Error in updating completeness: ' + JSON.stringify(err));
+        });
       ValidationService.quiz2(land, 5).then(function () {
         AppServiceAPI.sync(5).then(function () {
           $state.go('app.water');

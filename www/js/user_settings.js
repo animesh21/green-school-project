@@ -4,7 +4,7 @@
 angular.module('starter.user_settings', [])
 
   .controller('settingsCtrl', function ($scope, $ionicHistory, $ionicPopup, $state,
-                                        AppServiceAPI, ValidationService) {
+                                        AppServiceAPI, ValidationService, $cordovaAppRate) {
 
     'use strict';
 
@@ -20,7 +20,7 @@ angular.module('starter.user_settings', [])
         },
         3: {
           name: 'Rate this app',
-          onClick: $scope.help
+          onClick: $scope.rateUs
         },
         4: {
           name: 'Sign out',
@@ -54,10 +54,17 @@ angular.module('starter.user_settings', [])
       $state.go('app.help');
     };
 
+    $scope.rateUs = function () {
+      $cordovaAppRate.preferences.storeAppURL = {
+        android: 'https://google.com/'
+      };
+      $cordovaAppRate.promptForRating();
+    };
+
     $scope.signout = function () {
       $ionicPopup.prompt({
         title: "Confirmation",
-        template: "<p>Do you really want to singout of the GSP app?</p>",
+        template: "<p>Do you really want to sign out of the GSP app?</p>",
         buttons: [
           {
             text: 'Cancel', onTap: function (e) {
@@ -71,7 +78,6 @@ angular.module('starter.user_settings', [])
             }, function (err) {
               console.log("Error while syncing: " + JSON.stringify(err));
             });
-
           }
           }
         ]

@@ -38,7 +38,7 @@
                 </div>
                 <div class="row " style="padding-left: 20px">
                     <input ng-model="feedback.Q1Fe1S1" class="textbox" limit-to="4"
-                           style="border:1px solid #111;text-align: center;" type="number"
+                           style="border:1px solid #111;text-align: center;" type="number" string-to-number
                            onkeypress="return isNumberKey(event)">
                 </div>
             </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="row " style="padding-left: 20px">
                     <input ng-model="feedback.Q1Fe1S2" class="textbox" limit-to="1"
-                           style="border:1px solid #111;text-align: center;" type="number"
+                           style="border:1px solid #111;text-align: center;" type="number" string-to-number
                            onkeypress="return isNumberKey(event)">
                 </div>
             </div>
@@ -194,7 +194,7 @@
                 </div>
                 <div class="row" ng-repeat="i in getList(4)">
                     <div class="col col-10">
-                        <input ng-model="waste.Q1Fe9" ng-value="i" type="radio" name="q1f9">
+                        <input ng-model="feedback.Q1Fe9" ng-value="i" type="radio" name="q1f9">
                     </div>
                     <div class="col">
                         {{ data.howManyTimes[i] }}
@@ -270,7 +270,8 @@
                 </div>
                 <div class="row" ng-repeat="i in getList(28)">
                     <div class="col col-10">
-                        <input ng-model="feedback['Q17Fe' + i]" type="checkbox">
+                        <input ng-model="feedback['Q17Fe' + i]"
+                               ng-checked="feedback['Q17Fe' + i] === 'true'" type="checkbox">
                     </div>
                     <div class="col">
                         {{ data.uploadedDocs[i] }}
@@ -285,7 +286,8 @@
                 </div>
                 <div class="row">
                     <div class="col col-10">
-                        <input ng-model="feedback.Q18Fe" type="checkbox" style="margin-left: 20%">
+                        <input ng-model="feedback.Q18Fe" ng-checked="feedback['Q18Fe'] === 'true'"
+                               type="checkbox" style="margin-left: 20%">
                     </div>
                     <div class="col">
                         Please enter my school for Green School Awards.

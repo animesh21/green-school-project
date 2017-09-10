@@ -1,10 +1,90 @@
 angular.module('starter.waste', [])
 
   .controller('wasteCtrl', function ($scope, $state, $window, $stateParams, AppServiceAPI, $rootScope,
-                                     $ionicPlatform, $ionicModal, $sce, $ionicPopup, ValidationService) {
-    $(document).ready(function () {
-      $('.progressBarIndicator').css("background", "red");
-    });
+                                     $ionicPlatform, $ionicModal, $sce, $ionicPopup, ValidationService,
+                                     $ionicLoading, UploadService) {
+
+    'use strict';
+
+    //File Upload Code Starts Here
+    $scope.images = {
+      Segregation_Source_Classrooms: [],
+      Audit_Team_Weighing_Solid_Waste: [],
+      Composting_Pit: [],
+      Recycling_Machine: [],
+      'E-Waste': [],
+      'E-waste_authorised_dealer': [],
+      Housekeeping: [],
+      Buring_Waste: [],
+      Waste_Policy: [],
+      Water_Policy: [],
+      School_Initiatives: [],
+      Audit_Team_Doing_Survey_Waste: []
+    };
+
+    $scope.showLoading = function (message) {
+      $ionicLoading.show({
+        template: '<p>Loading...</p><ion-spinner></ion-spinner><p>' +
+        message + '</p>'
+      });
+    };
+
+    $scope.hide = function () {
+      $ionicLoading.hide();
+    };
+
+    $scope.get0List = function (n) {
+      var arr = [];
+      for(var i = 0; i < n; i++) {
+        arr.push(i);
+      }
+      return arr;
+    };
+
+    $scope.takepic = function (data_id) {
+      var num_images = $scope.images[data_id].length;
+      if (num_images >= 3) {
+        $scope.showPopup('Alert', "Can't upload more than 3 images in one question from mobile");
+      }
+      else {
+        $ionicPlatform.ready().then(function () {
+          UploadService.takePic().then(function (imageData) {
+            // var imageStr = "data:image/jpeg;base64," + imageData;
+            // console.log('Image data: ' + imageStr);
+            $scope.images[data_id].push(imageData);
+          }, function (err) {
+            console.error("Error in getting picture: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error("Error in platform ready: " + JSON.stringify(err));
+        });
+      }
+    };
+
+    $scope.upload = function (data_id) {
+      var images = $scope.images[data_id];
+      var numImages = images.length;
+      if (numImages <= 0) {
+        $scope.showPopup('Warning', "Please select an image first");
+      }
+      else {
+        $scope.showLoading('Uploading, please wait');
+        for (var i = 0; i < images.length; i++) {
+          var image_data = images[i];
+          var ques = 'mobile_' + i;
+          if (image_data) {
+            UploadService.uploadImage(image_data, data_id, ques);
+          }
+        }
+        $scope.hide();
+        $scope.showPopup('Success', numImages + " images uploaded successfully");
+      }
+    };
+
+    $scope.remove = function (data_id) {
+      $scope.images[data_id].pop();
+    };
+    // file upload code ends
 
     $scope.waste = {};
 
@@ -64,8 +144,10 @@ angular.module('starter.waste', [])
             c1: 'GENERATE',
             c2: 'generated'
           },
-          qNum: 6
-
+          qNum: 6,
+          uploadName: 'Audit_Team_Weighing_Solid_Waste',
+          uploadText: ['Picture of audit team weighing solid waste',
+            'Picture of types of solid waste generated']
         },
         2: {
           task: 'Task 4: How much waste does your school treat/recycle?',
@@ -80,7 +162,9 @@ angular.module('starter.waste', [])
             c1: 'REUSE/RECYCLE',
             c2: 'reused/recycled'
           },
-          qNum: 8
+          qNum: 8,
+          uploadName: 'Composting_Pit',
+          uploadText: ['Pictures of recycling units - composting pit']
         }
       },
 
@@ -139,6 +223,19 @@ angular.module('starter.waste', [])
             1: 'Biomedical waste such as syringes, band–aids, expired medicines etc.'
           }
         }
+      },
+
+      wasteTypesPrimary: {
+        1: 'Garden waste/Horticulture waste',
+        2: 'Kitchen waste',
+        3: 'Paper',
+        4: 'Plastic',
+        5: 'Wood, glass, metal, classroom furniture',
+        6: 'E-waste',
+        7: 'Biomedical waste',
+        8: 'Sanitary waste',
+        9: 'Construction and Demolition(C&D) waste',
+        10: 'Hazardous waste'
       },
 
       compostingMethodologies: {
@@ -204,7 +301,7 @@ angular.module('starter.waste', [])
         6: 'Heaters',
         7: 'Microwaves',
         8: 'Ovens',
-        9: 'Ovens',
+        9: 'Toasters',
         10: 'Electric kettles',
         11: 'Personal computers',
         12: 'Laptop computers',
@@ -290,7 +387,7 @@ angular.module('starter.waste', [])
       $scope.showPopup('Tool Tip', toolTip);
     };
 
-    $scope.progress = 75;
+    $scope.progress = $rootScope.completeness;
 
     $scope.readMore = {};
 
@@ -509,7 +606,6 @@ angular.module('starter.waste', [])
 
     $scope.validNext = function () {
       var validate = $scope.validateTeacher('Wa') && $scope.validateStudent('Wa');
-      $rootScope.sectionsCompleted = validate;
       return validate;
     };
     // validation functions end
@@ -552,6 +648,22 @@ angular.module('starter.waste', [])
     };
 
     $scope.quiz2 = function (waste) {
+      AppServiceAPI.updateUserCompleteness($rootScope.user, 100)
+        .then(function (res) {
+          console.log('Upldated completeness in profile: ' + JSON.stringify(res));
+          AppServiceAPI.getUserCompleteness($rootScope.user).then(function (res) {
+            console.log("User completeness from db: " + JSON.stringify(res));
+            if (res.rows.length > 0) {
+              var completeness_data = res.rows.item(0);
+              $rootScope.completeness = completeness_data.completeness;
+              console.log('User completeness set to : ' + JSON.stringify($rootScope.completeness));
+            }
+          }, function (err) {
+            console.error("Can't get completeness: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error('Error in updating completeness: ' + JSON.stringify(err));
+        });
       ValidationService.quiz2(waste, 7).then(function () {
         AppServiceAPI.sync(7).then(function () {
           $state.go('app.feedback');

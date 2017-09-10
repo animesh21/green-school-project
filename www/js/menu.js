@@ -2,7 +2,7 @@ angular.module('starter.menu', [])
   .controller(
     'menuCtrl',
     function ($scope, $state, $stateParams, $window, $rootScope,
-              ValidationService, AppServiceAPI) {
+              ValidationService, AppServiceAPI, $ionicPopup) {
 
       'use strict';
 
@@ -10,6 +10,22 @@ angular.module('starter.menu', [])
         // $window.location.reload(true);
         $state.go('app.home');
       };
+
+      $scope.showPopup = function (title, message) {
+        $scope.popup = $ionicPopup.show({
+            title: title,
+            template: message,
+            buttons: [
+                {
+                    'text': 'OK'
+                }
+            ]
+        });
+      };
+
+      $scope.iconHeight = 30;
+
+      $scope.iconWidth = 30;
 
       $scope.syncFromServer = function () {
         $state.go('app.syncFromServer');
@@ -20,35 +36,75 @@ angular.module('starter.menu', [])
       };
 
       $scope.general = function () {
-        $state.go('app.general1');
+        if ($rootScope.completeness >= 5) {
+          $state.go('app.general1');
+        }
+        else {
+          $scope.showPopup('Alert', "Please complete profile section first");
+        }
       };
 
       $scope.air = function () {
-        $state.go('app.air1');
+        if ($rootScope.completeness >= 10) {
+          $state.go('app.air1');
+        }
+        else {
+          $scope.showPopup('Alert', "Please complete general section first");
+        }
       };
 
       $scope.energy = function () {
-        $state.go('app.energy');
+        if ($rootScope.completeness >= 20) {
+          $state.go('app.energy');
+        }
+        else {
+          $scope.showPopup('Alert', "Please complete air section first");
+        }
       };
 
       $scope.food = function () {
-        $state.go('app.food');
+        if ($rootScope.completeness >= 30) {
+          $state.go('app.food');
+        }
+        else {
+          $scope.showPopup('Alert', "Please complete energy section first");
+        }
       };
 
       $scope.land = function () {
-        $state.go('app.land');
+        if ($rootScope.completeness >= 40) {
+          $state.go('app.land');
+        }
+        else {
+          $scope.showPopup('Alert', "Please complete food section first");
+        }
       };
 
       $scope.water = function () {
-        $state.go('app.water');
+        if ($rootScope.completeness >= 50) {
+          $state.go('app.water');
+        }
+        else {
+          $scope.showPopup('Alert', "Please complete land section first");
+        }
       };
 
       $scope.waste = function () {
-        $state.go('app.waste');
+        if ($rootScope.completeness >= 75) {
+          $state.go('app.waste');
+        }
+        else {
+          $scope.showPopup('Alert', "Please complete water section first");
+        }
       };
 
       $scope.feedback = function () {
-        $state.go('app.feedback');
+        if ($rootScope.completeness >= 100) {
+          $state.go('app.feedback');
+        }
+        else {
+          $scope.showPopup('Alert', "Please complete the survey first");
+        }
       };
 
       $scope.faq = function () {

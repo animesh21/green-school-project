@@ -46,9 +46,8 @@ angular.module('starter.energy', [])
       else {
         $ionicPlatform.ready().then(function () {
           UploadService.takePic().then(function (imageData) {
-            var imageStr = "data:image/jpeg;base64," + imageData;
-            console.log('Image data: ' + imageStr);
-            $scope.images[data_id].push(imageStr);
+            // var imageStr = "data:image/jpeg;base64," + imageData;
+            $scope.images[data_id].push(imageData);
           }, function (err) {
             console.error("Error in getting picture: " + JSON.stringify(err));
           });
@@ -59,13 +58,13 @@ angular.module('starter.energy', [])
     };
 
     $scope.upload = function (data_id) {
-      $scope.showLoading('Uploading, please wait');
       var images = $scope.images[data_id];
       var numImages = images.length;
       if (numImages <= 0) {
         $scope.showPopup('Warning', "Please select an image first");
       }
       else {
+        $scope.showLoading('Uploading, please wait');
         for (var i = 0; i < images.length; i++) {
           var image_data = images[i];
           var ques = 'mobile_' + i;
@@ -112,13 +111,15 @@ angular.module('starter.energy', [])
         16: 'Wood (kg)'
       },
       appliances: {
-        1: {name: 'Air Conditioners', unit: 'tons'},
-        2: {name: 'Refrigerator', unit: 'litres'},
-        3: {name: 'Microwave', unit: 'litres'},
-        4: {name: 'Tube Lights', unit: 'watts'},
-        5: {name: 'CFL Bulbs', unit: 'watts'},
-        6: {name: 'LED Lights', unit: 'watts'},
-        7: {name: 'Fans', unit: 'watts'}
+        2: {name: 'Air Conditioners', unit: 'tons'},
+        3: {name: 'Refrigerator', unit: 'litres'},
+        4: {name: 'Microwave', unit: 'litres'},
+        5: {name: 'Tube Lights', unit: 'watts'},
+        6: {name: 'CFL Bulbs', unit: 'watts'},
+        7: {name: 'LED Lights', unit: 'watts'},
+        8: {name: 'Fans', unit: 'watts'},
+        9: {name: 'Incandescent bulbs', unit: 'watts'},
+        10: {name: 'Overhead projector(smart classroom)', unit: 'watts'}
       }
     };
 
@@ -135,7 +136,7 @@ angular.module('starter.energy', [])
       $scope.showPopup('Tool Tip', toolTip);
     };
 
-    $scope.progress = 20;
+    $scope.progress = $rootScope.completeness;
 
     $scope.readMore = {};
 
@@ -418,10 +419,45 @@ angular.module('starter.energy', [])
       var validate = ($scope.validateTeacher('E') && $scope.validateStudent('E') &&
               validQ4  && validQ5 &&
               validQ9 && validQ10 && validQ6E1);
-      $rootScope.sectionsCompleted = validate;
-      return validate;
+      if (validate) {
+        return true;
+      }
+      else {
+        return false;
+      }
     };
     // validation functions end
+
+    // Primary validation functions
+    $scope.validateQ6P = function () {
+      var arr = [1, 2, 3, 4, 5, 6, 7, 16, 8, 9, 10, 11, 12, 13];
+      var qID, val;
+      for (var i = 0; i < arr.length; i++) {
+        qID = 'Q6E' + arr[i];
+        if(!$scope.validVal(qID)) {
+          // console.log('Q6 not valid');
+          return false;
+        }
+      }
+      // console.log('Q6 valid in primary');
+      return true;
+    };
+
+    $scope.validNextPrimary = function () {
+      var validQ4 = $scope.validVal('Q4E1');
+      var validQ5 = $scope.validVal('Q5E1');
+      var validQ6EP = $scope.validateQ6P();
+      // var validQ9 = $scope.validateQ9();
+
+      var validate = ($scope.validateTeacher('E') && $scope.validateStudent('E') &&
+              validQ4  && validQ5 && validQ6EP);
+      if (validate) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    };
 
     $scope.loadPageData = function () {
       console.log('loading energy page data');
@@ -485,6 +521,22 @@ angular.module('starter.energy', [])
     });
 
     $scope.quiz2 = function (energy) {
+      AppServiceAPI.updateUserCompleteness($rootScope.user, 30)
+        .then(function (res) {
+          console.log('Upldated completeness in energy: ' + JSON.stringify(res));
+          AppServiceAPI.getUserCompleteness($rootScope.user).then(function (res) {
+            console.log("User completeness from db: " + JSON.stringify(res));
+            if (res.rows.length > 0) {
+              var completeness_data = res.rows.item(0);
+              $rootScope.completeness = completeness_data.completeness;
+              console.log('User completeness set to : ' + JSON.stringify($rootScope.completeness));
+            }
+          }, function (err) {
+            console.error("Can't get completeness: " + JSON.stringify(err));
+          });
+        }, function (err) {
+          console.error('Error in updating completeness: ' + JSON.stringify(err));
+        });
       ValidationService.quiz2(energy, 3).then(function () {
         AppServiceAPI.sync(3).then(function () {
           $state.go('app.food');

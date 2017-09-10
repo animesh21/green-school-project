@@ -13,6 +13,8 @@ angular.module('starter.api', [])
       console.error('Error in platform ready in api: ' + error);
     });
 
+    var vm = this;
+
     return {
 
       insert: function (userid, questionid, answer, score, type) {
@@ -47,6 +49,12 @@ angular.module('starter.api', [])
         });
       },
 
+      deleteAllAnswers: function (userid) {
+        var query = "DELETE FROM gsp_answers WHERE userid = ?";
+        return $cordovaSQLite.execute(db, query, [userid]);
+      },
+
+      // user functions
       insertUser: function (user_id, email, password, school_name, state, completeness, login_status) {
         var query = "INSERT INTO gsp_users (user_id, email, password, school_name, state, completeness, login_status) VALUES " +
           "(?, ?, ?, ?, ?, ?, ?)";
@@ -58,10 +66,33 @@ angular.module('starter.api', [])
         return $cordovaSQLite.execute(db, query, [login_status]);
       },
 
-      updateUser: function (user_id) {
+      getUserCompleteness: function (user_id) {
+        var query = "SELECT completeness FROM gsp_users WHERE user_id = ?";
+        return $cordovaSQLite.execute(db, query, [user_id]);
+      },
+
+      logoutUser: function (user_id) {
         console.log('Logging out userid: ' + user_id);
         var query = "UPDATE gsp_users SET login_status = 0 WHERE user_id = ?";
-        return $cordovaSQLite.execute(db, query, [user_id]);
+        return $cordovaSQLite.execute(db, query, [user_id]).then(function (res) {
+          console.log("Logged out user from database: " + JSON.stringify(res));
+          return res;
+          }, function (err) {
+          console.log("Can't logout user in the database: " + JSON.stringify(err));
+          return err;
+        });
+      },
+
+      updateUserCompleteness: function (user_id, completeness) {
+        console.log('Updating completeness to: ' + completeness);
+        var query = "UPDATE gsp_users SET completeness = ? WHERE user_id = ? AND gsp_users.completeness < ?";
+        return $cordovaSQLite.execute(db, query, [completeness, user_id, completeness]);
+      },
+
+      updateUserPrimary: function (user_id, is_primary) {
+        // console.log('Updating primary to: ' + is_primary);
+        var query = "UPDATE gsp_users SET is_primary = ? WHERE user_id = ?";
+        return $cordovaSQLite.execute(db, query, [is_primary, user_id]);
       },
 
       deleteAllUsers: function () {

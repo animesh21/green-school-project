@@ -90,8 +90,12 @@ angular.module('starter.feedback', [])
       };
 
       $scope.saveData = function () {
-        ValidationService.saveData($scope.feedback, 8);
-        AppServiceAPI.sync(8);
+        ValidationService.saveData($scope.feedback, 8).then(function () {
+          AppServiceAPI.sync(8).then(function () {
+            ValidationService.logoutUser();
+          });
+        });
+
       };
 
       $scope.goToPrev = function () {
@@ -126,7 +130,7 @@ angular.module('starter.feedback', [])
       $scope.quiz2 = function (feedback) {
         ValidationService.quiz2(feedback, 8).then(function () {
           AppServiceAPI.sync(8).then(function () {
-            $state.go('app.feedback');
+            $state.go('app.home');
           });
         });
       };

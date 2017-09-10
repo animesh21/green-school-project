@@ -285,7 +285,8 @@
                     </div>
                     <div class="row">
                         <div class="col col-20" style="text-align: center;" ng-repeat="i in getList(12)">
-                            <input ng-model="general['Q7G' + i]" type="checkbox" name="month{{ i }}">
+                            <input ng-model="general['Q7G' + i]" type="checkbox"
+                                   ng-checked="general['Q7G' + i] === 'true'">
                         </div>
                     </div>
                 </ion-scroll>
@@ -295,8 +296,9 @@
                 <div class="item item-text-wrap item-borderless">
                     <label>
                         7. Where is the school located?
-                        <span class="badge" ng-click="showToolTip('Q7')">?</span>
                     </label>
+                    <span class="badge"
+                              ng-click="showToolTip('Q7')">?</span>
                 </div>
                 <div class="row ">
                     <div class="col fs-12" ng-repeat="i in [1, 2]">

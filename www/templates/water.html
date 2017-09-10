@@ -1,4 +1,4 @@
-<ion-view title="Water" ng-controller="waterCtrl">
+<ion-view title="Water {{ primaryText }}" ng-controller="waterCtrl">
 
     <script type="text/javascript">
         function isNumberKey(evt) {
@@ -206,7 +206,8 @@
 
             <div class="card">
                 <div class="list" style="margin-left: 5px;margin-right: 5px">
-                    <strong>1. Calculate your school’s water consumption, per activity:</strong><br>
+                    <strong ng-if="!primary">1. Calculate your school’s water consumption, per activity:</strong><br>
+                    <strong ng-if="primary">1. Total water consumption of your school</strong><br>
                     <span class="badge" ng-click="showToolTip('Q1')">?</span>
                 </div>
 
@@ -215,107 +216,24 @@
                     <div class="col">Total Quantity (litres per day)</div>
                 </div>
 
-                <div class="row ">
-
-                    <div class="col">Drinking</div>
+                <div class="row" ng-repeat="i in getList(10)">
                     <div class="col">
-                        <input ng-model="water.Q4W1" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
-                               min="0"
+                        {{ data.typesOfConsumption[i] }}
+                        <span ng-if="i === 9" class="badge" ng-click="showToolTip('Q4W9')">?</span>
+                    </div>
+                    <div class="col">
+                        <input ng-model="water['Q4W' + i]" class="textbox"
+                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number"
+                               string-to-number min="0"
                                onkeypress="return isDecimalNumber(event)">
                     </div>
                 </div>
 
-                <div class="row ">
-
-                    <div class="col">Toilet flushing</div>
-                    <div class="col">
-                        <input ng-model="water.Q4W2" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
-                               min="0"
-                               onkeypress="return isDecimalNumber(event)">
-                    </div>
-                </div>
-
-                <div class="row ">
-
-                    <div class="col">Personal cleaning</div>
-                    <div class="col">
-                        <input ng-model="water.Q4W3" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
-                               min="0"
-                               onkeypress="return isDecimalNumber(event)">
-                    </div>
-                </div>
-
-                <div class="row ">
-
-                    <div class="col">Washing clothes</div>
-                    <div class="col">
-                        <input ng-model="water.Q4W4" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
-                               min="0"
-                               onkeypress="return isDecimalNumber(event)">
-                    </div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Cooking</div>
-                    <div class="col">
-                        <input ng-model="water.Q4W5" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
-                               min="0"
-                               onkeypress="return isDecimalNumber(event)">
-                    </div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Cleaning Utensils</div>
-                    <div class="col">
-                        <input ng-model="water.Q4W6" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
-                               min="0"
-                               onkeypress="return isDecimalNumber(event)">
-                    </div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Washing Vegetables</div>
-                    <div class="col">
-                        <input ng-model="water.Q4W7" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
-                               min="0"
-                               onkeypress="return isDecimalNumber(event)">
-                    </div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">Mopping floors</div>
-                    <div class="col">
-                        <input ng-model="water.Q4W8" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
-                               min="0"
-                               onkeypress="return isDecimalNumber(event)">
-                    </div>
-                </div>
-
-                <div class="row ">
-                    <div class="col">
-                        Gardening
-                        <span class="badge" ng-click="showToolTip('Q4W9')">?</span>
-                    </div>
-                    <div class="col">
-                        <input ng-model="water.Q4W9" class="textbox"
-                               style="border:1px solid #111;text-align: center;" ng-change="updateQ4()" type="number" string-to-number
-                               min="0"
-                               onkeypress="return isDecimalNumber(event)">
-                    </div>
-                </div>
 
                 <div class="row ">
                     <div class="col">Total</div>
                     <div class="col">
-                        <input ng-model="water.Q4W10" class="textbox"
+                        <input ng-model="water.Q4W11" class="textbox"
                                style="border:1px solid #111;text-align: center;" type="number" string-to-number min="0"
                                readonly>
                     </div>
@@ -386,7 +304,7 @@
 
             </div>
 
-            <div class="card">
+            <div class="card" ng-if="!primary">
                 <div class="item item-text-wrap item-borderless">
                     3. Who supplies the water in your school? (please tick the correct options):
                 </div>
@@ -401,7 +319,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    4. Does your school get daily water supply?
+                    <span ng-if="primary">3.</span><span ng-if="!primary">4.</span> Does your school get daily water supply?
                 </div>
 
                 <div class="row " style="padding-left: 20px">
@@ -420,7 +338,7 @@
 
             <div class="card" ng-show="water.Q7W1 == 'Y'">
                 <div class="item item-text-wrap item-borderless">
-                    4(a). If supply of water is daily, please tick the correct option:
+                    <span ng-if="primary">3</span><span ng-if="!primary">4</span>(a). If supply of water is daily, please tick the correct option:
                 </div>
 
                 <ion-item class="fs-14 item-text-wrap">
@@ -452,7 +370,7 @@
 
             <div class="card" ng-show="water.Q7W1 == 'N'">
                 <div class="item item-text-wrap item-borderless">
-                    4(a). If supply of water is not daily, please tick the correct option:
+                    <span ng-if="primary">3</span><span ng-if="!primary">4</span>(a). If supply of water is not daily, please tick the correct option:
                 </div>
 
                 <ion-item class="fs-14 item-text-wrap">
@@ -474,11 +392,11 @@
 
             </div>
 
-            <div class="padding-bottom content fs-16">
+            <div class="padding-bottom content fs-16" ng-if-start="!primary">
                 <strong>Task 4: What are the water conservation practices followed in your school?</strong>
             </div>
 
-            <div class="card">
+            <div class="card" ng-if-end>
                 <div class="item item-text-wrap item-borderless">
                     5. What are the water conservation practices your school follows
                     <span class="badge" ng-click="showToolTip('Q5')">?</span>
@@ -604,22 +522,42 @@
                     </div>
                 </div>
 
-            </div>
+                <div class="list" style="padding-left: 20px">
+                    <b>Please upload picture of supporting documents:</b>
+                    <span>
+                        Uploaded files must be in .jpg, .jpeg format. File
+                        size per document should not exceed 500 KB.
+                    </span>
+                </div>
 
-            <div class="padding-bottom content fs-16 card">
-                <strong style="padding:1%;">Upload supporting documents</strong><br/>
-                <p style="padding:1%;">
-                    Please upload all supporting documents related to this section here.
-                    Note: files must be in one of the following formats: PDF Document (.pdf),
-                    Word Document (.doc, .docx), Image File (.jpg, .jpeg) <br>
-                    File size per document should not exceed 500 KB.
-                    <input fileread="water.QW1FL1" type="file">
-                </p>
+                <div class="list" style="padding-left: 20px">
+                    <label>
+                        <b>Please upload all supporting documents related to this section here.</b>
+                    </label>
+                    <button class="button button-assertive button-small" type="button"
+                            ng-click="takepic('Task_4_Supporting_docs')">Take Picture
+                    </button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Task_4_Supporting_docs')">
+                        Remove Picture
+                    </button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Task_4_Supporting_docs.length > 0"
+                         ng-repeat="i in get0List(images.Task_4_Supporting_docs.length)">
+                        <img src="" image-u-r-l="{{ images.Task_4_Supporting_docs[i] }}" height="100" width="100"
+                             alt="Task_4_Supporting_docs">
+                    </div>
+                </div>
 
+                <div class="list" style="padding-left: 20px">
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Task_4_Supporting_docs')">
+                        Upload
+                    </button>
+                </div>
             </div>
 
             <div class="padding-bottom content fs-16">
-                <strong>Task 5: Does your school harvest rainwater?</strong>
+                <strong>Task <span ng-if="primary">4</span><span ng-if="!primary">5</span>: Does your school harvest rainwater?</strong>
             </div>
 
             <div class="content" style="text-align: justify;">
@@ -646,7 +584,7 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    6. Do you have Rainwater harvesting (RWH) system in your school?
+                    <span ng-if="primary">4.</span><span ng-if="!primary">6.</span> Do you have Rainwater harvesting (RWH) system in your school?
                 </div>
                 <div class="row ">
                     <div class="col fs-12">
@@ -660,9 +598,10 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y'">
+            <div class="card" ng-if="water.Q8W2 == 'Y' && !primary">
                 <div class="item item-text-wrap item-borderless">
-                    6(a). Does your school harvest different catchments?
+                    <span ng-if="primary">4</span><span ng-if="!primary">6</span>(a).
+                    Does your school harvest different catchments?
                 </div>
                 <div class="row " style="padding-left: 20px">
 
@@ -677,44 +616,15 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S1 == 'Y'">
+            <div class="card" ng-if="(water.Q8W2 == 'Y' && water.Q8W2S1 == 'Y') || (water.Q8W2 === 'Y' && primary)">
                 <div class="item item-text-wrap item-borderless">
-                    6(a)(1). Which is the catchment area being harvested by your school?
+                    <span ng-if="primary">4(a).</span><span ng-if="!primary">6(a)(1).</span>
+                    Which is/are the catchment area being harvested by your school?
                 </div>
 
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="1" name="h"><span
-                        style="position:absolute">&nbsp;Rooftop</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="2" name="h"><span
-                        style="position:absolute">&nbsp;Paved</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="3" name="h"><span
-                        style="position:absolute">&nbsp;Unpaved</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="4" name="h"><span
-                        style="position:absolute">&nbsp;Rooftop + Paved</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="5" name="h"><span
-                        style="position:absolute">&nbsp;Paved + Unpaved</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="6" name="h"><span
-                        style="position:absolute">&nbsp;Rooftop + Unpaved</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="7" name="h"><span
-                        style="position:absolute">&nbsp;Rooftop + Paved + Unpaved</span>
+                <ion-item class="fs-14 item-text-wrap" ng-repeat="i in getList(7)">
+                    <input ng-model="water.Q8W2S1S1" type="radio" ng-value="i" name="h"><span
+                        style="position:absolute">&nbsp;{{ data.catchmentAreas[i] }}</span>
                 </ion-item>
 
             </div>
@@ -722,29 +632,19 @@
             <div class="card" ng-show="water.Q8W2 == 'Y'">
 
                 <div class="item item-text-wrap item-borderless">
-                    6(b). How does your school harvest rainwater?
+                    <span ng-if="primary">4</span><span ng-if="!primary">6</span>(b).
+                    How does your school harvest rainwater?
                 </div>
 
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2" type="radio" ng-value="1" name="i"><span
-                        style="position:absolute">&nbsp;By storing</span>
+                <ion-item class="fs-14 item-text-wrap" ng-repeat="i in getList(3)">
+                    <input ng-model="water.Q8W2S2" type="radio" ng-value="i" name="i"><span
+                        style="position:absolute">&nbsp;{{ data.howHarvested[i] }}</span>
                 </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2" type="radio" ng-value="2" name="i"><span
-                        style="position:absolute">&nbsp;By recharging groundwater</span>
-                </ion-item>
-
-                <ion-item class="fs-14 item-text-wrap">
-                    <input ng-model="water.Q8W2S2" type="radio" ng-value="3" name="i"><span
-                        style="position:absolute">&nbsp;Combination of both</span>
-                </ion-item>
-
             </div>
 
             <div class="card" ng-show="water.Q8W2 == 'Y' && (water.Q8W2S2 == 1 || water.Q8W2S2 == 3)">
                 <div class="item item-text-wrap item-borderless">
-                    6(b)(1). If your school only stores rainwater, please select the use of stored
+                    <span ng-if="primary">4</span><span ng-if="!primary">6</span>(b)(1). If your school only stores rainwater, please select the use of stored
                     rainwater:
                 </div>
 
@@ -758,7 +658,7 @@
 
             <div class="card" ng-show="water.Q8W2 == 'Y' && (water.Q8W2S2 == 1 || water.Q8W2S2 == 3)">
                 <div class="item item-text-wrap item-borderless">
-                    6(b)(2). Does your school have rainwater storage tank?
+                    <span ng-if="primary">4</span><span ng-if="!primary">6</span>(b)(2). Does your school have rainwater storage tank?
                 </div>
 
                 <div class="row ">
@@ -775,7 +675,7 @@
             </div>
 
             <div class="card"
-                 ng-show="water.Q8W2 == 'Y' && (water.Q8W2S2 == 1 || water.Q8W2S2 == 3) && water.Q8W2S2S1S1 == 'Y'">
+                 ng-show="water.Q8W2 == 'Y' && (water.Q8W2S2 == 1 || water.Q8W2S2 == 3) && water.Q8W2S2S1S1 === 'Y'">
 
                 <div class="item item-text-wrap item-borderless">
                     If yes, please provide:
@@ -783,7 +683,7 @@
 
                 <div class="row">
                     <div class="col col-67">
-                        6(b)(2)A. Total number of storage tank:
+                        <span ng-if="primary">4</span><span ng-if="!primary">6</span>(b)(2)A. Total number of storage tank:
                     </div>
                     <div class="col">
                         <input ng-model="water.Q8W2S2S3A" class="textbox"
@@ -795,7 +695,7 @@
 
                 <div class="row">
                     <div class="col col-67">
-                        6(b)(2)B. Total capacity of each storage tank (litres):
+                        <span ng-if="primary">4</span><span ng-if="!primary">6</span>(b)(2)B. Total capacity of each storage tank (litres):
                     </div>
                     <div class="col">
                         <input ng-model="water.Q8W2S2S4B" class="textbox"
@@ -807,7 +707,8 @@
 
                 <div class="row">
                     <div class="col">
-                        6(b)(2)C. Location of tanks:
+                        <span ng-if="primary">4</span><span ng-if="!primary">6</span>(b)(2)C.
+                        Location of tanks:
                     </div>
                 </div>
                 <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6]">
@@ -819,12 +720,13 @@
                         <span style="position: absolute">{{ data.locationOfTanks[i] }}</span>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" ng-if-start="!primary">
                     <div class="col">
-                        6(b)(2)D. Material options for tanks:
+                        <span ng-if="primary">4</span><span ng-if="!primary">6</span>(b)(2)D.
+                        Material options for tanks:
                     </div>
                 </div>
-                <div class="row" ng-repeat="i in [1, 2, 3, 4]">
+                <div class="row" ng-repeat="i in [1, 2, 3, 4]" ng-if-end>
                     <div class="col col-10"></div>
                     <div class="col col-10">
                         <input ng-model="water.Q8W2S2S6D" ng-value="i" type="radio" name="l">
@@ -837,7 +739,8 @@
 
             <div class="card" ng-show="water.Q8W2 == 'Y' && (water.Q8W2S2 == 2 || water.Q8W2S2 == 3)">
                 <div class="item item-text-wrap item-borderless">
-                    6(b)(3). Does your school have groundwater recharge structure?
+                    <span ng-if="primary">4</span><span ng-if="!primary">6</span>(b)(3).
+                    Does your school have groundwater recharge structure?
                 </div>
                 <div class="row ">
                     <div class="col fs-12">
@@ -851,10 +754,11 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y' &&
-            (water.Q8W2S2 == 2 || water.Q8W2S2 == 3) && water.Q8W2S2S7S3 == 'Y'">
+            <div class="card" ng-if="water.Q8W2 == 'Y' &&
+            (water.Q8W2S2 == 2 || water.Q8W2S2 == 3) && water.Q8W2S2S7S3 == 'Y' && !primary">
                 <div class="item item-text-wrap item-borderless">
-                    6(b)(3)(i). Please share the total number of groundwater recharge structures
+                    <span ng-if="primary">4</span><span ng-if="!primary">6</span>(b)(3)(i). 
+                    Please share the total number of groundwater recharge structures
                 </div>
                 <div class="row">
                     <input ng-model="water.Q8W2S2S8S1" type="number" min="0" class="textbox"
@@ -864,12 +768,13 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y' &&
-            (water.Q8W2S2 == 2 || water.Q8W2S2 == 3) && water.Q8W2S2S7S3 == 'Y'">
+            <div class="card" ng-if="water.Q8W2 == 'Y' &&
+            (water.Q8W2S2 == 2 || water.Q8W2S2 == 3) && water.Q8W2S2S7S3 == 'Y' && !primary">
                 <div class="item item-text-wrap item-borderless">
-                    6(b)(3)(ii). Please tick the type of groundwater recharge structures used in your school:
+                    <span ng-if="primary">4(b)(3)(i).</span><span ng-if="!primary">6(b)(3)(ii).</span>
+                    Please tick the type of groundwater recharge structures used in your school:
                 </div>
-                <div class="row" ng-repeat="i in [1, 2, 3, 4, 5, 6, 7]">
+                <div class="row" ng-if="!primary" ng-repeat="i in getList(7)">
                     <div class="col col-10"></div>
                     <div class="col col-10">
                         <input ng-model="water['Q8W2S2S9' + i]" ng-checked="water['Q8W2S2S9' + i] === 'true'"
@@ -879,9 +784,20 @@
                         <span style="position: absolute;">{{ data.rechargeStructures[i] }}</span>
                     </div>
                 </div>
+                <div class="row" ng-if="primary" ng-repeat="i in getList(3)">
+                    <div class="col col-10"></div>
+                    <div class="col col-10">
+                        <input ng-model="water['Q8W2S2S9' + i]"
+                               ng-checked="water['Q8W2S2S9' + i] === 'true'"
+                               type="checkbox">
+                    </div>
+                    <div class="col">
+                        <span style="position: absolute;">{{ data.rechargeStructuresPrimary[i] }}</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S2">
+            <div class="card" ng-if="water.Q8W2 == 'Y' && water.Q8W2S2 && !primary">
                 <div class="item item-text-wrap item-borderless">
                     6(b)(4). If your school practices rainwater harvesting,
                     then what is the ratio between storage and recharge?
@@ -898,7 +814,7 @@
 
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y'">
+            <div class="card" ng-if="water.Q8W2 == 'Y' && !primary">
                 <div class="item item-text-wrap item-borderless">
                     6(c). How much area in your school is harvested?
                 </div>
@@ -963,7 +879,7 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y'">
+            <div class="card" ng-show="water.Q8W2 == 'Y' && !primary">
                 <div class="item item-text-wrap item-borderless">
                     6(d). Please select (from the list given below) the rainwater harvesting
                     structures present in your school:
@@ -980,7 +896,7 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S33">
+            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S33 && !primary">
                 <div class="item item-text-wrap item-borderless">
                     6(d)(1) Where is your filter unit?
                 </div>
@@ -995,7 +911,7 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S33">
+            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S33 && !primary">
                 <div class="item item-text-wrap item-borderless">
                     6(d)(2) Types of filter used in your school:
                 </div>
@@ -1012,7 +928,7 @@
 
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y'">
+            <div class="card" ng-show="water.Q8W2 == 'Y' && !primary">
                 <div class="item item-text-wrap item-borderless">
                     6(e). Rate your catchment on cleanliness:
                 </div>
@@ -1038,11 +954,45 @@
 
                     </div>
                 </div>
+
+                <div class="list" style="padding-left: 20px" ng-if-start="water.Q8W2 === 'Y' && water.Q8W2S1 === 'Y'">
+                    <b>Please upload picture of supporting documents:</b>
+                    <span>
+                        Uploaded files must be in .jpg, .jpeg format. File
+                        size per document should not exceed 500 KB.
+                    </span>
+                </div>
+
+                <div class="list" style="padding-left: 20px" ng-if="">
+                    <label>
+                        <b>Please upload the picture of catchment area.</b>
+                    </label>
+                    <button class="button button-assertive button-small" type="button"
+                            ng-click="takepic('Water_Treatment_Process')">Take Picture
+                    </button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Water_Treatment_Process')">
+                        Remove Picture
+                    </button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Water_Treatment_Process.length > 0"
+                         ng-repeat="i in get0List(images.Water_Treatment_Process.length)">
+                        <img src="" image-u-r-l="{{ images.Water_Treatment_Process[i] }}" height="100" width="100"
+                             alt="Water_Treatment_Process">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px" ng-if-end>
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Water_Treatment_Process')">
+                        Upload
+                    </button>
+                </div>
             </div>
 
             <div class="card" ng-show="water.Q8W2 == 'Y'">
                 <div class="item item-text-wrap item-borderless">
-                    6(f) Does your school clean your catchment and system(structure)?
+                    <span ng-if="primary">4(c)</span><span ng-if="!primary">6(f)</span>
+                    Does your school clean your catchment and system(structure)?
                 </div>
                 <div class="row">
                     <div class="col col-50">
@@ -1056,7 +1006,7 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y' && water.Q8W2S61 == 'Y'">
+            <div class="card" ng-if="water.Q8W2 == 'Y' && water.Q8W2S61 == 'Y' && !primary">
                 <div class="item item-text-wrap item-borderless">
                     6(f)(1) Please specify when does your school clean the catchment and RWH system?
                 </div>
@@ -1071,7 +1021,7 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y'">
+            <div class="card" ng-show="water.Q8W2 == 'Y'" ng-if-start="!primary">
                 <div class="item item-text-wrap item-borderless">
                     6(g) Does your school monitor the rainwater harvesting structure for its efficiency?
                 </div>
@@ -1147,7 +1097,7 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'Y'">
+            <div class="card" ng-show="water.Q8W2 == 'Y'" ng-if-end>
                 <div class="item item-text-wrap item-borderless">
                     6(i) If your school&#39;s RWH structure is more than a year old, is there any
                     improvement in the groundwater quality after the implementation of the RWH
@@ -1165,7 +1115,7 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q8W2 == 'N'">
+            <div class="card" ng-if="water.Q8W2 == 'N' && !primary">
                 <div class="item item-text-wrap item-borderless">
                     6(a) Calculate your school’s rainwater harvesting potential (in litres).
                 </div>
@@ -1216,8 +1166,8 @@
 
             <div class="padding-bottom content fs-16">
                 <strong>
-                    Task 6: Are the plumbing and sanitation facilities
-                    in your school adequate?
+                    Task <span ng-if="primary">5</span><span ng-if="!primary">6</span>:
+                    Are the plumbing and sanitation facilities in your school adequate?
                 </strong>
             </div>
 
@@ -1237,22 +1187,35 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    7. Please share details about sanitation and hygiene practices in your school:
+                    <span ng-if="primary">5.</span><span ng-if="!primary">7.</span>
+                     Please share details about sanitation and hygiene practices in your school:
                     <span class="badge" ng-click="showToolTip('Q7')">?</span>
                 </div>
 
-                <div class="row " ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8]">
+                <div class="row " ng-if="!primary" ng-repeat="i in getList(8)">
                     <div class="col col-67">{{ data.hygienePractices[i] }}</div>
                     <div class="col"><input ng-model="water['Q8W3S' + i]" ng-value="'Y'" type="radio"
                                             name="va{{ i }}">&nbsp;<span style="position:absolute">Yes</span></div>
                     <div class="col"><input ng-model="water['Q8W1S' + i]" ng-value="'N'" type="radio"
                                             name="va{{ i }}">&nbsp;<span style="position:absolute">No</span></div>
                 </div>
+                <div class="row " ng-if="primary" ng-repeat="i in getList(10)">
+                    <div class="col col-67" ng-if="i <= 8">{{ data.hygienePractices[i] }}</div>
+                    <div class="col col-67" ng-if="i > 8">{{ data.hygienePracticesPrimary[i] }}</div>
+                    <div class="col"><input ng-model="water['Q8W3S' + i]" ng-value="'Y'" type="radio"
+                                            name="va{{ i }}">&nbsp;
+                        <span style="position:absolute">Yes</span></div>
+                    <div class="col"><input ng-model="water['Q8W1S' + i]" ng-value="'N'" type="radio"
+                                            name="va{{ i }}">&nbsp;
+                        <span style="position:absolute">No</span></div>
+                </div>
             </div>
 
             <div class="card">
                 <div class="row ">
-                    <div class="col col-67">8. How many drinking water taps do you have?</div>
+                    <div class="col col-67">
+                        <span ng-if="primary">6.</span><span ng-if="!primary">8.</span>
+                         How many drinking water taps do you have?</div>
                     <div class="col">
                         <input ng-model="water.Q9W1" class="textbox"
                                style="border:1px solid #111;text-align: center;" type="number"
@@ -1264,7 +1227,9 @@
 
             <div class="card">
                 <div class="row ">
-                    <div class="col col-67">9. How many hand-pumps do you have?</div>
+                    <div class="col col-67">
+                        <span ng-if="primary">7.</span><span ng-if="!primary">9.</span>
+                         How many hand-pumps do you have?</div>
                     <div class="col">
                         <input ng-model="water.Q10W1" class="textbox"
                                style="border:1px solid #111;text-align: center;" type="number"
@@ -1277,7 +1242,8 @@
             <div class="card">
                 <div class="row ">
                     <div class="col col-67">
-                        10. How many ablution taps(taps used for washing hands only)
+                        <span ng-if="primary">8.</span><span ng-if="!primary">10.</span>
+                         How many ablution taps(taps used for washing hands only)
                         do you have?
                     </div>
                     <div class="col">
@@ -1291,16 +1257,18 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    11. How many water closets (used for defecation and urination) do you have?
+                    <span ng-if="primary">9.</span><span ng-if="!primary">11.</span>
+                     How many water closets (used for defecation and urination) do you have?
                 </div>
                 <div class="row">
-                    <div class="col"> Number of toilets:</div>
+                    <div class="col col-20"></div>
+                    <div class="col col-40"> Number of toilets:</div>
                 </div>
                 <div class="row" ng-repeat="i in [1, 2, 3]">
                     <div class="col col-20">
                         {{ data.numToilets[i] }}
                     </div>
-                    <div class="col col-20">
+                    <div class="col col-40">
                         <input ng-model="water['Q13W1S' + i]" class="textbox" ng-change="updateQ13()"
                                style="border:1px solid #111;text-align: center;" type="number"
                                string-to-number min="0"
@@ -1311,7 +1279,7 @@
                     <div class="col col-20">
                         Total
                     </div>
-                    <div class="col col-20">
+                    <div class="col col-40">
                         <input ng-model="water.Q13W1S4" ng-value="water.Q13W1S4" class="textbox"
                                style="border: 1px solid #111; text-align: center;"
                                type="number" string-to-number min="0" readonly>
@@ -1322,7 +1290,8 @@
             <div class="card">
                 <div class="row ">
                     <div class="col col-67">
-                        12. How many urinals (strictly used for urination only) do you have?
+                        <span ng-if="primary">10.</span><span ng-if="!primary">12.</span>
+                         How many urinals (strictly used for urination only) do you have?
                     </div>
                     <div class="col">
                         <input ng-model="water.Q14W1" class="textbox"
@@ -1336,7 +1305,8 @@
             <div class="card">
                 <div class="row ">
                     <div class="col col-67">
-                        13. How many other water outlets (example: taps in play fields,
+                        <span ng-if="primary">11.</span><span ng-if="!primary">13.</span>
+                         How many other water outlets (example: taps in play fields,
                         sprinklers, swimming pool) do you have?
                     </div>
                     <div class="col">
@@ -1348,9 +1318,14 @@
                 </div>
             </div>
 
+            <div class="content">
+                <strong>Water supply and cleaning of toilets in your school:</strong>
+            </div>
+
             <div class="card">
-                <div class="item item-text-wrap item-borderless">
-                    14. Is there a water storage system in place to supply water in the toilets?
+                <div class="row">
+                    <span ng-if="primary">12.</span><span ng-if="!primary">14.</span>
+                     Is there a water storage system in place to supply water in the toilets?
                 </div>
 
                 <div class="row " style="padding-left: 20px">
@@ -1369,7 +1344,8 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    15. Is the water supply sufficient?
+                    <span ng-if="primary">13.</span><span ng-if="!primary">15.</span>
+                     Is the water supply sufficient?
                 </div>
 
                 <div class="row " style="padding-left: 20px">
@@ -1388,7 +1364,8 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    16. Are the toilets cleaned?
+                    <span ng-if="primary">14.</span><span ng-if="!primary">16.</span>
+                     Are the toilets cleaned?
                 </div>
 
                 <div class="row " style="padding-left: 20px">
@@ -1407,7 +1384,7 @@
 
             <div class="card" ng-show="water.Q18W1 == 'Y'">
                 <div class="item item-text-wrap item-borderless">
-                    16(a) If yes, please specify:
+                    <span ng-if="primary">14</span><span ng-if="!primary">16</span>(a) If yes, please specify:
                 </div>
                 <div class="row" ng-repeat="i in [1, 2, 3]">
                     <div class="col col-10"></div>
@@ -1422,7 +1399,8 @@
 
             <div class="padding-bottom content fs-16">
                 <strong>
-                    Task 7: Does your school reuse/recycle waste water?<br/>
+                    Task <span ng-if="primary">6</span><span ng-if="!primary">7</span>:
+                    Does your school reuse/recycle waste water?<br/>
                     Go to <a href="http://www.greenschoolsprogramme.org/knowledge-bank/water/#recyclingSewageWater"
                        target="_blank">
                         knowledge portal
@@ -1449,7 +1427,8 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    17. Does your school treat wastewater?
+                    <span ng-if="primary">15.</span><span ng-if="!primary">17.</span>
+                     Does your school treat wastewater?
                 </div>
 
                 <div class="row " style="padding-left: 20px">
@@ -1466,29 +1445,32 @@
 
             <div class="card">
                 <div class="item item-text-wrap item-borderless">
-                    18. Does your school reuse the treated wastewater?
+                    <span ng-if="primary">16.</span><span ng-if="!primary">18.</span>
+                     Does your school reuse the treated wastewater?
                 </div>
 
                 <div class="row " style="padding-left: 20px">
                     <div class="col fs-12">
-                        <input ng-model="water.Q20W1" ng-value="'Y'" type="radio" name="vg1">&nbsp;<span
+                        <input ng-model="water.Q20W1" ng-change="updateQ20()" ng-value="'Y'" type="radio" name="vg1">&nbsp;<span
                             style="position:absolute">Yes</span>
                     </div>
                     <div class="col fs-12">
-                        <input ng-model="water.Q20W1" ng-value="'N'" type="radio" name="vg1">&nbsp;<span
+                        <input ng-model="water.Q20W1" ng-change="updateQ20()" ng-value="'N'" type="radio" name="vg1">&nbsp;<span
                             style="position:absolute">No</span>
                     </div>
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q20W1 == 'Y'">
+            <div class="card" ng-if="water.Q20W1 === 'Y'">
                 <div class="item item-text-wrap item-borderless">
-                    18(a) How does your school reuse waste-water?
+                    <span ng-if="primary">16</span><span ng-if="!primary">18</span>(a) 
+                    How does your school reuse waste-water?
                 </div>
                 <div class="row" ng-repeat="i in [1, 2, 3]">
                     <div class="col col-10"></div>
                     <div class="col col-10">
-                        <input ng-model="water.Q20W2" ng-value="i" type="radio" name="vh1">
+                        <input ng-model="water['Q20W2S' + i]" type="checkbox"
+                               ng-checked="water['Q20W2S' + i] === 'true'">
                     </div>
                     <div class="col">
                         {{ data.howDoesReuse[i] }}
@@ -1496,19 +1478,94 @@
                 </div>
             </div>
 
-            <div class="card" ng-show="water.Q20W1 == 'N'">
+            <div class="card" ng-if="water.Q20W1 === 'N'">
                 <div class="item item-text-wrap item-borderless">
-                    18(a) Please specify the fate of waste-water:
+                    <span ng-if="primary">16</span><span ng-if="!primary">18</span>(a) Please specify the fate of waste-water:
                 </div>
                 <div class="row" ng-repeat="i in [1, 2, 3]">
                     <div class="col col-10"></div>
                     <div class="col col-10">
-                        <input ng-model="water.Q20W2" ng-value="i" type="radio" name="vh1">
+                        <input ng-model="water['Q20W3S' + i]" type="checkbox"
+                               ng-checked="water['Q20W3S' + i] === 'true'">
                     </div>
                     <div class="col">
                         {{ data.fateOfWasteWater[i] }}
                     </div>
                 </div>
+            </div>
+
+            <div class="card" ng-if="water.Q19W1 === 'Y'">
+
+                <div class="list" style="padding-left: 20px">
+                    <b>Please upload picture of supporting documents:</b>
+                    <span>
+                        Uploaded files must be in .jpg, .jpeg format. File
+                        size per document should not exceed 500 KB.
+                    </span>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <label>
+                        <b>Please upload a flow chart (hand drawn) of the wastewater treatment process.</b>
+                    </label>
+                    <button class="button button-assertive button-small" type="button"
+                            ng-click="takepic('Flow_Chart_Hand_Drwan')">Take Picture
+                    </button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Flow_Chart_Hand_Drwan')">
+                        Remove Picture
+                    </button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Flow_Chart_Hand_Drwan.length > 0"
+                         ng-repeat="i in get0List(images.Flow_Chart_Hand_Drwan.length)">
+                        <img src="" image-u-r-l="{{ images.Flow_Chart_Hand_Drwan[i] }}" height="100" width="100"
+                             alt="Flow_Chart_Hand_Drwan">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Flow_Chart_Hand_Drwan')">
+                        Upload
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="list" style="padding-left: 20px">
+                    <b>Please upload picture of supporting documents:</b>
+                    <span>
+                        Uploaded files must be in .jpg, .jpeg format. File
+                        size per document should not exceed 500 KB.
+                    </span>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <label>
+                        <b>Pictures of audit team doing survey.</b>
+                    </label>
+                    <button class="button button-assertive button-small" type="button"
+                            ng-click="takepic('Supporting_Document_Water')">Take Picture
+                    </button>
+                    <button class="button button-assertive button-small" type="button" ng-click="remove('Supporting_Document_Water')">
+                        Remove Picture
+                    </button>
+                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col" ng-if="images.Supporting_Document_Water.length > 0"
+                         ng-repeat="i in get0List(images.Supporting_Document_Water.length)">
+                        <img src="" image-u-r-l="{{ images.Supporting_Document_Water[i] }}" height="100" width="100"
+                             alt="Supporting_Document_Water">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
+                    <p>Please click upload after taking/selecting all the pictures.</p>
+                    <button type="button" class="button button-assertive" ng-click="upload('Supporting_Document_Water')">
+                        Upload
+                    </button>
+                </div>
+
             </div>
 
             <div class="list card">
