@@ -63,7 +63,8 @@ angular.module('starter.general', [])
     };
 
     // progress corresponding to current section
-    $scope.progress = $rootScope.completeness;
+    // $scope.progress = $rootScope.completeness;
+    $scope.progress = $rootScope.webProgress;
 
     // function for getting answer values from other sections(from db)
     $scope.getAnswer = function (questionID) {
@@ -295,6 +296,9 @@ angular.module('starter.general', [])
             if (res.rows.length > 0) {
               var completeness_data = res.rows.item(0);
               $rootScope.completeness = completeness_data.completeness;
+              if ($rootScope.completeness > $rootScope.webProgress) {
+                $rootScope.webProgress = $rootScope.completeness;
+              }
               console.log('User completeness set to : ' + JSON.stringify($rootScope.completeness));
             }
           }, function (err) {

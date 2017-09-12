@@ -80,7 +80,7 @@ angular.module('starter.login', [])
       $http.get("http://greenschoolsprogramme.org/audit2017/api/Gsp/users/email/" + email + "/password/" + password)
       // $http.get("http://127.0.0.1/GSP/api/Gsp/users/email/" + email + "/password/" + password)
         .then(function (response) {
-          console.log('Response from API: ' + JSON.stringify(response));
+          // console.log('Response from API: ' + JSON.stringify(response));
           if (!response.data.data) {
             $scope.hide();
             $scope.showPopup(
@@ -97,22 +97,23 @@ angular.module('starter.login', [])
             var answer_data = response.data.data;
 
             // getting user_id of the school
-            var user_id;
-            for (var prop in answer_data) {
-              user_id = answer_data[prop].user;
-              break;
-            }
-            $rootScope.user = user_id;
+            $rootScope.user = response.data.school.userid;
+            // console.log("Userid: " + $rootScope.user);
+
+            // getting progress
+            $rootScope.webProgress = response.data.school.progress;
+            console.log('webProgress: ' + $rootScope.webProgress);
 
             // getting state of the school
             var state = $rootScope.school.state;
 
             AppServiceAPI.deleteAllUsers().then(function (res) {
-              AppServiceAPI.insertUser($rootScope.user, email, password, $rootScope.schoolName, state, 0, 1).then(function (res) {
-                console.log("logged in user inserted: " + JSON.stringify(res));
-              }, function (err) {
-                console.error("error in inserting logged in user: " + JSON.stringify(err));
-              });
+              AppServiceAPI.insertUser($rootScope.user, email, password, $rootScope.schoolName, state, 0, 1)
+                .then(function (res) {
+                  console.log("logged in user inserted: " + JSON.stringify(res));
+                }, function (err) {
+                  console.error("error in inserting logged in user: " + JSON.stringify(err));
+                });
             }, function (err) {
               console.error("error deleting all users: " + JSON.stringify(err));
             });
@@ -135,7 +136,6 @@ angular.module('starter.login', [])
 
               // console.log(JSON.stringify(quesID));
               // console.log(JSON.stringify(answerObj));
-              $rootScope.user = answerObj.user;
               AppServiceAPI.insert(answerObj.user, quesID, answerObj.Answer, answerObj.score, answerObj.type).then(function (res) {
 
                 // promise successfully resolved

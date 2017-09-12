@@ -126,7 +126,8 @@ angular.module('starter.air', [])
       $scope.showPopup('Tool Tip', toolTip);
     };
 
-    $scope.progress = $rootScope.completeness;
+    // $scope.progress = $rootScope.completeness;
+    $scope.progress = $rootScope.webProgress;
 
     $scope.roomRange = [];
 
@@ -653,6 +654,9 @@ angular.module('starter.air', [])
               var completeness_data = res.rows.item(0);
               $rootScope.completeness = completeness_data.completeness;
               console.log('User completeness set to : ' + JSON.stringify($rootScope.completeness));
+              if ($rootScope.completeness > $rootScope.webProgress) {
+                $rootScope.webProgress = $rootScope.completeness;
+              }
             }
           }, function (err) {
             console.error("Can't get completeness: " + JSON.stringify(err));

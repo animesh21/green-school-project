@@ -65,13 +65,14 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
             var schoolName = user_data.school_name;
             var state = user_data.state;
             var completeness = user_data.completeness;
-            
+
             var isPrimary = user_data.is_primary;
             console.log('Completeness in app: ' + completeness);
             $rootScope.states = {"1":"Andaman and Nicobar (AN)","2":"Andhra Pradesh (AP)","3":"Arunachal Pradesh (AR)","4":"Assam (AS)","5":"Bihar (BR)","6":"Chandigarh (CH)","7":"Chhattisgarh (CG)","8":"Dadra and Nagar Haveli (DN)","9":"Daman and Diu (DD)","10":"Delhi (DL)","11":"Goa (GA)","12":"Gujarat (GJ)","13":"Haryana (HR)","14":"Himachal Pradesh (HP)","15":"Jammu and Kashmir (JK)","16":"Jharkhand (JH)","17":"Karnataka (KA)","18":"Kerala (KL)","19":"Lakshdweep (LD)","20":"Madhya Pradesh (MP)","21":"Maharashtra (MH)","22":"Manipur (MN)","23":"Meghalaya (ML)","24":"Mizoram (MZ)","25":"Nagaland (NL)","26":"Odisha (OD)","27":"Puducherry (PY)","28":"Punjab (PB)","29":"Rajasthan (RJ)","30":"Sikkim (SK)","31":"Tamil Nadu (TN)","32":"Telangana (TG)","33":"Tripura (TR) ","34":"Uttar Pradesh (UP)","35":"Uttarakhand (UK)","36":"West Bengal (WB)","":"Select State"};
             $rootScope.user = userID;
             $rootScope.schoolName = schoolName;
             $rootScope.completeness = completeness;
+            $rootScope.webProgress = completeness;
             if (isPrimary === 1) {
               $rootScope.primary = true;
               $rootScope.primaryText = "Primary";

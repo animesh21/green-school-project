@@ -93,8 +93,9 @@ angular.module('starter.profile', [])
     };
 
     // value of progress for this section
-    $scope.progress = $rootScope.completeness;
-
+    // $scope.progress = $rootScope.completeness;
+    $scope.progress = parseInt($rootScope.webProgress);
+    console.log("Progress in profile: " + $rootScope.webProgress);
     $scope.validVal = function (questionID) {
       if ($scope.profile[questionID]) {
         return true;
@@ -183,6 +184,9 @@ angular.module('starter.profile', [])
             if (res.rows.length > 0) {
               var completeness_data = res.rows.item(0);
               $rootScope.completeness = completeness_data.completeness;
+              if ($rootScope.completeness > $rootScope.webProgress) {
+                $rootScope.webProgress = $rootScope.completeness;
+              }
               console.log('User completeness set to : ' + JSON.stringify($rootScope.completeness));
             }
           }, function (err) {

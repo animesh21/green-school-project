@@ -121,7 +121,14 @@ angular.module('starter.api', [])
             for (var i = 0; i < res.rows.length; i++) {
               data[i.toString()] = res.rows.item(i);
             }
-            // console.log('Data made: ' + JSON.stringify(data));
+            data[i.toString()] = {
+              userid: $rootScope.user,
+              questionid: 'progress',
+              answer: $rootScope.completeness,
+              score: 0,
+              type: 0
+            };
+            console.log('Data made: ' + JSON.stringify(data));
             $http({
               method: "POST",
               url: "http://greenschoolsprogramme.org/audit2017/api/Gsp/users/",
