@@ -24,17 +24,12 @@
             <ion-list>
 
                 <ion-item class="title  item-borderless">
-                    <p class="fs-12 text-white padding-top" style="text-align: center;">WELCOME</p>
-
-                    <br/>
-
-                    <p class="fs-16 text-white" menu-close ng-click="home()" style="text-align: center;">
-                        {{ schoolName }}
+                    <p class="fs-12 text-white padding-top" style="text-align: center;">WELCOME (
+                        {{ schoolName }}  )
                     </p>
                 </ion-item>
-                <div class="padding-left">
                     <ion-item class="item-borderless fs-12" ng-click="syncFromServer()" menu-close>
-                        SYNC FROM PORTAL
+                        <img src="img/sync.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;  SYNC FROM PORTAL
                     </ion-item>
 
                     <ion-item class="item-borderless fs-12" ng-click="profile()" menu-close>
@@ -43,35 +38,35 @@
                     </ion-item>
 
                     <ion-item class="item-borderless fs-12" ng-click="general()" menu-close href="#/app/general1">
-                        <img src="img/general@3x.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;GENERAL QUESTIONS
+                        <img src="img/general@.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;GENERAL QUESTIONS
                     </ion-item>
 
                     <ion-item class="item-borderless fs-12" ng-click="air()" menu-close>
-                        <img src="img/air@3x.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;AIR
+                        <img src="img/air@.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;AIR
                     </ion-item>
 
                     <ion-item class="item-borderless fs-12" ng-click="energy()" menu-close>
-                        <img src="img/energy@3x.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;ENERGY
+                        <img src="img/energy@.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;ENERGY
                     </ion-item>
 
                     <ion-item class="item-borderless fs-12" ng-click="food()" menu-close>
-                        <img src="img/food@3x.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;FOOD
+                        <img src="img/food@.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;FOOD
                     </ion-item>
 
                     <ion-item class="item-borderless fs-12" ng-click="land()" menu-close>
-                        <img src="img/land@3x.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;LAND
+                        <img src="img/land@.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;LAND
                     </ion-item>
 
                     <ion-item class="item-borderless fs-12" ng-click="water()" menu-close>
-                        <img src="img/water@3x.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;WATER
+                        <img src="img/water@.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;WATER
                     </ion-item>
 
                     <ion-item class="item-borderless fs-12" ng-click="waste()" menu-close>
-                        <img src="img/waste@3x.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;WASTE
+                        <img src="img/waste@.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;WASTE
                     </ion-item>
 
                     <ion-item class="item-borderless fs-12" menu-close ng-click="feedback()">
-                        <img src="img/feedback@3x.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;FEEDBACK
+                        <img src="img/feedback.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;FEEDBACK
                     </ion-item>
 
                     <ion-item class="item-borderless fs-12" menu-close ng-click="faq()">
@@ -81,8 +76,12 @@
                     <ion-item class="item-borderless fs-12" menu-close ng-click="settings()">
                         <img src="img/settings.png" width="{{ iconHeight }}px" height="{{ iconHeight }}px">&nbsp;SETTINGS
                     </ion-item>
-                </div>
             </ion-list>
         </ion-content>
     </ion-side-menu>
 </ion-side-menus>
+<style type="text/css">
+.item-borderless img{ width:20px; height:20px; margin-right:12px; margin-top:0px; position:relative; top:4px;}
+.item-borderless{ border-bottom:1px solid #ccc!important;}
+.item-borderless:last-child{ border-bottom:none!important;}
+</style>
