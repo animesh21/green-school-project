@@ -14,6 +14,17 @@ angular.module('starter.air', [])
       Supporting_Document_Air: []
     };
 
+    $scope.getWebImages = function () {
+      var image_keys = Object.keys($scope.images);
+      return UploadService.getImages(image_keys).then(function (res) {
+        $scope.image_lookup = res;
+        // console.log('Image lookup in air: ' + JSON.stringify($scope.image_lookup));
+        return res;
+      }, function (err) {
+        console.error("Error in image lookup: " + JSON.stringify(err));
+      });
+    };
+
     $scope.showLoading = function (message) {
       $ionicLoading.show({
         template: '<p>Loading...</p><ion-spinner></ion-spinner><p>' +
@@ -27,7 +38,7 @@ angular.module('starter.air', [])
 
     $scope.get0List = function (n) {
       var arr = [];
-      for(var i = 0; i < n; i++) {
+      for (var i = 0; i < n; i++) {
         arr.push(i);
       }
       return arr;
@@ -76,6 +87,7 @@ angular.module('starter.air', [])
     $scope.remove = function (data_id) {
       $scope.images[data_id].pop();
     };
+    // File upload code ends here
 
     $scope.air = {
       'Q6A2S1B6': {id: 1, name: 'Yes'},
@@ -95,7 +107,7 @@ angular.module('starter.air', [])
 
     $scope.getList = function (n) {
       var arr = [];
-      for(var i = 1; i <= n; i++) {
+      for (var i = 1; i <= n; i++) {
         arr.push(i);
       }
       return arr;
@@ -291,7 +303,14 @@ angular.module('starter.air', [])
 
     $scope.validateQ5 = function () {
       var qID, val;
-      for (var i = 1; i <= $scope.air.Q4A1; i++) {
+      var n;  // maximum limit to check room entry
+      if ($scope.air.Q4A1 > 10) {
+        n = 10;
+      }
+      else {
+        n = $scope.air.Q4A1;
+      }
+      for (var i = 1; i <= n; i++) {
         qID = $scope.getQuestionID(5, i, 4);
         val = $scope.getAbsVal(qID);
         if (!val) {
@@ -635,6 +654,8 @@ angular.module('starter.air', [])
     };
 
     $ionicPlatform.ready(function () {
+      // getting previous uploads from the web portal
+      $scope.getWebImages();
 
       ValidationService.getData(2).then(function (res) {
         for (var qID in res) {

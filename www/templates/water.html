@@ -531,6 +531,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Task_4_Supporting_docs.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Task_4_Supporting_docs.length)">
+                        <img src="" web-upload="{{ image_lookup.Task_4_Supporting_docs[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label>
                         <b>Please upload all supporting documents related to this section here.</b>
                     </label>
@@ -540,7 +548,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Task_4_Supporting_docs')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Task_4_Supporting_docs.length > 0"
                          ng-repeat="i in get0List(images.Task_4_Supporting_docs.length)">
                         <img src="" image-u-r-l="{{ images.Task_4_Supporting_docs[i] }}" height="100" width="100"
@@ -963,6 +971,14 @@
                     </span>
                 </div>
 
+                <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Water_Treatment_Process.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Water_Treatment_Process.length)">
+                        <img src="" web-upload="{{ image_lookup.Water_Treatment_Process[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
                 <div class="list" style="padding-left: 20px" ng-if="">
                     <label>
                         <b>Please upload the picture of catchment area.</b>
@@ -973,7 +989,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Water_Treatment_Process')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Water_Treatment_Process.length > 0"
                          ng-repeat="i in get0List(images.Water_Treatment_Process.length)">
                         <img src="" image-u-r-l="{{ images.Water_Treatment_Process[i] }}" height="100" width="100"
@@ -1505,6 +1521,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Flow_Chart_Hand_Drawn.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Flow_Chart_Hand_Drawn.length)">
+                        <img src="" web-upload="{{ image_lookup.Flow_Chart_Hand_Drawn[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label>
                         <b>Please upload a flow chart (hand drawn) of the wastewater treatment process.</b>
                     </label>
@@ -1514,7 +1538,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Flow_Chart_Hand_Drwan')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Flow_Chart_Hand_Drwan.length > 0"
                          ng-repeat="i in get0List(images.Flow_Chart_Hand_Drwan.length)">
                         <img src="" image-u-r-l="{{ images.Flow_Chart_Hand_Drwan[i] }}" height="100" width="100"
@@ -1542,6 +1566,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Supporting_Document_Water.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Supporting_Document_Water.length)">
+                        <img src="" web-upload="{{ image_lookup.Supporting_Document_Water[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label>
                         <b>Pictures of audit team doing survey.</b>
                     </label>
@@ -1551,7 +1583,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Supporting_Document_Water')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Supporting_Document_Water.length > 0"
                          ng-repeat="i in get0List(images.Supporting_Document_Water.length)">
                         <img src="" image-u-r-l="{{ images.Supporting_Document_Water[i] }}" height="100" width="100"

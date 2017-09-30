@@ -723,6 +723,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Green_Cover.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Green_Cover.length)">
+                        <img src="" web-upload="{{ image_lookup.Green_Cover[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li>
                             Pictures of <span ng-if="primary">Kachcha(unpaved) playground with grass</span>
@@ -742,7 +750,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Green_Cover')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25">Current Uploads:</div>
                     <div class="col" ng-if="images.Green_Cover.length > 0"
                          ng-repeat="i in get0List(images.Green_Cover.length)">
                         <img src="" image-u-r-l="{{ images.Green_Cover[i] }}" height="100" width="100"

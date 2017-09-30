@@ -19,6 +19,17 @@ angular.module('starter.energy', [])
       Supporting_Document_Energy: []
     };
 
+    $scope.getWebImages = function () {
+      var image_keys = Object.keys($scope.images);
+      return UploadService.getImages(image_keys).then(function (res) {
+        $scope.image_lookup = res;
+        // console.log('Image lookup in air: ' + JSON.stringify($scope.image_lookup));
+        return res;
+      }, function (err) {
+        console.error("Error in image lookup: " + JSON.stringify(err));
+      });
+    };
+
     $scope.showLoading = function (message) {
       $ionicLoading.show({
         template: '<p>Loading...</p><ion-spinner></ion-spinner><p>' +
@@ -165,6 +176,7 @@ angular.module('starter.energy', [])
     $scope.$on('$destroy', function () {
       $scope.modal.remove();
     });
+
     // Execute action on hide modal
     $scope.$on('modal.hidden', function() {
       $scope.pauseVideo();
@@ -228,11 +240,11 @@ angular.module('starter.energy', [])
           if (res) {
             val1 = parseInt(res);
             val2 = $scope.energy.Q5E1;
-            if (val1 <= 2 && val2 == 'Y'){
+            if (val1 <= 2 && val2 === 'Y'){
               $scope.showPopup('Alert', 'Your choice mismatch with answer given in air section Q3');
               $scope.energy.Q5E1 = 'N';
             }
-            else if(val1 > 2 && val2 == 'N'){
+            else if(val1 > 2 && val2 === 'N'){
               $scope.showPopup('Alert', 'Your choice mismatch with answer given in air section Q3');
               $scope.energy.Q5E1 = 'Y';
             }
@@ -513,7 +525,7 @@ angular.module('starter.energy', [])
     };
 
     $ionicPlatform.ready(function () {
-
+      $scope.getWebImages();
       ValidationService.getData(3).then(function (res) {
         for (var qID in res) {
           $scope.energy[qID] = res[qID];

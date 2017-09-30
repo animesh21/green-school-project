@@ -332,6 +332,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Mid_Day_Meal.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Mid_Day_Meal.length)">
+                        <img src="" web-upload="{{ image_lookup.Mid_Day_Meal[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col">
                         <b>Please upload picture of Mid-day meal being served.</b>
                     </label>
@@ -341,7 +349,7 @@
                     <button class="button button-assertive button-small" type="button"
                             ng-click="remove('Mid_Day_Meal')">Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Mid_Day_Meal.length > 0"
                          ng-repeat="i in get0List(images.Mid_Day_Meal.length)">
                         <img src="" image-u-r-l="{{ images.Mid_Day_Meal[i] }}" height="100" width="100"
@@ -431,6 +439,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Lunch_Boxes.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Lunch_Boxes.length)">
+                        <img src="" web-upload="{{ image_lookup.Lunch_Boxes[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col">
                         <b>Please upload photographs of lunch boxes.</b>
                     </label>
@@ -440,7 +456,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Lunch_Boxes')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Lunch_Boxes.length > 0"
                          ng-repeat="i in get0List(images.Lunch_Boxes.length)">
                         <img src="" image-u-r-l="{{ images.Lunch_Boxes[i] }}" height="100" width="100"
@@ -761,6 +777,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Traditional_Food_Items_In_Canteen.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Traditional_Food_Items_In_Canteen.length)">
+                        <img src="" web-upload="{{ image_lookup.Traditional_Food_Items_In_Canteen[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col">
                         <b>
                             Please upload picture of traditional food items sold in canteen.
@@ -772,7 +796,7 @@
                     <button class="button button-assertive button-small" type="button"
                             ng-click="remove('Traditional_Food_Items_In_Canteen')">Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Traditional_Food_Items_In_Canteen.length > 0"
                          ng-repeat="i in get0List(images.Traditional_Food_Items_In_Canteen.length)">
                         <img src="" image-u-r-l="{{ images.Traditional_Food_Items_In_Canteen[i] }}"
@@ -999,6 +1023,15 @@
                     </span>
             </div>
 
+                <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Audit_Team_doing_Survey.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Audit_Team_doing_Survey.length)">
+                        <img src="" web-upload="{{ image_lookup.Audit_Team_doing_Survey[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+
             <div class="list" style="padding-left: 20px">
                 <label class="col">
                     <b>
@@ -1011,7 +1044,7 @@
                 <button class="button button-assertive button-small" type="button"
                         ng-click="remove('Audit_Team_doing_Survey')">Remove Picture
                 </button>
-                <div class="col col-25">Uploaded Images:</div>
+                <div class="col col-25"><strong>Current Uploads:</strong></div>
                 <div class="col" ng-if="images.Audit_Team_doing_Survey.length > 0"
                      ng-repeat="i in get0List(images.Audit_Team_doing_Survey.length)">
                     <img src="" image-u-r-l="{{ images.Audit_Team_doing_Survey[i] }}" height="100" width="100"
@@ -1105,6 +1138,15 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.UPPF.length > 0"
+                         ng-repeat="i in get0List(image_lookup.UPPF.length)">
+                        <img src="" web-upload="{{ image_lookup.UPPF[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col">
                         <b>Please upload pictures of your Audit Team doing the survey.</b>
                     </label>
@@ -1114,7 +1156,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('UPPF')">Remove
                         Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.UPPF.length > 0"
                          ng-repeat="i in get0List(images.UPPF.length)">
                         <img src="" image-u-r-l="{{ images.UPPF[i] }}" height="100" width="100" alt="UPPF">

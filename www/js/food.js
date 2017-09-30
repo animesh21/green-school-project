@@ -17,6 +17,17 @@ angular.module('starter.food', [])
       UPPF: []
     };
 
+    $scope.getWebImages = function () {
+      var image_keys = Object.keys($scope.images);
+      return UploadService.getImages(image_keys).then(function (res) {
+        $scope.image_lookup = res;
+        // console.log('Image lookup in air: ' + JSON.stringify($scope.image_lookup));
+        return res;
+      }, function (err) {
+        console.error("Error in image lookup: " + JSON.stringify(err));
+      });
+    };
+
     $scope.showLoading = function (message) {
       $ionicLoading.show({
         template: '<p>Loading...</p><ion-spinner></ion-spinner><p>' +
@@ -178,6 +189,7 @@ angular.module('starter.food', [])
     $scope.$on('$destroy', function () {
       $scope.modal.remove();
     });
+
     // Execute action on hide modal
     $scope.$on('modal.hidden', function() {
       $scope.pauseVideo();
@@ -506,6 +518,8 @@ angular.module('starter.food', [])
     };
 
     $ionicPlatform.ready(function () {
+
+      $scope.getWebImages();
 
       ValidationService.getData(4).then(function (res) {
         for (var qID in res) {

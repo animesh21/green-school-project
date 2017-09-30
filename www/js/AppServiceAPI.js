@@ -85,7 +85,7 @@ angular.module('starter.api', [])
 
       updateUserCompleteness: function (user_id, completeness) {
         console.log('Updating completeness to: ' + completeness);
-        var query = "UPDATE gsp_users SET completeness = ? WHERE user_id = ? AND gsp_users.completeness < ?";
+        var query = "UPDATE gsp_users SET completeness = ? WHERE user_id = ? AND completeness < ?";
         return $cordovaSQLite.execute(db, query, [completeness, user_id, completeness]);
       },
 

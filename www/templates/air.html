@@ -128,54 +128,13 @@
                     <div class="col"> Email ID</div>
                 </div>
 
-                <div class="row">
-                    <div class="col col-10">1</div>
-                    <div class="col"><input ng-model="air.Q2A1S1" id='questionairtwoOneName' class="textbox"
+                <div class="row" ng-repeat="i in getList(5)">
+                    <div class="col col-10">{{ i }}</div>
+                    <div class="col"><input ng-model="air['Q2A' + i + 'S1']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q2A1S3" class="textbox"
+                    <div class="col"><input ng-model="air['Q2A' + i + 'S3']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q2A1S2" id='questionairtwoOneEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="email"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">2</div>
-                    <div class="col"><input ng-model="air.Q2A2S1" id='questionairtwoTwoName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q2A2S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q2A2S2" id='questionairtwoTwoEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="email"></div>
-                </div>
-
-
-                <div class="row ">
-                    <div class="col col-10">3</div>
-                    <div class="col"><input ng-model="air.Q2A3S1" id='questionairtwoThreeName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q2A3S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q2A3S2" id='questionairtwoThreeEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="email"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">4</div>
-                    <div class="col"><input ng-model="air.Q2A4S1" id='questionairtwoFourName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q2A4S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q2A4S2" id='questionairtwoFourEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="email"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">5</div>
-                    <div class="col"><input ng-model="air.Q2A5S1" id='questionairtwoFiveName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q2A5S3" class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q2A5S2" id='questionairtwoFiveEmail' class="textbox"
+                    <div class="col"><input ng-model="air['Q2A' + i + 'S2']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="email"></div>
                 </div>
             </div>
@@ -194,103 +153,13 @@
                     <div class="col">Grade</div>
                 </div>
 
-                <div class="row ">
-                    <div class="col col-10">1</div>
-                    <div class="col"><input ng-model="air.Q3A1S1" id='questionairthreeOneName' class="textbox"
+                <div class="row" ng-repeat="i in getList(10)">
+                    <div class="col col-10">{{ i }}</div>
+                    <div class="col"><input ng-model="air['Q3A' + i + 'S1']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A1S2" id='questionairthreeOneEmail' class="textbox"
+                    <div class="col"><input ng-model="air['Q3A' + i + 'S2']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A1S3" id='questionairthreeOneGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">2</div>
-                    <div class="col"><input ng-model="air.Q3A2S1" id='questionairthreeTwoName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A2S2" id='questionairthreeTwoEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A2S3" id='questionairthreeTwoGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">3</div>
-                    <div class="col"><input ng-model="air.Q3A3S1" id='questionairthreeThreeName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A3S2" id='questionairthreeThreeEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A3S3" id='questionairthreeThreeGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">4</div>
-                    <div class="col"><input ng-model="air.Q3A4S1" id='questionairthreeFourName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A4S2" id='questionairthreeFourEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A4S3" id='questionairthreeFourGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">5</div>
-                    <div class="col"><input ng-model="air.Q3A5S1" id='questionairthreeFiveName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A5S2" id='questionairthreeFiveEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A5S3" id='questionairthreeFiveGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">6</div>
-                    <div class="col"><input ng-model="air.Q3A6S1" id='questionairthreeSixName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A6S2" id='questionairthreeSixEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A6S3" id='questionairthreeSixGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">7</div>
-                    <div class="col"><input ng-model="air.Q3A7S1" id='questionairthreeSevenName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A7S2" id='questionairthreeSevenEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A7S3" id='questionairthreeSevenGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">8</div>
-                    <div class="col"><input ng-model="air.Q3A8S1" id='questionairthreeEightName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A8S2" id='questionairthreeEightEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A8S3" id='questionairthreeEightGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">9</div>
-                    <div class="col"><input ng-model="air.Q3A9S1" id='questionairthreeNineName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A9S2" id='questionairthreeNineEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A9S3" id='questionairthreeNineGrade' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                </div>
-
-                <div class="row ">
-                    <div class="col col-10">10</div>
-                    <div class="col"><input ng-model="air.Q3A10S1" id='questionairthreeTenName' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A10S2" id='questionairthreeTenEmail' class="textbox"
-                                            style="border:1px solid #111;text-align: center;" type="text"></div>
-                    <div class="col"><input ng-model="air.Q3A10S3" id='questionairthreeTenGrade' class="textbox"
+                    <div class="col"><input ng-model="air['Q3A' + i + 'S3']" class="textbox"
                                             style="border:1px solid #111;text-align: center;" type="text"></div>
                 </div>
             </div>
@@ -697,16 +566,27 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.PUC_Certificate.length > 0"
+                         ng-repeat="i in get0List(image_lookup.PUC_Certificate.length)">
+                        <img src="" web-upload="{{ image_lookup.PUC_Certificate[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col">
                         <b ng-if="!primary">PUC certificates of the buses</b>
                         <b ng-if="primary">Picture of school owned vehicle and parking area</b>
                     </label>
-                    <button class="button button-small button-assertive" ng-click="takepic('PUC_Certificate')" type="button">Take Picture</button>
-                    <button class="button button-small button-assertive" type="button" ng-click="remove('PUC_Certificate')">Remove Picture</button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <button class="button button-small button-assertive" ng-click="takepic('PUC_Certificate')" type="button">
+                        Take Picture
+                    </button>
+                    <button class="button button-small button-assertive" type="button" ng-click="remove('PUC_Certificate')">
+                        Remove Picture
+                    </button>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.PUC_Certificate.length > 0"
                          ng-repeat="i in get0List(images.PUC_Certificate.length)">
-                        <!--<img src="{{ images.PUC_Certificate[i] }}" image-u-r-l="{{ images.PUC_Certificate[i] }}" height="100" width="100" alt="PUC certificate">-->
                         <img src="" image-u-r-l="{{ images.PUC_Certificate[i] }}" height="100" width="100" alt="PUC certificate">
                     </div>
                 </div>
@@ -1016,11 +896,21 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Fuels.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Fuels.length / 2)">
+                        <img src="" web-upload="{{ image_lookup.Fuels[i] }}" height="100" width="100">
+                        <img src="" web-upload="{{ image_lookup.Fuels[i + 1] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col"><b>Fuel Bills</b></label>
                     <label class="col"><b>Pictures of school owned vehicles</b></label>
                     <button class="button button-assertive button-small" type="button" ng-click="takepic('Fuels')">Take Picture</button>
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Fuels')">Remove Picture</button>
-                    <div class="col col-25">Uploaded Images:</div>
+
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Fuels.length > 0"
                          ng-repeat="i in get0List(images.Fuels.length)">
                         <img src="" image-u-r-l="{{ images.Fuels[i] }}" height="100" width="100" alt="Fuel Bills">
@@ -1029,7 +919,8 @@
 
                 <div class="list" style="padding-left: 20px" ng-if-end>
                     <p>Please click upload after taking/selecting all the pictures.</p>
-                    <button type="button" class="button button-assertive" ng-click="upload('Fuels')">Upload</button>
+                    <!--<button type="button" class="button button-assertive" ng-click="upload('Fuels')">Upload</button>-->
+                    <button type="button" class="button button-assertive" ng-click="getWebImages()">Upload</button>
                 </div>
             </div>
 
@@ -1349,10 +1240,18 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Air_Quality_Monitoring.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Air_Quality_Monitoring.length)">
+                        <img src="" web-upload="{{ image_lookup.Air_Quality_Monitoring[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col"><b>Picture of Air Quality Monitoring equipment of the school</b></label>
                     <button class="button button-assertive button-small" type="button" ng-click="takepic('Air_Quality_Monitoring')">Take Picture</button>
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Air_Quality_Monitoring')">Remove Picture</button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Air_Quality_Monitoring.length > 0"
                          ng-repeat="i in get0List(images.Air_Quality_Monitoring.length)">
                         <img src="" image-u-r-l="{{ images.Air_Quality_Monitoring[i] }}" height="100" width="100" alt="Air Quality Monitoring">
@@ -1392,10 +1291,18 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Supporting_Document_Air.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Supporting_Document_Air.length)">
+                        <img src="" web-upload="{{ image_lookup.Supporting_Document_Air[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col"><b>Picture of audit team doing the survey</b></label>
                     <button class="button button-assertive button-small" type="button" ng-click="takepic('Supporting_Document_Air')">Take Picture</button>
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Supporting_Document_Air')">Remove Picture</button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Supporting_Document_Air.length > 0"
                          ng-repeat="i in get0List(images.Supporting_Document_Air.length)">
                         <img src="" image-u-r-l="{{ images.Supporting_Document_Air[i] }}" height="100" width="100" alt="Supporting Document Air">

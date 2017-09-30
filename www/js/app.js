@@ -168,6 +168,31 @@ angular.module('starter', ['ionic', 'starter.faq', 'starter.quiz',
     };
   }])
 
+  .directive("webUpload", [function () {
+
+    'use strict';
+
+    return {
+      restrict: "A",
+      link: function (scope, elem, attrs) {
+        var filename = attrs.webUpload;
+        var fileExt = filename.slice((Math.max(0, filename.lastIndexOf(".")) || Infinity) + 1);
+        var imgSrc;
+        var validExts = ['jpeg', 'jpg', 'png'];
+
+        if (validExts.indexOf(fileExt) !== -1) {
+          imgSrc = "http://greenschoolsprogramme.org/audit2017/uploads/files/" + filename;
+        }
+        else {
+          imgSrc = "https://www.file-extensions.org/imgs/articles/1/14/pdf-word-icons.png";
+        }
+
+        attrs.$set('src', imgSrc);
+        // attrs.$set('src', docSrc);
+      }
+    };
+  }])
+
   .config(function ($stateProvider, $urlRouterProvider) {
 
     'use strict';

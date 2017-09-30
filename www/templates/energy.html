@@ -351,10 +351,18 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Electricity_Bill.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Electricity_Bill.length)">
+                        <img src="" web-upload="{{ image_lookup.Electricity_Bill[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col"><b>Please upload a recent electricity bill</b></label>
                     <button class="button button-assertive button-small" type="button" ng-click="takepic('Electricity_Bill')">Take Picture</button>
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Electricity_Bill')">Remove Picture</button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Electricity_Bill.length > 0"
                          ng-repeat="i in get0List(images.Electricity_Bill.length)">
                         <img src="" image-u-r-l="{{ images.Electricity_Bill[i] }}" height="100" width="100" alt="Electricity Bill">
@@ -447,10 +455,18 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Fuels_Bills.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Fuels_Bills.length)">
+                        <img src="" web-upload="{{ image_lookup.Fuels_Bills[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col"><b>Please upload fuel bills</b></label>
                     <button class="button button-assertive button-small" type="button" ng-click="takepic('Fuels_Bills')">Take Picture</button>
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Fuels_Bills')">Remove Picture</button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads</strong></div>
                     <div class="col" ng-if="images.Fuels_Bills.length > 0"
                          ng-repeat="i in get0List(images.Fuels_Bills.length)">
                         <img src="" image-u-r-l="{{ images.Fuels_Bills[i] }}" height="100" width="100" alt="Fuels Bills">
@@ -526,10 +542,18 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Five_Star_Appliances.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Five_Star_Appliances.length)">
+                        <img src="" web-upload="{{ image_lookup.Five_Star_Appliances[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col"><b>Please upload a picture of 5 star appliances used by your school</b></label>
                     <button class="button button-assertive button-small" type="button" ng-click="takepic('Five_Star_Appliances')">Take Picture</button>
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Five_Star_Appliances')">Remove Picture</button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Five_Star_Appliances.length > 0"
                          ng-repeat="i in get0List(images.Five_Star_Appliances.length)">
                         <img src="" image-u-r-l="{{ images.Five_Star_Appliances[i] }}" height="100" width="100" alt="Five Star Appliances">
@@ -587,13 +611,21 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Alternative_Source_of_Energy.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Alternative_Source_of_Energy.length)">
+                        <img src="" web-upload="{{ image_lookup.Alternative_Source_of_Energy[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col">
                         <b>Please upload a picture of alternative source of energy installed that
                             is currently in use.</b>
                     </label>
                     <button class="button button-assertive button-small" type="button" ng-click="takepic('Alternative_Source_of_Energy')">Take Picture</button>
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Alternative_Source_of_Energy')">Remove Picture</button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Alternative_Source_of_Energy.length > 0"
                          ng-repeat="i in get0List(images.Alternative_Source_of_Energy.length)">
                         <img src="" image-u-r-l="{{ images.Alternative_Source_of_Energy[i] }}" height="100" width="100" alt="Alternative Source of Energy">
@@ -664,12 +696,20 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Supporting_Document_Energy.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Supporting_Document_Energy.length)">
+                        <img src="" web-upload="{{ image_lookup.Supporting_Document_Energy[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <label class="col">
                         <b>Picture of audit team doing the survey.</b>
                     </label>
                     <button class="button button-assertive button-small" type="button" ng-click="takepic('Supporting_Document_Energy')">Take Picture</button>
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Supporting_Document_Energy')">Remove Picture</button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Supporting_Document_Energy.length > 0"
                          ng-repeat="i in get0List(images.Supporting_Document_Energy.length)">
                         <img src="" image-u-r-l="{{ images.Supporting_Document_Energy[i] }}" height="100" width="100" alt="Alternative Source of Energy">

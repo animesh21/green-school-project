@@ -7,6 +7,8 @@ angular.module('starter.upload', [])
 
     'use strict';
 
+    var imageUrl = 'http://greenschoolsprogramme.org/audit2017/api/gsp/image?userid=';
+
     var _takePic = function () {
       var actionSheetOptions = {
         title: 'Select a picture/document',
@@ -159,9 +161,33 @@ angular.module('starter.upload', [])
       });
     };
 
+    var _getImages = function (image_keys) {
+
+      return $http.get(imageUrl + $rootScope.user).then(function (res) {
+        var webImages = res.data;
+        // console.log("Images from web: " + JSON.stringify($scope.webImages));
+        var image_lookup = {};
+        for (var i = 0; i < image_keys.length; i++) {
+          var image_key = image_keys[i];
+          var item_list = [];
+          for (var j = 0; j < webImages.length; j++) {
+            var filename = webImages[j].file_name;
+            var n = filename.search(image_key);
+            if (n > 0) {
+              item_list.push(filename);
+            }
+          }
+          image_lookup[image_key] = item_list;
+        }
+        // console.log('Image lookup: ' + JSON.stringify(image_lookup));
+        return image_lookup;
+      });
+    };
+
     return {
       uploadImage: _uploadImage,
       takePic: _takePic,
-      syncFromServer: _syncFromServer
+      syncFromServer: _syncFromServer,
+      getImages: _getImages
     };
   });

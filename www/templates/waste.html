@@ -300,6 +300,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Segregation_Source_Classrooms.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Segregation_Source_Classrooms.length)">
+                        <img src="" web-upload="{{ image_lookup.Segregation_Source_Classrooms[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li>
                             Pictures of dustbins in classroom showing segregation at source
@@ -314,7 +322,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Segregation_Source_Classrooms')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Segregation_Source_Classrooms.length > 0"
                          ng-repeat="i in get0List(images.Segregation_Source_Classrooms.length)">
                         <img src="" image-u-r-l="{{ images.Segregation_Source_Classrooms[i] }}" height="100" width="100"
@@ -431,6 +439,15 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup[wasteGeneratedOrRecycled[x]['uploadName']].length > 0"
+                         ng-repeat="i in get0List(image_lookup[wasteGeneratedOrRecycled[x]['uploadName']].length)">
+                        <img src="" web-upload="{{ image_lookup[wasteGeneratedOrRecycled[x]['uploadName']][i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li ng-repeat="text in data.wasteGeneratedOrRecycled[x]['uploadText']">
                             {{ text }}
@@ -442,7 +459,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove(data.wasteGeneratedOrRecycled[x]['uploadName'])">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.data[wasteGeneratedOrRecycled[x]['uploadName']].length > 0"
                          ng-repeat="i in get0List(images.data[wasteGeneratedOrRecycled[x]['uploadName']].length)">
                         <img src="" image-u-r-l="{{ images.data[wasteGeneratedOrRecycled[x]['uploadName']][i] }}" height="100" width="100"
@@ -524,6 +541,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup[data.wasteGeneratedOrRecycled[2]['uploadName']].length > 0"
+                         ng-repeat="i in get0List(image_lookup[data.wasteGeneratedOrRecycled[2]['uploadName']].length)">
+                        <img src="" web-upload="{{ image_lookup[data.wasteGeneratedOrRecycled[2]['uploadName']][i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li ng-repeat="text in data.wasteGeneratedOrRecycled[2]['uploadText']">
                             {{ text }}
@@ -536,7 +561,7 @@
                             ng-click="remove(data.wasteGeneratedOrRecycled[2]['uploadName'])">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.data[wasteGeneratedOrRecycled[2]['uploadName']].length > 0"
                          ng-repeat="i in get0List(images.data[wasteGeneratedOrRecycled[2]['uploadName']].length)">
                         <img src="" image-u-r-l="{{ images.data[wasteGeneratedOrRecycled[2]['uploadName']][i] }}"
@@ -625,6 +650,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Recycling_Machine.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Recycling_Machine.length)">
+                        <img src="" web-upload="{{ image_lookup.Recycling_Machine[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li>
                             Pictures of recycling units - paper recycling machine, selling paper to kabadiwala,
@@ -637,7 +670,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Recycling_Machine')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25">Current Uploads:</div>
                     <div class="col" ng-if="images.Recycling_Machine.length > 0"
                          ng-repeat="i in get0List(images.Recycling_Machine.length)">
                         <img src="" image-u-r-l="{{ images.Recycling_Machine[i] }}" height="100" width="100"
@@ -704,6 +737,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Recycling_Machine.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Recycling_Machine.length)">
+                        <img src="" web-upload="{{ image_lookup.Recycling_Machine[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li>
                             Pictures of recycling units - paper recycling machine, selling paper to kabadiwala,
@@ -716,7 +757,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Recycling_Machine')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Recycling_Machine.length > 0"
                          ng-repeat="i in get0List(images.Recycling_Machine.length)">
                         <img src="" image-u-r-l="{{ images.Recycling_Machine[i] }}" height="100" width="100"
@@ -793,6 +834,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup['E-Waste'].length > 0"
+                         ng-repeat="i in get0List(image_lookup['E-Waste'].length)">
+                        <img src="" web-upload="{{ image_lookup['E-Waste'][i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li>
                             Pictures of Electronic items used by school and storage of non-working electronic items.
@@ -807,7 +856,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('E-Waste')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images['E-Waste'].length > 0"
                          ng-repeat="i in get0List(images['E-Waste'].length)">
                         <img src="" image-u-r-l="{{ images['E-Waste'][i] }}" height="100" width="100"
@@ -869,6 +918,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup['E-waste_authorised_dealer'].length > 0"
+                         ng-repeat="i in get0List(image_lookup['E-waste_authorised_dealer'].length)">
+                        <img src="" web-upload="{{ image_lookup['E-waste_authorised_dealer'][i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li>
                             Certificate of disposing e-waste from authorised dealer/dismantler.
@@ -880,7 +937,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('E-waste_authorised_dealer')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images['E-waste_authorised_dealer'].length > 0"
                          ng-repeat="i in get0List(images['E-waste_authorised_dealer'].length)">
                         <img src="" image-u-r-l="{{ images['E-waste_authorised_dealer'][i] }}" height="100" width="100"
@@ -923,6 +980,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Housekeeping.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Housekeeping.length)">
+                        <img src="" web-upload="{{ image_lookup.Housekeeping[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li>
                             Pictures of housekeeping staff disposing different types of solid waste.
@@ -934,7 +999,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Housekeeping')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong> Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Housekeeping.length > 0"
                          ng-repeat="i in get0List(images.Housekeeping.length)">
                         <img src="" image-u-r-l="{{ images.Housekeeping[i] }}" height="100" width="100"
@@ -973,6 +1038,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Burning_Waste.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Burning_Waste.length)">
+                        <img src="" web-upload="{{ image_lookup.Burning_Waste[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li>
                             Pictures of burning waste.
@@ -984,7 +1057,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Buring_Waste')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Buring_Waste.length > 0"
                          ng-repeat="i in get0List(images.Buring_Waste.length)">
                         <img src="" image-u-r-l="{{ images.Buring_Waste[i] }}" height="100" width="100"
@@ -1090,6 +1163,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Waste_Policy.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Waste_Policy.length)">
+                        <img src="" web-upload="{{ image_lookup.Waste_Policy[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li>
                             Waste Policy.
@@ -1101,7 +1182,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Waste_Policy')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong> Current Uploads:</strong></div>
                     <div class="col" ng-if="images.Waste_Policy.length > 0"
                          ng-repeat="i in get0List(images.Waste_Policy.length)">
                         <img src="" image-u-r-l="{{ images.Waste_Policy[i] }}" height="100" width="100"
@@ -1140,6 +1221,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.School_Initiatives.length > 0"
+                         ng-repeat="i in get0List(image_lookup.School_Initiatives.length)">
+                        <img src="" web-upload="{{ image_lookup.School_Initiatives[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li>
                             Pictures of various school initiatives e.g. rally, debate, street play, art competition, etc.
@@ -1151,7 +1240,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('School_Initiatives')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current Uploads:</strong></div>
                     <div class="col" ng-if="images.School_Initiatives.length > 0"
                          ng-repeat="i in get0List(images.School_Initiatives.length)">
                         <img src="" image-u-r-l="{{ images.School_Initiatives[i] }}" height="100" width="100"
@@ -1207,6 +1296,14 @@
                 </div>
 
                 <div class="list" style="padding-left: 20px">
+                    <div class="row"><strong>Previous Uploads:</strong></div>
+                    <div class="row" ng-if="image_lookup.Audit_Team_Doing_Survey_Waste.length > 0"
+                         ng-repeat="i in get0List(image_lookup.Audit_Team_Doing_Survey_Waste.length)">
+                        <img src="" web-upload="{{ image_lookup.Audit_Team_Doing_Survey_Waste[i] }}" height="100" width="100">
+                    </div>
+                </div>
+
+                <div class="list" style="padding-left: 20px">
                     <ul class="water-list">
                         <li>Pictures of audit team doing survey.</li>
                         <li>Please upload all supporting documents related to this section here.</li>
@@ -1217,7 +1314,7 @@
                     <button class="button button-assertive button-small" type="button" ng-click="remove('Audit_Team_Doing_Survey_Waste')">
                         Remove Picture
                     </button>
-                    <div class="col col-25">Uploaded Images:</div>
+                    <div class="col col-25"><strong>Current UPloads:</strong></div>
                     <div class="col" ng-if="images.Audit_Team_Doing_Survey_Waste.length > 0"
                          ng-repeat="i in get0List(images.Audit_Team_Doing_Survey_Waste.length)">
                         <img src="" image-u-r-l="{{ images.Audit_Team_Doing_Survey_Waste[i] }}" height="100" width="100"

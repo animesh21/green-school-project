@@ -204,6 +204,5 @@ angular.module('starter.profile', [])
       }, function (err) {
         console.error('Error while saving to db: ' + JSON.stringify(err));
       });
-
     };
   });
